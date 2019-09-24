@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -28,12 +29,15 @@ namespace WPFApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            listBox1.Items.Clear();
-            Assembly[] sborki = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (Assembly item in sborki)
-            {
-                listBox1.Items.Add(item.FullName);
-            }            
+            //listBox1.Items.Clear();
+            //Assembly[] sborki = AppDomain.CurrentDomain.GetAssemblies();
+            //foreach (Assembly item in sborki)
+            //{
+            //    listBox1.Items.Add(item.FullName);
+            //}
+            //var hzxml = PostGetHTTP.XML();
+            
+            textbox1.Text = PostGetHTTP.Main();
         }
     }
 }

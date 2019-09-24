@@ -1,0 +1,71 @@
+RunOperationRequest
+Запрос на проведение операции оплаты услуги "Гостехосмотр"
+request
+"<?xml version=""1.0"" encoding=""UTF-8"" standalone='yes'?>
+<PS_ERIP>
+  <RunOperationRequest>
+    <Key/>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <SignCode>0</SignCode>
+    <PayDate>17/09/2019 09:00:06</PayDate>
+    <KioskReceipt>17092019090006</KioskReceipt>
+    <KioskError>0</KioskError>
+    <PayRecordCount>0</PayRecordCount>
+   <PayRecord Code=""421"" DIType=""9120"" Name=""Гостехосмотр"" CodeOut=""421"" StornoMode=""S"" ClaimID=""0"" 
+Category=""1"" GetPayListType=""1"" Summa=""8"" Edit=""0"" View=""0"" Fine=""0"" PayCommission=""0"" 
+Commission=""0"">
+      <GroupRecord Code=""401"" Name=""Физическое лицо""/>
+      <AttrRecord Code=""660"" CodeOut=""1001"" Name=""Оплачено по услуге"" 
+	  Value=""1234AA-7"" />
+      <AttrRecord Code=""745"" CodeOut=""1002"" Name=""Свидетельство о регистрации"" 
+	  Value=""AAA123456789"" />
+      <AttrRecord Code=""873"" Name=""УНП плательщика"" Value=""109879310"" />
+      <AttrRecord Code=""661"" Name=""Тип транспортного средства"" 
+	  Value=""Легковой автомобиль"" />
+      <AttrRecord Code=""664"" Name=""Тип двигателя"" Value=""Гибридный или электромобиль"" />
+      <AttrRecord Code=""665"" Name=""Колесная формула"" Value=""4x2"" />
+      <AttrRecord Code=""861"" Name=""Счетчик запросов"" Value=""0"" />
+    </PayRecord>
+  </RunOperationRequest>
+</PS_ERIP>"
+
+responce
+"<?xml version=""1.0""?>
+<PS_ERIP>
+  <RunOperationResponse>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <KioskReceipt>17092019090006</KioskReceipt>
+    <PayRest/>
+    <PayRecord Code=""421"" RecordID=""0"" PaymentID=""175124624"" ClaimID=""0"" PayAll=""8"" Summa=""8"" 
+Fine=""0"" PayCommission=""0"" Currency=""933"" Date=""17/09/2019 09:00:06"">
+      <AttrRecord Code=""660"" Name=""Регистрационный знак транспортного средства"" Value=""1234AA-7"" Print=""0""/>
+      <AttrRecord Code=""745"" Name=""Свидетельство о регистрации"" Value=""AAA123456789"" Print=""0""/>
+      <AttrRecord Code=""873"" Name=""УНП плательщика"" Value=""109879310"" Print=""0""/>
+      <AttrRecord Code=""661"" Name=""Тип транспортного средства"" Value=""Легковой автомобиль"" Print=""0""/>
+      <AttrRecord Code=""664"" Name=""Тип двигателя"" Value=""Гибридный или электромобиль"" Print=""0""/>
+      <AttrRecord Code=""665"" Name=""Колесная формула"" Value=""4x2"" Print=""0""/>
+      <AttrRecord Code=""861"" Name=""Счетчик запросов"" Value=""0"" Print=""0""/>
+      <Check>
+        <CheckHeader Count=""12"" xml:space=""preserve"">
+          <CheckLine Idx=""1"">Дата платежа:                   17/09/2019 09:00:06</CheckLine>
+          <CheckLine Idx=""2"">Отправитель платежа: 220 Г.МИНСК,ОАО 'БЕЛВНЕШЭКОНОМБАНК' МИНСКОЕ ОТДЕ</CheckLine>
+          <CheckLine Idx=""3"">ЛЕНИЕ 4</CheckLine>
+          <CheckLine Idx=""4""/>
+          <CheckLine Idx=""5"">Получатель платежа: Гостехосмотр, р/с BY50REDJ30121000262600000000 в 1</CheckLine>
+          <CheckLine Idx=""6"">10 Г.МИНСК,ЗАО 'РРБ-БАНК'</CheckLine>
+          <CheckLine Idx=""7""></CheckLine>
+          <CheckLine Idx=""8"">Гостехосмотр</CheckLine>
+          <CheckLine Idx=""9""></CheckLine>
+          <CheckLine Idx=""10"">Оплачено по услуге:                       8 BYN</CheckLine>
+          <CheckLine Idx=""11"">Сумма:                              8 BYN</CheckLine>
+          <CheckLine Idx=""12"">*** ОПЛАТА НАЛИЧНЫМИ ***</CheckLine>
+        </CheckHeader>
+        <CheckFooter/>
+      </Check>
+    </PayRecord>
+    <ErrorCode>0</ErrorCode>
+    <ErrorText/>
+  </RunOperationResponse>
+</PS_ERIP>
+"

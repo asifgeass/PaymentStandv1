@@ -1,64 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿RunOperationRequest
+Запрос на проведение операции оплаты услуги "Гостехосмотр"
 
-"<?xml version=""1.0"" encoding=""UTF-8"" standalone='yes'?>
-<PS_ERIP>
-  <GetPayListRequest>
-    <TerminalID>TEST_TERMINAL</TerminalID>
-    <Version>3</Version>
-    <PAN>BY93AKBB36019010100000000000</PAN>
-    <TypePAN>ACCOUNT</TypePAN>
-    <PayCode>421</PayCode>
-  </GetPayListRequest>
-</PS_ERIP>"
-
-"<?xml version=""1.0"" encoding=""UTF-8""?>
-<PS_ERIP>
-  <GetPayListResponse>
-    <TerminalID>TEST_TERMINAL</TerminalID>
-    <AllSumma/>
-    <ErrorCode>0</ErrorCode>
-    <ErrorText/>
-    <PayRecord Code=""421="""" Name=""Гостехосмотр="""" CodeOut=""421="""" StornoMode=""S="""" ClaimID=""0="""" Category=""1="""" GetPayListType=""1="""" Summa=""0="""" Edit=""0="""" View=""0="""" Fine=""0="""" PayCommission=""0="""" Commission=""0="""">
-      <GroupRecord Code=""401="""" Name=""Физическое="" лицо=""""/>
-      <AttrRecord Code=""660="""" Name=""Регистрационный="" знак="" транспортного="" средства="""" Type=""S="""" MinLength=""6="""" MaxLength=""8="""" Mandatory=""1="""" Edit=""1="""" Print=""0="""" Search=""0="""" View=""0=""""/>
-      <AttrRecord Code=""745="""" Name=""Свидетельство="" о="" регистрации="""" Type=""S="""" Mandatory=""1="""" Edit=""1="""" Print=""0="""" Search=""0="""" View=""0=""""/>
-      <AttrRecord Code=""873="""" Name=""УНП="" плательщика="""" Type=""I="""" MinLength=""9="""" MaxLength=""9="""" Mandatory=""1="""" Edit=""1="""" Print=""0="""" Search=""0="""" View=""0=""""/>
-      <AttrRecord Code=""661="""" Name=""Тип="" транспортного="" средства="""" Type=""S="""" Mandatory=""1="""" Edit=""1="""" Print=""0="""" Lookup=""ТИПЫ="" ТРАНСПОРТНЫХ="" СРЕДСТВ="""" Search=""0="""" View=""0=""""/>
-      <AttrRecord Code=""664="""" Name=""Тип="" двигателя="""" Type=""S="""" Mandatory=""1="""" Edit=""1="""" Print=""0="""" Lookup=""ТИП="" ДВИГАТЕЛЯ="" АВТО="""" Search=""0="""" View=""0=""""/>
-      <AttrRecord Code=""665="""" Name=""Колесная="" формула="""" Type=""S="""" Mandatory=""1="""" Edit=""1="""" Print=""0="""" Lookup=""КОЛЕСНАЯ="" ФОРМУЛА="" АВТО="""" Search=""0="""" View=""0=""""/>
-      <AttrRecord Code=""861="""" Name=""Счетчик="" запросов="""" Type=""I="""" Mandatory=""1="""" Edit=""0="""" Print=""0="""" Value=""0="""" View=""0=""""/>
-      <AttrLookups>
-        <AttrLookup Name=""КОЛЕСНАЯ="" ФОРМУЛА="" АВТО="""">
-          <Item Name=""4x2="""">4x2</Item>
-          <Item Name=""4x4="""">4x4</Item>
-        </AttrLookup>
-        <AttrLookup Name=""ТИП="" ДВИГАТЕЛЯ="" АВТО="""">
-          <Item Name=""Бензиновый="""">Бензиновый</Item>
-          <Item Name=""Дизельный="" или="" на="" газовом="" топливе="""">Дизельный или на газовом топливе</Item>
-          <Item Name=""Гибридный="" или="" электромобиль="""">Гибридный или электромобиль</Item>
-        </AttrLookup>
-        <AttrLookup Name=""ТИПЫ="" ТРАНСПОРТНЫХ="" СРЕДСТВ="""">
-          <Item Name=""Легковой="" автомобиль="""">Легковой автомобиль</Item>
-          <Item Name=""Прицеп="""">Прицеп</Item>
-          <Item Name=""Прицеп-дача="""">Прицеп-дача</Item>
-          <Item Name=""Грузовой="" автомобиль="""">Грузовой автомобиль</Item>
-          <Item Name=""Автобус="""">Автобус</Item>
-          <Item Name=""Мотоцикл="""">Мотоцикл</Item>
-          <Item Name=""Мопед="""">Мопед</Item>
-          <Item Name=""Квадрицикл="""">Квадрицикл</Item>
-          <Item Name=""Седельный="" тягач="""">Седельный тягач</Item>
-        </AttrLookup>
-      </AttrLookups>
-    </PayRecord>
-  </GetPayListResponse>
-</PS_ERIP>
-"
-
-Запрос атрибутов по выбранной услуге "Гостехосмотр"
-
-
-
-RunOperationRequest
+request
 "<?xml version=""1.0"" encoding=""UTF-8"" standalone='yes'?>
 <PS_ERIP>
   <RunOperationRequest>
@@ -83,6 +26,7 @@ RunOperationRequest
   </RunOperationRequest>
 </PS_ERIP>"
 
+responce
 "<?xml version=""1.0""?>
 <PS_ERIP>
   <RunOperationResponse>
@@ -120,10 +64,11 @@ RunOperationRequest
   </RunOperationResponse>
 </PS_ERIP>
 "
-Запрос на проведение операции оплаты услуги "Гостехосмотр"
-
 
 ConfirmRequest
+Подтверждение проведения операции оплаты услуги "Гостехосмотр"
+
+request
 "<?xml version=""1.0"" encoding=""UTF-8"" standalone='yes'?>
 <PS_ERIP>
   <ConfirmRequest>
@@ -134,6 +79,7 @@ ConfirmRequest
   </ConfirmRequest>
 </PS_ERIP>"
 
+responce
 "<?xml version=""1.0"" encoding=""UTF-8""?>
 <PS_ERIP>
   <ConfirmResponse>
@@ -143,5 +89,4 @@ ConfirmRequest
   </ConfirmResponse>
 </PS_ERIP>
 "
-Подтверждение проведения операции оплаты услуги "Гостехосмотр"
 
