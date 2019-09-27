@@ -22,13 +22,21 @@ namespace WPFApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static event Action<string> WriteTextBox = (x) => { };
         public MainWindow()
         {
             InitializeComponent();
+            PostGetHTTP.WriteTextBox += WriteToTextbox;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void WriteToTextbox(string arg)
         {
+            textbox1.AppendText(arg + Environment.NewLine + Environment.NewLine);
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PostGetHTTP.DoParalel();
             //listBox1.Items.Clear();
             //Assembly[] sborki = AppDomain.CurrentDomain.GetAssemblies();
             //foreach (Assembly item in sborki)
@@ -36,8 +44,13 @@ namespace WPFApp
             //    listBox1.Items.Add(item.FullName);
             //}
             //var hzxml = PostGetHTTP.XML();
-            
-            textbox1.Text = PostGetHTTP.Main();
+
+            //textbox1.Text = await PostGetHTTP.AllTypePost();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            PostGetHTTP.RunOpReq(textBoxId2.Text);
         }
     }
 }

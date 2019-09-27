@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--SessionId="86247690-1"-->
+<all>
+  <!--2.1-->
+  <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
+  <PS_ERIP>
+    <GetPayListRequest>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <PAN>BY93AKBB36019010100000000000</PAN>
+      <TypePAN>ACCOUNT</TypePAN>
+      <PayCode>411</PayCode>
+    </GetPayListRequest>
+  </PS_ERIP>
+
+  <!--2.2-->
+  <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
+  <PS_ERIP>
+    <RunOperationRequest>
+      <Key/>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <SignCode>0</SignCode>
+      <PayDate>17/09/2019 09:00:00</PayDate>
+      <KioskReceipt>17092019090000</KioskReceipt>
+      <KioskError>0</KioskError>
+      <PayRecordCount>0</PayRecordCount>
+      <PayRecord Code="411" DIType="9120" Name="Госпошлина за выдачу разрешения" GetPayListType="0"
+    Commission="0" Summa="8.00" Currency="933" Fine="1.50" PayCommission="0">
+        <GroupRecord Code="401" Name="Физическое лицо"/>
+        <AttrRecord Code="660" CodeOut="1001" Name="Оплачено по услуге" Value="1234AA-7" />
+        <AttrRecord Code="745" CodeOut="1002" Name="Свидетельство о регистрации" Value="AAA123456789" />
+        <AttrRecord Code="873" Name="УНП плательщика" Value="109879310" />
+        <AttrRecord Code="661" Name="Тип транспортного средства" Value="Легковой автомобиль" />
+        <AttrRecord Code="662" Name="Разрешённая максимальная масса авто" Value="Не более 1,5 тонны" />
+        <AttrRecord Code="663" Name="Коэффициенты госпошлины" Value="2" />
+        <AttrRecord Code="861" Name="Счетчик запросов" Value="-1"/>
+      </PayRecord>
+    </RunOperationRequest>
+  </PS_ERIP>
+
+  <!--2.3-->
+  <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
+  <PS_ERIP>
+    <ConfirmRequest>
+      <Key/>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <PayRecord RecordID="1" PaymentID="175124620" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000"
+    ConfirmCode="1"/>
+    </ConfirmRequest>
+  </PS_ERIP>
+</all>
