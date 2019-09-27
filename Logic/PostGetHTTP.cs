@@ -20,14 +20,18 @@ namespace Logic
 
         public static async Task DoParalel()
         {
-            //postXMLData(url, XmlRequests.XmlTest().ToStringFull());
+            postXMLData(url, XmlRequests.XmlTest().ToStringFull());
             //AnotherPost();
-            PostWithParameter();
+            //PostWithParameter();
         }
         public static async Task RunOpReq(string SessionID)
         {
-
             postXMLData(url, XmlRequests.XmlTest2(SessionID).ToStringFull());
+        }
+
+        public static async Task ConfirmReq()
+        {
+            postXMLData(url, XmlRequests.XmlTest3().ToStringFull());
         }
         public static async Task<string> AllTypePost()
         {
@@ -54,26 +58,26 @@ namespace Logic
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
                     requestStream.Write(bytes, 0, bytes.Length);
-                    requestStream.Dispose();
                 }
-                HttpWebResponse response;
-                response = (HttpWebResponse)request.GetResponse();
-                
-                if (response.StatusCode == HttpStatusCode.OK)
+                string msg;
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
                 {
-                    Stream responseStream = response.GetResponseStream();
-                    string responseStr = new StreamReader(responseStream).ReadToEnd();
-                    
-                    var msg = $"1postXMLData():\n{responseStr}";
-                    WriteTextBox(msg);
-                    return msg;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (var responseStream = new StreamReader(response.GetResponseStream()))
+                        {
+                            string responseStr = await responseStream.ReadToEndAsync();
+                            msg = $"1postXMLData():\n{responseStr}";
+                        }
+                    }
+                    else
+                    {
+                        msg = $"1postXMLData():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
+
+                    }
                 }
-                else
-                {
-                    var msg = $"1postXMLData():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
-                    WriteTextBox(msg);
-                    return msg;
-                }
+                WriteTextBox(msg);
+                return msg;
             }
             catch (Exception ex)
             {
@@ -87,7 +91,7 @@ namespace Logic
         {
             try
             {
-                string xmlMessage = "XML=" + XmlRequests.XmlTest().ToStringFull();
+                string xmlMessage = /*"XML=" +*/ XmlRequests.XmlTest().ToStringFull();
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
                 byte[] requestInFormOfBytes = System.Text.Encoding.ASCII.GetBytes(xmlMessage);
@@ -97,28 +101,26 @@ namespace Logic
 
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
-                    requestStream.Write(requestInFormOfBytes, 0, requestInFormOfBytes.Length);                    
+                    await requestStream.WriteAsync(requestInFormOfBytes, 0, requestInFormOfBytes.Length);                    
                 }
-
+                string msg;
                 using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        StreamReader respStream = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8);
-                        response.Close();
-                        string receivedResponse = respStream.ReadToEnd();
-                        respStream.Close();
-                        var msg= $"2AnotherPost():\n{receivedResponse}";
-                        WriteTextBox(msg);
-                        return msg;
+                        using (StreamReader respStream = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))
+                        {
+                            string receivedResponse = await respStream.ReadToEndAsync();
+                            msg = $"2AnotherPost():\n{receivedResponse}";
+                        }
                     }
                     else
                     {
-                        var msg= $"2AnotherPost():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
-                        WriteTextBox(msg);
-                        return msg;
+                        msg= $"2AnotherPost():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
                     }
                 }
+                WriteTextBox(msg);
+                return msg;
             }
             catch (Exception ex)
             {
@@ -146,26 +148,24 @@ namespace Logic
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = content.Headers.ContentLength.Value;
                 await content.CopyToAsync(await request.GetRequestStreamAsync());
-
+                string msg;
                 // get response
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         // as an xml: deserialise into your own object or parse as you wish
                         var responseXml = XDocument.Load(response.GetResponseStream());
-                        var msg= $"3PostWithParameter():\n{responseXml.ToString()}";
-                        WriteTextBox(msg);
-                        return msg;
+                        msg= $"3PostWithParameter():\n{responseXml.ToString()}";
                     }
                     else
                     {
-                        var msg= $"3PostWithParameter():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
-                        WriteTextBox(msg);
-                        return msg;
+                        msg= $"3PostWithParameter():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
                     }
 
                 }
+                WriteTextBox(msg);
+                return msg;
             }
             catch (Exception ex)
             {                

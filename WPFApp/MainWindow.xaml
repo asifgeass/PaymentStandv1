@@ -11,7 +11,6 @@
             <ColumnDefinition Width="191*"/>
             <ColumnDefinition Width="277*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Some Test Text" HorizontalAlignment="Left" Margin="311,151,-140,0" VerticalAlignment="Top" Width="106" Grid.Column="1"/>
         <Button Content="Req1" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <TextBox x:Name="textbox1" Margin="12,34,13,10" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             <TextBox.RenderTransform>
@@ -25,7 +24,8 @@
         </TextBox>
         <TextBox x:Name="textBoxId2" HorizontalAlignment="Left" Height="17" Margin="151,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106" Grid.ColumnSpan="2"/>
         <Label Content="SesID" HorizontalAlignment="Left" Margin="110,4,0,0" VerticalAlignment="Top"/>
-        <Button Content="Req2" HorizontalAlignment="Left" Margin="48,7,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="Button_Click_1"/>
+        <Button Content="Req2" HorizontalAlignment="Left" Margin="143,7,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="Button_Click_1"/>
+        <Button Content="Req3" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="241,7,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click_2"/>
 
     </Grid>
 </Window>

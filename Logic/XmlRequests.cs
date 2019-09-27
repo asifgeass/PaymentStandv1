@@ -11,17 +11,21 @@ namespace XmlBodies
     {
         public static XDocument XmlTest()
         {
-            //return x11Get();
+            return x1Get();
             return x21Get();            
         }
         public static XDocument XmlTest2(string param)
         {
             return x22Run(param);
         }
-        public static XDocument x11Get(string PayCode = "400")
+        public static XDocument XmlTest3()
+        {
+            return x33Conf();
+        }
+        public static XDocument x1Get(string PayCode = "400")
         {
             var xdoc = new XDocument(
-                //new XDeclaration("1.0", "UTF-8", "yes"),
+                new XDeclaration("1.0", "UTF-8", "yes"),
                 new XElement("PS_ERIP",
                     new XElement("GetPayListRequest",
                         new XElement("TerminalID", "TEST_TERMINAL"),
@@ -64,10 +68,10 @@ namespace XmlBodies
                     new XElement("KioskError", "0"),
                     new XElement("PayRecordCount", "0"),
                     new XElement("PayRecord",
-                        new XAttribute("SessionId", SessionId),
                         new XAttribute("Code", "411"),                        
                         new XAttribute("DIType", "9120"),
                         new XAttribute("Name", "Госпошлина за выдачу разрешения"),
+                        new XAttribute("SessionId", SessionId),
                         new XAttribute("GetPayListType", "0"),
                         new XAttribute("Commission", "0"),
                         new XAttribute("Summa", "8.00"),
@@ -118,7 +122,22 @@ namespace XmlBodies
                         ))));
             return xml;
         }
-        public static XDocument RunOpRequestGosTehOsmotr()
+        public static XDocument x31Get(string PayCode = "421")
+        {
+            var xdoc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", "yes"),
+                new XElement("PS_ERIP",
+                    new XElement("GetPayListRequest",
+                        new XElement("TerminalID", "TEST_TERMINAL"),
+                        new XElement("Version", "3"),
+                        new XElement("PAN", "BY93AKBB36019010100000000000"),
+                        new XElement("TypePAN", "ACCOUNT"),
+                        new XElement("PayCode", PayCode)
+                    )
+                ));
+            return xdoc;
+        }
+        public static XDocument x32Run(string SessionId)
         {
             XDocument xml = new XDocument(
                 new XElement("PS_ERIP",
@@ -135,6 +154,7 @@ namespace XmlBodies
                         new XAttribute("Code", "421"),
                         new XAttribute("DIType", "9120"),
                         new XAttribute("Name", "Гостехосмотр"),
+                        new XAttribute("SessionId", SessionId),
                         new XAttribute("CodeOut", "421"),
                         new XAttribute("StornoMode", "S"),
                         new XAttribute("ClaimID", "0"),
@@ -190,6 +210,42 @@ namespace XmlBodies
                         new XAttribute("Value", "0")
                         ))));
             return xml;
+        }
+        public static XDocument x33Conf(string PayCode = "421")
+        {
+            var xdoc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", "yes"),
+                new XElement("PS_ERIP",
+                    new XElement("ConfirmRequest",
+                        new XElement("Key"),
+                        new XElement("TerminalID", "TEST_TERMINAL"),
+                        new XElement("Version", "3"),
+                        new XElement("PayRecord",
+                            new XAttribute("RecordID", "1"),
+                            new XAttribute("PaymentID", "175124622"),
+                            new XAttribute("Date", "17/09/2019 09:00:04"),
+                            new XAttribute("KioskReceipt", "17092019090004"),
+                            new XAttribute("ConfirmCode", "1")
+                            )
+                        )
+                    )
+                );
+            return xdoc;
+        }
+        public static XDocument x41Get(string PayCode = "441")
+        {
+            var xdoc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", "yes"),
+                new XElement("PS_ERIP",
+                    new XElement("GetPayListRequest",
+                        new XElement("TerminalID", "TEST_TERMINAL"),
+                        new XElement("Version", "3"),
+                        new XElement("PAN", "BY93AKBB36019010100000000000"),
+                        new XElement("TypePAN", "ACCOUNT"),
+                        new XElement("PayCode", PayCode)
+                    )
+                ));
+            return xdoc;
         }
         public static string ToStringFull(this XDocument d) => $"{d.Declaration}{Environment.NewLine}{d}";
     }

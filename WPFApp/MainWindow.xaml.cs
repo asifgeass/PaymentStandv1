@@ -52,5 +52,10 @@ namespace WPFApp
         {
             PostGetHTTP.RunOpReq(textBoxId2.Text);
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            PostGetHTTP.ConfirmReq();
+        }
     }
 }

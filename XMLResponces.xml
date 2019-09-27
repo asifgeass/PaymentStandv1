@@ -18,4 +18,10 @@
       </PayRecord>
     </GetPayListResponse>
   </PS_ERIP>
+
+  <!--2.1 responce:-->
+  <ErrorCode>811310</ErrorCode>
+  <ErrorText>Ошибка валидации атрибута (сессия): 86247690, код атрибута: 10001). Обязательный атрибут отсутствует в запросе</ErrorText>
+  <ErrorCode>880600</ErrorCode>
+  <ErrorText>ERIP: Комплат: Внутренняя ошибка. Необходимопереустановить соединение со шлюзом.</ErrorText>
 </all>
