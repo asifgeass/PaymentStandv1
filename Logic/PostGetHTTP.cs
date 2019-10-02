@@ -13,7 +13,7 @@ namespace Logic
 {
     public static class PostGetHTTP
     {        
-        private static string url = "http://public.softclub.by:3007/komplat/online.request"; //"http://public.softclub.by:3007/komplat/online.request"
+        private static readonly string url = "http://public.softclub.by:3007/komplat/online.request"; //"http://public.softclub.by:3007/komplat/online.request"
         private static readonly HttpClient httpClient = new HttpClient();
         public static event Action<string> WriteTextBox = (x) => { };
         //public static string IDSession { get; set; }
@@ -33,7 +33,7 @@ namespace Logic
         {
             postXMLData(url, XmlRequests.XmlTest3().ToStringFull());
         }
-        public static async Task<string> AllTypePost()
+        private static async Task<string> AllTypePost()
         {
             var output = new StringBuilder();
             //output.AppendLine(await postXMLData(url, XmlRequests.XmlTest().ToStringFull()));
@@ -41,17 +41,17 @@ namespace Logic
             //output.AppendLine(await PostWithParameter());
             return output.ToString();
         }
-        public static async Task<string> GetResponseText(string address)
+        private static async Task<string> GetResponseText(string address)
         {
             return await httpClient.GetStringAsync(address);
         }
-        public static async Task<string> postXMLData(string destinationUrl, string requestXml)
+        private static async Task<string> postXMLData(string destinationUrl, string requestXml)
         {
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);                
                 byte[] bytes;
-                bytes = System.Text.Encoding.ASCII.GetBytes(requestXml);
+                bytes = System.Text.Encoding.UTF8.GetBytes(requestXml);
                 request.ContentType = "text/xml; encoding='utf-8'";
                 request.ContentLength = bytes.Length;
                 request.Method = "POST";
@@ -87,7 +87,12 @@ namespace Logic
             }
 
         }
-        public static async Task<string> AnotherPost()
+
+        public static async Task<string> postXMLData(string requestXml)
+        {
+            return await postXMLData(url, requestXml);
+        }
+        private static async Task<string> AnotherPost()
         {
             try
             {
@@ -129,7 +134,7 @@ namespace Logic
                 return msg;
             }
         }
-        public static async Task<string> PostWithParameter()
+        private static async Task<string> PostWithParameter()
         {
             try
             {

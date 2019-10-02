@@ -31,7 +31,7 @@ namespace WPFApp
 
         private void WriteToTextbox(string arg)
         {
-            textbox1.AppendText(arg + Environment.NewLine + Environment.NewLine);
+            textboxResponceXML.AppendText(arg + Environment.NewLine + Environment.NewLine);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -50,12 +50,22 @@ namespace WPFApp
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            PostGetHTTP.RunOpReq(textBoxId2.Text);
+            PostGetHTTP.RunOpReq(textBoxSessionID.Text);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             PostGetHTTP.ConfirmReq();
+        }
+
+        private void ButtonXMLCustom_Click(object sender, RoutedEventArgs e)
+        {
+            PostGetHTTP.postXMLData(textboxXMLCustom.Text);
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            textboxResponceXML.Clear();
         }
     }
 }

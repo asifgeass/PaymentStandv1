@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<all>
+  <!--2answer-->
+  <!--<?xml version="1.0" encoding="UTF-8"?>-->
+  <PS_ERIP>
+    <GetPayListResponse>
+      <ErrorCode>0</ErrorCode>
+      <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="88257290-2" Edit="1" GetPayListType="0">
+        <GroupRecord Code="401" Name="Физическое лицо"/>
+        <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="1234AA-7" View="1" Hint="Введите регистрационный знак авто"/>
+        <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="AAA123456789" View="1"/>
+        <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="0" Value="109879310" View="1"/>
+        <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Прицеп" View="1"/>
+        <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" MinLength="0" MaxLength="30" Value="Не более 1,5 тонны" View="1"/>
+        <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" MinLength="0" MaxLength="30" Value="0,5" View="1"/>
+      </PayRecord>
+    </GetPayListResponse>
+  </PS_ERIP>
+  
+  <!--2Request-->
+  <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
+  <PS_ERIP>
+    <RunOperationRequest>
+      <Key/>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <SignCode>0</SignCode>
+      <PayDate>17/09/2019 09:00:00</PayDate>
+      <KioskReceipt>17092019090000</KioskReceipt>
+      <KioskError>0</KioskError>
+      <PayRecordCount>0</PayRecordCount>
+      <PayRecord Code="411" DIType="9120" Name="Госпошлина за выдачу разрешения" GetPayListType="0" Commission="0" Summa="8.00" Currency="933" Fine="1.50" PayCommission="0" SessionId="88257290-2">
+        <GroupRecord Code="401" Name="Физическое лицо"/>
+        <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" Value="1234AA-7" />
+        <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" Value="AAA123456789"/>
+        <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Value="109879310"/>
+        <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" Value="Прицеп"/>
+        <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" Value="Не более 1,5 тонны"/>
+        <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" Value="0,5" />
+      </PayRecord>
+    </RunOperationRequest>
+  </PS_ERIP>
+
+  <!--2answer-->
+  <!--<?xml version="1.0" encoding="UTF-8"?>-->
+  <PS_ERIP>
+    <RunOperationResponse>
+      <KioskReceipt>17092019090000</KioskReceipt>
+      <ErrorCode>0</ErrorCode>
+      <PayRecord Code="411" RecordID="0" PaymentID="3807661" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:00">
+        <AttrRecord Code="745" CodeOut="0" Name="Лицевой счет" Print="1" Value="AAA123456789" View="1"/>
+        <Check>
+          <CheckHeader Count="14">
+            <CheckLine Idx="1">Дата платежа:                  02/10/2019 15:56:14</CheckLine>
+            <CheckLine Idx="2">Отправитель платежа: 765 Г.МИНСК,ОАО &apos;БНБ-БАНК&apos;. р</CheckLine>
+            <CheckLine Idx="3">/с 3819800000001                                  </CheckLine>
+            <CheckLine Idx="4"/>
+            <CheckLine Idx="5">Получатель платежа: Гостехосмотр, р/с BY50REDJ3012</CheckLine>
+            <CheckLine Idx="6">1000262600000000 в 110 Г.МИНСК,ЗАО &apos;РРБ-БАНК&apos;     </CheckLine>
+            <CheckLine Idx="7">                                                  </CheckLine>
+            <CheckLine Idx="8">Госпошлина за выдачу разрешения                   </CheckLine>
+            <CheckLine Idx="9">                                                  </CheckLine>
+            <CheckLine Idx="10">Лицевой счет:                         AAA123456789</CheckLine>
+            <CheckLine Idx="11">Сумма, оплаченная по услуге:                 8 BYN</CheckLine>
+            <CheckLine Idx="12">Сумма:                                       8 BYN</CheckLine>
+            <CheckLine Idx="13">Сумма вознаграждения:                        0 BYN</CheckLine>
+            <CheckLine Idx="14">        *** ОПЛАТА НАЛИЧНЫМИ ***        </CheckLine>
+          </CheckHeader>
+        </Check>
+      </PayRecord>
+    </RunOperationResponse>
+  </PS_ERIP>
+
+  <!--2Request-->
+  <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
+  <PS_ERIP>
+    <ConfirmRequest>
+      <Key/>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <PayRecord RecordID="1" PaymentID="175124620" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" ConfirmCode="1"/>
+    </ConfirmRequest>
+  </PS_ERIP>
+  
+  <!--2Error answer-->
+  <PS_ERIP>
+    <ConfirmResponse>
+      <ErrorCode>541123</ErrorCode>
+      <ErrorText>Сессия не найдена</ErrorText>
+      <PayRecord Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" RecordID="1">
+      </PayRecord>
+    </ConfirmResponse>
+  </PS_ERIP>
+
+  <!--2Request-->
+  <PS_ERIP>
+    <ConfirmRequest>
+      <Key/>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <PayRecord RecordID="1" PaymentID="3807661" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" ConfirmCode="1"/>
+    </ConfirmRequest>
+  </PS_ERIP>
+  
+  <!--2asnwer-->
+  <PS_ERIP>
+    <ConfirmResponse>
+      <ErrorCode>0</ErrorCode>
+      <PayRecord PaymentID="3807661" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" RecordID="1">
+        <Check>
+          <CheckFooter Count="1">
+            <CheckLine Idx="1">--------------------------------------------------</CheckLine>
+          </CheckFooter>
+        </Check>
+      </PayRecord>
+    </ConfirmResponse>
+  </PS_ERIP>
+
+
+</all>

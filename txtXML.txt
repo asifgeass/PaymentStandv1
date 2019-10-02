@@ -1,4 +1,85 @@
-SessionId="86247690-1"
+<?xml version="1.0" encoding="UTF-8" standalone='yes'?>
+<PS_ERIP>
+  <GetPayListRequest>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <PAN>BY93AKBB36019010100000000000</PAN> 
+    <TypePAN>ACCOUNT</TypePAN>  
+    <PayCode>421</PayCode>
+    </GetPayListRequest>
+</PS_ERIP>
+
+Responce:
+1postXMLData():
+<?xml version="1.0" encoding="UTF-8"?>
+<PS_ERIP>
+  <GetPayListResponse>
+    <ErrorCode>0</ErrorCode>
+    <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" 
+	SessionId="88115490-1" Edit="0" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо"/>
+      <Lookups>
+        <Lookup Name="КОЛЕСНАЯ ФОРМУЛА АВТО">
+          <Item Name="4x2">4x2</Item>
+          <Item Name="4x4">4x4</Item>
+        </Lookup>
+        <Lookup Name="ТИП ДВИГАТЕЛЯ АВТО">
+          <Item Name="Бензиновый">Бензиновый</Item>
+          <Item Name="Дизельный или на газовом топливе">Дизельный или на газовом топливе</Item>
+          <Item Name="Гибридный или электромобиль">Гибридный или электромобиль</Item>
+        </Lookup>
+        <Lookup Name="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ">
+          <Item Name="Легковой автомобиль">Легковой автомобиль</Item>
+          <Item Name="Прицеп">Прицеп</Item>
+          <Item Name="Прицеп-дача">Прицеп-дача</Item>
+          <Item Name="Грузовой автомобиль">Грузовой автомобиль</Item>
+          <Item Name="Автобус">Автобус</Item>
+          <Item Name="Мотоцикл">Мотоцикл</Item>
+          <Item Name="Мопед">Мопед</Item>
+          <Item Name="Квадрицикл">Квадрицикл</Item>
+          <Item Name="Седельный тягач">Седельный тягач</Item>
+        </Lookup>
+      </Lookups>
+      <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1"/>
+      <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1"/>
+      <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1"/>
+      <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1"/>
+      <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1"/>
+      <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" MinLength="0" MaxLength="30" Edit="1" Lookup="КОЛЕСНАЯ ФОРМУЛА АВТО" View="1"/>
+    </PayRecord>
+  </GetPayListResponse>
+</PS_ERIP>
+
+Request after responce:
+<?xml version="1.0" encoding="UTF-8"?>
+<PS_ERIP>
+  <GetPayListRequest>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <PayCode>421</PayCode>
+    <PAN>8600382941523812</PAN>
+    <TypePAN AccountType="CARD">MS</TypePAN>
+    <SessionId>88115490-1</SessionId>
+    <CountAttr>6</CountAttr>
+    <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" Value="1234AA-7" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" Value="AAA123456789" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Value="109879310" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" Value="Прицеп" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" Value="Гибридный или электромобиль" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" Value="4x2" Change="1"/>
+  </GetPayListRequest>
+</PS_ERIP>
+
+Responce error after request:
+<?xml version="1.0" encoding="UTF-8"?>
+<PS_ERIP>
+  <GetPayListResponse>
+    <ErrorCode>880600</ErrorCode>
+    <ErrorText>ERIP: Значение параметра 661 - &quot;Тип транспортногосредства&quot; имеет недопустимое значение.</ErrorText>
+    <PayRecord>
+    </PayRecord>
+  </GetPayListResponse>
+</PS_ERIP>
 
 2.1
 <?xml version="1.0" encoding="UTF-8" standalone='yes'?>

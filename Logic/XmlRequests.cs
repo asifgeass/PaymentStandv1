@@ -11,12 +11,12 @@ namespace XmlBodies
     {
         public static XDocument XmlTest()
         {
-            return x1Get();
-            return x21Get();            
+            //return x1Get();
+            return x31Get();            
         }
         public static XDocument XmlTest2(string param)
         {
-            return x22Run(param);
+            return x32Run(param);
         }
         public static XDocument XmlTest3()
         {
@@ -35,7 +35,22 @@ namespace XmlBodies
                 ));
             return xdoc;
         }
-        public static XDocument x21Get(string PayCode = "411")
+        public static XDocument x21Get1(string PayCode = "411")
+        {
+            var xdoc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", "yes"),
+                new XElement("PS_ERIP",
+                    new XElement("GetPayListRequest",
+                        new XElement("TerminalID", "TEST_TERMINAL"),
+                        new XElement("Version", "3"),
+                        new XElement("PAN", "BY93AKBB36019010100000000000"),
+                        new XElement("TypePAN", "ACCOUNT"),
+                        new XElement("PayCode", PayCode)
+                    )
+                ));
+            return xdoc;
+        }
+        public static XDocument x21Get2(string PayCode = "411")
         {
             var xdoc = new XDocument(
                 new XDeclaration("1.0", "UTF-8", "yes"),
@@ -121,6 +136,27 @@ namespace XmlBodies
                         new XAttribute("Value", "-1")
                         ))));
             return xml;
+        }
+        public static XDocument x23Conf(string PayCode = "421")
+        {
+            var xdoc = new XDocument(
+                new XDeclaration("1.0", "UTF-8", "yes"),
+                new XElement("PS_ERIP",
+                    new XElement("ConfirmRequest",
+                        new XElement("Key"),
+                        new XElement("TerminalID", "TEST_TERMINAL"),
+                        new XElement("Version", "3"),
+                        new XElement("PayRecord",
+                            new XAttribute("RecordID", "1"),
+                            new XAttribute("PaymentID", "175124620"),
+                            new XAttribute("Date", "17/09/2019 09:00:00"),
+                            new XAttribute("KioskReceipt", "17092019090000"),
+                            new XAttribute("ConfirmCode", "1")
+                            )
+                        )
+                    )
+                );
+            return xdoc;
         }
         public static XDocument x31Get(string PayCode = "421")
         {
