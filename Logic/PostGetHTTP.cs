@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,8 @@ namespace Logic
     {        
         private static readonly string url = "http://public.softclub.by:3007/komplat/online.request"; //"http://public.softclub.by:3007/komplat/online.request"
         private static readonly HttpClient httpClient = new HttpClient();
+        private static readonly Stopwatch timer = new Stopwatch();
+
         public static event Action<string> WriteTextBox = (x) => { };
         //public static string IDSession { get; set; }
 
@@ -55,11 +58,17 @@ namespace Logic
                 request.ContentType = "text/xml; encoding='utf-8'";
                 request.ContentLength = bytes.Length;
                 request.Method = "POST";
+                string timings = "";
+                string msg;
+                timer.Restart();
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
+                    timer.Stop();
+                    timings += $"GetRequestStream={timer.ElapsedMilliseconds}; ";
+                    WriteTextBox(requestXml);
+                    timer.Restart();
                     requestStream.Write(bytes, 0, bytes.Length);
                 }
-                string msg;
                 using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
@@ -67,12 +76,16 @@ namespace Logic
                         using (var responseStream = new StreamReader(response.GetResponseStream()))
                         {
                             string responseStr = await responseStream.ReadToEndAsync();
-                            msg = $"1postXMLData():\n{responseStr}";
+                            timer.Stop();
+                            timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                            msg = $"{timings}{responseStr}";
                         }
                     }
                     else
                     {
-                        msg = $"1postXMLData():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
+                        timer.Stop();
+                        timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                        msg = $"{timings}response.StatusCode={response.StatusCode}\n{response.StatusDescription}";
 
                     }
                 }
@@ -90,7 +103,7 @@ namespace Logic
 
         public static async Task<string> postXMLData(string requestXml)
         {
-            return await postXMLData(url, requestXml);
+            return await postXMLData(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
         private static async Task<string> AnotherPost()
         {

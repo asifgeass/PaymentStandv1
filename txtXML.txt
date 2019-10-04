@@ -15,37 +15,37 @@ Responce:
 <PS_ERIP>
   <GetPayListResponse>
     <ErrorCode>0</ErrorCode>
-    <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" 
+    <PayRecord Code="421" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" 
 	SessionId="88115490-1" Edit="0" GetPayListType="1">
-      <GroupRecord Code="401" Name="Физическое лицо"/>
+      <GroupRecord Code="401" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ"/>
       <Lookups>
-        <Lookup Name="КОЛЕСНАЯ ФОРМУЛА АВТО">
+        <Lookup Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ">
           <Item Name="4x2">4x2</Item>
           <Item Name="4x4">4x4</Item>
         </Lookup>
-        <Lookup Name="ТИП ДВИГАТЕЛЯ АВТО">
-          <Item Name="Бензиновый">Бензиновый</Item>
-          <Item Name="Дизельный или на газовом топливе">Дизельный или на газовом топливе</Item>
-          <Item Name="Гибридный или электромобиль">Гибридный или электромобиль</Item>
+        <Lookup Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ">
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
         </Lookup>
-        <Lookup Name="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ">
-          <Item Name="Легковой автомобиль">Легковой автомобиль</Item>
-          <Item Name="Прицеп">Прицеп</Item>
-          <Item Name="Прицеп-дача">Прицеп-дача</Item>
-          <Item Name="Грузовой автомобиль">Грузовой автомобиль</Item>
-          <Item Name="Автобус">Автобус</Item>
-          <Item Name="Мотоцикл">Мотоцикл</Item>
-          <Item Name="Мопед">Мопед</Item>
-          <Item Name="Квадрицикл">Квадрицикл</Item>
-          <Item Name="Седельный тягач">Седельный тягач</Item>
+        <Lookup Name="пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ">
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</Item>
+          <Item Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ</Item>
         </Lookup>
       </Lookups>
-      <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1"/>
-      <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1"/>
-      <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1"/>
-      <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1"/>
-      <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1"/>
-      <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" MinLength="0" MaxLength="30" Edit="1" Lookup="КОЛЕСНАЯ ФОРМУЛА АВТО" View="1"/>
+      <AttrRecord Code="0" CodeOut="10001" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1"/>
+      <AttrRecord Code="0" CodeOut="10002" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" MinLength="0" MaxLength="30" Edit="1" View="1"/>
+      <AttrRecord Code="0" CodeOut="10003" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1"/>
+      <AttrRecord Code="0" CodeOut="10004" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" MinLength="0" MaxLength="30" Edit="1" Lookup="пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" View="1"/>
+      <AttrRecord Code="0" CodeOut="10005" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" MinLength="0" MaxLength="30" Edit="1" Lookup="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" View="1"/>
+      <AttrRecord Code="0" CodeOut="10006" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" MinLength="0" MaxLength="30" Edit="1" Lookup="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" View="1"/>
     </PayRecord>
   </GetPayListResponse>
 </PS_ERIP>
@@ -61,12 +61,12 @@ Request after responce:
     <TypePAN AccountType="CARD">MS</TypePAN>
     <SessionId>88115490-1</SessionId>
     <CountAttr>6</CountAttr>
-    <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" Value="1234AA-7" Change="1"/>
-    <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" Value="AAA123456789" Change="1"/>
-    <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Value="109879310" Change="1"/>
-    <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" Value="Прицеп" Change="1"/>
-    <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" Value="Гибридный или электромобиль" Change="1"/>
-    <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" Value="4x2" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10001" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="1234AA-7" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10002" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="AAA123456789" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10003" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="109879310" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10004" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="пїЅпїЅпїЅпїЅпїЅпїЅ" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10005" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Change="1"/>
+    <AttrRecord Code="0" CodeOut="10006" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="4x2" Change="1"/>
   </GetPayListRequest>
 </PS_ERIP>
 
@@ -75,7 +75,7 @@ Responce error after request:
 <PS_ERIP>
   <GetPayListResponse>
     <ErrorCode>880600</ErrorCode>
-    <ErrorText>ERIP: Значение параметра 661 - &quot;Тип транспортногосредства&quot; имеет недопустимое значение.</ErrorText>
+    <ErrorText>ERIP: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 661 - &quot;пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&quot; пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.</ErrorText>
     <PayRecord>
     </PayRecord>
   </GetPayListResponse>
@@ -105,16 +105,16 @@ Responce error after request:
     <KioskReceipt>17092019090000</KioskReceipt>
     <KioskError>0</KioskError>
     <PayRecordCount>0</PayRecordCount>
-    <PayRecord Code="411" DIType="9120" Name="Госпошлина за выдачу разрешения" GetPayListType="0" 
+    <PayRecord Code="411" DIType="9120" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" GetPayListType="0" 
 	Commission="0" Summa="8.00" Currency="933" Fine="1.50" PayCommission="0">
-      <GroupRecord Code="401" Name="Физическое лицо"/>
-      <AttrRecord Code="660" CodeOut="1001" Name="Оплачено по услуге" Value="1234AA-7" />
-      <AttrRecord Code="745" CodeOut="1002" Name="Свидетельство о регистрации" Value="AAA123456789" />
-      <AttrRecord Code="873" Name="УНП плательщика" Value="109879310" />
-      <AttrRecord Code="661" Name="Тип транспортного средства" Value="Легковой автомобиль" />
-      <AttrRecord Code="662" Name="Разрешённая максимальная масса авто" Value="Не более 1,5 тонны" />
-      <AttrRecord Code="663" Name="Коэффициенты госпошлины" Value="2" />
-      <AttrRecord Code="861" Name="Счетчик запросов" Value="-1"/>
+      <GroupRecord Code="401" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ"/>
+      <AttrRecord Code="660" CodeOut="1001" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" Value="1234AA-7" />
+      <AttrRecord Code="745" CodeOut="1002" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="AAA123456789" />
+      <AttrRecord Code="873" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="109879310" />
+      <AttrRecord Code="661" Name="пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" />
+      <AttrRecord Code="662" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" Value="пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 1,5 пїЅпїЅпїЅпїЅпїЅ" />
+      <AttrRecord Code="663" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="2" />
+      <AttrRecord Code="861" Name="пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" Value="-1"/>
     </PayRecord>
   </RunOperationRequest>
 </PS_ERIP>
