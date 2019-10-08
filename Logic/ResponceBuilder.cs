@@ -17,6 +17,7 @@ namespace Logic
         public static void PostGetHTTP_XmlReceived(XDocument inc)
         {
             var x = inc.Root.Descendants("PayRecord");
+            var z = inc.Root.Descendants("PayRecord");
             throw new NotImplementedException();
         }
 
