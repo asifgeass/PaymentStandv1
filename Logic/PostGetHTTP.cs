@@ -19,7 +19,22 @@ namespace Logic
         private static readonly Stopwatch timer = new Stopwatch();
 
         public static event Action<string> WriteTextBox = (x) => { };
+        public static event Action<XDocument> XmlReceived = (x) => { };
+
+        static PostGetHTTP()
+        {
+            XmlReceived += ResponceBuilder.PostGetHTTP_XmlReceived;
+        }
         //public static string IDSession { get; set; }
+
+        public static async Task<XDocument> XmlLoadAsync(Stream stream
+            , LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
+        {
+            return await Task.Run(() =>
+            {
+                return XDocument.Load(stream, loadOptions);
+            });
+        }
 
         public static async Task DoParalel()
         {
@@ -31,19 +46,11 @@ namespace Logic
         {
             postXMLData(url, XmlRequests.XmlTest2(SessionID).ToStringFull());
         }
-
         public static async Task ConfirmReq()
         {
             postXMLData(url, XmlRequests.XmlTest3().ToStringFull());
         }
-        private static async Task<string> AllTypePost()
-        {
-            var output = new StringBuilder();
-            //output.AppendLine(await postXMLData(url, XmlRequests.XmlTest().ToStringFull()));
-            output.AppendLine(await AnotherPost());
-            //output.AppendLine(await PostWithParameter());
-            return output.ToString();
-        }
+
         private static async Task<string> GetResponseText(string address)
         {
             return await httpClient.GetStringAsync(address);
@@ -73,13 +80,21 @@ namespace Logic
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        using (var responseStream = new StreamReader(response.GetResponseStream()))
+                        using (var responseStream = response.GetResponseStream())
                         {
-                            string responseStr = await responseStream.ReadToEndAsync();
+                            var responseXml = await XmlLoadAsync(responseStream);
                             timer.Stop();
+                            XmlReceived(responseXml);
                             timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
-                            msg = $"{timings}{responseStr}";
+                            msg = $"{timings}{responseXml.ToStringFull()}";
                         }
+                        //using (var responseStream = new StreamReader(response.GetResponseStream()))
+                        //{
+                        //    string responseStr = await responseStream.ReadToEndAsync();
+                        //    timer.Stop();
+                        //    timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                        //    msg = $"{timings}{responseStr}";
+                        //}
                     }
                     else
                     {
@@ -105,93 +120,5 @@ namespace Logic
         {
             return await postXMLData(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
-        private static async Task<string> AnotherPost()
-        {
-            try
-            {
-                string xmlMessage = /*"XML=" +*/ XmlRequests.XmlTest().ToStringFull();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-
-                byte[] requestInFormOfBytes = System.Text.Encoding.ASCII.GetBytes(xmlMessage);
-                request.Method = "POST";
-                request.ContentType = "text/xml;charset=utf-8";
-                request.ContentLength = requestInFormOfBytes.Length;
-
-                using (Stream requestStream = await request.GetRequestStreamAsync())
-                {
-                    await requestStream.WriteAsync(requestInFormOfBytes, 0, requestInFormOfBytes.Length);                    
-                }
-                string msg;
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        using (StreamReader respStream = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8))
-                        {
-                            string receivedResponse = await respStream.ReadToEndAsync();
-                            msg = $"2AnotherPost():\n{receivedResponse}";
-                        }
-                    }
-                    else
-                    {
-                        msg= $"2AnotherPost():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
-                    }
-                }
-                WriteTextBox(msg);
-                return msg;
-            }
-            catch (Exception ex)
-            {
-                var msg= $"2AnotherPost():\n{ex.Message}";
-                WriteTextBox(msg);
-                return msg;
-            }
-        }
-        private static async Task<string> PostWithParameter()
-        {
-            try
-            {
-                var xmlRequest = XmlRequests.XmlTest();
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                
-                // parameters to post - other end expects API and XML parameters
-                var postData = new List<KeyValuePair<string, string>>();
-                postData.Add(new KeyValuePair<string, string>("XML", xmlRequest.ToStringFull()));
-
-                // assemble the request content form encoded (reference System.Net.Http)
-                HttpContent content = new FormUrlEncodedContent(postData);
-
-                // indicate what we are posting in the request
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = content.Headers.ContentLength.Value;
-                await content.CopyToAsync(await request.GetRequestStreamAsync());
-                string msg;
-                // get response
-                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
-                {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        // as an xml: deserialise into your own object or parse as you wish
-                        var responseXml = XDocument.Load(response.GetResponseStream());
-                        msg= $"3PostWithParameter():\n{responseXml.ToString()}";
-                    }
-                    else
-                    {
-                        msg= $"3PostWithParameter():\nresponse.StatusCode={response.StatusCode}\n{response.StatusDescription}";
-                    }
-
-                }
-                WriteTextBox(msg);
-                return msg;
-            }
-            catch (Exception ex)
-            {                
-                var msg= $"3PostWithParameter():\n{ex.Message}";
-                WriteTextBox(msg);
-                return msg;
-            }
-        }
-
     }
 }

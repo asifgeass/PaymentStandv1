@@ -773,12 +773,13 @@
         <PayCode>441</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=286; GetRequestStream=11;-->
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" SessionId="90193370-1" Edit="0" GetPayListType="1">
+        <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" StornoMode="S" 
+                   Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" 
+                   SessionId="90193370-1" Edit="0" GetPayListType="1">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1"/>
           <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1"/>
@@ -802,12 +803,13 @@
         <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Value="209879310" Change="1"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=186; GetRequestStream=25;-->
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="90193370-2" Edit="1" GetPayListType="0">
+        <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" StornoMode="S" 
+                   Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" 
+                   SessionId="90193370-2" Edit="1" GetPayListType="0">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="2234AA-7" View="1"/>
           <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="AAA223456789" View="1"/>
@@ -827,7 +829,9 @@
         <KioskReceipt>17092019090007</KioskReceipt>
         <KioskError>0</KioskError>
         <PayRecordCount>0</PayRecordCount>
-        <PayRecord Code="441" DIType="9120" Name="Идентификация ТС, регистрация и оформление разрешения" CodeOut="441" StornoMode="S" ClaimID="0" Category="1" GetPayListType="1" Summa="5" Edit="0" View="0" Fine="0" PayCommission="0" Commission="0" SessionId="90193370-2">
+        <PayRecord Code="441" DIType="9120" Name="Идентификация ТС, регистрация и оформление разрешения" 
+                   CodeOut="441" StornoMode="S" ClaimID="0" Category="1" GetPayListType="1" Summa="5" 
+                   Edit="0" View="0" Fine="0" PayCommission="0" Commission="0" SessionId="90193370-2">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <AttrRecord Code="660" CodeOut="1001" Name="Оплачено по услуге" Value="2234AA-7" />
           <AttrRecord Code="745" CodeOut="1002" Name="Свидетельство о регистрации" Value="AAA223456789" />
@@ -836,7 +840,6 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     <!--error Responce=38; GetRequestStream=22;-->
     <PS_ERIP>
       <RunOperationResponse>
@@ -859,7 +862,9 @@
         <KioskReceipt>17092019090007</KioskReceipt>
         <KioskError>0</KioskError>
         <PayRecordCount>0</PayRecordCount>
-        <PayRecord Code="441" DIType="9120" Name="Идентификация ТС, регистрация и оформление разрешения" CodeOut="441" StornoMode="S" ClaimID="0" Category="1" GetPayListType="1" Summa="5" Edit="0" View="0" Fine="0" PayCommission="0" Commission="0" SessionId="90193370-2">
+        <PayRecord Code="441" DIType="9120" Name="Идентификация ТС, регистрация и оформление разрешения" 
+                   CodeOut="441" StornoMode="S" ClaimID="0" Category="1" GetPayListType="1" Summa="5" 
+                   Edit="0" View="0" Fine="0" PayCommission="0" Commission="0" SessionId="90193370-2">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="2234AA-7" View="1"/>
           <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="AAA223456789" View="1"/>
@@ -867,13 +872,13 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     <!--Responce=796; GetRequestStream=19;-->
     <PS_ERIP>
       <RunOperationResponse>
         <KioskReceipt>17092019090007</KioskReceipt>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="441" RecordID="0" PaymentID="3807703" PayAll="5.00" Summa="5.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:07">
+        <PayRecord Code="441" RecordID="0" PaymentID="3807703" PayAll="5.00" Summa="5.00" 
+                   PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:07">
           <AttrRecord Code="745" CodeOut="0" Name="Лицевой счет" Print="1" Value="AAA223456789" View="1"/>
           <Check>
             <CheckHeader Count="15">
@@ -898,8 +903,14 @@
       </RunOperationResponse>
     </PS_ERIP>
 
-
-
+    <PS_ERIP>
+      <ConfirmRequest>
+        <Key/>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PayRecord RecordID="1" PaymentID="3807703" Date="17/09/2019 09:00:07" KioskReceipt="17092019090007" ConfirmCode="1"/>
+      </ConfirmRequest>
+    </PS_ERIP>
     <!--Responce=371; GetRequestStream=13;-->
     <PS_ERIP>
       <ConfirmResponse>
