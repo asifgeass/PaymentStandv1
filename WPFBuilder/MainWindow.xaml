@@ -1,0 +1,22 @@
+﻿<Window x:Class="WPFBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFBuilder"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="178*"/>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="149*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Button" HorizontalAlignment="Left" Height="40" Margin="31,77,0,0" VerticalAlignment="Top" Width="168"/>
+        <TextBox HorizontalAlignment="Left" Height="48" Margin="31,150,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="168"/>
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Height="21" Margin="31,221,0,0" VerticalAlignment="Top" Width="144"/>
+        <ComboBox HorizontalAlignment="Left" Height="54" Margin="31,271,0,0" VerticalAlignment="Top" Width="115"/>
+        <Label Content="Label" HorizontalAlignment="Left" Height="33" Margin="31,27,0,0" VerticalAlignment="Top" Width="168"/>
+
+    </Grid>
+</Window>

@@ -8,7 +8,6 @@
         <PayCode>400</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=48; GetRequestStream=22;-->
     <PS_ERIP>
       <GetPayListResponse>
@@ -37,7 +36,6 @@
         <PayCode>401</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=78; GetRequestStream=17;-->
     <PS_ERIP>
       <GetPayListResponse>
@@ -796,6 +794,7 @@
         <PayCode>441</PayCode>
         <PAN>8600382941523812</PAN>
         <TypePAN AccountType="CARD">MS</TypePAN>
+        <!--<TypePAN>ACCOUNT</TypePAN>-->
         <SessionId>90193370-1</SessionId>
         <CountAttr>3</CountAttr>
         <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" Value="2234AA-7" Change="1"/>
