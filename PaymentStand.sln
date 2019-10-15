@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFExeLauncher", "WPFExeLau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernUINavigation", "ModernUINavigation\ModernUINavigation.csproj", "{ED80163D-EB58-4010-8DC6-8D7CE14EEBA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahAppsUI", "MahAppsUI\MahAppsUI.csproj", "{A05A8899-B661-4A3C-ABE5-1307638AC8C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.App1", "MahApps.Metro.App1\MahApps.Metro.App1.csproj", "{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{ED80163D-EB58-4010-8DC6-8D7CE14EEBA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED80163D-EB58-4010-8DC6-8D7CE14EEBA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED80163D-EB58-4010-8DC6-8D7CE14EEBA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A05A8899-B661-4A3C-ABE5-1307638AC8C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A05A8899-B661-4A3C-ABE5-1307638AC8C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A05A8899-B661-4A3C-ABE5-1307638AC8C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A05A8899-B661-4A3C-ABE5-1307638AC8C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F56EDA9-CF7F-4C49-A67B-3FCD434D4902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

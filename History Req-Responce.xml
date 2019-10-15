@@ -12,17 +12,23 @@
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="403" Name="Индивидуальный предприниматель" GetPayListType="1">
+        <PayRecord 
+          Code="403" Name="Индивидуальный предприниматель" GetPayListType="1">
           <GroupRecord Code="400" Name="Гостехосмотр"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" 
+                      Value="0" View="0"/>
         </PayRecord>
-        <PayRecord Code="401" Name="Физическое лицо" GetPayListType="2">
+        <PayRecord 
+          Code="401" Name="Физическое лицо" GetPayListType="2">
           <GroupRecord Code="400" Name="Гостехосмотр"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" 
+                      Value="0" View="0"/>
         </PayRecord>
-        <PayRecord Code="402" Name="Юридическое лицо" GetPayListType="1">
+        <PayRecord 
+          Code="402" Name="Юридическое лицо" GetPayListType="1">
           <GroupRecord Code="400" Name="Гостехосмотр"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" 
+                      Value="0" View="0"/>
         </PayRecord>
       </GetPayListResponse>
     </PS_ERIP>
@@ -40,7 +46,8 @@
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" GetPayListType="1">
+        <PayRecord 
+          Code="411" Name="Госпошлина за выдачу разрешения" GetPayListType="1">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="2" View="0"/>
         </PayRecord>

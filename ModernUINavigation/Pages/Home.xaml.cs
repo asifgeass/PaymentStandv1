@@ -30,11 +30,14 @@ namespace ModernUINavigation.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             var hz = AppearanceManager.LightThemeSource;
             var manager = AppearanceManager.Current;
+            var child = ScrollView1.Content;
             var cmd = manager.LightThemeCommand;
-            manager.AccentColor = (Color)ColorConverter.ConvertFromString("#f6f4ef");
-            cmd.Execute("Light");
+            
+            //manager.AccentColor = (Color)ColorConverter.ConvertFromString("#f6f4ef");
+            //cmd.Execute("Light");
         }
     }
 }
