@@ -76,8 +76,7 @@
   </x12>
   
   <x2-gos-poslina>
-    <!--req-->
-    <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
+
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -87,12 +86,14 @@
         <PayCode>411</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=587; GetRequestStream=38;-->
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" SessionId="90090480-1" Edit="0" GetPayListType="1">
+        <PayRecord 
+          Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" 
+          Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" 
+          SessionId="90090480-1" Edit="0" GetPayListType="1">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <Lookups>
             <Lookup Name="КОЭФФИЦИЕНТЫ Ф/Л">
@@ -116,17 +117,24 @@
               <Item Name="Седельный тягач">Седельный тягач</Item>
             </Lookup>
           </Lookups>
-          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" Hint="Введите регистрационный знак авто"/>
-          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1"/>
-          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="0" Edit="1" View="1"/>
-          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1"/>
-          <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" MinLength="0" MaxLength="30" Edit="1" Lookup="МАССА АВТО" View="1"/>
-          <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" MinLength="0" MaxLength="30" Edit="1" Lookup="КОЭФФИЦИЕНТЫ Ф/Л" View="1"/>
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" 
+                      MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" 
+                      Hint="Введите регистрационный знак авто"/>
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" 
+                      MinLength="0" MaxLength="30" Edit="1" View="1"/>
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" 
+                      MinLength="0" Edit="1" View="1"/>
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" 
+                      MinLength="0" MaxLength="30" Edit="1" 
+                      Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1"/>
+          <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" 
+                      MinLength="0" MaxLength="30" Edit="1" Lookup="МАССА АВТО" View="1"/>
+          <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" 
+                      MinLength="0" MaxLength="30" Edit="1" Lookup="КОЭФФИЦИЕНТЫ Ф/Л" View="1"/>
         </PayRecord>
       </GetPayListResponse>
     </PS_ERIP>
 
-    <!--req-->
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -144,7 +152,6 @@
         <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" Value="0,5" Change="1"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Error Responce=44; GetRequestStream=21;-->
     <PS_ERIP>
       <GetPayListResponse>
@@ -153,7 +160,6 @@
       </GetPayListResponse>
     </PS_ERIP>
 
-    <!--req-->
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -171,25 +177,31 @@
         <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" Value="0,5" Change="1"/>
       </GetPayListRequest>
     </PS_ERIP>
-    
     <!--resp-->
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="88257290-2" Edit="1" GetPayListType="0">
+        <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" 
+                   Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" 
+                   SessionId="88257290-2" Edit="1" GetPayListType="0">
           <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="1234AA-7" View="1" Hint="Введите регистрационный знак авто"/>
-          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="AAA123456789" View="1"/>
-          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="0" Value="109879310" View="1"/>
-          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Прицеп" View="1"/>
-          <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" MinLength="0" MaxLength="30" Value="Не более 1,5 тонны" View="1"/>
-          <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" MinLength="0" MaxLength="30" Value="0,5" View="1"/>
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" 
+                      MinLength="6" MaxLength="30" Value="1234AA-7" View="1" 
+                      Hint="Введите регистрационный знак авто"/>
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" 
+                      MinLength="0" MaxLength="30" Value="AAA123456789" View="1"/>
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" 
+                      MinLength="0" Value="109879310" View="1"/>
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" 
+                      MinLength="0" MaxLength="30" Value="Прицеп" View="1"/>
+          <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" 
+                      MinLength="0" MaxLength="30" Value="Не более 1,5 тонны" View="1"/>
+          <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" 
+                      MinLength="0" MaxLength="30" Value="0,5" View="1"/>
         </PayRecord>
       </GetPayListResponse>
     </PS_ERIP>
 
-    <!--req-->
-    <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
     <PS_ERIP>
       <RunOperationRequest>
         <Key/>
@@ -211,9 +223,7 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     <!--resp-->
-    <!--<?xml version="1.0" encoding="UTF-8"?>-->
     <PS_ERIP>
       <RunOperationResponse>
         <KioskReceipt>17092019090000</KioskReceipt>
@@ -242,8 +252,6 @@
       </RunOperationResponse>
     </PS_ERIP>
 
-    <!--req-->
-    <!--<?xml version="1.0" encoding="UTF-8" standalone='yes'?>-->
     <PS_ERIP>
       <ConfirmRequest>
         <Key/>
@@ -252,8 +260,7 @@
         <PayRecord RecordID="1" PaymentID="175124620" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" ConfirmCode="1"/>
       </ConfirmRequest>
     </PS_ERIP>
-
-    <!--err resp-->
+    <!--error resp-->
     <PS_ERIP>
       <ConfirmResponse>
         <ErrorCode>541123</ErrorCode>
@@ -263,7 +270,6 @@
       </ConfirmResponse>
     </PS_ERIP>
 
-    <!--req-->
     <PS_ERIP>
       <ConfirmRequest>
         <Key/>
@@ -272,7 +278,6 @@
         <PayRecord RecordID="1" PaymentID="3807661" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" ConfirmCode="1"/>
       </ConfirmRequest>
     </PS_ERIP>
-
     <!--resp-->
     <PS_ERIP>
       <ConfirmResponse>
@@ -298,7 +303,6 @@
         <PayCode>411</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=587; GetRequestStream=38;-->
     <PS_ERIP>
       <GetPayListResponse>
@@ -354,7 +358,6 @@
         <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" Value="0,5" Change="1"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--err Responce=44; GetRequestStream=21;-->
     <PS_ERIP>
       <GetPayListResponse>
@@ -380,7 +383,6 @@
         <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" Value="0,5" Change="1"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     <!--Responce=329; GetRequestStream=21;-->
     <PS_ERIP>
       <GetPayListResponse>
@@ -419,7 +421,6 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     <!--err Responce=43; GetRequestStream=21;-->
     <PS_ERIP>
       <RunOperationResponse>
@@ -453,7 +454,6 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     <!--Responce=76; GetRequestStream=15;-->
     <PS_ERIP>
       <RunOperationResponse>
