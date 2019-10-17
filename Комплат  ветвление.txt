@@ -1,0 +1,78 @@
+атрибут с:
+edit=1 поле ввода
+edit=0 перебросить введеное ранее значение
+
+view=0 не показывать атрибут
+view=1 показывать атрибут
+-------------------------------------
+1)
+if(GetPayListType=1)
+if(PayRecord.View=1 || null)
+if(PayRecord.AttrRecord==null || (PayRecord.AttrRecord.View==0) )
+{
+	Button (PayRecord.Name)
+};
+-------------------------------------
+2)
+if(GetPayListType=1)
+if(PayRecord.View=1 || null)
+if(PayRecord.AttrRecord.View = 1 || null)
+if(PayRecord.AttrRecord.Edit = 1)
+if(PayRecord.AttrRecord.Lookup = null)
+{
+	Label (AttrRecord.Name)
+	Textbox (AttrRecord.Name, AttrRecord.MinLength, AttrRecord.MaxLength)
+};
+-------------------------------------
+3)
+if(GetPayListType=1)
+if(PayRecord.View=0)
+if(PayRecord.AttrRecord.View = 1 || null)
+if(PayRecord.AttrRecord.Edit = 1)
+if(PayRecord.AttrRecord.Lookup = string)
+{
+	Label (PayRecord.AttrRecord.Looku)
+	Buttons (foreach Item.Name in Lookup.Name)
+};
+-------------------------------------
+4)
+if(GetPayListType=0)
+if(PayRecord.AttrRecord.View = 1 || null)
+if(PayRecord.AttrRecord.Edit = 0 || null)
+{
+	Label (AttrRecord.Name)
+	Labelbox (AttrRecord.Value)
+};
+-------------------------------------
+
+
+
+
+
+
+SessionID: GetPayListResponse -> GetPayListResponse -> RunOperationRequest
+PaymentID: RunOperationResponse -> ConfirmRequest
+GroupRecord
+
+if(GetPayListRequest)
+if(GetPayListType=="1")
+=>GPR:
+=>PayRecord-Code => <PayCode>
+=>PayRecord-SessionID => <SessionId>
+=><AttrRecord> +input Value
+=>if(edit)
+=>if(view)
+
+if(GetPayListType=="0")
+=>ROR:
+=>PayCode
+=>SessionId
+=>get System Date
+=>copy <AttrRecord>
+
+if(RunOperationResponse)
+
+
+
+
+
