@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:ModernUINavigation.Styles"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <sys:Double x:Key="Height">400</sys:Double>
+    <sys:Double x:Key="Height">300</sys:Double>
     
     <Style TargetType="Button"  >
         <Setter Property="Margin" Value="10" />
