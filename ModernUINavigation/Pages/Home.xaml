@@ -9,9 +9,9 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer x:Name="ScrollView1">
             <StackPanel x:Name="StackPanel1" Style="{StaticResource myStackPanelStyle}">
-                <Label Content="Label" />
+                <Label Content="Label"/>
                 <Button Content="button" Click="Button_Click"/>
-                <TextBox Text="Textbox"  />
+                <TextBox Text="Textbox" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
