@@ -1,0 +1,62 @@
+﻿<Window x:Class="UIWPFClean.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:local="clr-namespace:UIWPFClean"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="36"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="600" Width="350" FontSize="48">
+    <Window.Resources>
+        <!--<Style x:Key="{x:Type Button}" 
+               TargetType="Button" 
+               BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Margin" Value="20 5 20 5" />
+        </Style>
+        <Style x:Key="{x:Type TextBox}" 
+               TargetType="TextBox" 
+               BasedOn="{StaticResource MaterialDesignTextBoxBase}">
+            <Setter Property="Margin" Value="20 5 20 5" />
+        </Style>
+        <Style x:Key="{x:Type Label}" 
+               TargetType="Label" 
+               BasedOn="{StaticResource MaterialDesignLabel}">
+            <Setter Property="Margin" Value="20 5 20 5" />
+        </Style>
+        <Style x:Key="{x:Type TextBlock}" 
+               TargetType="TextBlock" 
+               BasedOn="{StaticResource MaterialDesignCaptionTextBlock}">
+            <Setter Property="Margin" Value="20 5 20 5" />
+        </Style>-->
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="StackPanel1" >
+                <materialDesign:Card Padding="32" Margin="16" MouseDoubleClick="Card_MouseDoubleClick">
+                    <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">My First Material Design App</TextBlock>
+                </materialDesign:Card>
+                <TextBlock Text="Text Block test"/>
+                <Button Content="Button test"/>
+                <Label Content="Label test"/>
+                <TextBox Text="Text Box test"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

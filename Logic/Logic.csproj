@@ -44,9 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicPage.cs" />
+    <Compile Include="PagesManager.cs" />
     <Compile Include="PostGetHTTP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponceBuilder.cs" />
+    <Compile Include="XML\AttrRecord.cs" />
+    <Compile Include="XML\GroupRecord.cs" />
+    <Compile Include="XML\PayRecord.cs" />
+    <Compile Include="XML\XMLRequest.cs" />
+    <Compile Include="XML\XMLResponce.cs" />
     <Compile Include="XmlRequests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
