@@ -25,7 +25,6 @@ namespace Logic
         {
             XmlReceived += ResponceBuilder.PostGetHTTP_XmlReceived;
         }
-        //public static string IDSession { get; set; }
 
         public static async Task<XDocument> XmlLoadAsync(Stream stream
             , LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
@@ -34,21 +33,6 @@ namespace Logic
             {
                 return XDocument.Load(stream, loadOptions);
             });
-        }
-
-        public static async Task DoParalel()
-        {
-            postXMLData(url, XmlRequests.XmlTest().ToStringFull());
-            //AnotherPost();
-            //PostWithParameter();
-        }
-        public static async Task RunOpReq(string SessionID)
-        {
-            postXMLData(url, XmlRequests.XmlTest2(SessionID).ToStringFull());
-        }
-        public static async Task ConfirmReq()
-        {
-            postXMLData(url, XmlRequests.XmlTest3().ToStringFull());
         }
 
         private static async Task<string> GetResponseText(string address)

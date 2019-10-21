@@ -51,7 +51,16 @@
     <Compile Include="ResponceBuilder.cs" />
     <Compile Include="XML\AttrRecord.cs" />
     <Compile Include="XML\GroupRecord.cs" />
+    <Compile Include="XML\Lookup.cs" />
+    <Compile Include="XML\LookupItem.cs" />
     <Compile Include="XML\PayRecord.cs" />
+    <Compile Include="XML\Serializable\AttrRecord.cs" />
+    <Compile Include="XML\Serializable\Erip.cs" />
+    <Compile Include="XML\Serializable\GroupRecord.cs" />
+    <Compile Include="XML\Serializable\iRequestable.cs" />
+    <Compile Include="XML\Serializable\Lookup.cs" />
+    <Compile Include="XML\Serializable\LookupItem.cs" />
+    <Compile Include="XML\Serializable\PayRecord.cs" />
     <Compile Include="XML\XMLRequest.cs" />
     <Compile Include="XML\XMLResponce.cs" />
     <Compile Include="XmlRequests.cs" />

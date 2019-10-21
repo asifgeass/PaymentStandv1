@@ -212,7 +212,9 @@
         <KioskReceipt>17092019090000</KioskReceipt>
         <KioskError>0</KioskError>
         <PayRecordCount>0</PayRecordCount>
-        <PayRecord Code="411" DIType="9120" Name="Госпошлина за выдачу разрешения" GetPayListType="0" Commission="0" Summa="8.00" Currency="933" Fine="1.50" PayCommission="0" SessionId="88257290-2">
+        <PayRecord Code="411" DIType="9120" Name="Госпошлина за выдачу разрешения" GetPayListType="0" 
+                   Commission="0" Summa="8.00" Currency="933" Fine="1.50" PayCommission="0" 
+                   SessionId="88257290-2">
           <GroupRecord Code="401" Name="Физическое лицо"/>
           <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" Value="1234AA-7" />
           <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" Value="AAA123456789"/>
@@ -228,7 +230,8 @@
       <RunOperationResponse>
         <KioskReceipt>17092019090000</KioskReceipt>
         <ErrorCode>0</ErrorCode>
-        <PayRecord Code="411" RecordID="0" PaymentID="3807661" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:00">
+        <PayRecord Code="411" RecordID="0" PaymentID="3807661" PayAll="8.00" Summa="8.00" 
+                   PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:00">
           <AttrRecord Code="745" CodeOut="0" Name="Лицевой счет" Print="1" Value="AAA123456789" View="1"/>
           <Check>
             <CheckHeader Count="14">
@@ -257,7 +260,8 @@
         <Key/>
         <TerminalID>TEST_TERMINAL</TerminalID>
         <Version>3</Version>
-        <PayRecord RecordID="1" PaymentID="175124620" Date="17/09/2019 09:00:00" KioskReceipt="17092019090000" ConfirmCode="1"/>
+        <PayRecord RecordID="1" PaymentID="175124620" Date="17/09/2019 09:00:00" 
+                   KioskReceipt="17092019090000" ConfirmCode="1"/>
       </ConfirmRequest>
     </PS_ERIP>
     <!--error resp-->
@@ -487,6 +491,401 @@
   </x2-var2>
 
   <x3-gos-teh-osmotr>
+    
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PayCode>400</PayCode>
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=42; GetRequestStream=28;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="403" Name="Индивидуальный предприниматель" GetPayListType="1">
+          <GroupRecord Code="400" Name="Гостехосмотр" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+        <PayRecord Code="401" Name="Физическое лицо" GetPayListType="2">
+          <GroupRecord Code="400" Name="Гостехосмотр" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+        <PayRecord Code="402" Name="Юридическое лицо" GetPayListType="1">
+          <GroupRecord Code="400" Name="Гостехосмотр" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+      </GetPayListResponse>
+    </PS_ERIP>
+
+
+
+
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PayCode>401</PayCode>
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=99; GetRequestStream=17;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="2" View="0" />
+        </PayRecord>
+        <PayRecord Code="421" Name="Гостехосмотр" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+        <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+        <PayRecord Code="451" Name="Повторный техосмотр" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+        <PayRecord Code="431" Name="Прочие административные процедуры" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+        <PayRecord Code="461" Name="Прочие услуги" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+        </PayRecord>
+      </GetPayListResponse>
+    </PS_ERIP>
+
+
+
+
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PAN>BY93AKBB36019010100000000000</PAN>
+        <TypePAN>ACCOUNT</TypePAN>
+        <PayCode>421</PayCode>
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=5619; GetRequestStream=16;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" SessionId="93601460-1" Edit="0" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" />
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1" />
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1" />
+        </PayRecord>
+      </GetPayListResponse>
+    </PS_ERIP>
+
+
+
+
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PAN>BY93AKBB36019010100000000000</PAN>
+        <TypePAN>ACCOUNT</TypePAN>
+        <PayCode>421</PayCode>
+        <SessionId>93601460-1</SessionId>
+        <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" Value="123456" />
+        <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1" Value="hz345"/>
+        <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1" Value="123456789"/>
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=430; GetRequestStream=20;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" SessionId="93601460-2" Edit="0" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <Lookups>
+            <Lookup Name="ТИП ДВИГАТЕЛЯ АВТО">
+              <Item Name="Бензиновый">Бензиновый</Item>
+              <Item Name="Дизельный или на газовом топливе">Дизельный или на газовом топливе</Item>
+              <Item Name="Гибридный или электромобиль">Гибридный или электромобиль</Item>
+            </Lookup>
+            <Lookup Name="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ">
+              <Item Name="Легковой автомобиль">Легковой автомобиль</Item>
+              <Item Name="Прицеп">Прицеп</Item>
+              <Item Name="Прицеп-дача">Прицеп-дача</Item>
+              <Item Name="Грузовой автомобиль">Грузовой автомобиль</Item>
+              <Item Name="Автобус">Автобус</Item>
+              <Item Name="Мотоцикл">Мотоцикл</Item>
+              <Item Name="Мопед">Мопед</Item>
+              <Item Name="Квадрицикл">Квадрицикл</Item>
+              <Item Name="Седельный тягач">Седельный тягач</Item>
+            </Lookup>
+          </Lookups>
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="123456" View="1" />
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="hz345" View="1" />
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" Value="123456789" View="1" />
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1" />
+          <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" />
+        </PayRecord>
+      </GetPayListResponse>
+    </PS_ERIP>
+
+
+
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PAN>BY93AKBB36019010100000000000</PAN>
+        <TypePAN>ACCOUNT</TypePAN>
+        <PayCode>421</PayCode>
+        <SessionId>93601460-1</SessionId>
+        <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" Value="123456" Change="1"/>
+        <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1" Value="hz345" Change="1" />
+        <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1" Value="123456789" Change="1" />
+        <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1" Value="Прицеп"/>
+        <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=38; GetRequestStream=24;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>811123</ErrorCode>
+        <ErrorText>Сессия не найдена</ErrorText>
+      </GetPayListResponse>
+    </PS_ERIP>
+
+
+
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PAN>BY93AKBB36019010100000000000</PAN>
+        <TypePAN>ACCOUNT</TypePAN>
+        <PayCode>421</PayCode>
+        <SessionId>93601460-2</SessionId>
+        <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" Value="123456" Change="1"/>
+        <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1" Value="hz345" Change="1" />
+        <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1" Value="123456789" Change="1" />
+        <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1" Value="Прицеп"/>
+        <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=227; GetRequestStream=16;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" SessionId="93601460-3" Edit="0" GetPayListType="1">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <Lookups>
+            <Lookup Name="КОЛЕСНАЯ ФОРМУЛА АВТО">
+              <Item Name="4x2">4x2</Item>
+              <Item Name="4x4">4x4</Item>
+            </Lookup>
+          </Lookups>
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="123456" View="1" />
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="hz345" View="1" />
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" Value="123456789" View="1" />
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Прицеп" View="1" />
+          <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Value="Бензиновый" View="1" />
+          <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" MinLength="0" MaxLength="30" Edit="1" Lookup="КОЛЕСНАЯ ФОРМУЛА АВТО" View="1" />
+        </PayRecord>
+      </GetPayListResponse>
+    </PS_ERIP>
+
+
+
+    <PS_ERIP>
+      <GetPayListRequest>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PAN>BY93AKBB36019010100000000000</PAN>
+        <TypePAN>ACCOUNT</TypePAN>
+        <PayCode>421</PayCode>
+        <SessionId>93601460-3</SessionId>
+        <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" Value="123456" Change="1"/>
+        <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1" Value="hz345" Change="1" />
+        <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1" Value="123456789" Change="1" />
+        <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1" Value="Прицеп"/>
+        <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
+        <AttrRecord Code="0" CodeOut="10006"  Value="4x2" />
+      </GetPayListRequest>
+    </PS_ERIP>
+
+    Responce=200; GetRequestStream=16;
+
+    <PS_ERIP>
+      <GetPayListResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="93601460-4" Edit="1" GetPayListType="0">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="123456" View="1" />
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="hz345" View="1" />
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" Value="123456789" View="1" />
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Прицеп" View="1" />
+          <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Value="Бензиновый" View="1" />
+          <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" MinLength="0" MaxLength="30" Value="4x2" View="1" />
+        </PayRecord>
+      </GetPayListResponse>
+    </PS_ERIP>
+    
+
+    <PS_ERIP>
+      <RunOperationRequest>
+        <Key/>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <SignCode>0</SignCode>
+        <PayDate>17/09/2019 09:00:06</PayDate>
+        <KioskReceipt>17092019090006</KioskReceipt>
+        <KioskError>0</KioskError>
+        <PayRecordCount>0</PayRecordCount>
+        <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="93601460-4" Edit="1" GetPayListType="0">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="123456" View="1" />
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="hz345" View="1" />
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" Value="123456789" View="1" />
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Прицеп" View="1" />
+          <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Value="Бензиновый" View="1" />
+          <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" MinLength="0" MaxLength="30" Value="4x2" View="1" />
+        </PayRecord>
+      </RunOperationRequest>
+    </PS_ERIP>
+
+    Responce=1008; GetRequestStream=15;
+
+    <PS_ERIP>
+      <RunOperationResponse>
+        <KioskReceipt>17092019090006</KioskReceipt>
+        <ErrorCode>880600</ErrorCode>
+        <ErrorText>ERIP: Комплат: Регистрация платежей с суммой 0запрещена.</ErrorText>
+        <PayRecord Code="421" RecordID="0" PaymentID="3807997" PayAll="0.00" Summa="0.00" Fine="0.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:06">
+        </PayRecord>
+      </RunOperationResponse>
+    </PS_ERIP>
+
+
+
+
+    <PS_ERIP>
+      <RunOperationRequest>
+        <Key/>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <SignCode>0</SignCode>
+        <PayDate>17/09/2019 09:00:06</PayDate>
+        <KioskReceipt>17092019090006</KioskReceipt>
+        <KioskError>0</KioskError>
+        <PayRecordCount>0</PayRecordCount>
+        <PayRecord Code="421" Name="Гостехосмотр" StornoMode="S" Commission="0.00" Summa="8.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="93601460-4" Edit="1" GetPayListType="0">
+          <GroupRecord Code="401" Name="Физическое лицо" />
+          <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="123456" View="1" />
+          <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="hz345" View="1" />
+          <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" Value="123456789" View="1" />
+          <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Прицеп" View="1" />
+          <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Value="Бензиновый" View="1" />
+          <AttrRecord Code="0" CodeOut="10006" Name="Колесная формула" MinLength="0" MaxLength="30" Value="4x2" View="1" />
+        </PayRecord>
+      </RunOperationRequest>
+    </PS_ERIP>
+
+    Responce=790; GetRequestStream=21;
+
+    <PS_ERIP>
+      <RunOperationResponse>
+        <KioskReceipt>17092019090006</KioskReceipt>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord Code="421" RecordID="0" PaymentID="3807998" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:06">
+          <AttrRecord Code="745" CodeOut="0" Name="Лицевой счет" Print="1" Value="hz345" View="1" />
+          <Check>
+            <CheckHeader Count="14">
+              <CheckLine Idx="1">Дата платежа:                  21/10/2019 20:58:47</CheckLine>
+              <CheckLine Idx="2">Отправитель платежа: 765 Г.МИНСК,ОАО 'БНБ-БАНК'. р</CheckLine>
+              <CheckLine Idx="3">/с 3819800000001                                  </CheckLine>
+              <CheckLine Idx="4" />
+              <CheckLine Idx="5">Получатель платежа: Гостехосмотр, р/с BY50REDJ3012</CheckLine>
+              <CheckLine Idx="6">1000262600000000 в 110 Г.МИНСК,ЗАО 'РРБ-БАНК'     </CheckLine>
+              <CheckLine Idx="7">                                                  </CheckLine>
+              <CheckLine Idx="8">Гостехосмотр                                      </CheckLine>
+              <CheckLine Idx="9">                                                  </CheckLine>
+              <CheckLine Idx="10">Лицевой счет:                                hz345</CheckLine>
+              <CheckLine Idx="11">Сумма, оплаченная по услуге:                 8 BYN</CheckLine>
+              <CheckLine Idx="12">Сумма:                                       8 BYN</CheckLine>
+              <CheckLine Idx="13">Сумма вознаграждения:                        0 BYN</CheckLine>
+              <CheckLine Idx="14">        *** ОПЛАТА НАЛИЧНЫМИ ***        </CheckLine>
+            </CheckHeader>
+          </Check>
+        </PayRecord>
+      </RunOperationResponse>
+    </PS_ERIP>
+
+
+
+
+    <PS_ERIP>
+      <ConfirmRequest>
+        <Key/>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PayRecord Code="421" RecordID="0" PaymentID="3807998" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:06" ConfirmCode="1" />
+      </ConfirmRequest>
+    </PS_ERIP>
+    
+    Responce=31; GetRequestStream=32;
+    
+    <PS_ERIP>
+      <ConfirmResponse>
+        <ErrorCode>860600</ErrorCode>
+        <ErrorText>
+          Ошибка разбора ConfirmRequest. ORA-20001: KioskReceipt
+        </ErrorText>
+        <PayRecord>
+        </PayRecord>
+      </ConfirmResponse>
+    </PS_ERIP>
+
+
+
+
+    <PS_ERIP>
+      <ConfirmRequest>
+        <Key/>
+        <TerminalID>TEST_TERMINAL</TerminalID>
+        <Version>3</Version>
+        <PayRecord Code="421" RecordID="0" PaymentID="3807998" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:06" KioskReceipt="17092019090006" ConfirmCode="1" />
+      </ConfirmRequest>
+    </PS_ERIP>
+    
+    Responce=471; GetRequestStream=14;
+    
+    <PS_ERIP>
+      <ConfirmResponse>
+        <ErrorCode>0</ErrorCode>
+        <PayRecord PaymentID="3807998" Date="17/09/2019 09:00:06" KioskReceipt="17092019090006" RecordID="0">
+          <Check>
+            <CheckFooter Count="1">
+              <CheckLine Idx="1">--------------------------------------------------</CheckLine>
+            </CheckFooter>
+          </Check>
+        </PayRecord>
+      </ConfirmResponse>
+    </PS_ERIP>
 
   </x3-gos-teh-osmotr>
 

@@ -18,7 +18,7 @@ namespace Logic
         {
             var x = inc.Root.Descendants("PayRecord");
             var z = inc.Root.Descendants("PayRecord");
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         static void Main(string[] args)

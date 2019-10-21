@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.XML
+namespace Logic.XML.Serializable
 {
-    public class GroupRecord
+    interface iRequestable
     {
-        private string Code { get; set; }
-        private string Name { get; set; }
+
     }
 }

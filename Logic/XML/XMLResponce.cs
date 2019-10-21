@@ -9,5 +9,10 @@ namespace Logic
     public class XMLResponce
     {
         private string MyProperty { get; set; }
+        //private string MyProperty { get; set; }
+        //private string MyProperty { get; set; }
+        //private string MyProperty { get; set; }
+        //private string MyProperty { get; set; }
+        //private string MyProperty { get; set; }
     }
 }

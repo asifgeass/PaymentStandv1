@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logic.XML
 {
-    public class GroupRecord
+    public class LookupItem
     {
-        private string Code { get; set; }
         private string Name { get; set; }
+        private string Value { get; set; }
     }
 }
