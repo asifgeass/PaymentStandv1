@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logic.XML.Serializable
+namespace Logic.XML.AutoSerlzd
 {
     /// <remarks/>
     [System.SerializableAttribute()]

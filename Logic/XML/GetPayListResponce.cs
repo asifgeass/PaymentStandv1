@@ -7,18 +7,15 @@ using System.Xml.Serialization;
 
 namespace Logic.XML
 {
-    //[System.SerializableAttribute()]
-    //[System.ComponentModel.DesignerCategoryAttribute("code")]
-    //[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     [XmlRoot]
     public partial class GetPayListResponse
     {
-        private short errorCodeField;
+        private int errorCodeField;
 
         private List<PayRecord> payRecordField;
 
         /// <remarks/>
-        public short ErrorCode
+        public int ErrorCode
         {
             get
             {
