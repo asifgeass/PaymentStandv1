@@ -1,4 +1,5 @@
 ﻿using Logic;
+using Logic.XML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using Logic.Helpers;
 
 namespace WPFApp
 {
@@ -57,12 +61,29 @@ namespace WPFApp
 
         private void ButtonXMLCustom_Click(object sender, RoutedEventArgs e)
         {
-            PostGetHTTP.postXMLData(textboxXMLCustom.Text);
+            PostGetHTTP.PostXML(textboxXMLCustom.Text);
         }
 
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
             textboxResponceXML.Clear();
+        }
+
+        private async void buttonReceiveXML_Click(object sender, RoutedEventArgs e)
+        {
+            //myGrid.Children.
+            XDocument xml = await PostGetHTTP.XmlLoadAsync(textboxXMLCustom.Text);
+
+            PS_ERIP payRec = SerializationUtil.Deserialize<PS_ERIP>(xml);
+
+            var x1 = xml.Descendants("PayRecord");
+            var x2 = xml.Elements("PayRecord");
+            var x3 = xml.Elements();
+            foreach(var item in x1)
+            {
+                var hz = item.Name;
+                var atrs = item.Elements("AttrRecord");
+            }
         }
     }
 }

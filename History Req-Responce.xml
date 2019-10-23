@@ -499,9 +499,7 @@
         <PayCode>400</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=42; GetRequestStream=28;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
@@ -520,9 +518,6 @@
       </GetPayListResponse>
     </PS_ERIP>
 
-
-
-
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -530,9 +525,7 @@
         <PayCode>401</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=99; GetRequestStream=17;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
@@ -564,8 +557,6 @@
     </PS_ERIP>
 
 
-
-
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -575,9 +566,7 @@
         <PayCode>421</PayCode>
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=5619; GetRequestStream=16;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
@@ -589,8 +578,6 @@
         </PayRecord>
       </GetPayListResponse>
     </PS_ERIP>
-
-
 
 
     <PS_ERIP>
@@ -606,9 +593,7 @@
         <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="9" MaxLength="9" Mandatory="1" Edit="1" View="1" Value="123456789"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=430; GetRequestStream=20;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
@@ -642,7 +627,6 @@
     </PS_ERIP>
 
 
-
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -658,16 +642,13 @@
         <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=38; GetRequestStream=24;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>811123</ErrorCode>
         <ErrorText>Сессия не найдена</ErrorText>
       </GetPayListResponse>
     </PS_ERIP>
-
 
 
     <PS_ERIP>
@@ -685,9 +666,7 @@
         <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=227; GetRequestStream=16;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
@@ -710,7 +689,6 @@
     </PS_ERIP>
 
 
-
     <PS_ERIP>
       <GetPayListRequest>
         <TerminalID>TEST_TERMINAL</TerminalID>
@@ -727,9 +705,7 @@
         <AttrRecord Code="0" CodeOut="10006"  Value="4x2" />
       </GetPayListRequest>
     </PS_ERIP>
-
     Responce=200; GetRequestStream=16;
-
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>0</ErrorCode>
@@ -767,9 +743,7 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     Responce=1008; GetRequestStream=15;
-
     <PS_ERIP>
       <RunOperationResponse>
         <KioskReceipt>17092019090006</KioskReceipt>
@@ -779,8 +753,6 @@
         </PayRecord>
       </RunOperationResponse>
     </PS_ERIP>
-
-
 
 
     <PS_ERIP>
@@ -804,9 +776,7 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-
     Responce=790; GetRequestStream=21;
-
     <PS_ERIP>
       <RunOperationResponse>
         <KioskReceipt>17092019090006</KioskReceipt>
@@ -836,8 +806,6 @@
     </PS_ERIP>
 
 
-
-
     <PS_ERIP>
       <ConfirmRequest>
         <Key/>
@@ -846,9 +814,7 @@
         <PayRecord Code="421" RecordID="0" PaymentID="3807998" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:06" ConfirmCode="1" />
       </ConfirmRequest>
     </PS_ERIP>
-    
     Responce=31; GetRequestStream=32;
-    
     <PS_ERIP>
       <ConfirmResponse>
         <ErrorCode>860600</ErrorCode>
@@ -861,8 +827,6 @@
     </PS_ERIP>
 
 
-
-
     <PS_ERIP>
       <ConfirmRequest>
         <Key/>
@@ -871,9 +835,7 @@
         <PayRecord Code="421" RecordID="0" PaymentID="3807998" PayAll="8.00" Summa="8.00" PayCommission="0.00" Currency="933" Date="17/09/2019 09:00:06" KioskReceipt="17092019090006" ConfirmCode="1" />
       </ConfirmRequest>
     </PS_ERIP>
-    
     Responce=471; GetRequestStream=14;
-    
     <PS_ERIP>
       <ConfirmResponse>
         <ErrorCode>0</ErrorCode>

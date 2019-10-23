@@ -144,8 +144,7 @@ namespace Logic
             XmlReceived += ResponceBuilder.PostGetHTTP_XmlReceived;
         }
 
-        public static async Task<XDocument> XmlLoadAsync(Stream stream
-            , LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
+        public static async Task<XDocument> XmlLoadAsync(Stream stream, LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
         {
             return await Task.Run(() =>
             {
@@ -153,9 +152,7 @@ namespace Logic
             });
         }
 
-        public static async Task<XDocument> XmlLoadAsync
-            (string str, 
-            LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
+        public static async Task<XDocument> XmlLoadAsync(string str, LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
         {
             return await Task.Run(() =>
             {

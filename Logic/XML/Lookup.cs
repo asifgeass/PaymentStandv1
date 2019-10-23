@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logic.XML
 {
+    [XmlRoot]
     public class Lookup
     {
-        private string Name { get; set; }
-        private List<LookupItem> Items { get; set; }
+        [XmlAttribute]
+        public string Name { get; set; }
+        [XmlElement]
+        public List<LookupItem> Items { get; set; }
     }
 }

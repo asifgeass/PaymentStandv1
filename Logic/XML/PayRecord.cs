@@ -3,29 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logic.XML
 {
+    [System.SerializableAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public class PayRecord
     {
-        private GroupRecord GroupRecord { get; set; }
-        private List<Lookup> Lookups { get; set; }
-        private List<AttrRecord> AttrRecords { get; set; }
-        private string Code { get; set; }
-        private string Name { get; set; }
-        private string StornoMode { get; set; }
-        private string Commission { get; set; }
-        private string Summa { get; set; }
-
-        private string View { get; set; }
-        private string Fine { get; set; }
-        private string PayCommission { get; set; }
-        private string SessionId { get; set; }
-
-        private string Edit { get; set; }
-        private string GetPayListType { get; set; }
-        private string RecordID { get; set; }
-        private string PaymentID { get; set; }
-        private string xx { get; set; }
+        [XmlElement()]
+        public GroupRecord GroupRecord { get; set; }
+        [XmlElement()]
+        public Lookup[] Lookups { get; set; }
+        [XmlElement()]
+        public List<AttrRecord> AttrRecord { get; set; }
+        [XmlAttribute()]
+        public string Code { get; set; }
+        [XmlAttribute()]
+        public string Name { get; set; }
+        [XmlAttribute()]
+        public string StornoMode { get; set; }
+        [XmlAttribute()]
+        public string Commission { get; set; }
+        [XmlAttribute()]
+        public string Summa { get; set; }
+        [XmlAttribute()]
+        public short View { get; set; } = 1;
+        [XmlAttribute()]
+        public string Fine { get; set; }
+        [XmlAttribute()]
+        public string PayCommission { get; set; }
+        [XmlAttribute()]
+        public string SessionId { get; set; }
+        [XmlAttribute()]
+        public string Edit { get; set; }
+        [XmlAttribute()]
+        public string GetPayListType { get; set; }
+        [XmlAttribute()]
+        public string RecordID { get; set; }
+        [XmlAttribute()]
+        public string PaymentID { get; set; }
+        public string xx { get; set; }
     }
 }

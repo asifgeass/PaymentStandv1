@@ -8,7 +8,7 @@ namespace Logic.XML
 {
     public class LookupItem
     {
-        private string Name { get; set; }
-        private string Value { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }
