@@ -17,33 +17,71 @@ namespace Logic
         private static readonly string url = "http://public.softclub.by:3007/komplat/online.request"; //"http://public.softclub.by:3007/komplat/online.request"
         private static readonly HttpClient httpClient = new HttpClient();
         private static readonly Stopwatch timer = new Stopwatch();
+        private static List<XDocument> ResponceHistory = new List<XDocument>();
+        private static List<XDocument> RequestHistory = new List<XDocument>();
+
 
         public static event Action<string> WriteTextBox = (x) => { };
         public static event Action<XDocument> XmlReceived = (x) => { };
 
-        static PostGetHTTP()
-        {
-            XmlReceived += ResponceBuilder.PostGetHTTP_XmlReceived;
-        }
-
-        public static async Task<XDocument> XmlLoadAsync(Stream stream
-            , LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
-        {
-            return await Task.Run(() =>
-            {
-                return XDocument.Load(stream, loadOptions);
-            });
-        }
-
-        private static async Task<string> GetResponseText(string address)
-        {
-            return await httpClient.GetStringAsync(address);
-        }
-        private static async Task<string> postXMLData(string destinationUrl, string requestXml)
+        private  static async Task<XDocument> PostXML(string destinationUrl, string requestXml)
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);                
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
+                byte[] bytes;
+                bytes = System.Text.Encoding.UTF8.GetBytes(requestXml);
+                request.ContentType = "text/xml; encoding='utf-8'";
+                request.ContentLength = bytes.Length;
+                request.Method = "POST";
+                string timings = "";
+                XDocument msg;
+                timer.Restart();
+                using (Stream requestStream = await request.GetRequestStreamAsync())
+                {
+                    timer.Stop();
+                    timings += $"GetRequestStream={timer.ElapsedMilliseconds}; ";
+                    WriteTextBox(requestXml);
+                    timer.Restart();
+                    requestStream.Write(bytes, 0, bytes.Length);
+                }
+                using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        using (var responseStream = response.GetResponseStream())
+                        {
+                            var responseXml = await XmlLoadAsync(responseStream);
+                            timer.Stop();
+                            XmlReceived(responseXml);
+                            timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                            msg = responseXml;
+                        }
+                    }
+                    else
+                    {
+                        timer.Stop();
+                        timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                        msg = null;
+
+                    }
+                }
+                WriteTextBox(msg.ToStringFull());
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                var msg = $"1postXMLData():\n{ex.Message}";
+                WriteTextBox(msg);
+                return null;
+            }
+
+        }
+        private static async Task<string> PostString(string destinationUrl, string requestXml)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
                 byte[] bytes;
                 bytes = System.Text.Encoding.UTF8.GetBytes(requestXml);
                 request.ContentType = "text/xml; encoding='utf-8'";
@@ -64,21 +102,13 @@ namespace Logic
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        using (var responseStream = response.GetResponseStream())
+                        using (var responseStream = new StreamReader(response.GetResponseStream()))
                         {
-                            var responseXml = await XmlLoadAsync(responseStream);
+                            string responseStr = await responseStream.ReadToEndAsync();
                             timer.Stop();
-                            XmlReceived(responseXml);
                             timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
-                            msg = $"{timings}{responseXml.ToStringFull()}";
+                            msg = $"{timings}{responseStr}";
                         }
-                        //using (var responseStream = new StreamReader(response.GetResponseStream()))
-                        //{
-                        //    string responseStr = await responseStream.ReadToEndAsync();
-                        //    timer.Stop();
-                        //    timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
-                        //    msg = $"{timings}{responseStr}";
-                        //}
                     }
                     else
                     {
@@ -93,16 +123,50 @@ namespace Logic
             }
             catch (Exception ex)
             {
-                var msg= $"1postXMLData():\n{ex.Message}";
+                var msg = $"1postXMLData():\n{ex.Message}";
                 WriteTextBox(msg);
                 return msg;
             }
 
         }
 
-        public static async Task<string> postXMLData(string requestXml)
+        public static async Task<XDocument> PostXML(string requestXml)
         {
-            return await postXMLData(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
+            return await PostXML(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
+        public static async Task<string> PostString(string requestXml)
+        {
+            return await PostString(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
+        }
+
+        static PostGetHTTP()
+        {
+            XmlReceived += ResponceBuilder.PostGetHTTP_XmlReceived;
+        }
+
+        public static async Task<XDocument> XmlLoadAsync(Stream stream
+            , LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
+        {
+            return await Task.Run(() =>
+            {
+                return XDocument.Load(stream, loadOptions);
+            });
+        }
+
+        public static async Task<XDocument> XmlLoadAsync
+            (string str, 
+            LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
+        {
+            return await Task.Run(() =>
+            {
+                return XDocument.Parse(str, loadOptions);
+            });
+        }
+
+        private static async Task<string> GetResponseText(string address)
+        {
+            return await httpClient.GetStringAsync(address);
+        }
+
     }
 }
