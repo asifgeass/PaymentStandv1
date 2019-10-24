@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logic.XML
+namespace Logic.XML.Check
 {
-    [XmlRoot]
-    public class Lookup
+    public partial class Check
     {
-        [XmlAttribute]
-        public string Name { get; set; }
         [XmlElement]
-        public List<LookupItem> Item { get; set; }
+        public CheckHeader CheckHeader { get; set; }
+
+        [XmlElement]
+        public CheckFooter CheckFooter { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace WPFApp
             //myGrid.Children.
             XDocument xml = await PostGetHTTP.XmlLoadAsync(textboxXMLCustom.Text);
 
-            PS_ERIP payRec = SerializationUtil.Deserialize<PS_ERIP>(xml);
+            PS_ERIP resp = SerializationUtil.Deserialize<PS_ERIP>(xml);
 
             var x1 = xml.Descendants("PayRecord");
             var x2 = xml.Elements("PayRecord");

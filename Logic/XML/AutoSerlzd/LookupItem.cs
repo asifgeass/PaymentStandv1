@@ -12,11 +12,8 @@ namespace Logic.XML.AutoSerlzd
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     public partial class LookupItem
     {
-
         private string nameField;
-
         private string valueField;
-
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string Name

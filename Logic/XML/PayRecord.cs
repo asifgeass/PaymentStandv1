@@ -7,15 +7,13 @@ using System.Xml.Serialization;
 
 namespace Logic.XML
 {
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlRoot]
     public class PayRecord
     {
         [XmlElement()]
         public GroupRecord GroupRecord { get; set; }
-        [XmlElement()]
-        public Lookup[] Lookups { get; set; }
+        [XmlArrayItem("Lookup")]
+        public List<Lookup> Lookups { get; set; } = null;
         [XmlElement()]
         public List<AttrRecord> AttrRecord { get; set; }
         [XmlAttribute()]

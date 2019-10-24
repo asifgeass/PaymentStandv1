@@ -7,9 +7,7 @@ using System.Xml.Serialization;
 
 namespace Logic.XML
 {
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [XmlRoot]
     public class AttrRecord
     {
         [XmlAttribute()]

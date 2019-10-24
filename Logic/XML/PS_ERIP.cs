@@ -7,10 +7,7 @@ using System.Xml.Serialization;
 
 namespace Logic.XML
 {
-    [System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    [XmlRoot]
     public partial class PS_ERIP
     {
         [XmlIgnore]
