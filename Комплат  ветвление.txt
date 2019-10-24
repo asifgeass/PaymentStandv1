@@ -6,6 +6,7 @@ view=0 не показывать атрибут
 view=1 показывать атрибут
 -------------------------------------
 1)
+if(PayRecord.Count > 1)
 if(PayRecord.GetPayListType=1)
 if(PayRecord.View=1 || null)
 if(PayRecord.AttrRecord==null || (PayRecord.AttrRecord.View==0) )

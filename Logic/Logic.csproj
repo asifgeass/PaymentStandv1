@@ -46,16 +46,16 @@
   <ItemGroup>
     <Compile Include="DynamicPage.cs" />
     <Compile Include="Helpers\SerializationUtil.cs" />
+    <Compile Include="Models\PageModel.cs" />
     <Compile Include="PagesManager.cs" />
     <Compile Include="PostGetHTTP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponceBuilder.cs" />
     <Compile Include="XML\AttrRecord.cs" />
-    <Compile Include="XML\AutoSerlzd\customs\checks.cs" />
-    <Compile Include="XML\Check\Check.cs" />
-    <Compile Include="XML\Check\CheckFooter.cs" />
-    <Compile Include="XML\Check\CheckHeader.cs" />
-    <Compile Include="XML\Check\CheckLine.cs" />
+    <Compile Include="XML\CheckXml\Check.cs" />
+    <Compile Include="XML\CheckXml\CheckFooter.cs" />
+    <Compile Include="XML\CheckXml\CheckHeader.cs" />
+    <Compile Include="XML\CheckXml\CheckLine.cs" />
     <Compile Include="XML\GetPayListResponce.cs" />
     <Compile Include="XML\GroupRecord.cs" />
     <Compile Include="XML\Lookup.cs" />
@@ -70,6 +70,9 @@
     <Compile Include="XML\AutoSerlzd\LookupItem.cs" />
     <Compile Include="XML\AutoSerlzd\PayRecord.cs" />
     <Compile Include="XmlRequests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="XML\AutoSerlzd\customs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

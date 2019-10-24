@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logic.XML.Check
+namespace Logic.XML.CheckXml
 {
-    public partial class CheckHeader
+    public partial class CheckFooter
     {
         [XmlElement]
         public List<CheckLine> CheckLine { get; set; }

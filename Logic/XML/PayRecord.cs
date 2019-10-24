@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.XML.CheckXml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,8 @@ namespace Logic.XML
         public List<Lookup> Lookups { get; set; } = null;
         [XmlElement()]
         public List<AttrRecord> AttrRecord { get; set; }
+        [XmlElement()]
+        public Check Check { get; set; }
         [XmlAttribute()]
         public string Code { get; set; }
         [XmlAttribute()]

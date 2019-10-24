@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Logic.Helpers;
+using Logic.Models;
 
 namespace WPFApp
 {
@@ -74,16 +75,33 @@ namespace WPFApp
             //myGrid.Children.
             XDocument xml = await PostGetHTTP.XmlLoadAsync(textboxXMLCustom.Text);
 
-            PS_ERIP resp = SerializationUtil.Deserialize<PS_ERIP>(xml);
+            PS_ERIP erip = SerializationUtil.Deserialize<PS_ERIP>(xml);
+            var resp = erip.GetListResponse;
+            var paylist = resp.PayRecord;
 
-            var x1 = xml.Descendants("PayRecord");
-            var x2 = xml.Elements("PayRecord");
-            var x3 = xml.Elements();
-            foreach(var item in x1)
+            var model = new PageModel();
+            var form = new FormAround();
+            var pnl = form.panelStk;
+            form.DataContext = model;
+
+
+            if (paylist.Count>1)
             {
-                var hz = item.Name;
-                var atrs = item.Elements("AttrRecord");
+                model.PayRecords = paylist;
+                model.SelectedPayRecord = paylist[1];
+                foreach (var it in paylist)
+                {
+                    var button = new Button();
+                    button.Content = it.Name;
+                    button.Click += (s, arg) => 
+                    {
+                        PageModel mdl = (form.GetDataContext as PageModel);
+                        mdl.SelectedPayRecord = it; 
+                    };
+                    pnl.Children.Add(button);
+                }
             }
+            new Window() { Content = form }.Show();
         }
     }
 }

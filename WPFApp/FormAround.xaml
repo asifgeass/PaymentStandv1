@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="WPFApp.FormAround"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFApp"
+             xmlns:logic="clr-namespace:Logic.Models;assembly=Logic"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="450">
+    
+    <UserControl.DataContext>
+        <logic:PageModel/>
+    </UserControl.DataContext>
+    
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="100*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Name="groupLabel" Content="{Binding SelectedPayRecord.GroupRecord.Name, Mode=TwoWay}"/>
+            <Label Grid.Row="1" Name="currentLabel" Content="{Binding SelectedPayRecord.Name, Mode=TwoWay}"/>
+        </Grid>
+
+        <StackPanel Orientation="Vertical" Name="panelStk" Grid.Row="1" Grid.Column="1"/>
+    </Grid>
+</UserControl>
