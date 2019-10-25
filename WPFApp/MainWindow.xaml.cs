@@ -88,7 +88,6 @@ namespace WPFApp
             if (paylist.Count>1)
             {
                 model.PayRecords = paylist;
-                model.SelectedPayRecord = paylist[1];
                 foreach (var it in paylist)
                 {
                     var button = new Button();
