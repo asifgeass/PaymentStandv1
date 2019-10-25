@@ -26,5 +26,7 @@ namespace WPFApp
         }
 
         public object GetDataContext => this.DataContext;
+
+        public UIElementCollection Controls => this.panelStk.Children;
     }
 }

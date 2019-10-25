@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.XML;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,11 @@ namespace Logic
         static void Main(string[] args)
         {
 
+        }
+
+        public static object ResponseToRequest(PS_ERIP body, object arg2)
+        {
+            return null;
         }
     }
 }

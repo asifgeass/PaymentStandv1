@@ -18,7 +18,6 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Logic.Helpers;
-using Logic.Models;
 
 namespace WPFApp
 {
@@ -79,11 +78,9 @@ namespace WPFApp
             var resp = erip.GetListResponse;
             var paylist = resp.PayRecord;
 
-            var model = new PageModel();
+            var model = new PageVM();
             var form = new FormAround();
-            var pnl = form.panelStk;
             form.DataContext = model;
-
 
             if (paylist.Count>1)
             {
@@ -92,14 +89,77 @@ namespace WPFApp
                 {
                     var button = new Button();
                     button.Content = it.Name;
-                    button.Click += (s, arg) => 
-                    {
-                        PageModel mdl = (form.GetDataContext as PageModel);
-                        mdl.SelectedPayRecord = it; 
-                    };
-                    pnl.Children.Add(button);
+                    button.DataContext = it;
+                    //button.Click += (s, arg) => 
+                    //{
+                    //    PageVM mdl = (form.GetDataContext as PageVM);
+                    //    mdl.SelectedPayRecord = it; 
+                    //};
+                    form.Controls.Add(button);
+                    form.Controls.Add(new Label());
                 }
             }
+
+            if (paylist.Count == 1)
+            {
+                var attrRecords = paylist.First().AttrRecord;
+                model.AttrRecords = attrRecords;
+
+                foreach (var it in attrRecords)
+                {
+                    if (it.Edit == 1 && it.View == 1 && !string.IsNullOrEmpty(it.Lookup))
+                    {
+                        List<Lookup> lookups = paylist.First().Lookups;
+                        Lookup selectedLookup = lookups.Where(x => x.Name.ToLower() == it.Lookup.ToLower()).Single();
+                        form.Controls.Add(new Label()
+                        {
+                            Content= selectedLookup.Name,
+                            HorizontalContentAlignment = HorizontalAlignment.Center
+                        });
+                        List<LookupItem> lookItems = selectedLookup.Item;
+                        lookItems.ForEach(x =>
+                        {
+                            form.Controls.Add(new Button() 
+                            { 
+                                Content=$"{x.Value}", 
+                            });
+                            form.Controls.Add(new Label());
+                        });
+                        new Window() { Content = form, Width=450, Height=800 }.Show();
+                        form = new FormAround();
+                    }
+                }
+
+                foreach (var it in attrRecords)
+                {
+                    if(it.Edit != 1 && it.View == 1)
+                    {
+                        var label = new Label();
+                        label.Content = $"{it.Name} = {it.Value}";
+
+                        form.Controls.Add(label);
+                        form.Controls.Add(new Label());
+                    }
+                }
+                foreach (var it in attrRecords)
+                {
+                    if (it.Edit == 1 && it.View == 1 && string.IsNullOrEmpty(it.Lookup))
+                    {
+                        var label = new Label();
+                        label.Content = $"{it.Name}:";
+                        var inputbox = new TextBox();
+
+                        form.Controls.Add(label);
+                        form.Controls.Add(inputbox);
+                        form.Controls.Add(new Label());
+                    }
+                }
+
+                form.Controls.Add(new Label());
+                form.Controls.Add(new Label());
+                form.Controls.Add(new Button() { Content="Продолжить" });
+            }
+
             new Window() { Content = form }.Show();
         }
     }

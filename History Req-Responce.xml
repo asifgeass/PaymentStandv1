@@ -642,7 +642,7 @@
         <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
       </GetPayListRequest>
     </PS_ERIP>
-    Responce=38; GetRequestStream=24;
+    <!--Error Responce=38; GetRequestStream=24;-->
     <PS_ERIP>
       <GetPayListResponse>
         <ErrorCode>811123</ErrorCode>
@@ -743,7 +743,7 @@
         </PayRecord>
       </RunOperationRequest>
     </PS_ERIP>
-    Responce=1008; GetRequestStream=15;
+    <!--Error Responce=1008; GetRequestStream=15;-->
     <PS_ERIP>
       <RunOperationResponse>
         <KioskReceipt>17092019090006</KioskReceipt>

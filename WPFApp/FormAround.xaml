@@ -4,12 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFApp"
-             xmlns:logic="clr-namespace:Logic.Models;assembly=Logic"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="450">
     
     <UserControl.DataContext>
-        <logic:PageModel/>
+        <local:PageVM/>
     </UserControl.DataContext>
     
     <Grid x:Name="MainGrid">
@@ -30,8 +29,8 @@
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Name="groupLabel" Content="{Binding SelectedPayRecord.GroupRecord.Name, Mode=TwoWay}"/>
-            <Label Grid.Row="1" Name="currentLabel" Content="{Binding SelectedPayRecord.Name, Mode=TwoWay}"/>
+            <Label Grid.Row="0" Name="groupLabel" Content="{Binding LabelParentGroup}"/>
+            <Label Grid.Row="1" Name="currentLabel" Content="{Binding LabelCurrent}"/>
         </Grid>
 
         <StackPanel Orientation="Vertical" Name="panelStk" Grid.Row="1" Grid.Column="1"/>
