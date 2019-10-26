@@ -43,36 +43,7 @@
       </GetPayListRequest>
     </PS_ERIP>
     <!--Responce=78; GetRequestStream=17;-->
-    <PS_ERIP>
-      <GetPayListResponse>
-        <ErrorCode>0</ErrorCode>
-        <PayRecord 
-          Code="411" Name="Госпошлина за выдачу разрешения" GetPayListType="1">
-          <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="2" View="0"/>
-        </PayRecord>
-        <PayRecord Code="421" Name="Гостехосмотр" GetPayListType="1">
-          <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
-        </PayRecord>
-        <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" GetPayListType="1">
-          <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
-        </PayRecord>
-        <PayRecord Code="451" Name="Повторный техосмотр" GetPayListType="1">
-          <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
-        </PayRecord>
-        <PayRecord Code="431" Name="Прочие административные процедуры" GetPayListType="1">
-          <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
-        </PayRecord>
-        <PayRecord Code="461" Name="Прочие услуги" GetPayListType="1">
-          <GroupRecord Code="401" Name="Физическое лицо"/>
-          <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0"/>
-        </PayRecord>
-      </GetPayListResponse>
-    </PS_ERIP>
+&
   </x12>
   
   <x2-gos-poslina>

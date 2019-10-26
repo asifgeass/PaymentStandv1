@@ -90,11 +90,12 @@ namespace WPFApp
                     var button = new Button();
                     button.Content = it.Name;
                     button.DataContext = it;
-                    //button.Click += (s, arg) => 
-                    //{
-                    //    PageVM mdl = (form.GetDataContext as PageVM);
-                    //    mdl.SelectedPayRecord = it; 
-                    //};
+                    button.Click += (s, arg) =>
+                    {
+                        PageVM vm = (form.GetDataContext as PageVM);
+                        vm.LabelCurrent = it.Name;
+                        vm.LabelParentGroup = it.GroupRecord.Name;
+                    };
                     form.Controls.Add(button);
                     form.Controls.Add(new Label());
                 }
