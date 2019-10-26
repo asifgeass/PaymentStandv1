@@ -90,12 +90,14 @@ namespace WPFApp
                     var button = new Button();
                     button.Content = it.Name;
                     button.DataContext = it;
-                    button.Click += (s, arg) =>
-                    {
-                        PageVM vm = (form.GetDataContext as PageVM);
-                        vm.LabelCurrent = it.Name;
-                        vm.LabelParentGroup = it.GroupRecord.Name;
-                    };
+                    //button.Command = model.CurrMenuHeader;
+                    //button.CommandParameter = it.Name;
+                    //button.SetBinding(Button.CommandProperty, new Binding()
+                    //{ Source = model.SetCurrMenuHeader });                    
+                    button.SetBinding(Button.CommandProperty, "SetCurrMenuHeader");
+                    button.SetBinding(Button.CommandParameterProperty, new Binding()
+                    { Source = it.Name });
+
                     form.Controls.Add(button);
                     form.Controls.Add(new Label());
                 }

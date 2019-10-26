@@ -31,5 +31,9 @@ namespace Logic
         {
             return null;
         }
+
+        public static void NextPage( object select)
+        { }
+        
     }
 }
