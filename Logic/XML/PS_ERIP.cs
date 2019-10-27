@@ -15,15 +15,17 @@ namespace Logic.XML
 
         [XmlChoiceIdentifier("EnumType")]
         [XmlElement("GetPayListResponse")]
+        [XmlElement("GetPayListRequest")]
         [XmlElement("RunOperationResponse")]
         [XmlElement("ConfirmResponse")]
-        public GetPayListResponse GetListResponse { get; set; }
+        public GetListResponse GetListResponse { get; set; }
     }
 
     [XmlType(IncludeInSchema = false)]
     public enum ItemChoiceType
     {
         GetPayListResponse,
+        GetPayListRequest,
         RunOperationResponse,
         ConfirmResponse
     }

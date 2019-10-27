@@ -17,7 +17,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using Logic.Helpers;
 
 namespace WPFApp
 {
@@ -61,7 +60,7 @@ namespace WPFApp
 
         private void ButtonXMLCustom_Click(object sender, RoutedEventArgs e)
         {
-            PostGetHTTP.PostXML(textboxXMLCustom.Text);
+            PostGetHTTP.PostStringGetXML(textboxXMLCustom.Text);
         }
 
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
@@ -74,7 +73,7 @@ namespace WPFApp
             //myGrid.Children.
             XDocument xml = await PostGetHTTP.XmlLoadAsync(textboxXMLCustom.Text);
 
-            PS_ERIP erip = SerializationUtil.Deserialize<PS_ERIP>(xml);
+            PS_ERIP erip = await SerializationUtil.Deserialize<PS_ERIP>(xml);
             var resp = erip.GetListResponse;
             var paylist = resp.PayRecord;
 

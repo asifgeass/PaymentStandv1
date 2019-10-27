@@ -8,32 +8,13 @@ using System.Xml.Linq;
 
 namespace Logic
 {
-    public static class ResponceBuilder
+    public class ResponceBuilder
     {
-        static ResponceBuilder()
+        //private static Lazy<PagesManager> manager = new Lazy<PagesManager>();
+        private static PagesManager manager = new PagesManager();
+        public static async Task<PS_ERIP> NextPage(object select)
         {
-            //PostGetHTTP.XmlReceived += PostGetHTTP_XmlReceived;
+            return await manager.NextRequest();
         }
-
-        public static void PostGetHTTP_XmlReceived(XDocument inc)
-        {
-            var x = inc.Root.Descendants("PayRecord");
-            var z = inc.Root.Descendants("PayRecord");
-            //throw new NotImplementedException();
-        }
-
-        static void Main(string[] args)
-        {
-
-        }
-
-        public static object ResponseToRequest(PS_ERIP body, object arg2)
-        {
-            return null;
-        }
-
-        public static void NextPage( object select)
-        { }
-        
     }
 }

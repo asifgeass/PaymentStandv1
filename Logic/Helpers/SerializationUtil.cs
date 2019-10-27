@@ -6,31 +6,38 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace Logic.Helpers
+namespace Logic
 {
     public static class SerializationUtil
     {
-        public static T Deserialize<T>(XDocument doc)
+        public static async Task<T> Deserialize<T>(XDocument doc)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-
-            using (var reader = doc.Root.CreateReader())
+            return await Task.Run(() =>
             {
-                return (T)xmlSerializer.Deserialize(reader);
-            }
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+
+                using (var reader = doc.Root.CreateReader())
+                {
+                    return (T)xmlSerializer.Deserialize(reader);
+                }
+            });
+
         }
 
-        public static XDocument Serialize<T>(T value)
+        public static async Task<XDocument> Serialize<T>(T value)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-
-            XDocument doc = new XDocument();
-            using (var writer = doc.CreateWriter())
+            return await Task.Run(() =>
             {
-                xmlSerializer.Serialize(writer, value);
-            }
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
 
-            return doc;
+                XDocument doc = new XDocument();
+                using (var writer = doc.CreateWriter())
+                {
+                    xmlSerializer.Serialize(writer, value);
+                }
+
+                return doc;
+            });
         }
     }
 }

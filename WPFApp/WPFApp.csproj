@@ -42,8 +42,14 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.7.2.0.1367\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Ninject.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Ninject.7.2.0.1367\lib\net45\Prism.Ninject.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Prism.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\Prism.Wpf.dll</HintPath>
@@ -71,6 +77,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicMenuBuilder.cs" />
+    <Compile Include="Views\DynamicMenuWindow.xaml.cs">
+      <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\DynamicMenuWindowViewModel.cs" />
+    <Compile Include="ViewModels\TestWindowViewModel.cs" />
     <Page Include="FormAround.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -86,6 +101,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DynamicMenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MenuManager.cs" />
@@ -119,9 +142,6 @@
       <Name>Logic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

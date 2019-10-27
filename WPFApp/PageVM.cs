@@ -28,7 +28,6 @@ namespace WPFApp
 
         #region Properties
         public PS_ERIP XmlBody { get; set; }
-        public object Request => ResponceBuilder.ResponseToRequest(XmlBody, XmlBody);
         public List<PayRecord> PayRecords { get; set; }
         public List<AttrRecord> AttrRecords { get; set; }
         public PayRecord SelectedPayRecord

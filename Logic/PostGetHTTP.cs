@@ -24,7 +24,7 @@ namespace Logic
         public static event Action<string> WriteTextBox = (x) => { };
         public static event Action<XDocument> XmlReceived = (x) => { };
 
-        private  static async Task<XDocument> PostXML(string destinationUrl, string requestXml)
+        private static async Task<XDocument> PostStringGetXML(string destinationUrl, string requestXml)
         {
             try
             {
@@ -75,9 +75,8 @@ namespace Logic
                 WriteTextBox(msg);
                 return null;
             }
-
         }
-        private static async Task<string> PostString(string destinationUrl, string requestXml)
+        private static async Task<string> PostStringGetString(string destinationUrl, string requestXml)
         {
             try
             {
@@ -130,18 +129,13 @@ namespace Logic
 
         }
 
-        public static async Task<XDocument> PostXML(string requestXml)
+        public static async Task<XDocument> PostStringGetXML(string requestXml)
         {
-            return await PostXML(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
+            return await PostStringGetXML(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
-        public static async Task<string> PostString(string requestXml)
+        public static async Task<string> PostStringGetString(string requestXml)
         {
-            return await PostString(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
-        }
-
-        static PostGetHTTP()
-        {
-            XmlReceived += ResponceBuilder.PostGetHTTP_XmlReceived;
+            return await PostStringGetString(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
 
         public static async Task<XDocument> XmlLoadAsync(Stream stream, LoadOptions loadOptions = LoadOptions.PreserveWhitespace)
@@ -164,6 +158,7 @@ namespace Logic
         {
             return await httpClient.GetStringAsync(address);
         }
+        public static string ToStringFull(this XDocument d) => $"{d.Declaration}{Environment.NewLine}{d}";
 
     }
 }

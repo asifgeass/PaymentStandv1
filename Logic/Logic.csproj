@@ -74,7 +74,7 @@
     <Compile Include="XML\CheckXml\CheckFooter.cs" />
     <Compile Include="XML\CheckXml\CheckHeader.cs" />
     <Compile Include="XML\CheckXml\CheckLine.cs" />
-    <Compile Include="XML\GetPayListResponce.cs" />
+    <Compile Include="XML\GetListResponse.cs" />
     <Compile Include="XML\GroupRecord.cs" />
     <Compile Include="XML\Lookup.cs" />
     <Compile Include="XML\LookupItem.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="XML\AutoSerlzd\Lookup.cs" />
     <Compile Include="XML\AutoSerlzd\LookupItem.cs" />
     <Compile Include="XML\AutoSerlzd\PayRecord.cs" />
-    <Compile Include="XmlRequests.cs" />
+    <Compile Include="XML\XmlBodies.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="XML\AutoSerlzd\customs\" />

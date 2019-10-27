@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace XmlBodies
+namespace XmlBodies.XML.AutoSerlzd
 {
-    public static class XmlRequests
+    public static class XmlBodies
     {
         public static XDocument XmlTest()
         {
@@ -283,6 +283,5 @@ namespace XmlBodies
                 ));
             return xdoc;
         }
-        public static string ToStringFull(this XDocument d) => $"{d.Declaration}{Environment.NewLine}{d}";
     }
 }
