@@ -42,6 +42,12 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -111,8 +117,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuManager.cs" />
-    <Compile Include="PageVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -140,6 +144,10 @@
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{F0636A56-60B2-4633-9343-565C8E1E16B4}</Project>
       <Name>Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XmlStructureComplat\XmlStructureComplat.csproj">
+      <Project>{60fd15bd-f34a-4cfe-a2e3-af6243e61f97}</Project>
+      <Name>XmlStructureComplat</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

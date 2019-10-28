@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using XmlStructureComplat;
 
 namespace Logic
 {
@@ -14,7 +15,7 @@ namespace Logic
         private static PagesManager manager = new PagesManager();
         public static async Task<PS_ERIP> NextPage(object select)
         {
-            return await manager.NextRequest();
+            return await manager.NextRequest(select);
         }
     }
 }

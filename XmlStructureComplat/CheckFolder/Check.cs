@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logic.XML.CheckXml
+namespace XmlStructureComplat.CheckFolder
 {
     public partial class Check
     {

@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logic.XML
+namespace XmlStructureComplat.CheckFolder
 {
-    [XmlRoot]
-    public class LookupItem
+    public partial class CheckLine
     {
         [XmlAttribute]
-        public string Name { get; set; }
+        public int Idx { get; set; }
+
         [XmlText]
         public string Value { get; set; }
     }

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using XmlStructureComplat;
 
 namespace Logic
 {
     public class DynamicPage
     {
-        public PS_ERIP xmlBody { get; set; }
-        public PS_ERIP xmlRequest { get; set; }
-        public bool IsResponced { get => xmlBody != null; }
+        public PS_ERIP Response { get; set; }
+        public PS_ERIP Request { get; set; }
+        public bool IsResponced { get => Response != null; }
     }
 }

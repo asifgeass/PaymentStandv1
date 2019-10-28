@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPFApp.ViewModels;
 
 namespace WPFApp.Views
 {
@@ -22,6 +23,11 @@ namespace WPFApp.Views
         public DynamicMenuWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var builder = new DynamicMenuBuilder(this);
         }
     }
 }

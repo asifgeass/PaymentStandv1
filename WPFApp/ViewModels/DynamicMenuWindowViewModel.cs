@@ -7,18 +7,19 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Ioc;
 using Logic;
-using Logic.XML;
+using XmlStructureComplat;
 
 namespace WPFApp.ViewModels
 {
     public class DynamicMenuWindowViewModel : BindableBase
     {
+        public event Action ResponseChangedEvent = ()=>{ };
         public DynamicMenuWindowViewModel()
         {
-            SetCurrMenuHeader = new DelegateCommand<string>(x => LabelCurrent = x);
-            SetParentGroupHeader = new DelegateCommand<string>(x => LabelParentGroup = x);
-            NextPage = new DelegateCommand<object>(NextPageCommand);
-            LoadedCommand = new DelegateCommand(()=> NextPageCommand(null));
+            SetCurrMenuHeaderCommand = new DelegateCommand<string>(x => LabelCurrent = x);
+            SetParentGroupHeaderCommand = new DelegateCommand<string>(x => LabelParentGroup = x);
+            NextPageCommand = new DelegateCommand<object>(NextPage);
+            LoadedCommand = new DelegateCommand(()=> NextPage(null));
         }
         #region fields
         private object _selectedXmlArg;
@@ -32,7 +33,7 @@ namespace WPFApp.ViewModels
         public PS_ERIP Responce 
         {
             get => _responce;
-            set => SetProperty(ref _responce, value); 
+            set => SetProperty(ref _responce, value, ResponseChangedEvent); 
         }
         public object SelectedXmlArg
         {
@@ -57,17 +58,18 @@ namespace WPFApp.ViewModels
         #endregion
 
         #region Commands Public
-        public DelegateCommand<string> SetParentGroupHeader { get; }
-        public DelegateCommand<string> SetCurrMenuHeader { get; }
-        public DelegateCommand<object> NextPage { get; }
+        public DelegateCommand<string> SetParentGroupHeaderCommand { get; }
+        public DelegateCommand<string> SetCurrMenuHeaderCommand { get; }
+        public DelegateCommand<object> NextPageCommand { get; }
         public DelegateCommand LoadedCommand { get; }
         #endregion
         #region Command Methods
-        private async void NextPageCommand(object param)
+        private async void NextPage(object param)
         {
-            IsLoadingMenu = true;
+            IsLoadingMenu = !IsLoadingMenu;
+            //IsLoadingMenu = true;
             Responce = await ResponceBuilder.NextPage(param);
-            IsLoadingMenu = false;
+            //IsLoadingMenu = false;
         }
         #endregion
 

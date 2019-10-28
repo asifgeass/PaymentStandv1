@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Logic.XML.CheckXml
+namespace XmlStructureComplat.CheckFolder
 {
-    public partial class CheckFooter
+    public partial class CheckHeader
     {
         [XmlElement]
         public List<CheckLine> CheckLine { get; set; }
