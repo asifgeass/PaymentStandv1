@@ -12,10 +12,13 @@ namespace WPFApp
 {
     public class DynamicMenuBuilder
     {
-        #region fields and ctor
-        DynamicMenuWindowViewModel model;
-        Window window;
-        FormAround form = new FormAround();
+        #region fields
+        private DynamicMenuWindowViewModel model;
+        private Window window;
+        private FormAround form = new FormAround();
+        private PagesList pages = new PagesList();
+        #endregion
+        #region ctor
         public DynamicMenuBuilder(Window incWindow)
         {
             window = incWindow;
@@ -30,16 +33,20 @@ namespace WPFApp
                 throw;
             }
         }
+        #endregion
 
         private void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "IsLoadingMenu")
             {
                 window.Content = null;
+                window.Content = "Loading...";
             }
         }
-        #endregion
 
+        #region Properties
+        public bool IsPageAvaiable => pages.IsNextAvaible;
+        #endregion
         private void BuildMenuOnReponse()
         {
             if (model == null) return;
@@ -48,21 +55,23 @@ namespace WPFApp
             var paylist = resp.PayRecord;
             if (paylist.Count > 1)
             {
+                pages.New();
                 foreach (var payrec in paylist)
                 {
-                    CreateButton(payrec);
+                    var button = ButtonSelect(payrec);
+                    pages.AddControl(button);
                 }
             }
             if (paylist.Count == 1)
             {
                 var attrRecords = paylist.First().AttrRecord;
-
-                foreach (var it in attrRecords)
+                foreach (var attr in attrRecords)
                 {
-                    if (it.Edit == 1 && it.View == 1 && !string.IsNullOrEmpty(it.Lookup))
+                    //Display every lookup as 1 page
+                    if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                     {
                         var lookups = paylist.First().Lookups;
-                        var selectedLookup = lookups.Where(x => x.Name.ToLower() == it.Lookup.ToLower()).Single();
+                        var selectedLookup = lookups.Where(x => x.Name.ToLower() == attr.Lookup.ToLower()).Single();
                         form.Controls.Add(new Label()
                         {
                             Content = selectedLookup.Name,
@@ -75,7 +84,7 @@ namespace WPFApp
                             {
                                 Content = $"{x.Value}",
                             });
-                            form.Controls.Add(new Label());
+                            form.Controls.Add(new TextBlock());
                         });
                         new Window() { Content = form, Width = 450, Height = 800 }.Show();
                         form = new FormAround();
@@ -84,17 +93,19 @@ namespace WPFApp
 
                 foreach (var it in attrRecords)
                 {
+                    //first display filled data attrs
                     if (it.Edit != 1 && it.View == 1)
                     {
                         var label = new Label();
                         label.Content = $"{it.Name} = {it.Value}";
 
                         form.Controls.Add(label);
-                        form.Controls.Add(new Label());
+                        form.Controls.Add(new TextBlock());
                     }
                 }
                 foreach (var it in attrRecords)
                 {
+                    //at last display attrs need to enter with textbox
                     if (it.Edit == 1 && it.View == 1 && string.IsNullOrEmpty(it.Lookup))
                     {
                         var label = new Label();
@@ -103,19 +114,19 @@ namespace WPFApp
 
                         form.Controls.Add(label);
                         form.Controls.Add(inputbox);
-                        form.Controls.Add(new Label());
+                        form.Controls.Add(new TextBlock());
                     }
                 }
 
-                form.Controls.Add(new Label());
-                form.Controls.Add(new Label());
+                form.Controls.Add(new TextBlock());
+                form.Controls.Add(new TextBlock());
                 form.Controls.Add(new Button() { Content = "Продолжить" });
             }
 
             window.Content= form;
         }
 
-        private void CreateButton(XmlStructureComplat.PayRecord payrec)
+        private StackPanel ButtonSelect(XmlStructureComplat.PayRecord payrec)
         {
             var frame = new StackPanel() { Orientation = Orientation.Vertical };
             var button = new Button();
@@ -126,7 +137,8 @@ namespace WPFApp
             //button.SetBinding(Button.CommandParameterProperty, new Binding(){ Source = it });
             frame.Children.Add(button);
             frame.Children.Add(new TextBlock());
-            form.Controls.Add(frame);
+            //form.Controls.Add(frame);
+            return frame;
         }
     }
 }

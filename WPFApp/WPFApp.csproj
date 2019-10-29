@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicMenuBuilder.cs" />
+    <Compile Include="PagesList.cs" />
     <Compile Include="Views\DynamicMenuWindow.xaml.cs">
       <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>
     </Compile>

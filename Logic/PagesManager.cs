@@ -12,12 +12,11 @@ namespace Logic
     public class PagesManager
     {
         #region fields
-        private List<DynamicPage> pages = new List<DynamicPage>();
-        private int currentIndex = -1;
+        private EripList list = new EripList();
         #endregion
 
         #region Properties
-        public int Count { get => pages.Count; }
+        public int Count { get => list.Count; }
         #endregion
 
         #region Public Methods
@@ -31,7 +30,7 @@ namespace Logic
         private async Task<string> GetRequest(object arg = null)
         {
             string request = null;
-            if (pages.Count <= 0)
+            if (list.Count <= 0)
             {
                 await CreateInitialPage();
             }
@@ -39,21 +38,21 @@ namespace Logic
             { 
                 CreateNextPage(arg); 
             }
-            PS_ERIP reqClass = this.Page.Request;
+            PS_ERIP reqClass = list.Page.Request;
             XDocument reqXml = await SerializationUtil.Serialize(reqClass);
             request = reqXml.ToStringFull();
             return request;
         }
         private void CreateNextPage(object param)
         {
-            var rootResponse = this.Page.Response;
+            var rootResponse = list.Page.Response;
             var paylist = rootResponse.GetListResponse.PayRecord;
             if (paylist.Count > 1)
             {
                 if (param is PayRecord)
                 {
                     PayRecord payrecArg = param as PayRecord;
-                    var reqErip = Page.Request.Copy();
+                    var reqErip = list.Page.Request.Copy();
                     reqErip.GetListResponse.PayCode = payrecArg.Code;
                     this.CreateNextPage(reqErip);
                 }
@@ -66,26 +65,20 @@ namespace Logic
             PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
             this.CreateNextPage(eripReq);
         }
-        private DynamicPage Page 
-            => (currentIndex < 0 || currentIndex >= pages.Count) 
-            ? null : pages[currentIndex];
-        private DynamicPage PrevPage
-            => (currentIndex < 1 || currentIndex >= pages.Count)
-            ? null : pages[currentIndex-1];
 
-        private PS_ERIP Request => this.Page.Request;
+
+        private PS_ERIP Request => list.Page.Request;
         private void CreateNextPage(PS_ERIP request)
         {
-            var page = new DynamicPage();
+            var page = new EripRequest();
             page.Request = request;
-            pages.Add(page);
-            currentIndex++;
+            list.Add(page);
         }
         private async Task<PS_ERIP> SendRequest(string request)
         {
             XDocument responceXml = await PostGetHTTP.PostStringGetXML(request);
             PS_ERIP responce = await SerializationUtil.Deserialize<PS_ERIP>(responceXml);
-            this.Page.Response = responce;
+            list.Page.Response = responce;
             return responce;
         }
         private string GetHardCodeInitialRequest()

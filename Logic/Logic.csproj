@@ -63,7 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicPage.cs" />
+    <Compile Include="EripList.cs" />
+    <Compile Include="EripRequest.cs" />
     <Compile Include="Helpers\SerializationUtil.cs" />
     <Compile Include="PagesManager.cs" />
     <Compile Include="PostGetHTTP.cs" />
