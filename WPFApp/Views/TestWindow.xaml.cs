@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPFApp.ViewModels;
 
 namespace WPFApp.Views
 {
@@ -22,16 +23,32 @@ namespace WPFApp.Views
         public TestWindow()
         {
             InitializeComponent();
-            var textbox = new TextBox();
-            var binding = new Binding("List[1]");
+            var vm = this.DataContext as TestWindowViewModel;
+            var binding = new Binding($"{nameof(vm.Payrec)}.AttrRecord[0].Name");
+            
+
+            var textbox = new TextBox();            
             textbox.SetBinding(TextBox.TextProperty, binding);
+
+            var text2 = new TextBox();
+            text2.SetBinding(TextBox.TextProperty, new Binding($"{nameof(vm.Payrec)}.AttrRecord[1].Name"));            
+
             var button = new Button() { Content="Coded" };
-            PnlStack.Children.Add(new TextBlock());
-            PnlStack.Children.Add(textbox);
-            PnlStack.Children.Add(button);
+            button.Command = vm.payCommand;
+
             var label = new Label();
             label.SetBinding(Label.ContentProperty, binding);
+
+            #region children.Add
+            PnlStack.Children.Add(new TextBlock());
+            PnlStack.Children.Add(textbox);
+            PnlStack.Children.Add(new TextBlock());
+            PnlStack.Children.Add(text2);
+            PnlStack.Children.Add(new TextBlock());
+            PnlStack.Children.Add(button);
+            PnlStack.Children.Add(new TextBlock());
             PnlStack.Children.Add(label);
+            #endregion
         }
     }
 }

@@ -7,6 +7,7 @@
         xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
         prism:ViewModelLocator.AutoWireViewModel="true"
         mc:Ignorable="d"
+        FontSize="20"
         Title="TestWindow" Height="450" Width="800">
     <Grid>
         <StackPanel x:Name="PnlStack">
