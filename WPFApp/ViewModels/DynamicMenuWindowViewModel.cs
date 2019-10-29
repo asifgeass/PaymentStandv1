@@ -27,6 +27,8 @@ namespace WPFApp.ViewModels
         private string _labelCurrent;
         private bool _isLoadingMenu;
         private PS_ERIP _responce;
+        private PayRecord _payrecToSend;
+        private PayRecord _test;
         #endregion
 
         #region Properties
@@ -34,6 +36,16 @@ namespace WPFApp.ViewModels
         {
             get => _responce;
             set => SetProperty(ref _responce, value, ResponseChangedEvent); 
+        }
+        public PayRecord PayrecToSend
+        {
+            get => _payrecToSend;
+            set => SetProperty(ref _payrecToSend, value);
+        }
+        public PayRecord Test
+        {
+            get => _test;
+            set => SetProperty(ref _test, value);
         }
         public object SelectedXmlArg
         {

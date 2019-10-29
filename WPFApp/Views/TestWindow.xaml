@@ -9,6 +9,10 @@
         mc:Ignorable="d"
         Title="TestWindow" Height="450" Width="800">
     <Grid>
-        
+        <StackPanel x:Name="PnlStack">
+            <Label Content="{Binding Str}"/>
+            <TextBox Text="{Binding Str}"/>
+            <Button Content="button"/>
+        </StackPanel>
     </Grid>
 </Window>

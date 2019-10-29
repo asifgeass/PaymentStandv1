@@ -22,6 +22,16 @@ namespace WPFApp.Views
         public TestWindow()
         {
             InitializeComponent();
+            var textbox = new TextBox();
+            var binding = new Binding("List[1]");
+            textbox.SetBinding(TextBox.TextProperty, binding);
+            var button = new Button() { Content="Coded" };
+            PnlStack.Children.Add(new TextBlock());
+            PnlStack.Children.Add(textbox);
+            PnlStack.Children.Add(button);
+            var label = new Label();
+            label.SetBinding(Label.ContentProperty, binding);
+            PnlStack.Children.Add(label);
         }
     }
 }

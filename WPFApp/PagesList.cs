@@ -11,58 +11,60 @@ namespace WPFApp
     public class PagesList
     {
         #region fields
-        private List<FrameworkElement> pages = new List<FrameworkElement>();
-        private int currentPageIndex = -1;
+        private List<Panel> pages = new List<Panel>();
+        private int currentPageIndex = 0;
         private StackPanel tempPnl = new StackPanel();
         #endregion
         #region Public Methods
         #region Get Page
-        public PagesList AddPage(FrameworkElement arg)
+        public PagesList AddPage(Panel arg)
         {
             pages.Add(arg);
             return this;
         }
-        public PagesList NextPage()
+        public Panel NextPage()
         {
-            if (pages.Count-1 > currentPageIndex)
+            //var retur = pages[currentPageIndex];
+            if (pages.Count - 1 > currentPageIndex)
             {
                 currentPageIndex++;
             }
-            return this;
-        }
-        public PagesList BackPage()
-        {
-            if (currentPageIndex > 0)
-            { 
-                currentPageIndex--; 
-            }
-            return this;
+            return pages[currentPageIndex];
         }
         #endregion
-        public PagesList New()
+        public PagesList NewPage()
         {
             if(tempPnl.Children.Count > 0)
             {
                 pages.Add(tempPnl);
                 ClearPnl();
             }
+            if (pages.Count <= 0)
+            {
+                pages.Add(tempPnl);
+            }
             return this;
         }
         public PagesList AddControl(FrameworkElement arg)
         {
+            if (pages.Count <= 0)
+            {
+                pages.Add(tempPnl);
+            }
             tempPnl.Children.Add(arg);
             return this;
         }
         #endregion
         #region Properties
+        public Panel this[int index] => pages[index];
         public bool IsNextAvaible => pages.Count-1 > currentPageIndex;
-        public int Count { get => pages.Count; }
-        public FrameworkElement Page
-            => (currentPageIndex < 0 || currentPageIndex >= pages.Count)
+        public int Count { get => (tempPnl.Children.Count==0) ? pages.Count-1 : pages.Count; }
+        public Panel Page
+            => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count==0)
             ? null : pages[currentPageIndex];
 
-        public FrameworkElement PrevPage
-            => (currentPageIndex < 1 || currentPageIndex >= pages.Count)
+        public Panel PrevPage
+            => (currentPageIndex < 1 || currentPageIndex >= pages.Count || pages.Count == 0)
             ? null : pages[currentPageIndex - 1];
         #endregion
         #region Private Methods

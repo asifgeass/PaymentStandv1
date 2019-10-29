@@ -49,13 +49,70 @@ namespace WPFApp
         #endregion
         private void BuildMenuOnReponse()
         {
+            pages = new PagesList();
+            BuildsPages();
+            if(pages.Count == 1)
+            {
+                window.Content = pages.Page;
+            }
+            if (pages.Count > 1)
+            {
+                ChangeCommandsFromVMToViewClick();
+                window.Content = pages.Page;
+            }
+        }
+
+        private void ChangeCommandsFromVMToViewClick()
+        {
+            for (int i = 0; i < pages.Count-2; i++)
+            {
+                var page = pages[i];
+                foreach (UIElement item in page.Children)
+                {
+                    RecurseChildren(item);                    
+                }
+            }
+        }
+        private void RecurseChildren(UIElement arg)
+        {
+            if(arg is Button)
+            {
+                Button button = arg as Button;                
+                button.Command = null;
+                if (button.Command is Prism.Commands.DelegateCommand<object>)
+                    button.CommandParameter = null;
+            }
+            if (arg is Panel)
+            {
+                Panel pnl = arg as Panel;
+                foreach (UIElement item in pnl.Children)
+                {
+                    RecurseChildren(item);
+                }
+            }
+        }
+
+        private void NextPage()
+        {
+            if(pages.IsNextAvaible)
+            {
+                window.Content = pages.NextPage();
+            }
+            else
+            {
+
+            }
+        }
+
+        private void BuildsPages()
+        {
             if (model == null) return;
             var rootResponse = model.Responce;
             var resp = rootResponse.GetListResponse;
             var paylist = resp.PayRecord;
             if (paylist.Count > 1)
             {
-                pages.New();
+                pages.NewPage();
                 foreach (var payrec in paylist)
                 {
                     var button = ButtonSelect(payrec);
@@ -72,67 +129,70 @@ namespace WPFApp
                     {
                         var lookups = paylist.First().Lookups;
                         var selectedLookup = lookups.Where(x => x.Name.ToLower() == attr.Lookup.ToLower()).Single();
-                        form.Controls.Add(new Label()
-                        {
-                            Content = selectedLookup.Name,
-                            HorizontalContentAlignment = HorizontalAlignment.Center
-                        });
-                        var lookItems = selectedLookup.Item;
-                        lookItems.ForEach(x =>
-                        {
-                            form.Controls.Add(new Button()
-                            {
-                                Content = $"{x.Value}",
-                            });
-                            form.Controls.Add(new TextBlock());
-                        });
-                        new Window() { Content = form, Width = 450, Height = 800 }.Show();
-                        form = new FormAround();
+                        pages.NewPage();
+                        LookupButtons(selectedLookup);
+                        pages.NewPage();
                     }
                 }
-
-                foreach (var it in attrRecords)
+                pages.NewPage();
+                foreach (var attr in attrRecords)
                 {
                     //first display filled data attrs
-                    if (it.Edit != 1 && it.View == 1)
+                    if (attr.Edit != 1 && attr.View == 1)
                     {
                         var label = new Label();
-                        label.Content = $"{it.Name} = {it.Value}";
+                        label.Content = $"{attr.Name} = {attr.Value}";
 
-                        form.Controls.Add(label);
-                        form.Controls.Add(new TextBlock());
+                        pages.AddControl(label);
+                        pages.AddControl(new TextBlock());
                     }
                 }
-                foreach (var it in attrRecords)
+                foreach (var attr in attrRecords)
                 {
                     //at last display attrs need to enter with textbox
-                    if (it.Edit == 1 && it.View == 1 && string.IsNullOrEmpty(it.Lookup))
+                    if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                     {
                         var label = new Label();
-                        label.Content = $"{it.Name}:";
+                        label.Content = $"{attr.Name}:";
                         var inputbox = new TextBox();
-
-                        form.Controls.Add(label);
-                        form.Controls.Add(inputbox);
-                        form.Controls.Add(new TextBlock());
+                        inputbox.SetBinding(TextBox.TextProperty, new Binding("Test.StornoMode") { Source=model });
+                        
+                        pages.AddControl(label);
+                        pages.AddControl(inputbox);
+                        pages.AddControl(new TextBlock());
+                        break;
                     }
                 }
-
-                form.Controls.Add(new TextBlock());
-                form.Controls.Add(new TextBlock());
-                form.Controls.Add(new Button() { Content = "Продолжить" });
+                pages.AddControl(new TextBlock());
+                pages.AddControl(new TextBlock());
+                pages.AddControl(new Button() 
+                { 
+                    Content = "Продолжить", 
+                });
             }
+        }
 
-            window.Content= form;
+        private void LookupButtons(XmlStructureComplat.Lookup selectedLookup)
+        {
+            pages.AddControl(new Label(){ Content = selectedLookup.Name});
+            var lookItems = selectedLookup.Item;
+            lookItems.ForEach(x =>
+            {
+                pages.AddControl(new Button()
+                {
+                    Content = $"{x.Value}",
+                });
+                pages.AddControl(new TextBlock());
+            });
         }
 
         private StackPanel ButtonSelect(XmlStructureComplat.PayRecord payrec)
         {
             var frame = new StackPanel() { Orientation = Orientation.Vertical };
             var button = new Button();
-            button.Content = payrec.Name;
             button.Command = model.NextPageCommand;
             button.CommandParameter = payrec;
+            button.Content = payrec.Name;
             //button.SetBinding(Button.CommandProperty, "NextPageCommand");
             //button.SetBinding(Button.CommandParameterProperty, new Binding(){ Source = it });
             frame.Children.Add(button);
