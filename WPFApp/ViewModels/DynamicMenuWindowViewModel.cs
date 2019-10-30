@@ -66,14 +66,11 @@ namespace WPFApp.ViewModels
             get => _attrToSend;
             set => SetProperty(ref _attrToSend, value);
         }
-        public LookupVM LookupVM
+        public LookupVM GetNewLookupVM()
         {
-            get
-            {
-                var vm = new LookupVM();
-                _lookupVMList.Add(vm);
-                return vm;
-            }
+            var vm = new LookupVM();
+            _lookupVMList.Add(vm);
+            return vm;
         }
         public List<LookupVM> ChildLookupVMList => _lookupVMList;
         public object SelectedXmlArg

@@ -1,6 +1,7 @@
 ﻿using Logic.XML;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,12 @@ namespace Logic
         #region Public Methods
         public async Task<PS_ERIP> NextRequest(object arg=null)
         {
-            string request = await GetRequest(arg);
+            string request = await GetRequestBody(arg);
             return await SendRequest(request);
         }
         #endregion
         #region Private Methods
-        private async Task<string> GetRequest(object arg = null)
+        private async Task<string> GetRequestBody(object arg = null)
         {
             string request = null;
             if (list.Count <= 0)
@@ -76,10 +77,11 @@ namespace Logic
         }
         private async Task<PS_ERIP> SendRequest(string request)
         {
-            XDocument responceXml = await PostGetHTTP.PostStringGetXML(request);
-            PS_ERIP responce = await SerializationUtil.Deserialize<PS_ERIP>(responceXml);
-            list.Page.Response = responce;
-            return responce;
+            XDocument responseXml = await PostGetHTTP.PostStringGetXML(request);
+            Trace.WriteLine(responseXml.ToString());
+            PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
+            list.Page.Response = response;
+            return response;
         }
         private string GetHardCodeInitialRequest()
         {

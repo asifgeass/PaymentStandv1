@@ -63,7 +63,7 @@ namespace WPFApp
         }
         private void BuildsPages()
         {
-            this.ResponseAnalizeAndBuild();
+            this.ResponseAnalizeAndBuild(true);
             this.fakeCount = pages.Count;
             if (pages.Count == 1)
             {
@@ -81,7 +81,7 @@ namespace WPFApp
                 throw new NotImplementedException($"{nameof(DynamicMenuBuilder)}.{nameof(BuildsPages)}(): if (pages.Count == 0)");
             }
         }
-        private void ResponseAnalizeAndBuild()
+        private void ResponseAnalizeAndBuild(bool isFake=false)
         {
             if (model == null) return;
             var rootResponse = model.Responce;
@@ -109,8 +109,12 @@ namespace WPFApp
                         Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower())?.Single();
                         int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                         pages.NewPage();
-                        var childVM = model.LookupVM;
-                        pages.AddDataContext(childVM);
+                        LookupVM childVM = new LookupVM();
+                        if(!isFake)
+                        {
+                            childVM = model.GetNewLookupVM();
+                            pages.AddDataContext(childVM);
+                        }
                         pages.AddControl(new Label() { Content = selectedLookup.Name });
                         var lookItems = selectedLookup.Item;
                         lookItems.ForEach(arg =>
@@ -119,7 +123,7 @@ namespace WPFApp
                             binding.Mode = BindingMode.OneWay;
                             var btn = new Button();
                             btn.Content = arg.Value;
-                            btn.Command = childVM.SelectLookupCommand;
+                            btn.Command = childVM?.SelectLookupCommand;
                             btn.CommandParameter = arg;
                             btn.Click += (sender, evArg) => NextPage();
                             pages.AddControl(btn);
