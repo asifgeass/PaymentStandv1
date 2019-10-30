@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using WPFApp.Interfaces;
 using WPFApp.ViewModels;
+using XmlStructureComplat;
 
 namespace WPFApp
 {
@@ -17,11 +19,14 @@ namespace WPFApp
         private Window window;
         private FormAround form = new FormAround();
         private PagesList pages = new PagesList();
+        private iControls _Controls;
+        private int fakeCount;
         #endregion
         #region ctor
-        public DynamicMenuBuilder(Window incWindow)
+        public DynamicMenuBuilder(Window incWindow, iControls Controls)
         {
             window = incWindow;
+            _Controls = Controls;
             try
             {
                 model = window.DataContext as DynamicMenuWindowViewModel;
@@ -47,33 +52,119 @@ namespace WPFApp
         #region Properties
         public bool IsPageAvaiable => pages.IsNextAvaible;
         #endregion
-        private void BuildMenuOnReponse()
+        private void ClearOnResponse()
         {
             pages = new PagesList();
+            fakeCount = 0;
+        }
+        private void BuildMenuOnReponse()
+        {
+            ClearOnResponse();
             BuildsPages();
-            if(pages.Count == 1)
+        }
+        private void BuildsPages()
+        {
+            this.ResponseAnalizeAndBuild();
+            this.fakeCount = pages.Count;
+            if (pages.Count == 1)
             {
                 window.Content = pages.Page;
             }
             if (pages.Count > 1)
             {
-                ChangeCommandsFromVMToViewClick();
-                window.Content = pages.Page;
+                this.pages = new PagesList();
+                this.ResponseAnalizeAndBuild();
+            }
+            if (pages.Count == 0)
+            {
+                throw new NotImplementedException($"{nameof(DynamicMenuBuilder)}.{nameof(BuildsPages)}(): if (pages.Count == 0)");
+            }
+        }
+        private void ResponseAnalizeAndBuild(bool isView=false)
+        {
+            if (model == null) return;
+            var rootResponse = model.Responce;
+            var resp = rootResponse.GetListResponse;
+            var paylist = resp.PayRecord;
+            if (paylist.Count > 1)
+            {
+                pages.NewPage();
+                foreach (var payrec in paylist)
+                {
+                    var button = ButtonSelect(payrec);
+                    CheckButtonCommand(button, paylist.Last() == payrec);
+                    pages.AddControl(button);
+                }
+            }
+            if (paylist.Count == 1)
+            {
+                var attrRecords = paylist.First().AttrRecord;
+                //Display every lookup as 1 page
+                foreach (var attr in attrRecords)
+                {
+                    if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
+                    {
+                        List<Lookup> lookups = paylist?.First()?.Lookups;
+                        Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower())?.Single();
+                        
+                        pages.NewPage();
+                        LookupButtons(selectedLookup);
+                        pages.NewPage();
+                    }
+                }
+                pages.NewPage();
+                //first display filled data attrs
+                foreach (var attr in attrRecords)
+                {
+                    if (attr.Edit != 1 && attr.View == 1)
+                    {
+                        var label = new Label();
+                        label.Content = $"{attr.Name} = {attr.Value}";
+
+                        pages.AddControl(label);
+                        pages.AddControl(new TextBlock());
+                    }
+                }
+                //at last display attrs need to enter with textbox
+                foreach (var attr in attrRecords)
+                {
+                    if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
+                    {
+                        var label = new Label();
+                        label.Content = $"{attr.Name}:";
+                        var inputbox = new TextBox();
+                        int index = model.PayrecToSend.AttrRecord.FindIndex(x => x==attr);
+                        var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+                        inputbox.SetBinding(TextBox.TextProperty, binding);
+
+                        pages.AddControl(label);
+                        pages.AddControl(inputbox);
+                        pages.AddControl(new TextBlock());
+                        break;
+                    }
+                }
+                pages.AddControl(new TextBlock());
+                pages.AddControl(new TextBlock());
+                var button = new Button() 
+                { 
+                    Content="Продолжить",
+                    Command = model.SendVmPayrecCommand
+                };
+                pages.AddControl(button);
             }
         }
 
-        private void ChangeCommandsFromVMToViewClick()
+        private void CheckButtonCommand(Button button, bool isLastPage)
         {
-            for (int i = 0; i < pages.Count-2; i++)
+            if (isLastPage) return;
+            if (fakeCount > 1)
             {
-                var page = pages[i];
-                foreach (UIElement item in page.Children)
-                {
-                    RecurseChildren(item);                    
-                }
+                button.Command = null;
+                button.CommandParameter = null;
+                button.Click += (s, arg) => NextPage();
             }
         }
-        private void RecurseChildren(UIElement arg)
+        private void RecurseRemoveButtonCommands(UIElement arg)
         {
             if(arg is Button)
             {
@@ -87,11 +178,21 @@ namespace WPFApp
                 Panel pnl = arg as Panel;
                 foreach (UIElement item in pnl.Children)
                 {
-                    RecurseChildren(item);
+                    RecurseRemoveButtonCommands(item);
                 }
             }
         }
-
+        private void ChangeCommandsFromVMToViewClick()
+        {
+            for (int i = 0; i < pages.Count - 1; i++)
+            {
+                var page = pages[i];
+                foreach (UIElement item in page.Children)
+                {
+                    RecurseRemoveButtonCommands(item);
+                }
+            }
+        }
         private void NextPage()
         {
             if(pages.IsNextAvaible)
@@ -100,78 +201,9 @@ namespace WPFApp
             }
             else
             {
-
+                throw new NotImplementedException();
             }
         }
-
-        private void BuildsPages()
-        {
-            if (model == null) return;
-            var rootResponse = model.Responce;
-            var resp = rootResponse.GetListResponse;
-            var paylist = resp.PayRecord;
-            if (paylist.Count > 1)
-            {
-                pages.NewPage();
-                foreach (var payrec in paylist)
-                {
-                    var button = ButtonSelect(payrec);
-                    pages.AddControl(button);
-                }
-            }
-            if (paylist.Count == 1)
-            {
-                var attrRecords = paylist.First().AttrRecord;
-                foreach (var attr in attrRecords)
-                {
-                    //Display every lookup as 1 page
-                    if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
-                    {
-                        var lookups = paylist.First().Lookups;
-                        var selectedLookup = lookups.Where(x => x.Name.ToLower() == attr.Lookup.ToLower()).Single();
-                        pages.NewPage();
-                        LookupButtons(selectedLookup);
-                        pages.NewPage();
-                    }
-                }
-                pages.NewPage();
-                foreach (var attr in attrRecords)
-                {
-                    //first display filled data attrs
-                    if (attr.Edit != 1 && attr.View == 1)
-                    {
-                        var label = new Label();
-                        label.Content = $"{attr.Name} = {attr.Value}";
-
-                        pages.AddControl(label);
-                        pages.AddControl(new TextBlock());
-                    }
-                }
-                foreach (var attr in attrRecords)
-                {
-                    //at last display attrs need to enter with textbox
-                    if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
-                    {
-                        var label = new Label();
-                        label.Content = $"{attr.Name}:";
-                        var inputbox = new TextBox();
-                        inputbox.SetBinding(TextBox.TextProperty, new Binding("Test.StornoMode") { Source=model });
-                        
-                        pages.AddControl(label);
-                        pages.AddControl(inputbox);
-                        pages.AddControl(new TextBlock());
-                        break;
-                    }
-                }
-                pages.AddControl(new TextBlock());
-                pages.AddControl(new TextBlock());
-                pages.AddControl(new Button() 
-                { 
-                    Content = "Продолжить", 
-                });
-            }
-        }
-
         private void LookupButtons(XmlStructureComplat.Lookup selectedLookup)
         {
             pages.AddControl(new Label(){ Content = selectedLookup.Name});
@@ -182,23 +214,15 @@ namespace WPFApp
                 {
                     Content = $"{x.Value}",
                 });
-                pages.AddControl(new TextBlock());
             });
         }
-
-        private StackPanel ButtonSelect(XmlStructureComplat.PayRecord payrec)
+        private Button ButtonSelect(XmlStructureComplat.PayRecord payrec)
         {
-            var frame = new StackPanel() { Orientation = Orientation.Vertical };
             var button = new Button();
-            button.Command = model.NextPageCommand;
-            button.CommandParameter = payrec;
             button.Content = payrec.Name;
-            //button.SetBinding(Button.CommandProperty, "NextPageCommand");
-            //button.SetBinding(Button.CommandParameterProperty, new Binding(){ Source = it });
-            frame.Children.Add(button);
-            frame.Children.Add(new TextBlock());
-            //form.Controls.Add(frame);
-            return frame;
+            button.Command = model.SendParamCommand;
+            button.CommandParameter = payrec;
+            return button;
         }
     }
 }
