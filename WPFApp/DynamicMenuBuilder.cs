@@ -23,14 +23,14 @@ namespace WPFApp
         private int fakeCount;
         #endregion
         #region ctor
-        public DynamicMenuBuilder(Window incWindow, iControls Controls)
+        public DynamicMenuBuilder(Window incWindow/*, iControls Controls*/)
         {
             window = incWindow;
-            _Controls = Controls;
+            //_Controls = Controls;
             try
             {
                 model = window.DataContext as DynamicMenuWindowViewModel;
-                model.ResponseChangedEvent += BuildMenuOnReponse;
+                model.NewResponseComeEvent += BuildMenuOnReponse;
                 model.PropertyChanged += IsLoadingMenuChanged;
             }
             catch (Exception ex)
@@ -42,9 +42,8 @@ namespace WPFApp
 
         private void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "IsLoadingMenu")
+            if(e.PropertyName == nameof(model.IsLoadingMenu))
             {
-                window.Content = null;
                 window.Content = "Loading...";
             }
         }
@@ -68,19 +67,21 @@ namespace WPFApp
             this.fakeCount = pages.Count;
             if (pages.Count == 1)
             {
-                window.Content = pages.Page;
+                //window.Content = pages.Page;
+                this.NextPage();
             }
             if (pages.Count > 1)
             {
                 this.pages = new PagesList();
                 this.ResponseAnalizeAndBuild();
+                this.NextPage();
             }
-            if (pages.Count == 0)
+            if (pages.Count <= 0)
             {
                 throw new NotImplementedException($"{nameof(DynamicMenuBuilder)}.{nameof(BuildsPages)}(): if (pages.Count == 0)");
             }
         }
-        private void ResponseAnalizeAndBuild(bool isView=false)
+        private void ResponseAnalizeAndBuild()
         {
             if (model == null) return;
             var rootResponse = model.Responce;
@@ -99,21 +100,36 @@ namespace WPFApp
             if (paylist.Count == 1)
             {
                 var attrRecords = paylist.First().AttrRecord;
-                //Display every lookup as 1 page
+                //LOOKUPs display every lookup as 1 page
                 foreach (var attr in attrRecords)
                 {
                     if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                     {
                         List<Lookup> lookups = paylist?.First()?.Lookups;
                         Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower())?.Single();
-                        
+                        int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                         pages.NewPage();
-                        LookupButtons(selectedLookup);
+                        var childVM = model.LookupVM;
+                        pages.AddDataContext(childVM);
+                        pages.AddControl(new Label() { Content = selectedLookup.Name });
+                        var lookItems = selectedLookup.Item;
+                        lookItems.ForEach(arg =>
+                        {
+                            var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+                            binding.Mode = BindingMode.OneWay;
+                            var btn = new Button();
+                            btn.Content = arg.Value;
+                            btn.Command = childVM.SelectLookupCommand;
+                            btn.CommandParameter = arg;
+                            btn.Click += (sender, evArg) => NextPage();
+                            pages.AddControl(btn);
+                        });
+                        //LookupButtons(selectedLookup);
                         pages.NewPage();
                     }
                 }
                 pages.NewPage();
-                //first display filled data attrs
+                //ATTRs first display filled data attrs
                 foreach (var attr in attrRecords)
                 {
                     if (attr.Edit != 1 && attr.View == 1)
@@ -125,7 +141,7 @@ namespace WPFApp
                         pages.AddControl(new TextBlock());
                     }
                 }
-                //at last display attrs need to enter with textbox
+                //ATTRs at last display attrs need to enter with textbox
                 foreach (var attr in attrRecords)
                 {
                     if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
@@ -193,7 +209,7 @@ namespace WPFApp
                 }
             }
         }
-        private void NextPage()
+        private void NextPage(object param=null)
         {
             if(pages.IsNextAvaible)
             {
@@ -201,7 +217,7 @@ namespace WPFApp
             }
             else
             {
-                throw new NotImplementedException();
+                model.SendParamCommand.Execute(param);
             }
         }
         private void LookupButtons(XmlStructureComplat.Lookup selectedLookup)

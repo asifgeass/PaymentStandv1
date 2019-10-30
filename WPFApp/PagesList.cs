@@ -12,7 +12,7 @@ namespace WPFApp
     {
         #region fields
         private List<Panel> pages = new List<Panel>();
-        private int currentPageIndex = 0;
+        private int currentPageIndex = -1;
         private StackPanel tempPnl = new StackPanel();
         #endregion
         #region Public Methods
@@ -25,7 +25,7 @@ namespace WPFApp
         public Panel NextPage()
         {
             //var retur = pages[currentPageIndex];
-            if (pages.Count - 1 > currentPageIndex)
+            if (IsNextAvaible)
             {
                 currentPageIndex++;
             }
@@ -52,13 +52,19 @@ namespace WPFApp
                 pages.Add(tempPnl);
             }
             tempPnl.Children.Add(arg);
+            tempPnl.Children.Add(new TextBlock());//TEMPORAL MARGIN
+            return this;
+        }
+        public PagesList AddDataContext(object arg)
+        {
+            tempPnl.DataContext = arg;
             return this;
         }
         #endregion
         #region Properties
         public Panel this[int index] => pages[index];
         public bool IsNextAvaible => pages.Count-1 > currentPageIndex;
-        public int Count { get => (tempPnl.Children.Count==0) ? pages.Count-1 : pages.Count; }
+        public int Count { get => (tempPnl.Children.Count<=0) ? pages.Count-1 : pages.Count; }
         public Panel Page
             => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count==0)
             ? null : pages[currentPageIndex];

@@ -13,7 +13,8 @@ namespace WPFApp.ViewModels
 {
     public class DynamicMenuWindowViewModel : BindableBase
     {
-        public event Action ResponseChangedEvent = ()=>{ };
+        public event Action NewResponseComeEvent = ()=>{ };
+
         #region ctor
         public DynamicMenuWindowViewModel()
         {
@@ -23,9 +24,11 @@ namespace WPFApp.ViewModels
             LoadedCommand = new DelegateCommand(()=> NextPage(null));
             SendVmPayrecCommand = new DelegateCommand(() => NextPage(PayrecToSend));
             SendVmAttrCommand = new DelegateCommand(() => NextPage(AttrToSend));
-            LookupCommand = new DelegateCommand<Lookup>(SetLookup);
+            LookupCommand = new DelegateCommand<LookupItem>(SetLookup);
+            NewResponseComeEvent += ()=>ClearLookup();
         }
         #endregion
+
         #region fields
         private object _selectedXmlArg;
         private string _labelGroup;
@@ -34,15 +37,19 @@ namespace WPFApp.ViewModels
         private PS_ERIP _responce;
         private PayRecord _payrecToSend;
         private List<AttrRecord> _attrToSend;
+        private LookupVM _lookupVM;
+        private List<LookupVM> _lookupVMList = new List<LookupVM>();
         #endregion
+
         #region Properties
         public PS_ERIP Responce 
         {
             get => _responce;
             set 
-            { 
-                SetProperty(ref _responce, value, ResponseChangedEvent);
-                PayrecToSend = value?.GetListResponse?.PayRecord?.FirstOrDefault();
+            {
+                if (value.GetListResponse.PayRecord.Count == 1)
+                { PayrecToSend = value?.GetListResponse?.PayRecord?.FirstOrDefault(); }
+                SetProperty(ref _responce, value, NewResponseComeEvent);
             }
         }
         public PayRecord PayrecToSend
@@ -50,8 +57,8 @@ namespace WPFApp.ViewModels
             get => _payrecToSend;
             set
             {
-                SetProperty(ref _payrecToSend, value);
                 AttrToSend = value?.AttrRecord;
+                SetProperty(ref _payrecToSend, value);
             }
         }
         public List<AttrRecord> AttrToSend
@@ -59,6 +66,16 @@ namespace WPFApp.ViewModels
             get => _attrToSend;
             set => SetProperty(ref _attrToSend, value);
         }
+        public LookupVM LookupVM
+        {
+            get
+            {
+                var vm = new LookupVM();
+                _lookupVMList.Add(vm);
+                return vm;
+            }
+        }
+        public List<LookupVM> ChildLookupVMList => _lookupVMList;
         public object SelectedXmlArg
         {
             get => _selectedXmlArg;
@@ -80,27 +97,52 @@ namespace WPFApp.ViewModels
             set => SetProperty(ref _isLoadingMenu, value);
         }
         #endregion
-        #region Commands Public
+
+        #region Public Commands
         public DelegateCommand<string> SetParentGroupHeaderCommand { get; }
         public DelegateCommand<string> SetCurrMenuHeaderCommand { get; }
         public DelegateCommand<object> SendParamCommand { get; }
-        public DelegateCommand<Lookup> LookupCommand { get; }
+        public DelegateCommand<LookupItem> LookupCommand { get; }
         public DelegateCommand LoadedCommand { get; }
         public DelegateCommand SendVmPayrecCommand { get; }
         public DelegateCommand SendVmAttrCommand { get; }
         #endregion
-        #region Command Methods
+
+        #region Private Methods
         private async void NextPage(object param)
         {
             IsLoadingMenu = !IsLoadingMenu;
             //IsLoadingMenu = true;
-            Responce = await ResponceBuilder.NextPage(param);
+            //LookupVMList.ForEach(item => item.Lookup.SelectedItem.Value);
+            FillPayrecToSendWithLookup();
+            Responce = await ResponceBuilder.NextPage(param ?? PayrecToSend);
             //IsLoadingMenu = false;
         }
-        private async void SetLookup(Lookup param)
-        {
 
+        private void FillPayrecToSendWithLookup()
+        {
+            foreach (var lookupVM in ChildLookupVMList)
+            {
+                foreach (var attr in PayrecToSend?.AttrRecord)
+                {
+                    if (attr?.Lookup == lookupVM?.Lookup?.Name)
+                    {
+                        attr.Value = lookupVM?.Lookup?.SelectedItem?.Value;
+                    }
+                }
+            }
         }
+
+        private async void ClearLookup()
+        {
+            _lookupVMList = new List<LookupVM>();
+            _lookupVM = null; ;
+        }
+        private async void SetLookup(LookupItem param)
+        {
+            
+        }
+
         #endregion
     }
 }

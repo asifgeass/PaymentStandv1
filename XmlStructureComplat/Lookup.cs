@@ -14,5 +14,8 @@ namespace XmlStructureComplat
         public string Name { get; set; }
         [XmlElement]
         public List<LookupItem> Item { get; set; }
+
+        [XmlIgnore]
+        public LookupItem SelectedItem { get; set; }
     }
 }
