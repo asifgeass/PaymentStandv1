@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace WPFApp
         private DynamicMenuWindowViewModel model;
         private Window window;
         private FormAround form = new FormAround();
-        private PagesList pages = new PagesList();
+        private ViewPagesList pages = new ViewPagesList();
         private iControls _Controls;
         private int fakeCount;
         #endregion
@@ -53,7 +54,7 @@ namespace WPFApp
         #endregion
         private void ClearOnResponse()
         {
-            pages = new PagesList();
+            pages = new ViewPagesList();
             fakeCount = 0;
         }
         private void BuildMenuOnReponse()
@@ -63,7 +64,7 @@ namespace WPFApp
         }
         private void BuildsPages()
         {
-            this.ResponseAnalizeAndBuild(true);
+            this.ResponseAnalizeAndBuild();
             this.fakeCount = pages.Count;
             if (pages.Count == 1)
             {
@@ -72,7 +73,9 @@ namespace WPFApp
             }
             if (pages.Count > 1)
             {
-                this.pages = new PagesList();
+                this.pages = new ViewPagesList();
+                model.ClearChildLookupVM();
+                Trace.WriteLine($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
                 this.ResponseAnalizeAndBuild();
                 this.NextPage();
             }
@@ -81,7 +84,7 @@ namespace WPFApp
                 throw new NotImplementedException($"{nameof(DynamicMenuBuilder)}.{nameof(BuildsPages)}(): if (pages.Count == 0)");
             }
         }
-        private void ResponseAnalizeAndBuild(bool isFake=false)
+        private void ResponseAnalizeAndBuild()
         {
             if (model == null) return;
             var rootResponse = model.Responce;
@@ -105,22 +108,20 @@ namespace WPFApp
                 {
                     if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                     {
+                        Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
                         List<Lookup> lookups = paylist?.First()?.Lookups;
-                        Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower())?.Single();
+                        Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower() )?.Single();
                         int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                        pages.NewPage();
-                        LookupVM childVM = new LookupVM();
-                        if(!isFake)
-                        {
-                            childVM = model.GetNewLookupVM();
-                            pages.AddDataContext(childVM);
-                        }
+                        pages.NewPage();                        
+                        LookupVM childVM = model.GetNewLookupVM();
+                        childVM.Lookup = selectedLookup;
+                        pages.AddDataContext(childVM);                        
                         pages.AddControl(new Label() { Content = selectedLookup.Name });
                         var lookItems = selectedLookup.Item;
                         lookItems.ForEach(arg =>
                         {
-                            var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
-                            binding.Mode = BindingMode.OneWay;
+                            //var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+                            //binding.Mode = BindingMode.OneWay;
                             var btn = new Button();
                             btn.Content = arg.Value;
                             btn.Command = childVM?.SelectLookupCommand;
@@ -132,17 +133,18 @@ namespace WPFApp
                         pages.NewPage();
                     }
                 }
+                Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): After LOOKup ViewPages={pages.Count};");
                 pages.NewPage();
                 //ATTRs first display filled data attrs
                 foreach (var attr in attrRecords)
                 {
                     if (attr.Edit != 1 && attr.View == 1)
                     {
+                        Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
                         var label = new Label();
                         label.Content = $"{attr.Name} = {attr.Value}";
-
+                        label.BorderThickness = new Thickness(4);
                         pages.AddControl(label);
-                        pages.AddControl(new TextBlock());
                     }
                 }
                 //ATTRs at last display attrs need to enter with textbox
@@ -150,6 +152,7 @@ namespace WPFApp
                 {
                     if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                     {
+                        Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
                         var label = new Label();
                         label.Content = $"{attr.Name}:";
                         var inputbox = new TextBox();
@@ -159,8 +162,6 @@ namespace WPFApp
 
                         pages.AddControl(label);
                         pages.AddControl(inputbox);
-                        pages.AddControl(new TextBlock());
-                        break;
                     }
                 }
                 pages.AddControl(new TextBlock());
@@ -215,6 +216,7 @@ namespace WPFApp
         }
         private void NextPage(object param=null)
         {
+            Trace.WriteLine($"DynamicMenuBuilder.Next VIEW Page: {pages.IsNextAvaible}; Current={pages.CurrIndex} Count={pages.Count}");
             if(pages.IsNextAvaible)
             {
                 window.Content = pages.NextPage();

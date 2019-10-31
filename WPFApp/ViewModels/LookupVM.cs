@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ namespace WPFApp.ViewModels
 
         private void SetLookup(LookupItem arg)
         {
+            Trace.WriteLine($"{nameof(LookupVM)}.{nameof(SetLookup)}(): Lookup name={Lookup.Name}; newValue={arg};");
             if (Lookup == null) { Lookup = new Lookup(); }
             Lookup.SelectedItem = arg;
         }

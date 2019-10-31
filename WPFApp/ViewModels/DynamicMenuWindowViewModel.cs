@@ -8,6 +8,7 @@ using Prism.Mvvm;
 using Prism.Ioc;
 using Logic;
 using XmlStructureComplat;
+using System.Diagnostics;
 
 namespace WPFApp.ViewModels
 {
@@ -59,6 +60,7 @@ namespace WPFApp.ViewModels
             {
                 AttrToSend = value?.AttrRecord;
                 SetProperty(ref _payrecToSend, value);
+                //Trace.WriteLine($"{nameof(PayrecToSend)}():");
             }
         }
         public List<AttrRecord> AttrToSend
@@ -71,6 +73,10 @@ namespace WPFApp.ViewModels
             var vm = new LookupVM();
             _lookupVMList.Add(vm);
             return vm;
+        }
+        public void ClearChildLookupVM()
+        {
+            _lookupVMList = new List<LookupVM>();
         }
         public List<LookupVM> ChildLookupVMList => _lookupVMList;
         public object SelectedXmlArg
@@ -106,25 +112,30 @@ namespace WPFApp.ViewModels
         #endregion
 
         #region Private Methods
-        private async void NextPage(object param)
+        private async void NextPage(object param=null)
         {
             IsLoadingMenu = !IsLoadingMenu;
             //IsLoadingMenu = true;
             //LookupVMList.ForEach(item => item.Lookup.SelectedItem.Value);
             FillPayrecToSendWithLookup();
+            Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
             Responce = await ResponceBuilder.NextPage(param ?? PayrecToSend);
             //IsLoadingMenu = false;
         }
 
         private void FillPayrecToSendWithLookup()
         {
+            Trace.WriteLine($"{nameof(FillPayrecToSendWithLookup)}(): childVM count={ChildLookupVMList.Count}");
             foreach (var lookupVM in ChildLookupVMList)
             {
+                var selectedValue = lookupVM?.Lookup?.SelectedItem?.Value;
+                Trace.WriteLine($"{nameof(FillPayrecToSendWithLookup)}(): lookup: name={lookupVM.Lookup.Name}; selected value={selectedValue}");
                 foreach (var attr in PayrecToSend?.AttrRecord)
                 {
-                    if (attr?.Lookup == lookupVM?.Lookup?.Name)
+                    if (attr?.Lookup == lookupVM?.Lookup?.Name && attr?.Lookup!=null)
                     {
-                        attr.Value = lookupVM?.Lookup?.SelectedItem?.Value;
+                        Trace.WriteLine($"{nameof(FillPayrecToSendWithLookup)}(): Match! attr: name={attr.Name}; value={attr.Value}; newValue={selectedValue}");
+                        attr.Value = selectedValue;
                     }
                 }
             }
