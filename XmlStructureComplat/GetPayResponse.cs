@@ -8,24 +8,10 @@ using System.Xml.Serialization;
 namespace XmlStructureComplat
 {
     [XmlRoot]
-    public partial class GetListResponse
+    public partial class GetPayResponse
     {
-        private int errorCodeField;
-
         private List<PayRecord> payRecordField;
-
-        /// <remarks/>
-        public int ErrorCode
-        {
-            get
-            {
-                return this.errorCodeField;
-            }
-            set
-            {
-                this.errorCodeField = value;
-            }
-        }
+        public int ErrorCode { get; set; }
         public string ErrorText { get; set; }
         public string TerminalID { get; set; }
         public string Version { get; set; }
@@ -39,18 +25,9 @@ namespace XmlStructureComplat
         public string KioskReceipt { get; set; }
         public string KioskError { get; set; }
         public string PayRecordCount { get; set; }
-
         [XmlElement()]
-        public List<PayRecord> PayRecord
-        {
-            get
-            {
-                return this.payRecordField;
-            }
-            set
-            {
-                this.payRecordField = value;
-            }
-        }
+        public List<PayRecord> PayRecord { get; set; }
+        [XmlElement()]
+        public List<AttrRecordRequest> AttrRecord { get; set; }
     }
 }

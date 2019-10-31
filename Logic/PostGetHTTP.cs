@@ -36,6 +36,7 @@ namespace Logic
                 string timings = "";
                 XDocument msg;
                 timer.Restart();
+                Debug.WriteLine($"=>>\n{requestXml}\n=>>");
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
                     timer.Stop();

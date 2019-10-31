@@ -1,6 +1,28 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <all>
-  <!--2.1 responce:-->
+  <PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <GetPayListRequest>
+      <ErrorCode>0</ErrorCode>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <PayCode>411</PayCode>
+      <SessionId>97309130-1</SessionId>
+      <AttrRecord Code="0" Name="Регистрационный знак транспорт" Value="1234567" CodeOut="10001" Change="1" />
+      <AttrRecord Code="0" Name="Свидетельство о регистрации" Value="регистрация" CodeOut="10002" Change="1" />
+      <AttrRecord Code="0" Name="УНП плательщика" Value="унп плательщика" CodeOut="10003" Change="1" />
+      <AttrRecord Code="0" Name="Тип транспортного средства" Value="Легковой автомобиль" CodeOut="10004" Change="1" />
+      <AttrRecord Code="0" Name="Разрешенная максимальная масса" Value="Не более 1,5 тонны" CodeOut="10005" Change="1" />
+      <AttrRecord Code="0" Name="Коэффициенты госпошлины" Value="0,5" CodeOut="10006" Change="1" />
+    </GetPayListRequest>
+  </PS_ERIP>
+  Responce
+  <PS_ERIP>
+    <GetPayListResponse>
+      <ErrorCode>811313</ErrorCode>
+      <ErrorText>Ошибка валидации атрибута (сессия): 97309130, код атрибута: 10003). Значение 10003 атрибута - "УНП плательщика" не целочисленное</ErrorText>
+    </GetPayListResponse>
+  </PS_ERIP>
+  
   <PS_ERIP>
     <GetPayListResponse>
       <ErrorCode>0</ErrorCode>
@@ -18,10 +40,14 @@
       </PayRecord>
     </GetPayListResponse>
   </PS_ERIP>
-
   <!--2.1 responce:-->
-  <ErrorCode>811310</ErrorCode>
-  <ErrorText>Ошибка валидации атрибута (сессия): 86247690, код атрибута: 10001). Обязательный атрибут отсутствует в запросе</ErrorText>
-  <ErrorCode>880600</ErrorCode>
-  <ErrorText>ERIP: Комплат: Внутренняя ошибка. Необходимопереустановить соединение со шлюзом.</ErrorText>
+  <PS_ERIP>
+    <GetPayListResponse>
+      <ErrorCode>811310</ErrorCode>
+      <ErrorText>Ошибка валидации атрибута (сессия): 86247690, код атрибута: 10001). Обязательный атрибут отсутствует в запросе</ErrorText>
+      <ErrorCode>880600</ErrorCode>
+      <ErrorText>ERIP: Комплат: Внутренняя ошибка. Необходимопереустановить соединение со шлюзом.</ErrorText>
+    </GetPayListResponse>
+  </PS_ERIP>
+
 </all>

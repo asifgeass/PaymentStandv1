@@ -63,10 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EripList.cs" />
+    <Compile Include="XmlHistory.cs" />
     <Compile Include="EripRequest.cs" />
     <Compile Include="Helpers\SerializationUtil.cs" />
-    <Compile Include="PagesManager.cs" />
+    <Compile Include="XmlTransactionsManager.cs" />
     <Compile Include="PostGetHTTP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponceBuilder.cs" />

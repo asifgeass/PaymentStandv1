@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class EripList
+    public class XmlHistory
     {
         #region fields
         private List<EripRequest> list = new List<EripRequest>();

@@ -86,7 +86,7 @@ namespace WPFApp
         }
         private void ResponseAnalizeAndBuild()
         {
-            if (model == null) return;
+            if (model == null) { throw new NullReferenceException("main VM = null"); };
             var rootResponse = model.Responce;
             var resp = rootResponse.GetListResponse;
             var paylist = resp.PayRecord;

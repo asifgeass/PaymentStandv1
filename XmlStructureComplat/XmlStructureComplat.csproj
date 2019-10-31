@@ -42,11 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttrRecord.cs" />
+    <Compile Include="AttrRecordRequest.cs" />
     <Compile Include="CheckFolder\Check.cs" />
     <Compile Include="CheckFolder\CheckFooter.cs" />
     <Compile Include="CheckFolder\CheckHeader.cs" />
     <Compile Include="CheckFolder\CheckLine.cs" />
-    <Compile Include="GetListResponse.cs" />
+    <Compile Include="GetPayResponse.cs" />
     <Compile Include="GroupRecord.cs" />
     <Compile Include="Lookup.cs" />
     <Compile Include="LookupItem.cs" />

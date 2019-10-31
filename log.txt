@@ -1,0 +1,414 @@
+'WPFExeLauncher.exe' (CLR v4.0.30319: DefaultDomain): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\mscorlib\v4.0_4.0.0.0__b77a5c561934e089\mscorlib.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: DefaultDomain): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\WPFExeLauncher.exe'. Symbols loaded.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework\v4.0_4.0.0.0__31bf3856ad364e35\PresentationFramework.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\WindowsBase\v4.0_4.0.0.0__31bf3856ad364e35\WindowsBase.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Core\v4.0_4.0.0.0__b77a5c561934e089\System.Core.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System\v4.0_4.0.0.0__b77a5c561934e089\System.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_32\PresentationCore\v4.0_4.0.0.0__31bf3856ad364e35\PresentationCore.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xaml\v4.0_4.0.0.0__b77a5c561934e089\System.Xaml.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\PrivateAssemblies\Runtime\Microsoft.VisualStudio.Debugger.Runtime.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Configuration\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Configuration.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+Step into: Stepping over non-user code 'WPFExeLauncher.App..ctor'
+Step into: Stepping over non-user code 'WPFExeLauncher.App.InitializeComponent'
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\MaterialDesignThemes.Wpf.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\MaterialDesignColors.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\mscorlib.resources\v4.0_4.0.0.0_ru_b77a5c561934e089\mscorlib.resources.dll'. Module was built without symbols.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\WPFApp.dll'. Symbols loaded.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\Prism.Wpf.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\Prism.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\XmlStructureComplat.dll'. Symbols loaded.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\System.Windows.Interactivity.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework.Aero2\v4.0_4.0.0.0__31bf3856ad364e35\PresentationFramework.Aero2.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Users\admin\AppData\Local\Temp\VisualStudio.XamlDiagnostics.2904\Microsoft.VisualStudio.DesignTools.WpfTap.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Serialization\v4.0_4.0.0.0__b77a5c561934e089\System.Runtime.Serialization.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\SMDiagnostics\v4.0_4.0.0.0__b77a5c561934e089\SMDiagnostics.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.ServiceModel.Internals\v4.0_4.0.0.0__31bf3856ad364e35\System.ServiceModel.Internals.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\UIAutomationTypes\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationTypes.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Projects\PaymentStand\WPFExeLauncher\bin\Debug\Logic.dll'. Symbols loaded.
+FillPayrecToSendWithLookup(): childVM count=0
+VM => Logic NextPage() param=; PayrecToSend=
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Xml.Linq\v4.0_4.0.0.0__b77a5c561934e089\System.Xml.Linq.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Net.Http\v4.0_4.0.0.0__b03f5f7f11d50a3a\System.Net.Http.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemXmlLinq\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemXmlLinq.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemXml\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemXml.dll'. Skipped loading symbols. Module is optimized and the debugger option 'Just My Code' is enabled.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationCore.resources\v4.0_4.0.0.0_ru_31bf3856ad364e35\PresentationCore.resources.dll'. Module was built without symbols.
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'Microsoft.GeneratedCode'. 
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\System.Runtime.Serialization.resources\v4.0_4.0.0.0_ru_b77a5c561934e089\System.Runtime.Serialization.resources.dll'. Module was built without symbols.
+=>>
+<?xml version="1.0" encoding="UTF-8" standalone='yes'?>
+
+<PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GetPayListRequest>
+    <ErrorCode>0</ErrorCode>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <PayCode>400</PayCode>
+  </GetPayListRequest>
+</PS_ERIP>
+=>>
+
+<PS_ERIP>
+  <GetPayListResponse>
+    <ErrorCode>0</ErrorCode>
+    <PayRecord Code="403" Name="Индивидуальный предприниматель" GetPayListType="1">
+      <GroupRecord Code="400" Name="Гостехосмотр" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+    <PayRecord Code="401" Name="Физическое лицо" GetPayListType="2">
+      <GroupRecord Code="400" Name="Гостехосмотр" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+    <PayRecord Code="402" Name="Юридическое лицо" GetPayListType="1">
+      <GroupRecord Code="400" Name="Гостехосмотр" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+  </GetPayListResponse>
+</PS_ERIP>
+
+
+
+ViewPagesList.NewPage(): pages=1; tempPanel.Children=0
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=6
+DynamicMenuBuilder.Next VIEW Page: True; Current=-1 Count=1
+ViewPagesList.NextPage(): index=-1; count=1;
+FillPayrecToSendWithLookup(): childVM count=0
+VM => Logic NextPage() param=XmlStructureComplat.PayRecord; PayrecToSend=
+=>>
+<?xml version="1.0" encoding="UTF-8" standalone='yes'?>
+
+<PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GetPayListRequest>
+    <ErrorCode>0</ErrorCode>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <PayCode>401</PayCode>
+  </GetPayListRequest>
+</PS_ERIP>
+=>>
+
+<PS_ERIP>
+  <GetPayListResponse>
+    <ErrorCode>0</ErrorCode>
+    <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="2" View="0" />
+    </PayRecord>
+    <PayRecord Code="421" Name="Гостехосмотр" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+    <PayRecord Code="441" Name="Идентификация ТС, регистрация и оформление разрешения" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+    <PayRecord Code="451" Name="Повторный техосмотр" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+    <PayRecord Code="431" Name="Прочие административные процедуры" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+    <PayRecord Code="461" Name="Прочие услуги" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="861" Name="Счетчик запросов" Type="I" Mandatory="1" Value="0" View="0" />
+    </PayRecord>
+  </GetPayListResponse>
+</PS_ERIP>
+
+
+
+ViewPagesList.NewPage(): pages=1; tempPanel.Children=0
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=8
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=10
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=12
+DynamicMenuBuilder.Next VIEW Page: True; Current=-1 Count=1
+ViewPagesList.NextPage(): index=-1; count=1;
+FillPayrecToSendWithLookup(): childVM count=0
+VM => Logic NextPage() param=XmlStructureComplat.PayRecord; PayrecToSend=
+=>>
+<?xml version="1.0" encoding="UTF-8" standalone='yes'?>
+
+<PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GetPayListRequest>
+    <ErrorCode>0</ErrorCode>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <PayCode>411</PayCode>
+  </GetPayListRequest>
+</PS_ERIP>
+=>>
+
+<PS_ERIP>
+  <GetPayListResponse>
+    <ErrorCode>0</ErrorCode>
+    <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="0" Fine="0.00" PayCommission="0.00" SessionId="97316940-1" Edit="0" GetPayListType="1">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <Lookups>
+        <Lookup Name="КОЭФФИЦИЕНТЫ Ф/Л">
+          <Item Name="Коэффициент 0,5 (для ТС, собственником которого являются ветеран ВОВ, инвалид I или II группы)">0,5</Item>
+          <Item Name="Коэффициент 2 (для ТС со сроком разрешения на допуск к участию в дорожном движении 2 года)">2</Item>
+        </Lookup>
+        <Lookup Name="МАССА АВТО">
+          <Item Name="Не более 1,5 тонны">Не более 1,5 тонны</Item>
+          <Item Name="Более 1,5 тонны, но не более 2 тонн">Более 1,5 тонны, но не более 2 тонн</Item>
+          <Item Name="Более 2 тонны, но не более 3 тонн">Более 2 тонны, но не более 3 тонн</Item>
+        </Lookup>
+        <Lookup Name="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ">
+          <Item Name="Легковой автомобиль">Легковой автомобиль</Item>
+          <Item Name="Прицеп">Прицеп</Item>
+          <Item Name="Прицеп-дача">Прицеп-дача</Item>
+          <Item Name="Грузовой автомобиль">Грузовой автомобиль</Item>
+          <Item Name="Автобус">Автобус</Item>
+          <Item Name="Мотоцикл">Мотоцикл</Item>
+          <Item Name="Мопед">Мопед</Item>
+          <Item Name="Квадрицикл">Квадрицикл</Item>
+          <Item Name="Седельный тягач">Седельный тягач</Item>
+        </Lookup>
+      </Lookups>
+      <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="8" Mandatory="1" Edit="1" View="1" Hint="Введите регистрационный знак авто" />
+      <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Edit="1" View="1" />
+      <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="0" Edit="1" View="1" />
+      <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ" View="1" />
+      <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" MinLength="0" MaxLength="30" Edit="1" Lookup="МАССА АВТО" View="1" />
+      <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" MinLength="0" MaxLength="30" Edit="1" Lookup="КОЭФФИЦИЕНТЫ Ф/Л" View="1" />
+    </PayRecord>
+  </GetPayListResponse>
+</PS_ERIP>
+
+
+
+ResponseAnalizeAndBuild(): LOOKUP display add: attr=Тип транспортного средства Lookup=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ
+ViewPagesList.NewPage(): pages=1; tempPanel.Children=0
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ViewPagesList.AddDataContext(): pages=1; tempPanel.Children=0
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=8
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=10
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=12
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=14
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=16
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=18
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=20
+ViewPagesList.NewPage(): pages=2; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ResponseAnalizeAndBuild(): LOOKUP display add: attr=Разрешенная максимальная масса Lookup=МАССА АВТО
+ViewPagesList.NewPage(): pages=2; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ViewPagesList.AddDataContext(): pages=2; tempPanel.Children=0
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=8
+ViewPagesList.NewPage(): pages=3; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ResponseAnalizeAndBuild(): LOOKUP display add: attr=Коэффициенты госпошлины Lookup=КОЭФФИЦИЕНТЫ Ф/Л
+ViewPagesList.NewPage(): pages=3; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ViewPagesList.AddDataContext(): pages=3; tempPanel.Children=0
+ViewPagesList.AddControl(): pages=3; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=3; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=3; tempPanel.Children=6
+ViewPagesList.NewPage(): pages=4; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ResponseAnalizeAndBuild(): After LOOKup ViewPages=3;
+ViewPagesList.NewPage(): pages=4; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ResponseAnalizeAndBuild(): ATTR input: attr=Регистрационный знак транспорт
+'WPFExeLauncher.exe' (CLR v4.0.30319: WPFExeLauncher.exe): Loaded 'C:\Windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework.resources\v4.0_4.0.0.0_ru_31bf3856ad364e35\PresentationFramework.resources.dll'. Module was built without symbols.
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=4
+ResponseAnalizeAndBuild(): ATTR input: attr=Свидетельство о регистрации
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=8
+ResponseAnalizeAndBuild(): ATTR input: attr=УНП плательщика
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=10
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=12
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=14
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=16
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=18
+BuildsPages(): if(pages.Count > 1) Clear & reBuild
+ResponseAnalizeAndBuild(): LOOKUP display add: attr=Тип транспортного средства Lookup=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ
+ViewPagesList.NewPage(): pages=1; tempPanel.Children=0
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ViewPagesList.AddDataContext(): pages=1; tempPanel.Children=0
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=8
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=10
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=12
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=14
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=16
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=18
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=20
+ViewPagesList.NewPage(): pages=2; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ResponseAnalizeAndBuild(): LOOKUP display add: attr=Разрешенная максимальная масса Lookup=МАССА АВТО
+ViewPagesList.NewPage(): pages=2; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ViewPagesList.AddDataContext(): pages=2; tempPanel.Children=0
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=2; tempPanel.Children=8
+ViewPagesList.NewPage(): pages=3; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ResponseAnalizeAndBuild(): LOOKUP display add: attr=Коэффициенты госпошлины Lookup=КОЭФФИЦИЕНТЫ Ф/Л
+ViewPagesList.NewPage(): pages=3; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ViewPagesList.AddDataContext(): pages=3; tempPanel.Children=0
+ViewPagesList.AddControl(): pages=3; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=3; tempPanel.Children=4
+ViewPagesList.AddControl(): pages=3; tempPanel.Children=6
+ViewPagesList.NewPage(): pages=4; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ResponseAnalizeAndBuild(): After LOOKup ViewPages=3;
+ViewPagesList.NewPage(): pages=4; tempPanel.Children=0
+page[0]=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ;
+page[1]=МАССА АВТО;
+ResponseAnalizeAndBuild(): ATTR input: attr=Регистрационный знак транспорт
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=2
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=4
+ResponseAnalizeAndBuild(): ATTR input: attr=Свидетельство о регистрации
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=6
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=8
+ResponseAnalizeAndBuild(): ATTR input: attr=УНП плательщика
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=10
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=12
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=14
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=16
+ViewPagesList.AddControl(): pages=4; tempPanel.Children=18
+DynamicMenuBuilder.Next VIEW Page: True; Current=-1 Count=4
+ViewPagesList.NextPage(): index=-1; count=4;
+DynamicMenuBuilder.Next VIEW Page: True; Current=0 Count=4
+ViewPagesList.NextPage(): index=0; count=4;
+LookupVM.SetLookup(): Lookup name=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ; newValue=XmlStructureComplat.LookupItem;
+DynamicMenuBuilder.Next VIEW Page: True; Current=1 Count=4
+ViewPagesList.NextPage(): index=1; count=4;
+LookupVM.SetLookup(): Lookup name=МАССА АВТО; newValue=XmlStructureComplat.LookupItem;
+DynamicMenuBuilder.Next VIEW Page: True; Current=2 Count=4
+ViewPagesList.NextPage(): index=2; count=4;
+LookupVM.SetLookup(): Lookup name=КОЭФФИЦИЕНТЫ Ф/Л; newValue=XmlStructureComplat.LookupItem;
+The thread 0x4888 has exited with code 0 (0x0).
+The thread 0x684 has exited with code 0 (0x0).
+The thread 0x28c8 has exited with code 0 (0x0).
+The thread 0x34a0 has exited with code 0 (0x0).
+The thread 0x1a90 has exited with code 0 (0x0).
+The thread 0x1d0 has exited with code 0 (0x0).
+The thread 0x1c7c has exited with code 0 (0x0).
+The thread 0x23c has exited with code 0 (0x0).
+FillPayrecToSendWithLookup(): childVM count=3
+FillPayrecToSendWithLookup(): lookup: name=ТИПЫ ТРАНСПОРТНЫХ СРЕДСТВ; selected value=Легковой автомобиль
+FillPayrecToSendWithLookup(): Match! attr: name=Тип транспортного средства; value=; newValue=Легковой автомобиль
+FillPayrecToSendWithLookup(): lookup: name=МАССА АВТО; selected value=Не более 1,5 тонны
+FillPayrecToSendWithLookup(): Match! attr: name=Разрешенная максимальная масса; value=; newValue=Не более 1,5 тонны
+FillPayrecToSendWithLookup(): lookup: name=КОЭФФИЦИЕНТЫ Ф/Л; selected value=2
+FillPayrecToSendWithLookup(): Match! attr: name=Коэффициенты госпошлины; value=; newValue=2
+VM => Logic NextPage() param=XmlStructureComplat.PayRecord; PayrecToSend=Госпошлина за выдачу разрешения
+The thread 0x22f0 has exited with code 0 (0x0).
+=>>
+<?xml version="1.0" encoding="UTF-8" standalone='yes'?>
+
+<PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GetPayListRequest>
+    <ErrorCode>0</ErrorCode>
+    <TerminalID>TEST_TERMINAL</TerminalID>
+    <Version>3</Version>
+    <PayCode>411</PayCode>
+    <SessionId>97316940-1</SessionId>
+    <AttrRecord Code="0" Name="Регистрационный знак транспорт" Value="1234567" CodeOut="10001" Change="1" />
+    <AttrRecord Code="0" Name="Свидетельство о регистрации" Value="1234567" CodeOut="10002" Change="1" />
+    <AttrRecord Code="0" Name="УНП плательщика" Value="1234567" CodeOut="10003" Change="1" />
+    <AttrRecord Code="0" Name="Тип транспортного средства" Value="Легковой автомобиль" CodeOut="10004" Change="1" />
+    <AttrRecord Code="0" Name="Разрешенная максимальная масса" Value="Не более 1,5 тонны" CodeOut="10005" Change="1" />
+    <AttrRecord Code="0" Name="Коэффициенты госпошлины" Value="2" CodeOut="10006" Change="1" />
+  </GetPayListRequest>
+</PS_ERIP>
+=>>
+The thread 0x4b98 has exited with code 0 (0x0).
+
+<PS_ERIP>
+  <GetPayListResponse>
+    <ErrorCode>0</ErrorCode>
+    <PayRecord Code="411" Name="Госпошлина за выдачу разрешения" StornoMode="S" Commission="0.00" Summa="0.00" View="1" Fine="0.00" PayCommission="0.00" SessionId="97316940-2" Edit="1" GetPayListType="0">
+      <GroupRecord Code="401" Name="Физическое лицо" />
+      <AttrRecord Code="0" CodeOut="10001" Name="Регистрационный знак транспорт" MinLength="6" MaxLength="30" Value="1234567" View="1" Hint="Введите регистрационный знак авто" />
+      <AttrRecord Code="0" CodeOut="10002" Name="Свидетельство о регистрации" MinLength="0" MaxLength="30" Value="1234567" View="1" />
+      <AttrRecord Code="0" CodeOut="10003" Name="УНП плательщика" Type="I" MinLength="0" Value="1234567" View="1" />
+      <AttrRecord Code="0" CodeOut="10004" Name="Тип транспортного средства" MinLength="0" MaxLength="30" Value="Легковой автомобиль" View="1" />
+      <AttrRecord Code="0" CodeOut="10005" Name="Разрешенная максимальная масса" MinLength="0" MaxLength="30" Value="Не более 1,5 тонны" View="1" />
+      <AttrRecord Code="0" CodeOut="10006" Name="Коэффициенты госпошлины" MinLength="0" MaxLength="30" Value="2" View="1" />
+    </PayRecord>
+  </GetPayListResponse>
+</PS_ERIP>
+
+
+
+ResponseAnalizeAndBuild(): After LOOKup ViewPages=-1;
+ViewPagesList.NewPage(): pages=1; tempPanel.Children=0
+Exception thrown: 'System.ArgumentOutOfRangeException' in PresentationCore.dll
+ResponseAnalizeAndBuild(): ATTR filled info display: attr=Регистрационный знак транспорт value=1234567
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=2
+ResponseAnalizeAndBuild(): ATTR filled info display: attr=Свидетельство о регистрации value=1234567
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=4
+ResponseAnalizeAndBuild(): ATTR filled info display: attr=УНП плательщика value=1234567
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=6
+ResponseAnalizeAndBuild(): ATTR filled info display: attr=Тип транспортного средства value=Легковой автомобиль
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=8
+ResponseAnalizeAndBuild(): ATTR filled info display: attr=Разрешенная максимальная масса value=Не более 1,5 тонны
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=10
+ResponseAnalizeAndBuild(): ATTR filled info display: attr=Коэффициенты госпошлины value=2
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=12
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=14
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=16
+ViewPagesList.AddControl(): pages=1; tempPanel.Children=18
+DynamicMenuBuilder.Next VIEW Page: True; Current=-1 Count=1
+ViewPagesList.NextPage(): index=-1; count=1;
+The thread 0x4a08 has exited with code 0 (0x0).
+The thread 0x1b18 has exited with code 0 (0x0).
+FillPayrecToSendWithLookup(): childVM count=0
+VM => Logic NextPage() param=XmlStructureComplat.PayRecord; PayrecToSend=Госпошлина за выдачу разрешения
+The thread 0x17c8 has exited with code 0 (0x0).
+The thread 0x3ae8 has exited with code 0 (0x0).
+=>>
+<?xml version="1.0" encoding="UTF-8" standalone='yes'?>
+
+<PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:nil="true" />
+=>>
+
+<PS_ERIP>
+  <UnknownResponse>
+    <ErrorCode>541057</ErrorCode>
+    <ErrorText>Внутренняя ошибка обработки запроса. Неизвестная команда.
+</ErrorText>
+  </UnknownResponse>
+</PS_ERIP>
+
+
+
+Exception thrown: 'System.NotImplementedException' in WPFApp.dll
+An exception of type 'System.NotImplementedException' occurred in WPFApp.dll but was not handled in user code
+DynamicMenuBuilder.BuildsPages(): if (pages.Count == 0)
+

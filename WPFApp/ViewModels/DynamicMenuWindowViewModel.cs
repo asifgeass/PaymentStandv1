@@ -48,7 +48,7 @@ namespace WPFApp.ViewModels
             get => _responce;
             set 
             {
-                if (value.GetListResponse.PayRecord.Count == 1)
+                if (value?.GetListResponse?.PayRecord?.Count == 1)
                 { PayrecToSend = value?.GetListResponse?.PayRecord?.FirstOrDefault(); }
                 SetProperty(ref _responce, value, NewResponseComeEvent);
             }

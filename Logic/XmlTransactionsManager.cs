@@ -10,10 +10,10 @@ using XmlStructureComplat;
 
 namespace Logic
 {
-    public class PagesManager
+    public class XmlTransactionsManager
     {
         #region fields
-        private EripList list = new EripList();
+        private XmlHistory list = new XmlHistory();
         #endregion
 
         #region Properties
@@ -24,7 +24,7 @@ namespace Logic
         public async Task<PS_ERIP> NextRequest(object arg=null)
         {
             string request = await GetRequestBody(arg);
-            return await SendRequest(request);
+            return await SendRequestGetResponse(request);
         }
         #endregion
         #region Private Methods
@@ -48,16 +48,39 @@ namespace Logic
         {
             var rootResponse = list.Page.Response;
             var paylist = rootResponse.GetListResponse.PayRecord;
+            PS_ERIP requestReturn = null;
             if (paylist.Count > 1)
             {
                 if (param is PayRecord)
                 {
                     PayRecord payrecArg = param as PayRecord;
-                    var reqErip = list.Page.Request.Copy();
-                    reqErip.GetListResponse.PayCode = payrecArg.Code;
-                    this.CreateNextPage(reqErip);
+                    var requestCopy = list.Page.Request.Copy();
+                    requestCopy.GetListResponse.PayCode = payrecArg.Code;
+                    requestReturn = requestCopy;
                 }
             }
+            if (paylist.Count == 1)
+            {
+                if (param is PayRecord)
+                {
+                    PayRecord payrecArg = param as PayRecord;
+                    var newRequest = list.Page.Request.Copy();
+                    newRequest.GetListResponse.SessionId = payrecArg.SessionId;
+
+                    if(payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
+                    {
+                        newRequest.GetListResponse.AttrRecord = new List<AttrRecordRequest>();
+                        payrecArg.AttrRecord.ForEach(attr =>
+                        {
+                            var newAttr = new AttrRecordRequest(attr);
+                            newAttr.Change = 1;
+                            newRequest.GetListResponse.AttrRecord.Add(newAttr);
+                        });
+                        requestReturn = newRequest;
+                    }
+                }
+            }
+            this.CreateNextPage(requestReturn);
         }
         private async Task CreateInitialPage()
         {
@@ -66,8 +89,6 @@ namespace Logic
             PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
             this.CreateNextPage(eripReq);
         }
-
-
         private PS_ERIP Request => list.Page.Request;
         private void CreateNextPage(PS_ERIP request)
         {
@@ -75,10 +96,10 @@ namespace Logic
             page.Request = request;
             list.Add(page);
         }
-        private async Task<PS_ERIP> SendRequest(string request)
+        private async Task<PS_ERIP> SendRequestGetResponse(string request)
         {
             XDocument responseXml = await PostGetHTTP.PostStringGetXML(request);
-            Trace.WriteLine(responseXml.ToString());
+            Debug.WriteLine(responseXml.ToString());
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
             list.Page.Response = response;
             return response;

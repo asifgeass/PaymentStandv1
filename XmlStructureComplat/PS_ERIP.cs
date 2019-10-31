@@ -17,8 +17,9 @@ namespace XmlStructureComplat
         [XmlElement("GetPayListResponse")]
         [XmlElement("GetPayListRequest")]
         [XmlElement("RunOperationResponse")]
+        [XmlElement("UnknownResponse")]
         [XmlElement("ConfirmResponse")]
-        public GetListResponse GetListResponse { get; set; }
+        public GetPayResponse GetListResponse { get; set; }
     }
 
     [XmlType(IncludeInSchema = false)]
@@ -27,6 +28,7 @@ namespace XmlStructureComplat
         GetPayListResponse,
         GetPayListRequest,
         RunOperationResponse,
+        UnknownResponse,
         ConfirmResponse
     }
 }

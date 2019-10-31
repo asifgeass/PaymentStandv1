@@ -12,7 +12,7 @@ namespace Logic
     public class ResponceBuilder
     {
         //private static Lazy<PagesManager> manager = new Lazy<PagesManager>();
-        private static PagesManager manager = new PagesManager();
+        private static XmlTransactionsManager manager = new XmlTransactionsManager();
         public static async Task<PS_ERIP> NextPage(object select)
         {
             return await manager.NextRequest(select);

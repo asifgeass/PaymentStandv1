@@ -11,7 +11,7 @@ namespace XmlStructureComplat
     public class AttrRecord
     {
         [XmlAttribute()]
-        public float Code { get; set; }
+        public string Code { get; set; }
         [XmlAttribute()]
         public string Name { get; set; }
         [XmlAttribute()]
@@ -23,7 +23,7 @@ namespace XmlStructureComplat
         [XmlAttribute()]
         public short Change { get; set; }
         [XmlAttribute()]
-        public float CodeOut { get; set; }
+        public string CodeOut { get; set; }
         [XmlAttribute()]
         public string Type { get; set; }
         [XmlAttribute()]
