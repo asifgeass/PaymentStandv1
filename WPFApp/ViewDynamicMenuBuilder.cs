@@ -20,7 +20,7 @@ namespace WPFApp
         private DynamicMenuWindowViewModel model;
         private Window window;
         private FormAround form = new FormAround();
-        private ViewPagesList views = new ViewPagesList();
+        private ViewPagesManager views = new ViewPagesManager();
         private iControls _Controls;
         private int fakeCount;
         #endregion
@@ -55,7 +55,7 @@ namespace WPFApp
         #endregion
         private void ClearOnResponse()
         {
-            views = new ViewPagesList();
+            views = new ViewPagesManager();
             fakeCount = 0;
         }
         private void BuildMenuOnReponse()
@@ -74,7 +74,7 @@ namespace WPFApp
             }
             if (views.Count > 1)
             {
-                this.views = new ViewPagesList();
+                this.views = new ViewPagesManager();
                 model.ClearChildLookupVM();
                 Trace.WriteLine($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
                 this.ResponseAnalizeAndBuild();
@@ -185,7 +185,6 @@ namespace WPFApp
                         views.AddControl(inputbox);
                     }
                 }
-                views.AddControl(new TextBlock());
                 views.AddControl(new TextBlock());
                 var button = new Button() 
                 { 

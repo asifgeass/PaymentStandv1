@@ -86,7 +86,7 @@
     <Compile Include="Controls.cs" />
     <Compile Include="ViewDynamicMenuBuilder.cs" />
     <Compile Include="Interfaces\iControls.cs" />
-    <Compile Include="ViewPagesList.cs" />
+    <Compile Include="ViewPagesManager.cs" />
     <Compile Include="ViewModels\LookupVM.cs" />
     <Compile Include="Views\DynamicMenuWindow.xaml.cs">
       <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>

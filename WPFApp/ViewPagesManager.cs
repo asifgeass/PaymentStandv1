@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace WPFApp
 {
-    public class ViewPagesList
+    public class ViewPagesManager
     {
         #region fields
         private List<Panel> pages = new List<Panel>();
@@ -20,7 +20,7 @@ namespace WPFApp
         #region Get Page
         public ScrollViewer NextPage()
         {
-            Trace.WriteLine($"{nameof(ViewPagesList)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
+            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
             if (IsNextAvaible)
             {
                 currentPageIndex++;
@@ -28,7 +28,7 @@ namespace WPFApp
             return new ScrollViewer() { Content = pages[currentPageIndex] };
         }
         #endregion
-        public ViewPagesList NewPage()
+        public ViewPagesManager NewPage()
         {
             if(tempPnl.Children.Count > 0)
             {
@@ -36,7 +36,7 @@ namespace WPFApp
                 pages.Add(tempPnl);
             }
             CheckEmpty();
-            Trace.WriteLine($"{nameof(ViewPagesList)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
+            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
             try 
             { 
                 Trace.WriteLine($"page[0]={(pages[0].Children[0] as ContentControl).Content};");
@@ -45,12 +45,12 @@ namespace WPFApp
             catch (Exception){}
             return this;
         }
-        public ViewPagesList AddControl(FrameworkElement arg)
+        public ViewPagesManager AddControl(FrameworkElement arg)
         {
             CheckEmpty();
             tempPnl.Children.Add(arg);
             tempPnl.Children.Add(new TextBlock());//TEMPORAL MARGIN
-            Trace.WriteLine($"{nameof(ViewPagesList)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
+            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }
 
@@ -62,16 +62,16 @@ namespace WPFApp
             }
         }
 
-        public ViewPagesList AddDataContext(object arg)
+        public ViewPagesManager AddDataContext(object arg)
         {
-            Trace.WriteLine($"{nameof(ViewPagesList)}.{nameof(AddDataContext)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
+            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(AddDataContext)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             tempPnl.DataContext = arg;
             return this;
         }
-        public ViewPagesList AddPage(Panel arg)
+        public ViewPagesManager AddPage(Panel arg)
         {
             pages.Add(arg);
-            Trace.WriteLine($"{nameof(ViewPagesList)}.{nameof(AddPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
+            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(AddPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }
         #endregion
