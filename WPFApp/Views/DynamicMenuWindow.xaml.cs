@@ -27,7 +27,7 @@ namespace WPFApp.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var builder = new DynamicMenuBuilder(this);
+            var builder = new ViewDynamicMenuBuilder(this);
         }
     }
 }

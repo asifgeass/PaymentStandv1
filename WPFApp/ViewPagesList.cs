@@ -15,7 +15,6 @@ namespace WPFApp
         private List<Panel> pages = new List<Panel>();
         private int currentPageIndex = -1;
         private StackPanel tempPnl = new StackPanel();
-        private ScrollViewer scroll = new ScrollViewer();
         #endregion
         #region Public Methods
         #region Get Page

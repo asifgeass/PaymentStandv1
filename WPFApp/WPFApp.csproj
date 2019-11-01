@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls.cs" />
-    <Compile Include="DynamicMenuBuilder.cs" />
+    <Compile Include="ViewDynamicMenuBuilder.cs" />
     <Compile Include="Interfaces\iControls.cs" />
     <Compile Include="ViewPagesList.cs" />
     <Compile Include="ViewModels\LookupVM.cs" />

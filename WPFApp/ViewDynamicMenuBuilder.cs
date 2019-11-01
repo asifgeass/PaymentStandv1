@@ -7,24 +7,25 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using WPFApp.Interfaces;
 using WPFApp.ViewModels;
 using XmlStructureComplat;
 
 namespace WPFApp
 {
-    public class DynamicMenuBuilder
+    public class ViewDynamicMenuBuilder
     {
         #region fields
         private DynamicMenuWindowViewModel model;
         private Window window;
         private FormAround form = new FormAround();
-        private ViewPagesList pages = new ViewPagesList();
+        private ViewPagesList views = new ViewPagesList();
         private iControls _Controls;
         private int fakeCount;
         #endregion
         #region ctor
-        public DynamicMenuBuilder(Window incWindow/*, iControls Controls*/)
+        public ViewDynamicMenuBuilder(Window incWindow/*, iControls Controls*/)
         {
             window = incWindow;
             //_Controls = Controls;
@@ -50,11 +51,11 @@ namespace WPFApp
         }
 
         #region Properties
-        public bool IsPageAvaiable => pages.IsNextAvaible;
+        public bool IsPageAvaiable => views.IsNextAvaible;
         #endregion
         private void ClearOnResponse()
         {
-            pages = new ViewPagesList();
+            views = new ViewPagesList();
             fakeCount = 0;
         }
         private void BuildMenuOnReponse()
@@ -65,39 +66,59 @@ namespace WPFApp
         private void BuildsPages()
         {
             this.ResponseAnalizeAndBuild();
-            this.fakeCount = pages.Count;
-            if (pages.Count == 1)
+            this.fakeCount = views.Count;
+            if (views.Count == 1)
             {
                 //window.Content = pages.Page;
                 this.NextPage();
             }
-            if (pages.Count > 1)
+            if (views.Count > 1)
             {
-                this.pages = new ViewPagesList();
+                this.views = new ViewPagesList();
                 model.ClearChildLookupVM();
                 Trace.WriteLine($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
                 this.ResponseAnalizeAndBuild();
                 this.NextPage();
             }
-            if (pages.Count <= 0)
+            if (views.Count <= 0)
             {
-                throw new NotImplementedException($"{nameof(DynamicMenuBuilder)}.{nameof(BuildsPages)}(): if (pages.Count == 0)");
+                var str = "Извините, мы не смогли построить никакой " +
+                    "страницы на ответ сервера.\n(pages.Count <= 0)";
+                window.Content = CentralLabelBorder(str);                
             }
         }
+
+        private static Label CentralLabelBorder(string arg)
+        {
+            var info = new Label();
+            info.HorizontalContentAlignment = HorizontalAlignment.Center;
+            info.VerticalContentAlignment = VerticalAlignment.Center;
+            info.BorderThickness = new Thickness(2);
+            info.BorderBrush = System.Windows.Media.Brushes.Black;
+            info.Content = arg;
+            return info;
+        }
+
         private void ResponseAnalizeAndBuild()
         {
             if (model == null) { throw new NullReferenceException("main VM = null"); };
             var rootResponse = model.Responce;
             var resp = rootResponse.GetListResponse;
             var paylist = resp.PayRecord;
+            if(resp != null && resp?.ErrorCode != 0)
+            {
+                string str = $"{resp.ErrorCode}\n{resp.ErrorText}";
+                var control = CentralLabelBorder(str);
+                views.AddControl(control);
+            }
             if (paylist.Count > 1)
             {
-                pages.NewPage();
+                views.NewPage();
                 foreach (var payrec in paylist)
                 {
                     var button = ButtonSelect(payrec);
                     CheckButtonCommand(button, paylist.Last() == payrec);
-                    pages.AddControl(button);
+                    views.AddControl(button);
                 }
             }
             if (paylist.Count == 1)
@@ -112,11 +133,11 @@ namespace WPFApp
                         List<Lookup> lookups = paylist?.First()?.Lookups;
                         Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower() )?.Single();
                         int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                        pages.NewPage();                        
+                        views.NewPage();                        
                         LookupVM childVM = model.GetNewLookupVM();
                         childVM.Lookup = selectedLookup;
-                        pages.AddDataContext(childVM);                        
-                        pages.AddControl(new Label() { Content = selectedLookup.Name });
+                        views.AddDataContext(childVM);                        
+                        views.AddControl(new Label() { Content = selectedLookup.Name });
                         var lookItems = selectedLookup.Item;
                         lookItems.ForEach(arg =>
                         {
@@ -127,14 +148,14 @@ namespace WPFApp
                             btn.Command = childVM?.SelectLookupCommand;
                             btn.CommandParameter = arg;
                             btn.Click += (sender, evArg) => NextPage();
-                            pages.AddControl(btn);
+                            views.AddControl(btn);
                         });
                         //LookupButtons(selectedLookup);
-                        pages.NewPage();
+                        views.NewPage();
                     }
                 }
-                Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): After LOOKup ViewPages={pages.Count};");
-                pages.NewPage();
+                Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): After LOOKup ViewPages={views.Count};");
+                views.NewPage();
                 //ATTRs first display filled data attrs
                 foreach (var attr in attrRecords)
                 {
@@ -144,7 +165,7 @@ namespace WPFApp
                         var label = new Label();
                         label.Content = $"{attr.Name} = {attr.Value}";
                         label.BorderThickness = new Thickness(4);
-                        pages.AddControl(label);
+                        views.AddControl(label);
                     }
                 }
                 //ATTRs at last display attrs need to enter with textbox
@@ -160,18 +181,18 @@ namespace WPFApp
                         var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
                         inputbox.SetBinding(TextBox.TextProperty, binding);
 
-                        pages.AddControl(label);
-                        pages.AddControl(inputbox);
+                        views.AddControl(label);
+                        views.AddControl(inputbox);
                     }
                 }
-                pages.AddControl(new TextBlock());
-                pages.AddControl(new TextBlock());
+                views.AddControl(new TextBlock());
+                views.AddControl(new TextBlock());
                 var button = new Button() 
                 { 
                     Content="Продолжить",
                     Command = model.SendVmPayrecCommand
                 };
-                pages.AddControl(button);
+                views.AddControl(button);
             }
         }
 
@@ -205,9 +226,9 @@ namespace WPFApp
         }
         private void ChangeCommandsFromVMToViewClick()
         {
-            for (int i = 0; i < pages.Count - 1; i++)
+            for (int i = 0; i < views.Count - 1; i++)
             {
-                var page = pages[i];
+                var page = views[i];
                 foreach (UIElement item in page.Children)
                 {
                     RecurseRemoveButtonCommands(item);
@@ -216,10 +237,10 @@ namespace WPFApp
         }
         private void NextPage(object param=null)
         {
-            Trace.WriteLine($"DynamicMenuBuilder.Next VIEW Page: {pages.IsNextAvaible}; Current={pages.CurrIndex} Count={pages.Count}");
-            if(pages.IsNextAvaible)
+            Trace.WriteLine($"DynamicMenuBuilder.Next VIEW Page: {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            if(views.IsNextAvaible)
             {
-                window.Content = pages.NextPage();
+                window.Content = views.NextPage();
             }
             else
             {
@@ -228,11 +249,11 @@ namespace WPFApp
         }
         private void LookupButtons(XmlStructureComplat.Lookup selectedLookup)
         {
-            pages.AddControl(new Label(){ Content = selectedLookup.Name});
+            views.AddControl(new Label(){ Content = selectedLookup.Name});
             var lookItems = selectedLookup.Item;
             lookItems.ForEach(x =>
             {
-                pages.AddControl(new Button()
+                views.AddControl(new Button()
                 {
                     Content = $"{x.Value}",
                 });
