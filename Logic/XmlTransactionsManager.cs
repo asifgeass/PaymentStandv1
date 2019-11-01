@@ -17,7 +17,7 @@ namespace Logic
         #endregion
 
         #region Properties
-        public int Count { get => list.Count; }
+        //public int Count { get => list.Count; }
         #endregion
 
         #region Public Methods

@@ -87,18 +87,6 @@ namespace WPFApp
                 window.Content = CentralLabelBorder(str);                
             }
         }
-
-        private static Label CentralLabelBorder(string arg)
-        {
-            var info = new Label();
-            info.HorizontalContentAlignment = HorizontalAlignment.Center;
-            info.VerticalContentAlignment = VerticalAlignment.Center;
-            info.BorderThickness = new Thickness(2);
-            info.BorderBrush = System.Windows.Media.Brushes.Black;
-            info.Content = arg;
-            return info;
-        }
-
         private void ResponseAnalizeAndBuild()
         {
             if (model == null) { throw new NullReferenceException("main VM = null"); };
@@ -162,9 +150,8 @@ namespace WPFApp
                     if (attr.Edit != 1 && attr.View == 1)
                     {
                         Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
-                        var label = new Label();
+                        var label = CentralLabelBorder();
                         label.Content = $"{attr.Name} = {attr.Value}";
-                        label.BorderThickness = new Thickness(4);
                         views.AddControl(label);
                     }
                 }
@@ -245,6 +232,20 @@ namespace WPFApp
             {
                 model.SendParamCommand.Execute(param);
             }
+        }
+        private static Label CentralLabelBorder(string arg = "")
+        {
+            var info = new Label();
+            info.HorizontalContentAlignment = HorizontalAlignment.Center;
+            info.VerticalContentAlignment = VerticalAlignment.Center;
+            info.BorderThickness = new Thickness(2);
+            info.BorderBrush = System.Windows.Media.Brushes.Black;
+            info.Margin = info.BorderThickness;
+            var text = new TextBlock();
+            text.Text = arg;
+            text.TextWrapping = TextWrapping.Wrap;
+            info.Content = text;
+            return info;
         }
         private void LookupButtons(XmlStructureComplat.Lookup selectedLookup)
         {
