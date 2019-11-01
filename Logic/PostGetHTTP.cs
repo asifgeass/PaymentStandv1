@@ -23,7 +23,7 @@ namespace Logic
         public static event Action<string> WriteTextBox = (x) => { };
         public static event Action<XDocument> XmlReceived = (x) => { };
 
-        private static async Task<XDocument> PostStringGetXML(string destinationUrl, string requestXml)
+        public static async Task<XDocument> PostStringGetXML(string destinationUrl, string requestXml)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Logic
                 return null;
             }
         }
-        private static async Task<string> PostStringGetString(string destinationUrl, string requestXml)
+        public static async Task<string> PostStringGetString(string destinationUrl, string requestXml)
         {
             try
             {

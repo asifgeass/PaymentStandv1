@@ -1,9 +1,6 @@
-﻿using Logic;
-using Logic.XML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,8 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Logic;
+using XmlStructureComplat;
 
-namespace WPFApp
+namespace UIXmlPostTerminal
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -60,6 +59,7 @@ namespace WPFApp
 
         private void ButtonXMLCustom_Click(object sender, RoutedEventArgs e)
         {
+            string url = "";
             PostGetHTTP.PostStringGetXML(textboxXMLCustom.Text);
         }
 

@@ -78,6 +78,10 @@ namespace Logic
                         });
                         requestReturn = newRequest;
                     }
+                    if(payrecArg.GetPayListType=="0")
+                    {
+
+                    }
                 }
             }
             this.CreateNextPage(requestReturn);

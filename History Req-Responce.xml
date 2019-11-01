@@ -1,5 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <all>
+  
+  <terminal>
+    <PURRequest>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <Lang>?</Lang> 
+      <PaySumma>1</PaySumma>
+    </PURRequest>
+    Response
+    <PURResponse>
+      <ErrorCode>0</ErrorCode>
+      <ErrorText>?</ErrorText>
+      <Lang>?</Lang>
+      <PayDate>?</PayDate>
+      <KioskReceipt>17092019090006</KioskReceipt>
+      <PC_ID>?</PC_ID>
+      <PAN>BY93AKBB36019010100000000000</PAN>
+      <TypePAN>ACCOUNT</TypePAN>
+      <Receipt>?</Receipt>
+      <xxx>?</xxx>
+      <xxx>?</xxx>
+    </PURResponse>
+
+    <VOIRequest>
+      <TerminalID>TEST_TERMINAL</TerminalID>
+      <Version>3</Version>
+      <Lang>?</Lang>
+      <KioskReceipt>resp</KioskReceipt>
+      <PC_ID>resp</PC_ID>
+    </VOIRequest>
+    Response
+    <VOIResponse>
+      <ErrorCode>0</ErrorCode>
+      <ErrorText>?</ErrorText>
+      <Lang>?</Lang>
+      <xxx>?</xxx>
+      <xxx>?</xxx>
+      <xxx>?</xxx>
+    </VOIResponse>
+  </terminal>
+
+  <RealTerminalHistory>
+  </RealTerminalHistory>
+
+
+
   <x11>
     <PS_ERIP>
       <GetPayListRequest>
