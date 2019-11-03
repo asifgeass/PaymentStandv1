@@ -40,6 +40,7 @@ namespace WPFApp.ViewModels
         private List<AttrRecord> _attrToSend;
         private LookupVM _lookupVM;
         private List<LookupVM> _lookupVMList = new List<LookupVM>();
+        private Exception _exception;
         #endregion
 
         #region Properties
@@ -99,6 +100,11 @@ namespace WPFApp.ViewModels
             get => _isLoadingMenu;
             set => SetProperty(ref _isLoadingMenu, value);
         }
+        public Exception Exception
+        {
+            get => _exception;
+            set => SetProperty(ref _exception, value);
+        }
         #endregion
 
         #region Public Commands
@@ -114,13 +120,17 @@ namespace WPFApp.ViewModels
         #region Private Methods
         private async void NextPage(object param=null)
         {
-            IsLoadingMenu = !IsLoadingMenu;
-            //IsLoadingMenu = true;
-            //LookupVMList.ForEach(item => item.Lookup.SelectedItem.Value);
-            FillPayrecToSendWithLookup();
-            Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
-            Responce = await ResponceBuilder.NextPage(param ?? PayrecToSend);
-            //IsLoadingMenu = false;
+            try
+            {
+                IsLoadingMenu = !IsLoadingMenu;
+                FillPayrecToSendWithLookup();
+                Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
+                Responce = await ResponceBuilder.NextPage(param ?? PayrecToSend);
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
         }
 
         private void FillPayrecToSendWithLookup()

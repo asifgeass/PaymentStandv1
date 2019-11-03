@@ -48,6 +48,17 @@ namespace WPFApp
             {
                 window.Content = "Loading...";
             }
+            if (e.PropertyName == nameof(model.Exception))
+            {
+                try
+                {
+                    throw new Exception("",model.Exception);
+                }
+                catch (Exception ex)
+                {
+                    DisplayErrorPage(ex?.InnerException ?? ex);
+                }
+            }
         }
 
         #region Properties
@@ -60,9 +71,28 @@ namespace WPFApp
         }
         private void BuildMenuOnReponse()
         {
-            ClearOnResponse();
-            BuildsPages();
+            try
+            {
+                ClearOnResponse();
+                BuildsPages();
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorPage(ex);
+            }
         }
+
+        private void DisplayErrorPage(Exception ex)
+        {
+            DisplayErrorPage($"{ex.Message}\n\n{ex.StackTrace}");
+        }
+        private void DisplayErrorPage(string msgError)
+        {
+            var str = "Извините, произошла непредвиденная ошибка. " +
+                $"Обратитесь к администратору.\n\n{msgError}";
+            window.Content = CentralLabelBorder(str);
+        }
+
         private void BuildsPages()
         {
             this.ResponseAnalizeAndBuild();
