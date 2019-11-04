@@ -6,13 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Logic
 {
     public static class PostGetHTTP
-    {        
+    {
         private static readonly string url = "http://public.softclub.by:3007/komplat/online.request"; //"http://public.softclub.by:3007/komplat/online.request"
         private static readonly HttpClient httpClient = new HttpClient();
         private static readonly Stopwatch timer = new Stopwatch();
@@ -73,7 +75,7 @@ namespace Logic
             {
                 var msg = $"1postXMLData():\n{ex.Message}";
                 WriteTextBox(msg);
-                return null;
+                throw new Exception($"Error at {nameof(PostStringGetXML)}()", ex);
             }
         }
         public static async Task<string> PostStringGetString(string destinationUrl, string requestXml)
@@ -124,9 +126,8 @@ namespace Logic
             {
                 var msg = $"1postXMLData():\n{ex.Message}";
                 WriteTextBox(msg);
-                return msg;
+                throw new Exception($"Error at {nameof(PostStringGetString)}()", ex);
             }
-
         }
 
         public static async Task<XDocument> PostStringGetXML(string requestXml)
@@ -142,7 +143,14 @@ namespace Logic
         {
             return await Task.Run(() =>
             {
-                return XDocument.Load(stream, loadOptions);
+                XDocument doc;
+                using (StreamReader sr = new StreamReader(stream))
+                {
+                    string str = sr.ReadToEnd().Trim();
+                    str = Regex.Replace(str, @"[\p{Cc}-[\r\n\t]]+", String.Empty);
+                    doc = XDocument.Parse(str, loadOptions);
+                }
+                return doc;
             });
         }
 
