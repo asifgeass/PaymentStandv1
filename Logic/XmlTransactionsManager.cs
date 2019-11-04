@@ -27,11 +27,12 @@ namespace Logic
             return await SendRequestGetResponse(request);
         }
         public async Task<PS_ERIP> PrevRequest(object arg = null)
-        {
-            return list.Prev().Response;
+        {            
+            return list.Previos().Response;
         }
         public async Task<PS_ERIP> HomeRequest(object arg = null)
         {
+            throw new NotImplementedException();
             await CreateInitialRequest();
             string request = await GetRequestBody(arg);
             return await SendRequestGetResponse(request);
@@ -110,7 +111,7 @@ namespace Logic
         private PS_ERIP Request => list.Page.Request;
         private void CreateNextPage(PS_ERIP request)
         {
-            list.Add(request);
+            list.Next(request);
         }
         private async Task<PS_ERIP> SendRequestGetResponse(string request)
         {
