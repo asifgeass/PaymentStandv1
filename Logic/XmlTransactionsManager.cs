@@ -26,6 +26,16 @@ namespace Logic
             string request = await GetRequestBody(arg);
             return await SendRequestGetResponse(request);
         }
+        public async Task<PS_ERIP> PrevRequest(object arg = null)
+        {
+            return list.Prev().Response;
+        }
+        public async Task<PS_ERIP> HomeRequest(object arg = null)
+        {
+            await CreateInitialRequest();
+            string request = await GetRequestBody(arg);
+            return await SendRequestGetResponse(request);
+        }
         #endregion
         #region Private Methods
         private async Task<string> GetRequestBody(object arg = null)
@@ -33,7 +43,7 @@ namespace Logic
             string request = null;
             if (list.Count <= 0)
             {
-                await CreateInitialPage();
+                await CreateInitialRequest();
             }
             else 
             { 
@@ -43,6 +53,10 @@ namespace Logic
             XDocument reqXml = await SerializationUtil.Serialize(reqClass);
             request = reqXml.ToStringFull();
             return request;
+        }
+        private void HomeRequest()
+        {
+
         }
         private void CreateNextPage(object param)
         {
@@ -86,7 +100,7 @@ namespace Logic
             }
             this.CreateNextPage(requestReturn);
         }
-        private async Task CreateInitialPage()
+        private async Task CreateInitialRequest()
         {
             string strxml = GetHardCodeInitialRequest();
             XDocument xml = await PostGetHTTP.XmlLoadAsync(strxml);
@@ -96,9 +110,7 @@ namespace Logic
         private PS_ERIP Request => list.Page.Request;
         private void CreateNextPage(PS_ERIP request)
         {
-            var page = new EripRequest();
-            page.Request = request;
-            list.Add(page);
+            list.Add(request);
         }
         private async Task<PS_ERIP> SendRequestGetResponse(string request)
         {

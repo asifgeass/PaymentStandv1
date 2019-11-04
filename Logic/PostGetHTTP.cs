@@ -36,7 +36,7 @@ namespace Logic
                 request.ContentLength = bytes.Length;
                 request.Method = "POST";
                 string timings = "";
-                XDocument msg;
+                XDocument doc;
                 timer.Restart();
                 Debug.WriteLine($"=>>\n{requestXml}\n=>>");
                 using (Stream requestStream = await request.GetRequestStreamAsync())
@@ -55,21 +55,19 @@ namespace Logic
                         {
                             var responseXml = await XmlLoadAsync(responseStream);
                             timer.Stop();
-                            XmlReceived(responseXml);
                             timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
-                            msg = responseXml;
+                            doc = responseXml;
                         }
                     }
                     else
                     {
                         timer.Stop();
                         timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
-                        msg = null;
-
+                        throw new HttpRequestException($"Response isn't ok (200); code={response.StatusCode};");
                     }
                 }
-                WriteTextBox(msg.ToStringFull());
-                return msg;
+                WriteTextBox(doc.ToStringFull());
+                return doc;
             }
             catch (Exception ex)
             {
@@ -158,7 +156,8 @@ namespace Logic
         {
             return await Task.Run(() =>
             {
-                return XDocument.Parse(str, loadOptions);
+                string temp = Regex.Replace(str, @"[\p{Cc}-[\r\n\t]]+", String.Empty);
+                return XDocument.Parse(temp, loadOptions);
             });
         }
 

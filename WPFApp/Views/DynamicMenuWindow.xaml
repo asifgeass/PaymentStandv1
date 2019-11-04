@@ -19,7 +19,7 @@
         Title="DynamicMenuWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+            <i:InvokeCommandAction Command="{Binding HomePageCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

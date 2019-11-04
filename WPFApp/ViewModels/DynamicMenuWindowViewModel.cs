@@ -19,13 +19,14 @@ namespace WPFApp.ViewModels
         #region ctor
         public DynamicMenuWindowViewModel()
         {
+            //SendVmAttrCommand = new DelegateCommand(() => NextPage(AttrToSend));
             SetCurrMenuHeaderCommand = new DelegateCommand<string>(x => LabelCurrent = x);
             SetParentGroupHeaderCommand = new DelegateCommand<string>(x => LabelParentGroup = x);
             SendParamCommand = new DelegateCommand<object>(NextPage);
             LoadedCommand = new DelegateCommand(()=> NextPage(null));
             SendVmPayrecCommand = new DelegateCommand(() => NextPage(PayrecToSend));
-            SendVmAttrCommand = new DelegateCommand(() => NextPage(AttrToSend));
             LookupCommand = new DelegateCommand<LookupItem>(SetLookup);
+            HomePageCommand = new DelegateCommand( () => { } );
             NewResponseComeEvent += ()=>ClearLookup();
         }
         #endregion
@@ -113,8 +114,10 @@ namespace WPFApp.ViewModels
         public DelegateCommand<object> SendParamCommand { get; }
         public DelegateCommand<LookupItem> LookupCommand { get; }
         public DelegateCommand LoadedCommand { get; }
+        public DelegateCommand HomePageCommand { get; }
+        public DelegateCommand BackUserCommand { get; }
         public DelegateCommand SendVmPayrecCommand { get; }
-        public DelegateCommand SendVmAttrCommand { get; }
+        //public DelegateCommand SendVmAttrCommand { get; }
         #endregion
 
         #region Private Methods
@@ -126,6 +129,20 @@ namespace WPFApp.ViewModels
                 FillPayrecToSendWithLookup();
                 Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
                 Responce = await ResponceBuilder.NextPage(param ?? PayrecToSend);
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+        }
+
+        private async void BackPage()
+        {
+            try
+            {
+                IsLoadingMenu = !IsLoadingMenu;
+                Trace.WriteLine($"VM => Logic BackPage()");
+                Responce = await ResponceBuilder.BackPage();
             }
             catch (Exception ex)
             {

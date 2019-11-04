@@ -25,10 +25,9 @@ namespace WPFApp
         private int fakeCount;
         #endregion
         #region ctor
-        public ViewDynamicMenuBuilder(Window incWindow/*, iControls Controls*/)
+        public ViewDynamicMenuBuilder(Window incWindow)
         {
             window = incWindow;
-            //_Controls = Controls;
             try
             {
                 model = window.DataContext as DynamicMenuWindowViewModel;
@@ -90,7 +89,7 @@ namespace WPFApp
         {
             var str = "Извините, произошла непредвиденная ошибка. " +
                 $"Обратитесь к администратору.\n\n{msgError}";
-            window.Content = CentralLabelBorder(str);
+            window.Content = Controls.CentralLabelBorder(str);
         }
 
         private void BuildsPages()
@@ -99,7 +98,6 @@ namespace WPFApp
             this.fakeCount = views.Count;
             if (views.Count == 1)
             {
-                //window.Content = pages.Page;
                 this.NextPage();
             }
             if (views.Count > 1)
@@ -114,7 +112,7 @@ namespace WPFApp
             {
                 var str = "Извините, мы не смогли построить никакой " +
                     "страницы на ответ сервера.\n(pages.Count <= 0)";
-                window.Content = CentralLabelBorder(str);                
+                window.Content = Controls.CentralLabelBorder(str);                
             }
         }
         private void ResponseAnalizeAndBuild()
@@ -126,7 +124,7 @@ namespace WPFApp
             if(resp != null && resp?.ErrorCode != 0)
             {
                 string str = $"{resp.ErrorCode}\n{resp.ErrorText}";
-                var control = CentralLabelBorder(str);
+                var control = Controls.CentralLabelBorder(str);
                 views.AddControl(control);
             }
             if (paylist.Count > 1)
@@ -134,7 +132,8 @@ namespace WPFApp
                 views.NewPage();
                 foreach (var payrec in paylist)
                 {
-                    var button = ButtonSelect(payrec);
+                    var button = Controls.ButtonSelect(payrec);
+                    button.Command = model.SendParamCommand;
                     CheckButtonCommand(button, paylist.Last() == payrec);
                     views.AddControl(button);
                 }
@@ -180,7 +179,7 @@ namespace WPFApp
                     if (attr.Edit != 1 && attr.View == 1)
                     {
                         Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
-                        var label = CentralLabelBorder();
+                        var label = Controls.CentralLabelBorder();
                         label.Content = $"{attr.Name} = {attr.Value}";
                         views.AddControl(label);
                     }
@@ -263,23 +262,9 @@ namespace WPFApp
                 model.SendParamCommand.Execute(param);
             }
         }
-        private static Label CentralLabelBorder(string arg = "")
+        public void LookupButtons(Lookup selectedLookup)
         {
-            var info = new Label();
-            info.HorizontalContentAlignment = HorizontalAlignment.Center;
-            info.VerticalContentAlignment = VerticalAlignment.Center;
-            info.BorderThickness = new Thickness(2);
-            info.BorderBrush = System.Windows.Media.Brushes.Black;
-            info.Margin = info.BorderThickness;
-            var text = new TextBlock();
-            text.Text = arg;
-            text.TextWrapping = TextWrapping.Wrap;
-            info.Content = text;
-            return info;
-        }
-        private void LookupButtons(XmlStructureComplat.Lookup selectedLookup)
-        {
-            views.AddControl(new Label(){ Content = selectedLookup.Name});
+            views.AddControl(new Label() { Content = selectedLookup.Name });
             var lookItems = selectedLookup.Item;
             lookItems.ForEach(x =>
             {
@@ -288,14 +273,6 @@ namespace WPFApp
                     Content = $"{x.Value}",
                 });
             });
-        }
-        private Button ButtonSelect(XmlStructureComplat.PayRecord payrec)
-        {
-            var button = new Button();
-            button.Content = payrec.Name;
-            button.Command = model.SendParamCommand;
-            button.CommandParameter = payrec;
-            return button;
         }
     }
 }

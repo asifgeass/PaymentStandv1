@@ -17,5 +17,10 @@ namespace Logic
         {
             return await manager.NextRequest(select);
         }
+
+        public static async Task<PS_ERIP> BackPage()
+        {
+            return await manager.PrevRequest();
+        }
     }
 }

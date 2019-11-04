@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XmlStructureComplat;
 
 namespace Logic
 {
@@ -16,7 +17,23 @@ namespace Logic
         public void Add(EripRequest item)
         {
             currentIndex++;
+            if (list.Count > currentIndex)
+            {
+                list.RemoveRange(currentIndex, list.Count - currentIndex);
+            }
             list.Add(item);
+        }
+        public void Add(PS_ERIP item)
+        {
+            var page = new EripRequest();
+            page.Request = item;
+            this.Add(page);
+        }
+
+        public EripRequest Prev()
+        {
+            currentIndex--;
+            return list[currentIndex];
         }
         #endregion
         #region Properties
