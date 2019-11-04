@@ -59,8 +59,14 @@ namespace UIXmlPostTerminal
 
         private void ButtonXMLCustom_Click(object sender, RoutedEventArgs e)
         {
-            string url = "";
-            PostGetHTTP.PostStringGetXML(textboxXMLCustom.Text);
+            try
+            {
+                PostGetHTTP.PostStringGetXML(textboxXMLCustom.Text);
+            }
+            catch (Exception ex)
+            {
+                WriteToTextbox(ex?.InnerException?.Message ?? ex.Message);
+            }
         }
 
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
@@ -163,6 +169,20 @@ namespace UIXmlPostTerminal
             //}
 
             //new Window() { Content = form }.Show();
+        }
+
+        private void buttonTerminalPost_Click(object sender, RoutedEventArgs e)
+        {
+            string url = @"http://public.softclub.by:8010/mdom_pos/online.request";
+            string request = $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{textboxXMLCustom.Text}";
+            try
+            {
+                PostGetHTTP.PostStringGetXML(url, request);
+            }
+            catch (Exception ex)
+            {
+                WriteToTextbox(ex?.InnerException?.Message ?? ex.Message);
+            }
         }
     }
 }

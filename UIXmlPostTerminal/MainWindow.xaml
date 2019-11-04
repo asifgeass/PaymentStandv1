@@ -38,9 +38,10 @@
                 <Button Content="Req3" Height="20" Margin="328,17,63,23"  Click="Button_Click_2"  Width="58"/>
                 <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="391,17,0,0" VerticalAlignment="Top" Width="58" Click="ButtonClear_Click"/>
             </Grid>
-            <TextBox x:Name="textboxXMLCustom" Grid.Column="2" Margin="10,53,19,39" TextWrapping="Wrap" AcceptsReturn="True" Text="    &lt;PURRequest&gt;&#xD;&#xA;      &lt;TerminalID&gt;TEST_TERMINAL&lt;/TerminalID&gt;&#xD;&#xA;      &lt;Version&gt;3&lt;/Version&gt;&#xD;&#xA;      &lt;Lang&gt;?&lt;/Lang&gt; &#xD;&#xA;      &lt;PaySumma Currency=&quot;933&quot;&gt;1&lt;/PaySumma&gt;&#xD;&#xA;    &lt;/PURRequest&gt;"/>
+            <TextBox x:Name="textboxXMLCustom" Grid.Column="2" Margin="10,53,19,39" TextWrapping="Wrap" AcceptsReturn="True" Text="    &lt;MDOM_POS&gt;&#xD;&#xA;      &lt;PURRequest&gt;&#xD;&#xA;        &lt;TerminalId&gt;KKM1&lt;/TerminalId&gt;&#xD;&#xA;        &lt;Version&gt;1&lt;/Version&gt;&#xD;&#xA;        &lt;PaySumma&gt;0.1&lt;/PaySumma&gt;&#xD;&#xA;      &lt;/PURRequest&gt;&#xD;&#xA;    &lt;/MDOM_POS&gt;"/>
             <Button x:Name="buttonXMLCustom" Content="Send XML" Grid.Column="2" Margin="10,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="ButtonXMLCustom_Click"/>
-            <Button x:Name="buttonReceiveXML" Content="Receive XML" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="184,25,0,0" VerticalAlignment="Top" Width="110" Click="buttonReceiveXML_Click"/>
+            <Button x:Name="buttonReceiveXML" Content="Receive XML" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="243,25,0,0" VerticalAlignment="Top" Width="110" Click="buttonReceiveXML_Click"/>
+            <Button x:Name="buttonTerminalPost" Content="Send Terminal" Grid.Column="2" HorizontalAlignment="Left" Margin="113,25,0,0" VerticalAlignment="Top" Width="95" Click="buttonTerminalPost_Click"/>
 
 
         </Grid>
