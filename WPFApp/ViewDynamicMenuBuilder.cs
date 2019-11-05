@@ -23,6 +23,7 @@ namespace WPFApp
         private ViewPagesManager views = new ViewPagesManager();
         private iControls _Controls;
         private int fakeCount;
+        private Style loadingBarStyle;
         #endregion
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
@@ -33,6 +34,7 @@ namespace WPFApp
                 model = window.DataContext as DynamicMenuWindowViewModel;
                 model.NewResponseComeEvent += BuildMenuOnReponse;
                 model.PropertyChanged += IsLoadingMenuChanged;
+                loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
             }
             catch (Exception ex)
             {
@@ -45,7 +47,13 @@ namespace WPFApp
         {
             if(e.PropertyName == nameof(model.IsLoadingMenu))
             {
-                window.Content = "Loading...";
+                var bar = new ProgressBar();
+                bar.IsIndeterminate = true;
+                bar.Value = 0;
+                bar.Style = loadingBarStyle;
+                bar.Height = 50;
+                bar.Width = 50;
+                SetWindow(bar);
             }
             if (e.PropertyName == nameof(model.Exception))
             {
@@ -58,6 +66,15 @@ namespace WPFApp
                     DisplayErrorPage(ex?.InnerException ?? ex);
                 }
             }
+        }
+
+        private void SetWindow(UIElement argElement)
+        {
+            var around = new FormAround();
+            around.ContentControls.Clear();
+            around.BackButton.Click += (s, e) => PrevPage();
+            around.ContentControls.Add(argElement);
+            window.Content = around;
         }
 
         #region Properties
@@ -83,13 +100,14 @@ namespace WPFApp
 
         private void DisplayErrorPage(Exception ex)
         {
+            Debug.WriteLine($"{ex.Message}\n\n{ex.StackTrace}");
             DisplayErrorPage($"{ex.Message}\n\n{ex.StackTrace}");
         }
         private void DisplayErrorPage(string msgError)
         {
             var str = "Извините, произошла непредвиденная ошибка. " +
                 $"Обратитесь к администратору.\n\n{msgError}";
-            window.Content = Controls.CentralLabelBorder(str);
+            SetWindow(Controls.CentralLabelBorder(str) );
         }
 
         private void BuildsPages()
@@ -112,7 +130,7 @@ namespace WPFApp
             {
                 var str = "Извините, мы не смогли построить никакой " +
                     "страницы на ответ сервера.\n(pages.Count <= 0)";
-                window.Content = Controls.CentralLabelBorder(str);                
+                SetWindow(Controls.CentralLabelBorder(str));                
             }
         }
         private void ResponseAnalizeAndBuild()
@@ -132,8 +150,9 @@ namespace WPFApp
                 views.NewPage();
                 foreach (var payrec in paylist)
                 {
-                    var button = Controls.ButtonSelect(payrec);
+                    var button = Controls.Button(payrec.Name);
                     button.Command = model.SendParamCommand;
+                    button.CommandParameter = payrec;
                     CheckButtonCommand(button, paylist.Last() == payrec);
                     views.AddControl(button);
                 }
@@ -154,14 +173,11 @@ namespace WPFApp
                         LookupVM childVM = model.GetNewLookupVM();
                         childVM.Lookup = selectedLookup;
                         views.AddDataContext(childVM);                        
-                        views.AddControl(new Label() { Content = selectedLookup.Name });
+                        views.AddControl(Controls.LabelHeader(selectedLookup.Name));
                         var lookItems = selectedLookup.Item;
                         lookItems.ForEach(arg =>
                         {
-                            //var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
-                            //binding.Mode = BindingMode.OneWay;
-                            var btn = new Button();
-                            btn.Content = arg.Value;
+                            var btn = Controls.Button(arg.Value);
                             btn.Command = childVM?.SelectLookupCommand;
                             btn.CommandParameter = arg;
                             btn.Click += (sender, evArg) => NextPage();
@@ -179,7 +195,7 @@ namespace WPFApp
                     if (attr.Edit != 1 && attr.View == 1)
                     {
                         Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
-                        var label = Controls.CentralLabelBorder();
+                        var label = Controls.LabelInfo();
                         label.Content = $"{attr.Name} = {attr.Value}";
                         views.AddControl(label);
                     }
@@ -190,11 +206,11 @@ namespace WPFApp
                     if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                     {
                         Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
-                        var label = new Label();
-                        label.Content = $"{attr.Name}:";
-                        var inputbox = new TextBox();
+                        var label = Controls.LabelInfo(attr.Name);
+                        var inputbox = Controls.TextBox();
                         int index = model.PayrecToSend.AttrRecord.FindIndex(x => x==attr);
                         var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+                        binding.Mode = BindingMode.TwoWay;
                         inputbox.SetBinding(TextBox.TextProperty, binding);
 
                         views.AddControl(label);
@@ -202,11 +218,8 @@ namespace WPFApp
                     }
                 }
                 views.AddControl(new TextBlock());
-                var button = new Button() 
-                { 
-                    Content="Продолжить",
-                    Command = model.SendVmPayrecCommand
-                };
+                var button = Controls.ButtonAccept("Продолжить");
+                button.Command = model.SendVmPayrecCommand;
                 views.AddControl(button);
             }
         }
@@ -252,14 +265,29 @@ namespace WPFApp
         }
         private void NextPage(object param=null)
         {
-            Trace.WriteLine($"DynamicMenuBuilder.Next VIEW Page: {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            Trace.WriteLine($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if(views.IsNextAvaible)
             {
-                window.Content = views.NextPage();
+                SetWindow(views.NextPage());
             }
             else
             {
                 model.SendParamCommand.Execute(param);
+            }
+        }
+        private void PrevPage()
+        {
+            Trace.WriteLine($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            if (views.IsPrevAvaible)
+            {
+                SetWindow(views.PrevPage());
+            }
+            else
+            {
+                if (model.BackUserCommand.CanExecute())
+                {
+                    model.BackUserCommand.Execute();
+                }
             }
         }
         public void LookupButtons(Lookup selectedLookup)

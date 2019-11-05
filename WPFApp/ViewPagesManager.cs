@@ -25,32 +25,49 @@ namespace WPFApp
             {
                 currentPageIndex++;
             }
-            return new ScrollViewer() { Content = pages[currentPageIndex] };
+            return GetPage();
         }
         #endregion
+        
+        public ScrollViewer PrevPage()
+        {
+            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(PrevPage)}(): index={currentPageIndex}; count={pages.Count};");
+            if (IsPrevAvaible)
+            {
+                currentPageIndex--;
+            }
+            return GetPage();
+        }
+
+        private ScrollViewer GetPage()
+        {
+            var scrollView = new ScrollViewer() { Content = pages[currentPageIndex] };
+            scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            return scrollView;
+        }
+
         public ViewPagesManager NewPage()
         {
-            if(tempPnl.Children.Count > 0)
+            if (tempPnl.Children.Count > 0)
             {
                 tempPnlClear();
                 pages.Add(tempPnl);
             }
             CheckEmpty();
             Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
-            try 
-            { 
+            try
+            {
                 Trace.WriteLine($"page[0]={(pages[0].Children[0] as ContentControl).Content};");
                 Trace.WriteLine($"page[1]={(pages[1].Children[0] as ContentControl).Content};");
             }
-            catch (Exception){}
+            catch (Exception) { }
             return this;
         }
         public ViewPagesManager AddControl(FrameworkElement arg)
         {
             CheckEmpty();
             tempPnl.Children.Add(arg);
-            tempPnl.Children.Add(new TextBlock());//TEMPORAL MARGIN
-            Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
+            //Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }
 
@@ -78,13 +95,14 @@ namespace WPFApp
         #region Properties
         public Panel this[int index] => pages[index];
         public bool IsNextAvaible => pages.Count-1 > currentPageIndex;
+        public bool IsPrevAvaible => 0 < currentPageIndex;
         public int Count  => (tempPnl.Children.Count<=0) ? pages.Count-1 : pages.Count;
         public int CurrIndex => currentPageIndex;
         public Panel Page
             => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count==0)
             ? null : pages[currentPageIndex];
 
-        public Panel PrevPage
+        public Panel PreviosPage
             => (currentPageIndex < 1 || currentPageIndex >= pages.Count || pages.Count == 0)
             ? null : pages[currentPageIndex - 1];
         #endregion
@@ -93,6 +111,7 @@ namespace WPFApp
         {
             tempPnl = new StackPanel();
         }
+        
         #endregion
     }
 }

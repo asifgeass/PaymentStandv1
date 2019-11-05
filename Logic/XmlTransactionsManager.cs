@@ -1,5 +1,4 @@
-﻿using Logic.XML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,50 +14,61 @@ namespace Logic
         #region fields
         private XmlHistory list = new XmlHistory();
         #endregion
-
-        #region Properties
-        //public int Count { get => list.Count; }
-        #endregion
-
         #region Public Methods
         public async Task<PS_ERIP> NextRequest(object arg=null)
         {
-            string request = await GetRequestBody(arg);
+            await CreateNextRequest(arg);
+            return await GetAndSend();
+        }
+
+        private async Task<PS_ERIP> GetAndSend()
+        {
+            string request = await GetRequestBody();
             return await SendRequestGetResponse(request);
         }
+
         public async Task<PS_ERIP> PrevRequest(object arg = null)
         {            
             return list.Previos().Response;
         }
-        public async Task<PS_ERIP> HomeRequest(object arg = null)
+        public bool IsPrevRequestPossible()
         {
-            throw new NotImplementedException();
-            await CreateInitialRequest();
-            string request = await GetRequestBody(arg);
-            return await SendRequestGetResponse(request);
+            return list.Page.PrevIndex >= 0 && list.Page.PrevIndex != list.Index;
+        }
+        public async Task<PS_ERIP> HomeRequest()
+        {
+            if (list.Count <= 0)
+            {
+                await CreateInitialRequest();
+                return await GetAndSend();
+            }
+            else
+            {
+                return list.HomePage().Response;
+            }
         }
         #endregion
         #region Private Methods
-        private async Task<string> GetRequestBody(object arg = null)
+        private async Task<string> GetRequestBody()
+        {    
+            PS_ERIP reqClass = list.Page.Request;
+            XDocument reqXml = await SerializationUtil.Serialize(reqClass);
+            string request = reqXml?.ToStringFull();
+            return request;
+        }
+
+        private async Task CreateNextRequest(object arg)
         {
-            string request = null;
             if (list.Count <= 0)
             {
                 await CreateInitialRequest();
             }
-            else 
-            { 
-                CreateNextPage(arg); 
+            else
+            {
+                CreateNextPage(arg);
             }
-            PS_ERIP reqClass = list.Page.Request;
-            XDocument reqXml = await SerializationUtil.Serialize(reqClass);
-            request = reqXml.ToStringFull();
-            return request;
         }
-        private void HomeRequest()
-        {
 
-        }
         private void CreateNextPage(object param)
         {
             var rootResponse = list.Page.Response;

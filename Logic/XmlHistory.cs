@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace Logic
         private int currentIndex = -1;
         #endregion
         #region Properties
-        public int Count { get => list.Count; }
+        public int Count => list.Count;
+        public int Index => currentIndex;
         public EripRequest Page
             => (currentIndex < 0 || currentIndex >= list.Count)
             ? null : list[currentIndex];
@@ -32,6 +34,7 @@ namespace Logic
                 list[0].SetPrevIndex(currentIndex);
                 currentIndex = 0;
             }
+            Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(HomePage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             return list[0];
         }
         
@@ -41,12 +44,14 @@ namespace Logic
             page.Request = item;
             page.SetPrevIndex (currentIndex);
             this.Add(page);
+            Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(Next)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
         }
 
         public EripRequest Previos()
         {
             int prevIndex = list[currentIndex].PrevIndex;
             currentIndex = prevIndex;
+            Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(Previos)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             return list[currentIndex];
         }
         #endregion

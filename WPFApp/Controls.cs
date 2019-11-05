@@ -18,7 +18,7 @@ namespace WPFApp
             info.HorizontalContentAlignment = HorizontalAlignment.Center;
             info.VerticalContentAlignment = VerticalAlignment.Center;
             info.BorderThickness = new Thickness(2);
-            info.BorderBrush = System.Windows.Media.Brushes.Black;
+            info.BorderBrush = System.Windows.Media.Brushes.Red;
             info.Margin = info.BorderThickness;
             var text = new TextBlock();
             text.Text = arg;
@@ -27,13 +27,43 @@ namespace WPFApp
             return info;
         }
 
-        public static Button ButtonSelect(PayRecord payrec)
+        public static Button Button(string argName=null)
         {
             var button = new Button();
-            button.Content = payrec.Name;
-            //button.Command = model.SendParamCommand;
-            button.CommandParameter = payrec;
+            if(argName!=null) button.Content = argName;
+            button.Margin = new Thickness(0,0,0, button.Height/2);
             return button;
+        }
+
+        public static Button ButtonAccept(string argName = null)
+        {
+            var button = new Button();
+            if (argName != null) button.Content = argName;
+            button.Margin = new Thickness(0, 0, 0, button.Height / 2);
+            button.FontSize = new TextBlock().FontSize;
+            return button;
+        }
+
+        public static Label LabelInfo(string argName = null)
+        {
+            var label = new Label();
+            if (argName != null) label.Content = argName;
+            return label;
+        }
+
+        public static Label LabelHeader(string argName = null)
+        {
+            var label = new Label();
+            if (argName != null) label.Content = argName;
+            label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            return label;
+        }
+
+        public static TextBox TextBox(string argName = null)
+        {
+            var TextBox = new TextBox();
+            if (argName != null) TextBox.Text = argName;
+            return TextBox;
         }
     }
 }

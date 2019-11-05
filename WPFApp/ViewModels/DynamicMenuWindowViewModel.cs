@@ -26,7 +26,8 @@ namespace WPFApp.ViewModels
             LoadedCommand = new DelegateCommand(()=> NextPage(null));
             SendVmPayrecCommand = new DelegateCommand(() => NextPage(PayrecToSend));
             LookupCommand = new DelegateCommand<LookupItem>(SetLookup);
-            HomePageCommand = new DelegateCommand( () => { } );
+            HomePageCommand = new DelegateCommand(HomePage);
+            BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(()=> IsBackPossible);
             NewResponseComeEvent += ()=>ClearLookup();
         }
         #endregion
@@ -42,6 +43,7 @@ namespace WPFApp.ViewModels
         private LookupVM _lookupVM;
         private List<LookupVM> _lookupVMList = new List<LookupVM>();
         private Exception _exception;
+        private bool _isBackPossible;
         #endregion
 
         #region Properties
@@ -52,6 +54,7 @@ namespace WPFApp.ViewModels
             {
                 if (value?.GetListResponse?.PayRecord?.Count == 1)
                 { PayrecToSend = value?.GetListResponse?.PayRecord?.FirstOrDefault(); }
+                IsBackPossible = VMToLogicStatic.IsBackPossible();
                 SetProperty(ref _responce, value, NewResponseComeEvent);
             }
         }
@@ -101,6 +104,11 @@ namespace WPFApp.ViewModels
             get => _isLoadingMenu;
             set => SetProperty(ref _isLoadingMenu, value);
         }
+        public bool IsBackPossible
+        {
+            get => _isBackPossible;
+            set => SetProperty(ref _isBackPossible, value);
+        }
         public Exception Exception
         {
             get => _exception;
@@ -128,7 +136,7 @@ namespace WPFApp.ViewModels
                 IsLoadingMenu = !IsLoadingMenu;
                 FillPayrecToSendWithLookup();
                 Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
-                Responce = await ResponceBuilder.NextPage(param ?? PayrecToSend);
+                Responce = await VMToLogicStatic.NextPage(param ?? PayrecToSend);
             }
             catch (Exception ex)
             {
@@ -142,7 +150,21 @@ namespace WPFApp.ViewModels
             {
                 IsLoadingMenu = !IsLoadingMenu;
                 Trace.WriteLine($"VM => Logic BackPage()");
-                Responce = await ResponceBuilder.BackPage();
+                Responce = await VMToLogicStatic.BackPage();
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+        }
+
+        private async void HomePage()
+        {
+            try
+            {
+                IsLoadingMenu = !IsLoadingMenu;
+                Trace.WriteLine($"VM => Logic BackPage()");
+                Responce = await VMToLogicStatic.HomePage();
             }
             catch (Exception ex)
             {

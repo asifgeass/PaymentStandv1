@@ -70,19 +70,10 @@
     <Compile Include="XmlTransactionsManager.cs" />
     <Compile Include="PostGetHTTP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResponceBuilder.cs" />
+    <Compile Include="VMToLogicStatic.cs" />
     <Compile Include="StaticExtensions.cs" />
-    <Compile Include="XML\AutoSerlzd\AttrRecord.cs" />
-    <Compile Include="XML\AutoSerlzd\Erip.cs" />
-    <Compile Include="XML\AutoSerlzd\GroupRecord.cs" />
-    <Compile Include="XML\AutoSerlzd\iRequestable.cs" />
-    <Compile Include="XML\AutoSerlzd\Lookup.cs" />
-    <Compile Include="XML\AutoSerlzd\LookupItem.cs" />
-    <Compile Include="XML\AutoSerlzd\PayRecord.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="XML\AutoSerlzd\customs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

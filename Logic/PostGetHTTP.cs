@@ -130,11 +130,11 @@ namespace Logic
 
         public static async Task<XDocument> PostStringGetXML(string requestXml)
         {
-            return await PostStringGetXML(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
+            return await PostStringGetXML(url, $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
         public static async Task<string> PostStringGetString(string requestXml)
         {
-            return await PostStringGetString(url, $"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
+            return await PostStringGetString(url, $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\" standalone='yes'?>\n{requestXml}");
         }
 
         public static async Task<XDocument> XmlLoadAsync(Stream stream, LoadOptions loadOptions = LoadOptions.PreserveWhitespace)

@@ -1,5 +1,4 @@
-﻿using Logic.XML;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,7 @@ using XmlStructureComplat;
 
 namespace Logic
 {
-    public class ResponceBuilder
+    public class VMToLogicStatic
     {
         //private static Lazy<PagesManager> manager = new Lazy<PagesManager>();
         private static XmlTransactionsManager manager = new XmlTransactionsManager();
@@ -21,6 +20,16 @@ namespace Logic
         public static async Task<PS_ERIP> BackPage()
         {
             return await manager.PrevRequest();
+        }
+
+        public static bool IsBackPossible()
+        {
+            return manager.IsPrevRequestPossible();
+        }
+
+        public static Task<PS_ERIP> HomePage()
+        {
+            return manager.HomeRequest();
         }
     }
 }

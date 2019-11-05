@@ -95,10 +95,244 @@
           </Receipt>
         </VOIResponse>
       </MDOM_POS>
+
+      <MDOM_POS>
+        <PURRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <PaySumma>0.3</PaySumma>
+        </PURRequest>
+      </MDOM_POS>
+      Response
+      <MDOM_POS>
+        <PURResponse>
+          <ErrorCode>0</ErrorCode>
+          <PayDate>05/11/2019 12:06:56</PayDate>
+          <KioskReceipt>0002</KioskReceipt>
+          <PC_ID>000000000000</PC_ID>
+          <PAN>522208******0693</PAN>
+          <TypePAN>MS</TypePAN>
+          <Receipt>
+            *****************************
+            DEMO MODE
+            ONLY FOR TEST
+            ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+            ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ
+            *****************************
+            **** TRAINING MODE ****
+            ТЕРМИНАЛ: PTS01001
+            Торговец: 0000001
+            Тестовый терминал
+            Расвиком
+
+
+            КАРТ-ЧЕК: 990002/000002
+            ERN: 2
+            * ДЛЯ КЛИЕНТА *
+            ОПЛАТА
+            05.11.2019
+            КАРТА: 522208******0693
+            Ввод данных - (CL)
+            Сумма                           0.30 BYN
+            КОД: 00
+            ЗАВЕРШЕНО УСПЕШНО
+            КОД АВТ.: XXXXXX
+            AID: A0000000041010
+            APP: Mastercard
+
+          </Receipt>
+        </PURResponse>
+      </MDOM_POS>
+
+      <MDOM_POS>
+        <VOIRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <KioskReceipt>0002</KioskReceipt>
+          <PC_ID>000000000000</PC_ID>
+        </VOIRequest>
+      </MDOM_POS>
+      Response
+      <MDOM_POS>
+        <VOIResponse>
+          <ErrorCode>0</ErrorCode>
+          <Receipt>
+            *****************************
+            DEMO MODE
+            ONLY FOR TEST
+            ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+            ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ
+            *****************************
+            **** TRAINING MODE ****
+            ТЕРМИНАЛ: PTS01001
+            Торговец: 0000001
+            Тестовый терминал
+            Расвиком
+
+
+            КАРТ-ЧЕК: 990002/000002
+            ERN: 2
+            * ДЛЯ КЛИЕНТА *
+            ОТМЕНА
+            05.11.2019
+            КАРТА: 522208******0693
+            Ввод данных - (CL)
+            Сумма                           0.30 BYN
+            КОД: 00
+            ЗАВЕРШЕНО УСПЕШНО
+            КОД АВТ.: XXXXXX
+            AID: A0000000041010
+            APP: Mastercard
+            ___________________      Подпись кассира
+
+          </Receipt>
+        </VOIResponse>
+      </MDOM_POS>
+
+      <MDOM_POS>
+        <PURRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <PaySumma>0.1</PaySumma>
+        </PURRequest>
+      </MDOM_POS>
+      Response
+      <MDOM_POS>
+        <PURResponse>
+          <ErrorCode>0</ErrorCode>
+          <PayDate>05/11/2019 12:09:17</PayDate>
+          <KioskReceipt>0003</KioskReceipt>
+          <PC_ID>000000000000</PC_ID>
+          <PAN>522208******0693</PAN>
+          <TypePAN>MS</TypePAN>
+          <Receipt>
+            *****************************
+            DEMO MODE
+            ONLY FOR TEST
+            ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+            ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ
+            *****************************
+            **** TRAINING MODE ****
+            ТЕРМИНАЛ: PTS01001
+            Торговец: 0000001
+            Тестовый терминал
+            Расвиком
+
+
+            КАРТ-ЧЕК: 990003/000002
+            ERN: 3
+            * ДЛЯ КЛИЕНТА *
+            ОПЛАТА
+            05.11.2019
+            КАРТА: 522208******0693
+            Ввод данных - (CL)
+            Сумма                           0.10 BYN
+            КОД: 00
+            ЗАВЕРШЕНО УСПЕШНО
+            КОД АВТ.: XXXXXX
+            AID: A0000000041010
+            APP: Mastercard
+
+          </Receipt>
+        </PURResponse>
+      </MDOM_POS>
+
+      <MDOM_POS>
+        <VOIRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <KioskReceipt>0003</KioskReceipt>
+        </VOIRequest>
+      </MDOM_POS>
+      Error (no PC ID)
+      <MDOM_POS>
+        <UnkResponse>
+          <ErrorCode>11</ErrorCode>
+          <ErrorText>XML parsing error</ErrorText>
+        </UnkResponse>
+      </MDOM_POS>
+
+      <MDOM_POS>
+        <VOIRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <KioskReceipt>0003</KioskReceipt>
+          <PC_ID>000000000000</PC_ID>
+        </VOIRequest>
+      </MDOM_POS>
+      Response
+      <MDOM_POS>
+        <VOIResponse>
+          <ErrorCode>0</ErrorCode>
+          <Receipt>
+            *****************************
+            DEMO MODE
+            ONLY FOR TEST
+            ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+            ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ
+            *****************************
+            **** TRAINING MODE ****
+            ТЕРМИНАЛ: PTS01001
+            Торговец: 0000001
+            Тестовый терминал
+            Расвиком
+
+
+            КАРТ-ЧЕК: 990003/000002
+            ERN: 3
+            * ДЛЯ КЛИЕНТА *
+            ОТМЕНА
+            05.11.2019
+            КАРТА: 522208******0693
+            Ввод данных - (CL)
+            Сумма                           0.10 BYN
+            КОД: 00
+            ЗАВЕРШЕНО УСПЕШНО
+            КОД АВТ.: XXXXXX
+            AID: A0000000041010
+            APP: Mastercard
+            ___________________      Подпись кассира
+
+          </Receipt>
+        </VOIResponse>
+      </MDOM_POS>
+
+
     </myHistory>
 
     <myErrors>
-
+      Canceled by user
+      <MDOM_POS>
+        <PURRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <PaySumma>0.1</PaySumma>
+        </PURRequest>
+      </MDOM_POS>
+      Response 
+      <MDOM_POS>
+        <PURResponse>
+          <ErrorCode>16</ErrorCode>
+          <ErrorText>Operation denied</ErrorText>
+        </PURResponse>
+      </MDOM_POS>
+      
+      Timeout (30сек)
+      <MDOM_POS>
+        <PURRequest>
+          <TerminalId>KKM1</TerminalId>
+          <Version>1</Version>
+          <PaySumma>0.1</PaySumma>
+        </PURRequest>
+      </MDOM_POS>
+      Response
+      <MDOM_POS>
+        <PURResponse>
+          <ErrorCode>128</ErrorCode>
+          <ErrorText>Can't start an opertation with NPC</ErrorText>
+        </PURResponse>
+      </MDOM_POS>
+      
       Wrong fractional separator(,)
       <!--xml=<?xml version="1.0" encoding="UTF-8"?>-->
       <MDOM_POS>
@@ -281,6 +515,7 @@
   </Terminal>
 
   <complat>
+    
     <x11>
       <PS_ERIP>
         <GetPayListRequest>

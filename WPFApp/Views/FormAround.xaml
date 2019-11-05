@@ -9,12 +9,12 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
+            <RowDefinition Height="10*" MinHeight="50"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="10*" MinWidth="50"/>
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
@@ -27,6 +27,16 @@
 
             <Label Grid.Row="0" Name="groupLabel" Content="{Binding LabelParentGroup}"/>
             <Label Grid.Row="1" Name="currentLabel" Content="{Binding LabelCurrent}"/>
+        </Grid>
+
+        <Grid x:Name="ButtonsLeftGrid" Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="65*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Name="HomeButton"  Content="Главная" VerticalAlignment="Stretch" Command="{Binding HomePageCommand}"/>
+            <Button Grid.Row="1" Name="BackButton"  Content="Назад" VerticalAlignment="Stretch"/>
         </Grid>
 
         <StackPanel Orientation="Vertical" Name="panelStk" Grid.Row="1" Grid.Column="1"/>
