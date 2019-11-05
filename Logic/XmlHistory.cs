@@ -51,8 +51,11 @@ namespace Logic
         {
             int prevIndex = list[currentIndex].PrevIndex;
             currentIndex = prevIndex;
+            var prevPage = list[currentIndex];
+            if (currentIndex == 0) 
+            { prevPage.SetPrevIndex(0); }
             Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(Previos)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
-            return list[currentIndex];
+            return prevPage;
         }
         #endregion
         #region Private Methods

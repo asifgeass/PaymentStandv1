@@ -162,7 +162,7 @@ namespace WPFApp.ViewModels
         {
             try
             {
-                IsLoadingMenu = !IsLoadingMenu;
+                //IsLoadingMenu = !IsLoadingMenu;
                 Trace.WriteLine($"VM => Logic BackPage()");
                 Responce = await VMToLogicStatic.HomePage();
             }
