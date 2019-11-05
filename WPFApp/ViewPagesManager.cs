@@ -14,11 +14,11 @@ namespace WPFApp
         #region fields
         private List<Panel> pages = new List<Panel>();
         private int currentPageIndex = -1;
-        private StackPanel tempPnl = new StackPanel();
+        private StackPanel tempPnl = new StackPanel() { VerticalAlignment = VerticalAlignment.Center };
         #endregion
         #region Public Methods
         #region Get Page
-        public ScrollViewer NextPage()
+        public Panel NextPage()
         {
             Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
             if (IsNextAvaible)
@@ -29,7 +29,7 @@ namespace WPFApp
         }
         #endregion
         
-        public ScrollViewer PrevPage()
+        public Panel PrevPage()
         {
             Trace.WriteLine($"{nameof(ViewPagesManager)}.{nameof(PrevPage)}(): index={currentPageIndex}; count={pages.Count};");
             if (IsPrevAvaible)
@@ -39,11 +39,12 @@ namespace WPFApp
             return GetPage();
         }
 
-        private ScrollViewer GetPage()
+        private Panel GetPage()
         {
-            var scrollView = new ScrollViewer() { Content = pages[currentPageIndex] };
-            scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            return scrollView;
+            //var scrollView = new ScrollViewer() { Content = pages[currentPageIndex] };
+            //scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            //return scrollView;
+            return pages[currentPageIndex];
         }
 
         public ViewPagesManager NewPage()
@@ -109,7 +110,7 @@ namespace WPFApp
         #region Private Methods
         private void tempPnlClear()
         {
-            tempPnl = new StackPanel();
+            tempPnl = new StackPanel() { VerticalAlignment= VerticalAlignment.Center};
         }
         
         #endregion

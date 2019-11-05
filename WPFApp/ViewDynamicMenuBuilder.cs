@@ -71,9 +71,8 @@ namespace WPFApp
         private void SetWindow(UIElement argElement)
         {
             var around = new FormAround();
-            around.ContentControls.Clear();
             around.BackButton.Click += (s, e) => PrevPage();
-            around.ContentControls.Add(argElement);
+            around.ContentControls = argElement;
             window.Content = around;
         }
 

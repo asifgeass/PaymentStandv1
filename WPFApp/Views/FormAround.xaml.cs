@@ -27,6 +27,11 @@ namespace WPFApp
 
         public object GetDataContext => this.DataContext;
 
-        public UIElementCollection ContentControls => this.panelStk.Children;
+        public object ContentControls
+        {
+            get => this.panelStk.Content;
+            set => this.panelStk.Content = value;
+        }
+            
     }
 }

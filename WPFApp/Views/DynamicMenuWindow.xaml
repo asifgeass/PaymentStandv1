@@ -16,7 +16,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="DynamicMenuWindow" Height="960" Width="540" Loaded="Window_Loaded">
+        Title="DynamicMenuWindow" Height="800" Width="450" Loaded="Window_Loaded">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding HomePageCommand}" />
