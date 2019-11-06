@@ -10,12 +10,12 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*" MinHeight="50"/>
+            <RowDefinition Height="8*" MinHeight="40"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" MinWidth="50"/>
+            <ColumnDefinition Width="10*" MinWidth="70"/>
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
@@ -32,8 +32,8 @@
 
         <Grid x:Name="ButtonsLeftGrid" Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="70*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="80*"/>
             </Grid.RowDefinitions>
 
             <Button Grid.Row="0" Name="HomeButton" HorizontalAlignment="Stretch"

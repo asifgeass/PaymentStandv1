@@ -8,7 +8,7 @@ using XmlStructureComplat;
 
 namespace Logic
 {
-    public class VMToLogicStatic
+    public class StaticMain
     {
         //private static Lazy<PagesManager> manager = new Lazy<PagesManager>();
         private static XmlTransactionsManager manager = new XmlTransactionsManager();

@@ -54,7 +54,7 @@ namespace WPFApp.ViewModels
             {
                 if (value?.GetListResponse?.PayRecord?.Count == 1)
                 { PayrecToSend = value?.GetListResponse?.PayRecord?.FirstOrDefault(); }
-                IsBackPossible = VMToLogicStatic.IsBackPossible();
+                IsBackPossible = StaticMain.IsBackPossible();
                 SetProperty(ref _responce, value, NewResponseComeEvent);
             }
         }
@@ -136,7 +136,7 @@ namespace WPFApp.ViewModels
                 IsLoadingMenu = !IsLoadingMenu;
                 FillPayrecToSendWithLookup();
                 Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
-                Responce = await VMToLogicStatic.NextPage(param ?? PayrecToSend);
+                Responce = await StaticMain.NextPage(param ?? PayrecToSend);
             }
             catch (Exception ex)
             {
@@ -150,7 +150,7 @@ namespace WPFApp.ViewModels
             {
                 IsLoadingMenu = !IsLoadingMenu;
                 Trace.WriteLine($"VM => Logic BackPage()");
-                Responce = await VMToLogicStatic.BackPage();
+                Responce = await StaticMain.BackPage();
             }
             catch (Exception ex)
             {
@@ -164,7 +164,7 @@ namespace WPFApp.ViewModels
             {
                 //IsLoadingMenu = !IsLoadingMenu;
                 Trace.WriteLine($"VM => Logic BackPage()");
-                Responce = await VMToLogicStatic.HomePage();
+                Responce = await StaticMain.HomePage();
             }
             catch (Exception ex)
             {

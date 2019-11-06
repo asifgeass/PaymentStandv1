@@ -158,7 +158,8 @@ namespace WPFApp
             }
             if (paylist.Count == 1)
             {
-                var attrRecords = paylist.First().AttrRecord;
+                var payrec = paylist.First();
+                var attrRecords = payrec.AttrRecord;
                 //LOOKUPs display every lookup as 1 page
                 foreach (var attr in attrRecords)
                 {
@@ -218,6 +219,8 @@ namespace WPFApp
                 }
                 views.AddControl(new TextBlock());
                 var button = Controls.ButtonAccept("Продолжить");
+                if(payrec.GetPayListType=="0")
+                { button.Content = "Оплатить"; }
                 button.Command = model.SendVmPayrecCommand;
                 views.AddControl(button);
             }

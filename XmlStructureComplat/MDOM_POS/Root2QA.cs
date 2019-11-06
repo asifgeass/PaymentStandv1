@@ -13,6 +13,9 @@ namespace XmlStructureComplat.MDOM_POS
         public int ErrorCode { get; set; }
         public string ErrorText { get; set; }
         public string PayDate { get; set; }
+        public string TerminalId { get; set; }
+        public string Version { get; set; }
+        public string PaySumma { get; set; }
         public string KioskReceipt { get; set; }
         public string KioskError { get; set; }
         public string PC_ID { get; set; }

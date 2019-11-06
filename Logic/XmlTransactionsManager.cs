@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using XmlStructureComplat;
+using XmlStructureComplat.MDOM_POS;
 
 namespace Logic
 {
@@ -20,13 +21,6 @@ namespace Logic
             await CreateNextRequest(arg);
             return await GetAndSend();
         }
-
-        private async Task<PS_ERIP> GetAndSend()
-        {
-            string request = await GetRequestBody();
-            return await SendRequestGetResponse(request);
-        }
-
         public async Task<PS_ERIP> PrevRequest(object arg = null)
         {            
             return list.Previos().Response;
@@ -49,14 +43,18 @@ namespace Logic
         }
         #endregion
         #region Private Methods
-        private async Task<string> GetRequestBody()
+        private async Task<PS_ERIP> GetAndSend()
+        {
+            string request = await GetEripRequest();
+            return await GetEripResponse(request);
+        }
+        private async Task<string> GetEripRequest()
         {    
             PS_ERIP reqClass = list.Page.Request;
             XDocument reqXml = await SerializationUtil.Serialize(reqClass);
             string request = reqXml?.ToStringFull();
             return request;
         }
-
         private async Task CreateNextRequest(object arg)
         {
             if (list.Count <= 0)
@@ -68,8 +66,7 @@ namespace Logic
                 CreateNextPage(arg);
             }
         }
-
-        private void CreateNextPage(object param)
+        private async Task CreateNextPage(object param)
         {
             var rootResponse = list.Page.Response;
             var paylist = rootResponse.GetListResponse.PayRecord;
@@ -105,12 +102,35 @@ namespace Logic
                     }
                     if(payrecArg.GetPayListType=="0")
                     {
-
+                        string request = await GetPosRequest(payrecArg);
+                        MDOM_POS resp = await GetPosResponse(request);
+                        if(resp.Root2.ErrorCode==0) //УСПЕХ оплаты
+                        {
+                            //build RunOperReq
+                        }
+                        if (resp.Root2.ErrorCode != 0) //ОШИБКА оплаты
+                        {
+                            //ошибка в ЮИ
+                        }
                     }
                 }
             }
             this.CreateNextPage(requestReturn);
         }
+        private async Task<string> GetPosRequest(PayRecord payrecArg)
+        {
+            QAMdomPOS pos = new QAMdomPOS(payrecArg);
+            XDocument reqXml = await SerializationUtil.Serialize(pos.Request);
+            string request = $"xml={reqXml?.ToStringFull()}";
+            return request;
+        }
+        private async Task<MDOM_POS> GetPosResponse(string argReq)
+        {
+            XDocument respXml = await PostGetHTTP.PostStringGetXML(QAMdomPOS.Url, argReq);
+            MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
+            return respPos;
+        }
+
         private async Task CreateInitialRequest()
         {
             string strxml = GetHardCodeInitialRequest();
@@ -123,7 +143,7 @@ namespace Logic
         {
             list.Next(request);
         }
-        private async Task<PS_ERIP> SendRequestGetResponse(string request)
+        private async Task<PS_ERIP> GetEripResponse(string request)
         {
             XDocument responseXml = await PostGetHTTP.PostStringGetXML(request);
             Debug.WriteLine(responseXml.ToString());
