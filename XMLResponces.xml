@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <all>
+  
+  <PS_ERIP>
+    <GetPayListResponse>
+      <ErrorCode>666</ErrorCode>
+      <ErrorText>Платеж уже регестрировался ранее. Найден в БД.</ErrorText>
+    </GetPayListResponse>
+  </PS_ERIP>
+  
   <PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <GetPayListRequest>
       <ErrorCode>0</ErrorCode>

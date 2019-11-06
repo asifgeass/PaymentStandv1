@@ -20,7 +20,7 @@ namespace XmlStructureComplat.MDOM_POS
         [XmlElement("VOIRequest")]
         [XmlElement("VOIResponse")]
         [XmlElement("CFGRequest")]
-        public Root2QA RootQAType { get; set; } = new Root2QA();
+        public Root2QA ResponseReq { get; set; } = new Root2QA();
     }
     [XmlType(IncludeInSchema = false)]
     public enum PosQAType

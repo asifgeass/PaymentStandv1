@@ -41,6 +41,16 @@ namespace XmlStructureComplat
             catch (Exception) { }
             return this;
         }
+        public PS_ERIP Accept(PS_ERIP arg)
+        {
+            try
+            {
+                RootQAType.TerminalID = arg.RootQAType.TerminalID ?? RootQAType.TerminalID;
+                RootQAType.Version = arg.RootQAType.Version ?? RootQAType.Version;
+            }
+            catch (Exception) { }
+            return this;
+        }
     }
 
     [XmlType(IncludeInSchema = false)]

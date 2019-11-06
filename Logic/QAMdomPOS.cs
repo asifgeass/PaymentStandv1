@@ -25,19 +25,21 @@ namespace Logic
         private QAMdomPOS()
         {
             Request = new MDOM_POS();
-            Request.RootQAType.TerminalId = TerminalId;
-            Request.RootQAType.Version = Version;
-            Request.RootQAType.PC_ID = PC_ID;
+            Request.ResponseReq.TerminalId = TerminalId;
+            Request.ResponseReq.Version = Version;
+            Request.ResponseReq.PC_ID = PC_ID;
             Request.EnumType = PosQAType.PURRequest;
         }
         public QAMdomPOS(PayRecord payrecArg) : this()
         {
             Request.EnumType = PosQAType.PURRequest;
-            Request.RootQAType.PaySumma = payrecArg.Summa;
-            if(Request.RootQAType.PaySumma=="0.00")
-            {
-                Request.RootQAType.PaySumma = "0.1";
-            }
+            Request.ResponseReq.PaySumma = payrecArg.Summa;
+            //TEST
+            //if (Request.RootQAType.PaySumma=="0.00")
+            //{
+            //    Request.RootQAType.PaySumma = "1";
+            //}
+            //TEST
         }
         #endregion
     }
