@@ -52,8 +52,8 @@ namespace WPFApp.ViewModels
             get => _responce;
             set 
             {
-                if (value?.GetListResponse?.PayRecord?.Count == 1)
-                { PayrecToSend = value?.GetListResponse?.PayRecord?.FirstOrDefault(); }
+                if (value?.RootQAType?.PayRecord?.Count == 1)
+                { PayrecToSend = value?.RootQAType?.PayRecord?.FirstOrDefault(); }
                 IsBackPossible = StaticMain.IsBackPossible();
                 SetProperty(ref _responce, value, NewResponseComeEvent);
             }

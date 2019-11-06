@@ -43,18 +43,7 @@ namespace Logic
         }
         #endregion
         #region Private Methods
-        private async Task<PS_ERIP> GetAndSend()
-        {
-            string request = await GetEripRequest();
-            return await GetEripResponse(request);
-        }
-        private async Task<string> GetEripRequest()
-        {    
-            PS_ERIP reqClass = list.Page.Request;
-            XDocument reqXml = await SerializationUtil.Serialize(reqClass);
-            string request = reqXml?.ToStringFull();
-            return request;
-        }
+
         private async Task CreateNextRequest(object arg)
         {
             if (list.Count <= 0)
@@ -63,65 +52,109 @@ namespace Logic
             }
             else
             {
-                CreateNextPage(arg);
+                await CreateNextPage(arg);
             }
         }
         private async Task CreateNextPage(object param)
         {
+            PS_ERIP returnReq = null;
             var rootResponse = list.Page.Response;
-            var paylist = rootResponse.GetListResponse.PayRecord;
-            PS_ERIP requestReturn = null;
-            if (paylist.Count > 1)
+            if (rootResponse.EnumType == EripQAType.GetPayListResponse)
             {
-                if (param is PayRecord)
+                var paylist = rootResponse.RootQAType.PayRecord;
+                if (paylist.Count > 1)
                 {
-                    PayRecord payrecArg = param as PayRecord;
-                    var requestCopy = list.Page.Request.Copy();
-                    requestCopy.GetListResponse.PayCode = payrecArg.Code;
-                    requestReturn = requestCopy;
+                    if (param is PayRecord)
+                    {
+                        PayRecord payrecArg = param as PayRecord;
+                        var requestCopy = list.Page.Request.Copy();
+                        requestCopy.RootQAType.PayCode = payrecArg.Code;
+                        returnReq = requestCopy;
+                    }
                 }
-            }
-            if (paylist.Count == 1)
-            {
-                if (param is PayRecord)
+                if (paylist.Count == 1)
                 {
-                    PayRecord payrecArg = param as PayRecord;
-                    var newRequest = list.Page.Request.Copy();
-                    newRequest.GetListResponse.SessionId = payrecArg.SessionId;
+                    if (param is PayRecord)
+                    {
+                        var requestCopy = list.Page.Request.Copy();
+                        PayRecord payrecArg = param as PayRecord;
+                        if (payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
+                        {
 
-                    if(payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
-                    {
-                        newRequest.GetListResponse.AttrRecord = new List<AttrRecordRequest>();
-                        payrecArg.AttrRecord.ForEach(attr =>
-                        {
-                            var newAttr = new AttrRecordRequest(attr);
-                            newAttr.Change = 1;
-                            newRequest.GetListResponse.AttrRecord.Add(newAttr);
-                        });
-                        requestReturn = newRequest;
-                    }
-                    if(payrecArg.GetPayListType=="0")
-                    {
-                        string request = await GetPosRequest(payrecArg);
-                        MDOM_POS resp = await GetPosResponse(request);
-                        if(resp.Root2.ErrorCode==0) //УСПЕХ оплаты
-                        {
-                            //build RunOperReq
+                            requestCopy.RootQAType.SessionId = payrecArg.SessionId;
+                            requestCopy.RootQAType.AttrRecord = new List<AttrRecordRequest>();
+                            payrecArg.AttrRecord.ForEach(attr =>
+                            {
+                                var newAttr = new AttrRecordRequest(attr);
+                                newAttr.Change = 1;
+                                requestCopy.RootQAType.AttrRecord.Add(newAttr);
+                            });
+                            returnReq = requestCopy;
                         }
-                        if (resp.Root2.ErrorCode != 0) //ОШИБКА оплаты
+                        if (payrecArg.GetPayListType == "0")
                         {
-                            //ошибка в ЮИ
+                            string request = await GetPosRequest(payrecArg);
+                            MDOM_POS respPos = await GetPosResponse(request);
+                            if (respPos.RootQAType.ErrorCode == 0) //УСПЕХ POS
+                            {
+                                returnReq = list.Page.Response.Copy();
+                                returnReq.EnumType = EripQAType.RunOperationRequest;
+                                returnReq.RootQAType.TerminalID = requestCopy.RootQAType.TerminalID;
+                                returnReq.RootQAType.Version = requestCopy.RootQAType.Version;
+                                returnReq.RootQAType.SessionId = payrecArg.SessionId;
+                                returnReq.RootQAType.PayDate = respPos.RootQAType.PayDate;
+                                returnReq.RootQAType.KioskReceipt = respPos.RootQAType.KioskReceipt;
+                                returnReq.RootQAType.PAN = respPos.RootQAType.PAN;
+                                returnReq.RootQAType.TypePAN = respPos.RootQAType.TypePAN;
+                                returnReq.RootQAType.KioskReceipt = respPos.RootQAType.KioskReceipt;
+                                returnReq.RootQAType.PayRecord.First().PC_ID = respPos.RootQAType.PC_ID;
+                                returnReq.Clear();
+                                returnReq.RootQAType.PayRecord.First().SessionId = payrecArg.SessionId;
+
+                                //string ReqRunOper = await GetEripRequest(newRequest);
+                                //PS_ERIP RespRunOper = await GetEripResponse(ReqRunOper);
+
+                                //if (RespRunOper.RootQAType.ErrorCode==0) // УСПЕХ RunOper
+                                //{
+                                //    returnReq = RespRunOper;
+                                //    //Успех в ЮИ юзеру
+                                //    ConfirmRequest(RespRunOper);
+                                //}
+                            }
+                            if (respPos.RootQAType.ErrorCode != 0) //ОШИБКА POS
+                            {
+                                //ошибка в ЮИ
+                            }
                         }
                     }
                 }
             }
-            this.CreateNextPage(requestReturn);
+            if(rootResponse.EnumType == EripQAType.RunOperationResponse)
+            {
+                if (rootResponse.RootQAType.ErrorCode == 0) // УСПЕХ RunOper
+                {
+                    //Успех в ЮИ юзеру
+                    ConfirmRequest(rootResponse);
+                }
+            }
+            this.CreateNextPage(returnReq);
         }
+
+        private async Task ConfirmRequest(PS_ERIP RespRunOper)
+        {
+            PS_ERIP confirmReq = RespRunOper.Copy();
+            confirmReq.EnumType = EripQAType.ConfirmRequest;
+            confirmReq.RootQAType.PayRecord[0].KioskReceipt = confirmReq.RootQAType.KioskReceipt;
+            confirmReq.RootQAType.PayRecord[0].ConfirmCode = "1";
+            string req = await GetEripRequest(confirmReq);
+            PS_ERIP resp = await GetEripResponse(req);
+        }
+
         private async Task<string> GetPosRequest(PayRecord payrecArg)
         {
             QAMdomPOS pos = new QAMdomPOS(payrecArg);
             XDocument reqXml = await SerializationUtil.Serialize(pos.Request);
-            string request = $"xml={reqXml?.ToStringFull()}";
+            string request = $"xml={reqXml?.ToString()}";
             return request;
         }
         private async Task<MDOM_POS> GetPosResponse(string argReq)
@@ -141,6 +174,7 @@ namespace Logic
         private PS_ERIP Request => list.Page.Request;
         private void CreateNextPage(PS_ERIP request)
         {
+            if (request == null) return;
             list.Next(request);
         }
         private async Task<PS_ERIP> GetEripResponse(string request)
@@ -150,6 +184,17 @@ namespace Logic
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
             list.Page.Response = response;
             return response;
+        }
+        private async Task<string> GetEripRequest(PS_ERIP argReq)
+        {
+            XDocument reqXml = await SerializationUtil.Serialize(argReq);
+            string request = reqXml?.ToString();
+            return request;
+        }
+        private async Task<PS_ERIP> GetAndSend()
+        {
+            string request = await GetEripRequest(list.Page.Request);
+            return await GetEripResponse(request);
         }
         private string GetHardCodeInitialRequest()
         {

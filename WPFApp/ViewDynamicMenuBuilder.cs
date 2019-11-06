@@ -136,7 +136,7 @@ namespace WPFApp
         {
             if (model == null) { throw new NullReferenceException("main VM = null"); };
             var rootResponse = model.Responce;
-            var resp = rootResponse.GetListResponse;
+            var resp = rootResponse.RootQAType;
             var paylist = resp.PayRecord;
             if(resp != null && resp?.ErrorCode != 0)
             {
@@ -200,6 +200,15 @@ namespace WPFApp
                         views.AddControl(label);
                     }
                 }
+                var payLabel = Controls.LabelInfo();
+                payLabel.Content = $"Summa = {payrec.Summa}";
+                views.AddControl(payLabel);
+                payLabel = Controls.LabelInfo();
+                payLabel.Content = $"Commission = {payrec.Commission}";
+                views.AddControl(payLabel);
+                payLabel = Controls.LabelInfo();
+                payLabel.Content = $"Fine = {payrec.Fine}";
+                views.AddControl(payLabel);
                 //ATTRs at last display attrs need to enter with textbox
                 foreach (var attr in attrRecords)
                 {

@@ -299,7 +299,6 @@
 
 
     </myHistory>
-
     <myErrors>
       Canceled by user
       <MDOM_POS>
@@ -417,7 +416,6 @@
       </MDOM_POS>
       
     </myErrors>
-
     <terminal>
       <MDOM_POS>
         <PURRequest>
@@ -459,7 +457,6 @@
         <xxx>?</xxx>
       </VOIResponse>
     </terminal>
-
     <ExampleHistory>
       PURRequest:
       <MDOM_POS>
@@ -512,6 +509,7 @@
       </MDOM_POS>
 
     </ExampleHistory>
+    
   </Terminal>
 
   <complat>

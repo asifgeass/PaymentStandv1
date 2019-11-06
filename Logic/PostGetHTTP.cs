@@ -54,6 +54,7 @@ namespace Logic
                         using (var responseStream = response.GetResponseStream())
                         {
                             var responseXml = await XmlLoadAsync(responseStream);
+                            Debug.WriteLine($"<<=\n{responseXml.ToString()}\n<<=");
                             timer.Stop();
                             timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
                             doc = responseXml;

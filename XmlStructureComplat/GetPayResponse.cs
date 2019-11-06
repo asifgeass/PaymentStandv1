@@ -10,7 +10,6 @@ namespace XmlStructureComplat
     [XmlRoot]
     public partial class GetPayResponse
     {
-        private List<PayRecord> payRecordField;
         public int ErrorCode { get; set; }
         public string ErrorText { get; set; }
         public string TerminalID { get; set; }

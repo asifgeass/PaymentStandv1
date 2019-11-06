@@ -14,7 +14,7 @@ namespace XmlStructureComplat
         [XmlElement()]
         public GroupRecord GroupRecord { get; set; }
         [XmlArrayItem("Lookup")]
-        public List<Lookup> Lookups { get; set; } = null;
+        public List<Lookup> Lookups { get; set; }
         [XmlElement()]
         public List<AttrRecord> AttrRecord { get; set; }
         [XmlElement()]
@@ -45,6 +45,27 @@ namespace XmlStructureComplat
         public string RecordID { get; set; }
         [XmlAttribute()]
         public string PaymentID { get; set; }
-        public string xx { get; set; }
+        [XmlAttribute()]
+        public string PC_ID { get; set; }
+        [XmlAttribute()]
+        public string PayAll { get; set; }
+        [XmlAttribute()]
+        public string KioskReceipt { get; set; }
+        [XmlAttribute()]
+        public string Date { get; set; }
+        [XmlAttribute()]
+        public string ClaimID { get; set; }
+        [XmlAttribute()]
+        public string DIType { get; set; }
+        [XmlAttribute()]
+        public string Currency { get; set; }
+        [XmlAttribute()]
+        public string CodeOut { get; set; }
+        [XmlAttribute()]
+        public string Label { get; set; }
+        [XmlAttribute()]
+        public string CancelReason { get; set; }
+        [XmlAttribute()]
+        public string ConfirmCode { get; set; }
     }
 }

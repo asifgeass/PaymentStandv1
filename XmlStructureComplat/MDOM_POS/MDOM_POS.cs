@@ -11,7 +11,7 @@ namespace XmlStructureComplat.MDOM_POS
     public class MDOM_POS
     {
         [XmlIgnore]
-        public ItemChoiceType EnumType;
+        public PosQAType EnumType;
 
         [XmlChoiceIdentifier("EnumType")]
         [XmlElement("UnknownResponse")]
@@ -20,10 +20,10 @@ namespace XmlStructureComplat.MDOM_POS
         [XmlElement("VOIRequest")]
         [XmlElement("VOIResponse")]
         [XmlElement("CFGRequest")]
-        public Root2QA Root2 { get; set; }
+        public Root2QA RootQAType { get; set; } = new Root2QA();
     }
     [XmlType(IncludeInSchema = false)]
-    public enum ItemChoiceType
+    public enum PosQAType
     {
         UnknownResponse,
         PURRequest,
