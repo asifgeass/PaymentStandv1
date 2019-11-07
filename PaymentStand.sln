@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlStructureComplat", "XmlS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIXmlPostTerminal", "UIXmlPostTerminal\UIXmlPostTerminal.csproj", "{77E00DE8-9B5D-4F3C-A1DE-EBA7BC9EF7A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExceptionManager", "..\ExceptionManager\ExceptionManager\ExceptionManager.csproj", "{3AC1A6DB-15C0-4A53-943C-947A5E020C81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{77E00DE8-9B5D-4F3C-A1DE-EBA7BC9EF7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77E00DE8-9B5D-4F3C-A1DE-EBA7BC9EF7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77E00DE8-9B5D-4F3C-A1DE-EBA7BC9EF7A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AC1A6DB-15C0-4A53-943C-947A5E020C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AC1A6DB-15C0-4A53-943C-947A5E020C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AC1A6DB-15C0-4A53-943C-947A5E020C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AC1A6DB-15C0-4A53-943C-947A5E020C81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

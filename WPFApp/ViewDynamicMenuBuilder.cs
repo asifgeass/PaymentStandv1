@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionManager;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -99,7 +100,7 @@ namespace WPFApp
 
         private void DisplayErrorPage(Exception ex)
         {
-            Debug.WriteLine($"{ex.Message}\n\n{ex.StackTrace}");
+            Ex.Log($"{ex.Message}\n\n{ex.StackTrace}");
             DisplayErrorPage($"{ex.Message}\n\n{ex.StackTrace}");
         }
         private void DisplayErrorPage(string msgError)
@@ -121,7 +122,7 @@ namespace WPFApp
             {
                 this.views = new ViewPagesManager();
                 model.ClearChildLookupVM();
-                Trace.WriteLine($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
+                Ex.Log($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
                 this.ResponseAnalizeAndBuild();
                 this.NextPage();
             }
@@ -167,7 +168,7 @@ namespace WPFApp
                     {
                         if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                         {
-                            Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
+                            Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
                             List<Lookup> lookups = paylist?.First()?.Lookups;
                             Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower())?.Single();
                             int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
@@ -189,14 +190,14 @@ namespace WPFApp
                             views.NewPage();
                         }
                     }
-                    Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): After LOOKup ViewPages={views.Count};");
+                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): After LOOKup ViewPages={views.Count};");
                     views.NewPage();
                     //ATTRs first display filled data attrs
                     foreach (var attr in attrRecords)
                     {
                         if (attr.Edit != 1 && attr.View == 1)
                         {
-                            Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
+                            Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
                             var label = Controls.LabelInfo();
                             label.Content = $"{attr.Name} = {attr.Value}";
                             views.AddControl(label);
@@ -216,7 +217,7 @@ namespace WPFApp
                     {
                         if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                         {
-                            Trace.WriteLine($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
+                            Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
                             var label = Controls.LabelInfo(attr.Name);
                             var inputbox = Controls.TextBox();
                             int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
@@ -238,7 +239,7 @@ namespace WPFApp
             }
             if (rootResponse.EnumType == EripQAType.RunOperationResponse)
             {
-                Debug.WriteLine($"ResponseAnalizeAndBuild(): rootResponse.EnumType==RunOperationResponse");
+                Ex.Log($"ResponseAnalizeAndBuild(): rootResponse.EnumType==RunOperationResponse");
                 if (resp.ErrorCode == 0)
                 {
                     var control = Controls.CentralLabelBorder("Оплата успешно произведена!");
@@ -294,7 +295,7 @@ namespace WPFApp
         }
         private void NextPage(object param=null)
         {
-            Trace.WriteLine($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if(views.IsNextAvaible)
             {
                 SetWindow(views.NextPage());
@@ -306,7 +307,7 @@ namespace WPFApp
         }
         private void PrevPage()
         {
-            Trace.WriteLine($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if (views.IsPrevAvaible)
             {
                 SetWindow(views.PrevPage());

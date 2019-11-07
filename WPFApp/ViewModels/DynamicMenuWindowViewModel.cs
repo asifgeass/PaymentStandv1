@@ -9,6 +9,7 @@ using Prism.Ioc;
 using Logic;
 using XmlStructureComplat;
 using System.Diagnostics;
+using ExceptionManager;
 
 namespace WPFApp.ViewModels
 {
@@ -65,7 +66,7 @@ namespace WPFApp.ViewModels
             {
                 AttrToSend = value?.AttrRecord;
                 SetProperty(ref _payrecToSend, value);
-                //Trace.WriteLine($"{nameof(PayrecToSend)}():");
+                //Ex.Log($"{nameof(PayrecToSend)}():");
             }
         }
         public List<AttrRecord> AttrToSend
@@ -135,7 +136,7 @@ namespace WPFApp.ViewModels
             {
                 IsLoadingMenu = !IsLoadingMenu;
                 FillPayrecToSendWithLookup();
-                Trace.WriteLine($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
+                Ex.Log($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
                 Responce = await StaticMain.NextPage(param ?? PayrecToSend);
             }
             catch (Exception ex)
@@ -149,7 +150,7 @@ namespace WPFApp.ViewModels
             try
             {
                 IsLoadingMenu = !IsLoadingMenu;
-                Trace.WriteLine($"VM => Logic BackPage()");
+                Ex.Log($"VM => Logic BackPage()");
                 Responce = await StaticMain.BackPage();
             }
             catch (Exception ex)
@@ -163,7 +164,7 @@ namespace WPFApp.ViewModels
             try
             {
                 //IsLoadingMenu = !IsLoadingMenu;
-                Trace.WriteLine($"VM => Logic BackPage()");
+                Ex.Log($"VM => Logic BackPage()");
                 Responce = await StaticMain.HomePage();
             }
             catch (Exception ex)
@@ -174,16 +175,16 @@ namespace WPFApp.ViewModels
 
         private void FillPayrecToSendWithLookup()
         {
-            Trace.WriteLine($"{nameof(FillPayrecToSendWithLookup)}(): childVM count={ChildLookupVMList.Count}");
+            Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): childVM count={ChildLookupVMList.Count}");
             foreach (var lookupVM in ChildLookupVMList)
             {
                 var selectedValue = lookupVM?.Lookup?.SelectedItem?.Value;
-                Trace.WriteLine($"{nameof(FillPayrecToSendWithLookup)}(): lookup: name={lookupVM.Lookup.Name}; selected value={selectedValue}");
+                Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): lookup: name={lookupVM.Lookup.Name}; selected value={selectedValue}");
                 foreach (var attr in PayrecToSend?.AttrRecord)
                 {
                     if (attr?.Lookup == lookupVM?.Lookup?.Name && attr?.Lookup!=null)
                     {
-                        Trace.WriteLine($"{nameof(FillPayrecToSendWithLookup)}(): Match! attr: name={attr.Name}; value={attr.Value}; newValue={selectedValue}");
+                        Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): Match! attr: name={attr.Name}; value={attr.Value}; newValue={selectedValue}");
                         attr.Value = selectedValue;
                     }
                 }

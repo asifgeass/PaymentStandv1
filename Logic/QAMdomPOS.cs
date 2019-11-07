@@ -35,10 +35,10 @@ namespace Logic
             Request.EnumType = PosQAType.PURRequest;
             Request.ResponseReq.PaySumma = payrecArg.Summa;
             //TEST
-            //if (Request.RootQAType.PaySumma=="0.00")
-            //{
-            //    Request.RootQAType.PaySumma = "1";
-            //}
+            if (Request.ResponseReq.PaySumma == "0.00")
+            {
+                Request.ResponseReq.PaySumma = "1";
+            }
             //TEST
         }
         #endregion

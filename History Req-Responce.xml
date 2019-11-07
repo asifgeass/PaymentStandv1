@@ -332,6 +332,22 @@
         </PURResponse>
       </MDOM_POS>
       
+      128
+      <MDOM_POS>
+        <PURResponse>
+          <ErrorCode>128</ErrorCode>
+          <ErrorText>Can't start an opertation with NPC</ErrorText>
+        </PURResponse>
+      </MDOM_POS>
+
+      16
+      <MDOM_POS>
+        <PURResponse>
+          <ErrorCode>16</ErrorCode>
+          <ErrorText>Operation denied</ErrorText>
+        </PURResponse>
+      </MDOM_POS>
+      
       Wrong fractional separator(,)
       <!--xml=<?xml version="1.0" encoding="UTF-8"?>-->
       <MDOM_POS>
@@ -416,100 +432,6 @@
       </MDOM_POS>
       
     </myErrors>
-    <terminal>
-      <MDOM_POS>
-        <PURRequest>
-          <TerminalID>KKM1</TerminalID>
-          <Version>1</Version>
-          <Lang>?</Lang>
-          <PaySumma>0.1</PaySumma>
-        </PURRequest>
-      </MDOM_POS>
-      Response
-      <PURResponse>
-        <ErrorCode>0</ErrorCode>
-        <ErrorText>?</ErrorText>
-        <Lang>?</Lang>
-        <PayDate>?</PayDate>
-        <KioskReceipt>17092019090006</KioskReceipt>
-        <PC_ID>?</PC_ID>
-        <PAN>BY93AKBB36019010100000000000</PAN>
-        <TypePAN>ACCOUNT</TypePAN>
-        <Receipt>?</Receipt>
-        <xxx>?</xxx>
-        <xxx>?</xxx>
-      </PURResponse>
-
-      <VOIRequest>
-        <TerminalID>TEST_TERMINAL</TerminalID>
-        <Version>3</Version>
-        <Lang>?</Lang>
-        <KioskReceipt>resp</KioskReceipt>
-        <PC_ID>resp</PC_ID>
-      </VOIRequest>
-      Response
-      <VOIResponse>
-        <ErrorCode>0</ErrorCode>
-        <ErrorText>?</ErrorText>
-        <Lang>?</Lang>
-        <xxx>?</xxx>
-        <xxx>?</xxx>
-        <xxx>?</xxx>
-      </VOIResponse>
-    </terminal>
-    <ExampleHistory>
-      PURRequest:
-      <MDOM_POS>
-        <PURRequest>
-          <TerminalId>KKM1</TerminalId>
-          <Version>1</Version>
-          <PaySumma>0.1</PaySumma>
-        </PURRequest>
-      </MDOM_POS>
-      PURResponse:
-      <MDOM_POS>
-        <PURResponse>
-          <ErrorCode>0</ErrorCode>
-          <PayDate>18/10/2019 17:26:22</PayDate>
-          <KioskReceipt>0001</KioskReceipt>
-          <PC_ID>000000000000</PC_ID>
-          <PAN>522208******0693</PAN>
-          <TypePAN>MS</TypePAN>
-          <Receipt>
-            КАРТ-ЧЕК: 990015/000001
-          </Receipt>
-        </PURResponse>
-      </MDOM_POS>
-
-      PURResponse (error):
-      <MDOM_POS>
-        <PURResponse>
-          <ErrorCode>14</ErrorCode>
-          <ErrorText>BPC error</ErrorText>
-        </PURResponse>
-      </MDOM_POS>
-
-      VOIRequest:
-      <MDOM_POS>
-        <VOIRequest>
-          <TerminalId>KKM1</TerminalId>
-          <Version>1</Version>
-          <KioskReceipt>0001</KioskReceipt>
-          <PC_ID>test</PC_ID>
-        </VOIRequest>
-      </MDOM_POS>
-      VOIResponse:
-      <MDOM_POS>
-        <VOIResponse>
-          <ErrorCode>0</ErrorCode>
-          <Receipt>
-            КАРТ-ЧЕК: 990015/000001
-          </Receipt>
-        </VOIResponse>
-      </MDOM_POS>
-
-    </ExampleHistory>
-    
   </Terminal>
 
   <complat>
@@ -779,6 +701,9 @@
           </PayRecord>
         </ConfirmResponse>
       </PS_ERIP>
+
+      ConfirmResp v2
+
     </x2-gos-poslina>
 
     <x2-var2>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionManager;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Logic
                 list[0].SetPrevIndex(currentIndex);
                 currentIndex = 0;
             }
-            Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(HomePage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(HomePage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             return list[0];
         }
         
@@ -44,7 +45,7 @@ namespace Logic
             page.Request = item;
             page.SetPrevIndex (currentIndex);
             this.Add(page);
-            Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(Next)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(Next)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
         }
 
         public EripRequest Previos()
@@ -54,7 +55,7 @@ namespace Logic
             var prevPage = list[currentIndex];
             if (currentIndex == 0) 
             { prevPage.SetPrevIndex(0); }
-            Trace.WriteLine($"{nameof(XmlHistory)}.{nameof(Previos)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(Previos)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             return prevPage;
         }
         #endregion

@@ -137,6 +137,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ExceptionManager\ExceptionManager\ExceptionManager.csproj">
+      <Project>{3ac1a6db-15c0-4a53-943c-947a5e020c81}</Project>
+      <Name>ExceptionManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{F0636A56-60B2-4633-9343-565C8E1E16B4}</Project>
       <Name>Logic</Name>

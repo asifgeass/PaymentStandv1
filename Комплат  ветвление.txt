@@ -1,3 +1,13 @@
+- RunOpREsp->ConfReq:
+PayRecord copy (delete attrecords and check)
+PayRecord.ConfirmCode=1
+(only need)
+PayRecord.PaymentID
+PayRecord.Date
+PayRecord.KioskReceipt
+PayRecord.
+
+
 Manager.NextPage()
 {
 	FillData();

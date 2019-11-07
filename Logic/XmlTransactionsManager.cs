@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionManager;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -237,6 +238,7 @@ namespace Logic
         {
             if (response.EnumType == EripQAType.RunOperationResponse)
             {
+                Ex.Log($"{nameof(CheckForConfirmRequest)}(): if(RunOperationResponse==true) ROR Error={response.RootQAType.ErrorCode}");
                 if (response.RootQAType.ErrorCode == 0) // УСПЕХ RunOper
                 {
                     bool success = false;
@@ -244,14 +246,16 @@ namespace Logic
                     
                     while(!success)
                     {
-                        var resp = await ConfirmRequest(response);
-                        if(resp.RootQAType.ErrorCode==0)
+                        var confirmResp = await ConfirmRequest(response);
+                        if(confirmResp.RootQAType.ErrorCode==0)
                         { success = true; }
+                        Ex.Log($"{nameof(CheckForConfirmRequest)}(): Conf Error={confirmResp.RootQAType.ErrorCode};");
                         await Task.Delay(interval*1000);
                         if (interval<1400) { interval *= 3; }
                     }
                 }
             }
+            Ex.Log($"{nameof(CheckForConfirmRequest)}() FINISHED.");
         }
         private async Task<PS_ERIP> ConfirmRequest(PS_ERIP RespRunOper)
         {

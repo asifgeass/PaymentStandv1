@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionManager;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -38,7 +39,7 @@ namespace Logic
                 string timings = "";
                 XDocument doc;
                 timer.Restart();
-                Debug.WriteLine($"=>>\n{requestXml}\n=>>");
+                Ex.Log($"=>>\n{requestXml}\n=>>");
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
                     timer.Stop();
@@ -54,7 +55,7 @@ namespace Logic
                         using (var responseStream = response.GetResponseStream())
                         {
                             var responseXml = await XmlLoadAsync(responseStream);
-                            Debug.WriteLine($"<<=\n{responseXml.ToString()}\n<<=");
+                            Ex.Log($"<<=\n{responseXml.ToString()}\n<<=");
                             timer.Stop();
                             timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
                             doc = responseXml;

@@ -41,6 +41,25 @@ namespace XmlStructureComplat
             catch (Exception) { }
             return this;
         }
+        public PS_ERIP ConfirmClear()
+        {
+            try
+            {
+                this.RootQAType.PayRecord[0].AttrRecord.ForEach(attr =>
+                {
+                    attr.MinLength = null;
+                    attr.MaxLength = null;
+                    attr.Min = null;
+                    attr.Max = null;
+                    attr.Mandatory = null;
+                    attr.Lookup = null;
+                    attr.Type = null;
+                    attr.Hint = null;
+                });
+            }
+            catch (Exception) { }
+            return this;
+        }
         public PS_ERIP Accept(PS_ERIP arg)
         {
             try
