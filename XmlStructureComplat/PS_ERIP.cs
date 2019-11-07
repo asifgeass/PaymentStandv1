@@ -21,12 +21,14 @@ namespace XmlStructureComplat
         [XmlElement("RunOperationResponse")]
         [XmlElement("UnknownResponse")]
         [XmlElement("ConfirmResponse")]
-        public GetPayResponse RootQAType { get; set; } = new GetPayResponse();
+        [XmlElement("POSPayError")]
+        [XmlElement("POSCancelError")]
+        public GetPayResponse ResponseReq { get; set; } = new GetPayResponse();
         public PS_ERIP Clear()
         {
             try
             {
-                this.RootQAType.PayRecord[0].AttrRecord.ForEach(attr =>
+                this.ResponseReq.PayRecord[0].AttrRecord.ForEach(attr =>
                 {
                     attr.MinLength = null;
                     attr.MaxLength = null;
@@ -45,17 +47,11 @@ namespace XmlStructureComplat
         {
             try
             {
-                this.RootQAType.PayRecord[0].AttrRecord.ForEach(attr =>
-                {
-                    attr.MinLength = null;
-                    attr.MaxLength = null;
-                    attr.Min = null;
-                    attr.Max = null;
-                    attr.Mandatory = null;
-                    attr.Lookup = null;
-                    attr.Type = null;
-                    attr.Hint = null;
-                });
+                this.ResponseReq.PayRecord[0].AttrRecord = null;
+                this.ResponseReq.PayRecord[0].Check = null;
+                this.ResponseReq.PayRecord[0].Lookups = null;
+                this.ResponseReq.PayRecord[0].PayCommission = null;
+                this.ResponseReq.PayRecord[0].Summa = null;
             }
             catch (Exception) { }
             return this;
@@ -64,8 +60,40 @@ namespace XmlStructureComplat
         {
             try
             {
-                RootQAType.TerminalID = arg.RootQAType.TerminalID ?? RootQAType.TerminalID;
-                RootQAType.Version = arg.RootQAType.Version ?? RootQAType.Version;
+                ResponseReq.TerminalID = arg.ResponseReq.TerminalID ?? ResponseReq.TerminalID;
+                ResponseReq.Version = arg.ResponseReq.Version ?? ResponseReq.Version;
+            }
+            catch (Exception) { }
+            return this;
+        }
+        public PS_ERIP Accept(MDOM_POS arg)
+        {
+            try
+            {
+                ResponseReq.PayDate = arg?.ResponseReq?.PayDate;
+                ResponseReq.KioskReceipt = arg?.ResponseReq?.KioskReceipt;
+                ResponseReq.PAN = arg?.ResponseReq?.PAN;
+                ResponseReq.TypePAN = arg?.ResponseReq?.TypePAN;
+                ResponseReq.KioskReceipt = arg?.ResponseReq?.KioskReceipt;
+                var payrec = ResponseReq?.PayRecord?.First();
+                payrec.PC_ID = arg.ResponseReq?.PC_ID;
+            }
+            catch (Exception) { }
+            return this;
+        }
+
+        public PS_ERIP SetPosError(MDOM_POS arg)
+        {
+            try
+            {
+                if(arg.EnumType == PosQAType.PURResponse)
+                { this.EnumType = EripQAType.POSPayError; }
+                if (arg.EnumType == PosQAType.VOIResponse)
+                { this.EnumType = EripQAType.POSCancelError; }
+                if (arg.EnumType == PosQAType.UnknownResponse)
+                { this.EnumType = EripQAType.UnknownResponse; }
+                this.ResponseReq.ErrorCode = arg.ResponseReq.ErrorCode;
+                this.ResponseReq.ErrorText = arg.ResponseReq.ErrorText;
             }
             catch (Exception) { }
             return this;
@@ -81,6 +109,8 @@ namespace XmlStructureComplat
         ConfirmRequest,
         RunOperationResponse,
         UnknownResponse,
+        POSPayError,
+        POSCancelError,
         ConfirmResponse
     }
 }

@@ -22,32 +22,32 @@
           <PAN>522208******0693</PAN>
           <TypePAN>MS</TypePAN>
           <Receipt>
-            *****************************
-            DEMO MODE
-            ONLY FOR TEST
-            ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
-            ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ
-            *****************************
-            **** TRAINING MODE ****
-            ТЕРМИНАЛ: PTS01001
-            Торговец: 0000001
-            Тестовый терминал
-            Расвиком
+*****************************
+DEMO MODE
+ONLY FOR TEST
+ДЕМОНСТРАЦИОННЫЙ РЕЖИМ
+ТОЛЬКО ДЛЯ ТЕСТИРОВАНИЯ
+*****************************
+**** TRAINING MODE ****
+ТЕРМИНАЛ: PTS01001
+Торговец: 0000001
+Тестовый терминал
+Расвиком
 
 
-            КАРТ-ЧЕК: 990003/000001
-            ERN: 2
-            * ДЛЯ КЛИЕНТА *
-            ОПЛАТА
-            04.11.2019
-            КАРТА: 522208******0693
-            Ввод данных - (CL)
-            Сумма                           0.10 BYN
-            КОД: 00
-            ЗАВЕРШЕНО УСПЕШНО
-            КОД АВТ.: XXXXXX
-            AID: A0000000041010
-            APP: Mastercard
+КАРТ-ЧЕК: 990003/000001
+ERN: 2
+* ДЛЯ КЛИЕНТА *
+ОПЛАТА
+04.11.2019
+КАРТА: 522208******0693
+Ввод данных - (CL)
+Сумма                           0.10 BYN
+КОД: 00
+ЗАВЕРШЕНО УСПЕШНО
+КОД АВТ.: XXXXXX
+AID: A0000000041010
+APP: Mastercard
           </Receipt>
         </PURResponse>
       </MDOM_POS>
@@ -300,6 +300,41 @@
 
     </myHistory>
     <myErrors>
+      <VOI_CancelError>
+        No PC_ID
+        <!--xml=<?xml version="1.0" encoding="UTF-8"?>-->
+        <MDOM_POS>
+          <VOIRequest>
+            <TerminalId>KKM1</TerminalId>
+            <Version>1</Version>
+            <KioskReceipt>0006</KioskReceipt>
+          </VOIRequest>
+        </MDOM_POS>
+        11
+        <MDOM_POS>
+          <UnkResponse>
+            <ErrorCode>11</ErrorCode>
+            <ErrorText>XML parsing error</ErrorText>
+          </UnkResponse>
+        </MDOM_POS>
+        Wrong PC_ID
+        <!--xml=<?xml version="1.0" encoding="UTF-8"?>-->
+        <MDOM_POS>
+          <VOIRequest>
+            <TerminalId>KKM1</TerminalId>
+            <Version>1</Version>
+            <KioskReceipt>0007</KioskReceipt>
+            <PC_ID>100000000001</PC_ID>
+          </VOIRequest>
+        </MDOM_POS>
+        14
+        <MDOM_POS>
+          <VOIResponse>
+            <ErrorCode>14</ErrorCode>
+            <ErrorText>BPC error</ErrorText>
+          </VOIResponse>
+        </MDOM_POS>
+      </VOI_CancelError>
       Canceled by user
       <MDOM_POS>
         <PURRequest>
@@ -357,7 +392,7 @@
           <PaySumma>0,1</PaySumma>
         </PURRequest>
       </MDOM_POS>
-      Responce=23; GetRequestStream=22;
+      13 Responce=23; GetRequestStream=22;
       <MDOM_POS>
         <PURResponse>
           <ErrorCode>13</ErrorCode>
@@ -374,7 +409,7 @@
           <PaySumma>0.1</PaySumma>
         </PURRequest>
       </MDOM_POS>
-      Responce=28; GetRequestStream=43;
+      11 Responce=28; GetRequestStream=43;
       <MDOM_POS>
         <UnkResponse>
           <ErrorCode>11</ErrorCode>
@@ -391,7 +426,7 @@
           <PC_ID>000000000000</PC_ID>
         </VOIRequest>
       </MDOM_POS>
-      Responce=515; GetRequestStream=27;
+      14 Responce=515; GetRequestStream=27;
       <MDOM_POS>
         <VOIResponse>
           <ErrorCode>14</ErrorCode>
@@ -407,7 +442,7 @@
           <PaySumma>0.1</PaySumma>
         </PURRequest>
       </MDOM_POS>
-      Responce=23; GetRequestStream=24;
+      14 Responce=23; GetRequestStream=24;
       <MDOM_POS>
         <PURResponse>
           <ErrorCode>14</ErrorCode>
@@ -423,7 +458,7 @@
           <PaySumma>0.1</PaySumma>
         </PURRequest>
       </MDOM_POS>
-      Responce=46; GetRequestStream=25;
+      13 Responce=46; GetRequestStream=25;
       <MDOM_POS>
         <PURResponse>
           <ErrorCode>13</ErrorCode>
@@ -431,7 +466,8 @@
         </PURResponse>
       </MDOM_POS>
       
-    </myErrors>
+    
+  </myErrors>
   </Terminal>
 
   <complat>

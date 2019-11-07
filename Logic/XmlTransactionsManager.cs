@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using XmlStructureComplat;
-using XmlStructureComplat.MDOM_POS;
 
 namespace Logic
 {
@@ -20,7 +19,7 @@ namespace Logic
         public async Task<PS_ERIP> NextRequest(object arg=null)
         {
             await CreateNextRequest(arg);
-            return await GetAndSend();
+            return await Transaction();
         }
         public async Task<PS_ERIP> PrevRequest(object arg = null)
         {            
@@ -35,7 +34,7 @@ namespace Logic
             if (list.Count <= 0)
             {
                 await CreateInitialRequest();
-                return await GetAndSend();
+                return await Transaction();
             }
             else
             {
@@ -53,24 +52,24 @@ namespace Logic
             }
             else
             {
-                var returnReq = await AnalyzeResponse(arg);
+                var returnReq = await HandleResponseFromUI(arg);
                 this.CreateNextPage(returnReq);
             }
         }
-        private async Task<PS_ERIP> AnalyzeResponse(object param)
+        private async Task<PS_ERIP> HandleResponseFromUI(object param)
         {
             PS_ERIP @return = null;
             var rootResponse = list.Page.Response;
             if (rootResponse.EnumType == EripQAType.GetPayListResponse)
             {
-                var paylist = rootResponse.RootQAType.PayRecord;
+                var paylist = rootResponse.ResponseReq.PayRecord;
                 if (paylist.Count > 1)
                 {
                     if (param is PayRecord)
                     {
                         PayRecord payrecArg = param as PayRecord;
                         var requestCopy = list.Page.Request.Copy();
-                        requestCopy.RootQAType.PayCode = payrecArg.Code;
+                        requestCopy.ResponseReq.PayCode = payrecArg.Code;
                         return requestCopy;
                     }
                 }
@@ -83,21 +82,22 @@ namespace Logic
                         if (payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
                         {
 
-                            requestCopy.RootQAType.SessionId = payrecArg.SessionId;
-                            requestCopy.RootQAType.AttrRecord = new List<AttrRecordRequest>();
+                            requestCopy.ResponseReq.SessionId = payrecArg.SessionId;
+                            requestCopy.ResponseReq.AttrRecord = new List<AttrRecordRequest>();
                             payrecArg.AttrRecord.ForEach(attr =>
                             {
                                 var newAttr = new AttrRecordRequest(attr);
                                 newAttr.Change = 1;
-                                requestCopy.RootQAType.AttrRecord.Add(newAttr);
+                                requestCopy.ResponseReq.AttrRecord.Add(newAttr);
                             });
                             return requestCopy;
                         }
                         if (payrecArg.GetPayListType == "0")
                         {
-                            string request = await GetPosRequest(payrecArg);
-                            MDOM_POS respPos = await GetPosResponse(request);
-                            string responseStr = @"      <MDOM_POS>
+                            MDOM_POS PosReq = new POSManager().PayPURRequest(payrecArg);
+                            string request = await POSSerialize(PosReq);
+                            MDOM_POS PosRespon = await GetPosResponse(request);
+                            string fakeRespon = @"      <MDOM_POS>
         <PURResponse>
           <ErrorCode>0</ErrorCode>
           <PayDate>04/11/2019 15:54:18</PayDate>
@@ -135,42 +135,28 @@ namespace Logic
           </Receipt>
         </PURResponse>
       </MDOM_POS>"; //FAKE RESPONSE
-                            //Debug.WriteLine($"TEST ПОДСТАВА ответа от POS вместо реального");
-                            if (respPos.ResponseReq.ErrorCode == 0) //УСПЕХ POS
+                            //Ex.Log($"TEST ПОДСТАВА ответа от POS вместо реального");
+                            if (PosRespon.ResponseReq.ErrorCode == 0) //УСПЕХ POS
                             {
-                                var respCopy = list.Page.Response.Copy();
-                                respCopy.EnumType = EripQAType.RunOperationRequest;
-                                respCopy.RootQAType.TerminalID = requestCopy.RootQAType.TerminalID;
-                                respCopy.RootQAType.Version = requestCopy.RootQAType.Version;
-                                respCopy.RootQAType.SessionId = payrecArg.SessionId;
-                                respCopy.RootQAType.PayDate = respPos.ResponseReq.PayDate;
-                                respCopy.RootQAType.KioskReceipt = respPos.ResponseReq.KioskReceipt;
-                                respCopy.RootQAType.PAN = respPos.ResponseReq.PAN;
-                                respCopy.RootQAType.TypePAN = respPos.ResponseReq.TypePAN;
-                                respCopy.RootQAType.KioskReceipt = respPos.ResponseReq.KioskReceipt;
-                                var payrec = respCopy.RootQAType.PayRecord.First();
-                                payrec.PC_ID = respPos.ResponseReq.PC_ID;
+                                var responCopy = list.Page.Response.Copy();
+                                responCopy.EnumType = EripQAType.RunOperationRequest;
+                                responCopy.Accept(requestCopy);
+                                responCopy.Accept(PosRespon);
+                                responCopy.ResponseReq.SessionId = payrecArg.SessionId;
+                                var payrec = responCopy.ResponseReq.PayRecord.First();
                                 payrec.SessionId = payrecArg.SessionId;
-                                //TEST
-                                Trace.WriteLine("TEST ПОДСТАВА суммы");
-                                if (respCopy.RootQAType.PayRecord[0].Summa == "0.00")
+                                Ex.Log("TEST ПОДСТАВА суммы");
+                                if (responCopy.ResponseReq.PayRecord[0].Summa == "0.00")
                                 {
-                                    respCopy.RootQAType.PayRecord[0].Summa = "1";
+                                    responCopy.ResponseReq.PayRecord[0].Summa = "1";
                                 }
-                                //TEST
-                                respCopy.Clear();
-                                return respCopy;
-
-                                //if (RespRunOper.RootQAType.ErrorCode==0) // УСПЕХ RunOper
-                                //{
-                                //    returnReq = RespRunOper;
-                                //    //Успех в ЮИ юзеру
-                                //    ConfirmRequest(RespRunOper);
-                                //}
+                                responCopy.Clear();
+                                return responCopy;
                             }
-                            if (respPos.ResponseReq.ErrorCode != 0) //ОШИБКА POS
+                            if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS
                             {
-                                //ошибка в ЮИ
+                                var temp = new PS_ERIP().SetPosError(PosRespon);
+                                return temp;
                             }
                         }
                     }
@@ -178,27 +164,50 @@ namespace Logic
             }
             if(rootResponse.EnumType == EripQAType.RunOperationResponse)
             {
-                if (rootResponse.RootQAType.ErrorCode == 0) // УСПЕХ RunOper
+                if (rootResponse.ResponseReq.ErrorCode == 0) // УСПЕХ RunOperRespon
                 {
-                    //Успех в ЮИ юзеру
+                    //NEVER REACHED
                     ConfirmRequest(rootResponse);
+                }
+                if (rootResponse.ResponseReq.ErrorCode != 0) // ОШИБКА RunOperRespon
+                {
+                    //POS CANCEL
+
                 }
             }
             return @return;
         }
 
-        private async Task<string> GetPosRequest(PayRecord payrecArg)
+        private async Task<string> POSSerialize(MDOM_POS PosArg)
         {
-            QAMdomPOS pos = new QAMdomPOS(payrecArg);
-            XDocument reqXml = await SerializationUtil.Serialize(pos.Request);
+            XDocument reqXml = await SerializationUtil.Serialize(PosArg);
             string request = $"xml={reqXml?.ToString()}";
             return request;
         }
+
         private async Task<MDOM_POS> GetPosResponse(string argReq)
         {
-            XDocument respXml = await PostGetHTTP.PostStringGetXML(QAMdomPOS.Url, argReq);
+            XDocument respXml = await PostGetHTTP.PostStringGetXML(POSManager.Url, argReq);
             MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
             return respPos;
+        }
+        private async Task CheckRunOperationError(PS_ERIP responArg)
+        {
+            if (responArg.EnumType == EripQAType.RunOperationResponse)
+            {
+                if (responArg.ResponseReq.ErrorCode != 0)
+                {
+                    var RunOpReq = Request; //list.Page.Request
+                    if(RunOpReq.EnumType != EripQAType.RunOperationRequest)
+                    {
+                        string str = "Request is NOT RunOperationRequest.\nCant get PC_ID for Cancel VOI Request";
+                        Ex.Throw(str);
+                    }
+                    MDOM_POS PosReq = new POSManager().CancelVOIRequest(RunOpReq);
+                    string request = await POSSerialize(PosReq);
+                    MDOM_POS PosRespon = await GetPosResponse(request);
+                }
+            }
         }
         private async Task CreateInitialRequest()
         {
@@ -226,20 +235,26 @@ namespace Logic
             string request = reqXml?.ToString();
             return request;
         }
-        private async Task<PS_ERIP> GetAndSend()
+        private async Task<PS_ERIP> Transaction()
         {
             string request = await GetEripRequest(list.Page.Request);
             var response = await GetEripResponse(request);
-            CheckForConfirmRequest(response);
+            await HandleResponseWithoutUI(response);            
             return response;
+        }
+
+        private async Task HandleResponseWithoutUI(PS_ERIP response)
+        {
+            CheckForConfirmRequest(response).RunParallel();
+            await CheckRunOperationError(response);
         }
 
         private async Task CheckForConfirmRequest(PS_ERIP response)
         {
             if (response.EnumType == EripQAType.RunOperationResponse)
             {
-                Ex.Log($"{nameof(CheckForConfirmRequest)}(): if(RunOperationResponse==true) ROR Error={response.RootQAType.ErrorCode}");
-                if (response.RootQAType.ErrorCode == 0) // УСПЕХ RunOper
+                Ex.Log($"{nameof(CheckForConfirmRequest)}(): if(RunOperationResponse==true) ROR Error={response.ResponseReq.ErrorCode}");
+                if (response.ResponseReq.ErrorCode == 0) // УСПЕХ RunOper
                 {
                     bool success = false;
                     int interval = 10;
@@ -247,9 +262,9 @@ namespace Logic
                     while(!success)
                     {
                         var confirmResp = await ConfirmRequest(response);
-                        if(confirmResp.RootQAType.ErrorCode==0)
+                        if(confirmResp.ResponseReq.ErrorCode==0)
                         { success = true; }
-                        Ex.Log($"{nameof(CheckForConfirmRequest)}(): Conf Error={confirmResp.RootQAType.ErrorCode};");
+                        Ex.Log($"{nameof(CheckForConfirmRequest)}(): Conf Error={confirmResp.ResponseReq.ErrorCode};");
                         await Task.Delay(interval*1000);
                         if (interval<1400) { interval *= 3; }
                     }
@@ -260,15 +275,14 @@ namespace Logic
         private async Task<PS_ERIP> ConfirmRequest(PS_ERIP RespRunOper)
         {
             PS_ERIP confirmReq = RespRunOper.Copy();
-            confirmReq.Accept(this.Request);
+            confirmReq.Accept(this.Request)?.ConfirmClear();
             confirmReq.EnumType = EripQAType.ConfirmRequest;
-            confirmReq.RootQAType.PayRecord[0].KioskReceipt = confirmReq.RootQAType.KioskReceipt;
-            confirmReq.RootQAType.PayRecord[0].ConfirmCode = "1";
+            confirmReq.ResponseReq.PayRecord[0].KioskReceipt = confirmReq.ResponseReq.KioskReceipt;
+            confirmReq.ResponseReq.PayRecord[0].ConfirmCode = "1";
             string req = await GetEripRequest(confirmReq);
             PS_ERIP resp = await GetEripResponse(req);
             return resp;
         }
-
         private string GetHardCodeInitialRequest()
         {
             string  str=

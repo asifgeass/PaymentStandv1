@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -183,6 +185,35 @@ namespace UIXmlPostTerminal
             {
                 WriteToTextbox(ex?.InnerException?.Message ?? ex.Message);
             }
+        }
+
+        private void button_Click_3(object sender, RoutedEventArgs e)
+        {
+            // задаем текст для печати
+            var print = textboxXMLCustom.Text;
+            // объект для печати
+            PrintDocument printDocument = new PrintDocument();
+            
+            // обработчик события печати
+            printDocument.PrintPage += PrintPageHandler;
+            printDocument.Print();
+
+            // диалог настройки печати
+            PrintDialog printDialog = new PrintDialog();
+
+            // установка объекта печати для его настройки
+            //printDialog.Document = printDocument;
+            //printDialog.PrintDocument();
+
+            // если в диалоге было нажато ОК
+            //if (printDialog.ShowDialog() == DialogResult.OK)
+            //    printDialog.Document.Print(); // печатаем
+        }
+
+        void PrintPageHandler(object sender, PrintPageEventArgs e)
+        {
+            // печать строки result
+            e.Graphics.DrawString(textboxXMLCustom.Text, new Font("Arial", 12), System.Drawing.Brushes.Black, 0, 0);
         }
     }
 }

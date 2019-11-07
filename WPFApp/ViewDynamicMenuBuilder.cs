@@ -137,7 +137,7 @@ namespace WPFApp
         {
             if (model == null) { throw new NullReferenceException("main VM = null"); };
             var rootResponse = model.Responce;
-            var resp = rootResponse.RootQAType;
+            var resp = rootResponse.ResponseReq;
             if (resp != null && resp?.ErrorCode != 0)
             {
                 string str = $"{resp.ErrorCode}\n{resp.ErrorText}";

@@ -63,7 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="QAMdomPOS.cs" />
+    <Compile Include="POSManager.cs" />
     <Compile Include="RequestNavigation.cs" />
     <Compile Include="XmlHistory.cs" />
     <Compile Include="EripRequest.cs" />

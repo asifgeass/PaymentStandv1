@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XmlStructureComplat;
-using XmlStructureComplat.MDOM_POS;
 
 namespace Logic
 {
-    public class QAMdomPOS
+    public class POSManager
     {
         #region fields
         private static string url = @"http://public.softclub.by:8010/mdom_pos/online.request";
         private string TerminalId = "KKM1";
         private string Version = "1";
-        private string PC_ID = "000000000000";
         #endregion
         #region Prop
         public MDOM_POS Request { get; set; }
@@ -22,15 +20,14 @@ namespace Logic
         public static string Url => url;
         #endregion
         #region ctor
-        private QAMdomPOS()
+        public POSManager()
         {
             Request = new MDOM_POS();
             Request.ResponseReq.TerminalId = TerminalId;
             Request.ResponseReq.Version = Version;
-            Request.ResponseReq.PC_ID = PC_ID;
             Request.EnumType = PosQAType.PURRequest;
         }
-        public QAMdomPOS(PayRecord payrecArg) : this()
+        public MDOM_POS PayPURRequest(PayRecord payrecArg)
         {
             Request.EnumType = PosQAType.PURRequest;
             Request.ResponseReq.PaySumma = payrecArg.Summa;
@@ -40,7 +37,17 @@ namespace Logic
                 Request.ResponseReq.PaySumma = "1";
             }
             //TEST
+            return Request;
         }
+
+        public MDOM_POS CancelVOIRequest(PS_ERIP reqArg)
+        {
+            Request.EnumType = PosQAType.VOIRequest;
+            Request.ResponseReq.KioskReceipt = reqArg.ResponseReq.KioskReceipt;
+            Request.ResponseReq.PC_ID = reqArg.ResponseReq.PayRecord?.First()?.PC_ID;
+            return Request;
+        }
+
         #endregion
     }
 }

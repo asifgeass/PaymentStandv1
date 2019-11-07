@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace XmlStructureComplat.MDOM_POS
+namespace XmlStructureComplat
 {
     [XmlRoot]
     public class MDOM_POS
