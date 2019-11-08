@@ -25,7 +25,13 @@ namespace Logic
             Request = new MDOM_POS();
             Request.ResponseReq.TerminalId = TerminalId;
             Request.ResponseReq.Version = Version;
-            Request.EnumType = PosQAType.PURRequest;
+            Request.EnumType = PosQAType.VOIRequest;
+        }
+        public POSManager(string argPCID, string argKioskReceipt):this()
+        {
+            Request.EnumType = PosQAType.VOIRequest;
+            Request.ResponseReq.PC_ID = argPCID;
+            Request.ResponseReq.KioskReceipt = argKioskReceipt;
         }
         public MDOM_POS PayPURRequest(PayRecord payrecArg)
         {
@@ -40,7 +46,7 @@ namespace Logic
             return Request;
         }
 
-        public MDOM_POS CancelVOIRequest(PS_ERIP reqArg)
+        public MDOM_POS GetCancelVOIRequest(PS_ERIP reqArg)
         {
             Request.EnumType = PosQAType.VOIRequest;
             Request.ResponseReq.KioskReceipt = reqArg.ResponseReq.KioskReceipt;

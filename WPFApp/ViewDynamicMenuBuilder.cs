@@ -22,7 +22,6 @@ namespace WPFApp
         private Window window;
         private FormAround form = new FormAround();
         private ViewPagesManager views = new ViewPagesManager();
-        private iControls _Controls;
         private int fakeCount;
         private Style loadingBarStyle;
         #endregion
@@ -39,7 +38,7 @@ namespace WPFApp
             }
             catch (Exception ex)
             {
-                throw;
+                ex.Throw();
             }
         }
         #endregion
@@ -58,14 +57,7 @@ namespace WPFApp
             }
             if (e.PropertyName == nameof(model.Exception))
             {
-                try
-                {
-                    throw new Exception("",model.Exception);
-                }
-                catch (Exception ex)
-                {
-                    DisplayErrorPage(ex?.InnerException ?? ex);
-                }
+                DisplayErrorPage(model.Exception);
             }
         }
 
@@ -100,14 +92,23 @@ namespace WPFApp
 
         private void DisplayErrorPage(Exception ex)
         {
-            Ex.Log($"{ex.Message}\n\n{ex.StackTrace}");
-            DisplayErrorPage($"{ex.Message}\n\n{ex.StackTrace}");
+            ex.Log();
+            string msg = string.Empty;
+            ex = ex.InnerGetLast();
+            if (ex is System.Net.WebException)
+            {
+                msg = "Извините, произошла ошибка интернет-соединения.\n"
+                    + "Попробуйте еще раз или обратитесь к администратору.";
+                DisplayErrorPage($"{ex.Message.prefix(msg,2)}");
+                return;
+            }
+            msg = "Извините, произошла непредвиденная ошибка. " +
+                $"Обратитесь к администратору.";
+            DisplayErrorPage($"{ex.Info().prefix(msg)}");
         }
         private void DisplayErrorPage(string msgError)
         {
-            var str = "Извините, произошла непредвиденная ошибка. " +
-                $"Обратитесь к администратору.\n\n{msgError}";
-            SetWindow(Controls.CentralLabelBorder(str) );
+            SetWindow(Controls.CentralLabelBorder(msgError) );
         }
 
         private void BuildsPages()

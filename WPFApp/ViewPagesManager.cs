@@ -21,7 +21,7 @@ namespace WPFApp
         #region Get Page
         public Panel NextPage()
         {
-            Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
+            //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
             if (IsNextAvaible)
             {
                 currentPageIndex++;
@@ -32,7 +32,7 @@ namespace WPFApp
         
         public Panel PrevPage()
         {
-            Ex.Log($"{nameof(ViewPagesManager)}.{nameof(PrevPage)}(): index={currentPageIndex}; count={pages.Count};");
+            //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(PrevPage)}(): index={currentPageIndex}; count={pages.Count};");
             if (IsPrevAvaible)
             {
                 currentPageIndex--;
@@ -56,13 +56,12 @@ namespace WPFApp
                 pages.Add(tempPnl);
             }
             CheckEmpty();
-            Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
-            try
+            //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
+            Ex.Try(() =>
             {
                 Ex.Log($"page[0]={(pages[0].Children[0] as ContentControl).Content};");
                 Ex.Log($"page[1]={(pages[1].Children[0] as ContentControl).Content};");
-            }
-            catch (Exception) { }
+            });
             return this;
         }
         public ViewPagesManager AddControl(FrameworkElement arg)

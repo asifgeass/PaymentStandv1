@@ -18,11 +18,11 @@ namespace Logic
         #region Properties
         public int Count => list.Count;
         public int Index => currentIndex;
-        public EripRequest Page
+        public EripRequest Current
             => (currentIndex < 0 || currentIndex >= list.Count)
             ? null : list[currentIndex];
 
-        public EripRequest PrevPage
+        public EripRequest PrevTransaction
             => (currentIndex < 1 || currentIndex >= list.Count)
             ? null : list[currentIndex - 1];
         #endregion
@@ -38,7 +38,7 @@ namespace Logic
             Ex.Log($"{nameof(XmlHistory)}.{nameof(HomePage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             return list[0];
         }
-        
+
         public void Next(PS_ERIP item)
         {
             var page = new RequestNavigation();

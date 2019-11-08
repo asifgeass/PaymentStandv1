@@ -14,5 +14,9 @@ namespace Logic
         public PS_ERIP Request { get; set; }
         public bool IsResponced { get => Response != null; }
         public int PrevIndex => _prevIndex;
+        public void SetBackToHome()
+        {
+            _prevIndex = 0;
+        }
     }
 }

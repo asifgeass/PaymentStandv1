@@ -12,54 +12,14 @@ namespace Logic
 {
     public class XmlTransactionsManager
     {
-        #region fields
         private XmlHistory list = new XmlHistory();
-        #endregion
-        #region Public Methods
-        public async Task<PS_ERIP> NextRequest(object arg=null)
-        {
-            await CreateNextRequest(arg);
-            return await Transaction();
-        }
-        public async Task<PS_ERIP> PrevRequest(object arg = null)
-        {            
-            return list.Previos().Response;
-        }
-        public bool IsPrevRequestPossible()
-        {
-            return list.Page.PrevIndex >= 0 && list.Page.PrevIndex != list.Index;
-        }
-        public async Task<PS_ERIP> HomeRequest()
-        {
-            if (list.Count <= 0)
-            {
-                await CreateInitialRequest();
-                return await Transaction();
-            }
-            else
-            {
-                return list.HomePage().Response;
-            }
-        }
-        #endregion
-        #region Private Methods
-
-        private async Task CreateNextRequest(object arg)
-        {
-            if (list.Count <= 0)
-            {
-                await CreateInitialRequest();
-            }
-            else
-            {
-                var returnReq = await HandleResponseFromUI(arg);
-                this.CreateNextPage(returnReq);
-            }
-        }
+        private string lastPCID;
+        private string lastKioskReceipt;
         private async Task<PS_ERIP> HandleResponseFromUI(object param)
         {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(HandleResponseFromUI)}()");
             PS_ERIP @return = null;
-            var rootResponse = list.Page.Response;
+            var rootResponse = list.Current.Response;
             if (rootResponse.EnumType == EripQAType.GetPayListResponse)
             {
                 var paylist = rootResponse.ResponseReq.PayRecord;
@@ -68,7 +28,7 @@ namespace Logic
                     if (param is PayRecord)
                     {
                         PayRecord payrecArg = param as PayRecord;
-                        var requestCopy = list.Page.Request.Copy();
+                        var requestCopy = list.Current.Request.Copy();
                         requestCopy.ResponseReq.PayCode = payrecArg.Code;
                         return requestCopy;
                     }
@@ -77,7 +37,7 @@ namespace Logic
                 {
                     if (param is PayRecord)
                     {
-                        var requestCopy = list.Page.Request.Copy();
+                        var requestCopy = list.Current.Request.Copy();
                         PayRecord payrecArg = param as PayRecord;
                         if (payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
                         {
@@ -95,7 +55,7 @@ namespace Logic
                         if (payrecArg.GetPayListType == "0")
                         {
                             MDOM_POS PosReq = new POSManager().PayPURRequest(payrecArg);
-                            string request = await POSSerialize(PosReq);
+                            string request = await Serialize(PosReq);
                             MDOM_POS PosRespon = await GetPosResponse(request);
                             string fakeRespon = @"      <MDOM_POS>
         <PURResponse>
@@ -138,7 +98,7 @@ namespace Logic
                             //Ex.Log($"TEST ПОДСТАВА ответа от POS вместо реального");
                             if (PosRespon.ResponseReq.ErrorCode == 0) //УСПЕХ POS
                             {
-                                var responCopy = list.Page.Response.Copy();
+                                var responCopy = list.Current.Response.Copy();
                                 responCopy.EnumType = EripQAType.RunOperationRequest;
                                 responCopy.Accept(requestCopy);
                                 responCopy.Accept(PosRespon);
@@ -162,51 +122,123 @@ namespace Logic
                     }
                 }
             }
-            if(rootResponse.EnumType == EripQAType.RunOperationResponse)
-            {
-                if (rootResponse.ResponseReq.ErrorCode == 0) // УСПЕХ RunOperRespon
-                {
-                    //NEVER REACHED
-                    ConfirmRequest(rootResponse);
-                }
-                if (rootResponse.ResponseReq.ErrorCode != 0) // ОШИБКА RunOperRespon
-                {
-                    //POS CANCEL
-
-                }
-            }
             return @return;
         }
-
-        private async Task<string> POSSerialize(MDOM_POS PosArg)
+        #region Public Methods
+        public async Task<PS_ERIP> NextRequest(object arg=null)
         {
-            XDocument reqXml = await SerializationUtil.Serialize(PosArg);
-            string request = $"xml={reqXml?.ToString()}";
-            return request;
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(NextRequest)}()");
+            await CreateNextRequest(arg);
+            return await Transaction();
         }
+        public Task<PS_ERIP> PrevRequest(object arg = null)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(PrevRequest)}()");
+            return Task.FromResult( list.Previos().Response);
+        }
+        public bool IsPrevRequestPossible()
+        {
+            return list.Current.PrevIndex >= 0 && list.Current.PrevIndex != list.Index;
+        }
+        public async Task<PS_ERIP> HomeRequest()
+        {
+            if (list.Count <= 0)
+            {
+                await CreateInitialRequest();
+                return await Transaction();
+            }
+            else
+            {
+                var req = list.HomePage().Request;
+                return await Transaction(req);
+            }
+        }
+        #endregion
 
+        #region Private Methods
+        private async Task<PS_ERIP> Transaction(PS_ERIP reqArg = null)
+        {
+            string request = await Serialize(reqArg ?? list.Current.Request);
+            var response = await GetEripResponse(request);
+            HandleResponseWithoutUI(response).RunParallel();
+            return response;
+        }
+        private async Task HandleResponseWithoutUI(PS_ERIP response)
+        {
+            CheckRunOperationResponse(response).RunParallel();
+        }
         private async Task<MDOM_POS> GetPosResponse(string argReq)
         {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetPosResponse)}()");
             XDocument respXml = await PostGetHTTP.PostStringGetXML(POSManager.Url, argReq);
             MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
             return respPos;
         }
-        private async Task CheckRunOperationError(PS_ERIP responArg)
+        private async Task CheckRunOperationResponse(PS_ERIP responArg)
         {
             if (responArg.EnumType == EripQAType.RunOperationResponse)
             {
-                if (responArg.ResponseReq.ErrorCode != 0)
+                Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(CheckRunOperationResponse)}()");
+                PS_ERIP confirmRequest = new PS_ERIP();
+                if (responArg.ResponseReq.ErrorCode == 0)// УСПЕХ RunOper
                 {
-                    var RunOpReq = Request; //list.Page.Request
-                    if(RunOpReq.EnumType != EripQAType.RunOperationRequest)
-                    {
-                        string str = "Request is NOT RunOperationRequest.\nCant get PC_ID for Cancel VOI Request";
-                        Ex.Throw(str);
-                    }
-                    MDOM_POS PosReq = new POSManager().CancelVOIRequest(RunOpReq);
-                    string request = await POSSerialize(PosReq);
-                    MDOM_POS PosRespon = await GetPosResponse(request);
+                    list.Current.SetBackToHome();
+                    confirmRequest = await GetConfirmRequest(responArg, "1");
                 }
+                if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
+                {
+                    CancelPayPOS().RunParallel();
+                    confirmRequest = await GetConfirmRequest(responArg, "0");
+                    
+                }
+                SendConfirmRequest(confirmRequest).RunParallel();
+            }
+        }
+        private async Task CancelPayPOS()
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(CancelPayPOS)}()");
+            var RunOpReq = Request; //list.Page.Request
+            MDOM_POS CancelPOSReq = null;
+            if (RunOpReq.EnumType != EripQAType.RunOperationRequest)
+            {
+                Ex.Log($"Error: {nameof(CancelPayPOS)} RunOpReq.EnumType != RunOperationRequest");
+                CancelPOSReq = new POSManager(lastPCID, lastKioskReceipt).Request;
+            }
+            else
+            {
+                CancelPOSReq = new POSManager().GetCancelVOIRequest(RunOpReq);
+            }
+            string request = await Serialize(CancelPOSReq);
+            MDOM_POS CancelRespon = await GetPosResponse(request);
+            Ex.Catch(() => HandleCancelPOSResponse(CancelRespon));
+        }
+        private void HandleCancelPOSResponse(MDOM_POS arg)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(HandleCancelPOSResponse)}()");
+            if (arg?.ResponseReq?.ErrorCode == null)
+            {
+                string str = $"Error: {nameof(HandleCancelPOSResponse)}(): MDOM_POS response = null";
+                Ex.Throw(str);
+            }
+            if (arg?.ResponseReq?.ErrorCode != 0)
+            {
+                string str = $"Error: {nameof(HandleCancelPOSResponse)}(): ErrorCode={arg.ResponseReq.ErrorCode}; ErrorText={arg.ResponseReq.ErrorText}";
+                Ex.Throw(str);
+            }
+        }
+        private async Task SendConfirmRequest(PS_ERIP confirmRequestArg)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(SendConfirmRequest)}()");
+            bool success = false;
+            int interval = 10;
+
+            while (!success)
+            {
+                if (confirmRequestArg.ResponseReq.ErrorCode == 0)
+                { success = true; }
+                Ex.Log($"{nameof(SendConfirmRequest)}(): Conf Error={confirmRequestArg.ResponseReq.ErrorCode};");
+                await Task.Delay(interval * 1000);
+                if (interval < 1400) { interval *= 3; }
             }
         }
         private async Task CreateInitialRequest()
@@ -216,7 +248,7 @@ namespace Logic
             PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
             this.CreateNextPage(eripReq);
         }
-        private PS_ERIP Request => list.Page.Request;
+        private PS_ERIP Request => list.Current.Request;
         private void CreateNextPage(PS_ERIP request)
         {
             if (request == null) return;
@@ -224,64 +256,49 @@ namespace Logic
         }
         private async Task<PS_ERIP> GetEripResponse(string request)
         {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetEripResponse)}()");
             XDocument responseXml = await PostGetHTTP.PostStringGetXML(request);
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
-            list.Page.Response = response;
+            list.Current.Response = response;
             return response;
         }
-        private async Task<string> GetEripRequest(PS_ERIP argReq)
+        private async Task<string> Serialize(MDOM_POS PosArg)
         {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Serialize)}()");
+            XDocument reqXml = await SerializationUtil.Serialize(PosArg);
+            string request = $"xml={reqXml?.ToString()}";
+            return request;
+        }
+        private async Task<string> Serialize(PS_ERIP argReq)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Serialize)}()");
             XDocument reqXml = await SerializationUtil.Serialize(argReq);
             string request = reqXml?.ToString();
             return request;
         }
-        private async Task<PS_ERIP> Transaction()
+        private async Task<PS_ERIP> GetConfirmRequest(PS_ERIP RespRunOper, string argConfirmCode)
         {
-            string request = await GetEripRequest(list.Page.Request);
-            var response = await GetEripResponse(request);
-            await HandleResponseWithoutUI(response);            
-            return response;
-        }
-
-        private async Task HandleResponseWithoutUI(PS_ERIP response)
-        {
-            CheckForConfirmRequest(response).RunParallel();
-            await CheckRunOperationError(response);
-        }
-
-        private async Task CheckForConfirmRequest(PS_ERIP response)
-        {
-            if (response.EnumType == EripQAType.RunOperationResponse)
-            {
-                Ex.Log($"{nameof(CheckForConfirmRequest)}(): if(RunOperationResponse==true) ROR Error={response.ResponseReq.ErrorCode}");
-                if (response.ResponseReq.ErrorCode == 0) // УСПЕХ RunOper
-                {
-                    bool success = false;
-                    int interval = 10;
-                    
-                    while(!success)
-                    {
-                        var confirmResp = await ConfirmRequest(response);
-                        if(confirmResp.ResponseReq.ErrorCode==0)
-                        { success = true; }
-                        Ex.Log($"{nameof(CheckForConfirmRequest)}(): Conf Error={confirmResp.ResponseReq.ErrorCode};");
-                        await Task.Delay(interval*1000);
-                        if (interval<1400) { interval *= 3; }
-                    }
-                }
-            }
-            Ex.Log($"{nameof(CheckForConfirmRequest)}() FINISHED.");
-        }
-        private async Task<PS_ERIP> ConfirmRequest(PS_ERIP RespRunOper)
-        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetConfirmRequest)}()");
             PS_ERIP confirmReq = RespRunOper.Copy();
             confirmReq.Accept(this.Request)?.ConfirmClear();
             confirmReq.EnumType = EripQAType.ConfirmRequest;
             confirmReq.ResponseReq.PayRecord[0].KioskReceipt = confirmReq.ResponseReq.KioskReceipt;
-            confirmReq.ResponseReq.PayRecord[0].ConfirmCode = "1";
-            string req = await GetEripRequest(confirmReq);
+            confirmReq.ResponseReq.PayRecord[0].ConfirmCode = argConfirmCode;
+            string req = await Serialize(confirmReq);
             PS_ERIP resp = await GetEripResponse(req);
             return resp;
+        }
+        private async Task CreateNextRequest(object arg)
+        {
+            if (list.Count <= 0)
+            {
+                await CreateInitialRequest();
+            }
+            else
+            {
+                var returnReq = await HandleResponseFromUI(arg);
+                this.CreateNextPage(returnReq);
+            }
         }
         private string GetHardCodeInitialRequest()
         {

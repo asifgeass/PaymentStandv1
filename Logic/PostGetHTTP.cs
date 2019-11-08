@@ -21,6 +21,7 @@ namespace Logic
         private static readonly Stopwatch timer = new Stopwatch();
         private static List<XDocument> ResponceHistory = new List<XDocument>();
         private static List<XDocument> RequestHistory = new List<XDocument>();
+        private static StringBuilder timings = new StringBuilder();
 
 
         public static event Action<string> WriteTextBox = (x) => { };
@@ -28,43 +29,39 @@ namespace Logic
 
         public static async Task<XDocument> PostStringGetXML(string destinationUrl, string requestXml)
         {
+            timings = new StringBuilder();
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
                 byte[] bytes;
-                bytes = System.Text.Encoding.UTF8.GetBytes(requestXml);
+                bytes = Encoding.UTF8.GetBytes(requestXml);
                 request.ContentType = "text/xml; encoding='utf-8'";
                 request.ContentLength = bytes.Length;
                 request.Method = "POST";
-                string timings = "";
                 XDocument doc;
-                timer.Restart();
                 Ex.Log($"=>>\n{requestXml}\n=>>");
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
-                    timer.Stop();
-                    timings += $"GetRequestStream={timer.ElapsedMilliseconds}; ";
                     WriteTextBox(requestXml);
-                    timer.Restart();
                     requestStream.Write(bytes, 0, bytes.Length);
                 }
+                timer.Restart();
                 using (HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync())
                 {
+                    timer.Stop();
+                    timings.AppendLine($"GetResponse={timer.ElapsedMilliseconds};");
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         using (var responseStream = response.GetResponseStream())
                         {
                             var responseXml = await XmlLoadAsync(responseStream);
-                            Ex.Log($"<<=\n{responseXml.ToString()}\n<<=");
-                            timer.Stop();
-                            timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                            Ex.Log($"<<=\n{responseXml.ToString()}\n<<=\n{timings}");
                             doc = responseXml;
                         }
                     }
                     else
                     {
-                        timer.Stop();
-                        timings = $"Responce={timer.ElapsedMilliseconds}; {timings}\n";
+                        Ex.Log($"<<=\nError: HttpStatusCode={response.StatusCode}\n<<=\n{timings}");
                         throw new HttpRequestException($"Response isn't ok (200); code={response.StatusCode};");
                     }
                 }
@@ -73,9 +70,10 @@ namespace Logic
             }
             catch (Exception ex)
             {
-                var msg = $"1postXMLData():\n{ex.Message}";
+                ex.Log();
+                var msg = $"Error at {nameof(PostStringGetXML)}()";
                 WriteTextBox(msg);
-                throw new Exception($"Error at {nameof(PostStringGetXML)}()", ex);
+                throw new Exception(msg, ex);
             }
         }
         public static async Task<string> PostStringGetString(string destinationUrl, string requestXml)
@@ -124,6 +122,7 @@ namespace Logic
             }
             catch (Exception ex)
             {
+                ex.Log();
                 var msg = $"1postXMLData():\n{ex.Message}";
                 WriteTextBox(msg);
                 throw new Exception($"Error at {nameof(PostStringGetString)}()", ex);

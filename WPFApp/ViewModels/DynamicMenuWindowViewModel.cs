@@ -29,7 +29,7 @@ namespace WPFApp.ViewModels
             LookupCommand = new DelegateCommand<LookupItem>(SetLookup);
             HomePageCommand = new DelegateCommand(HomePage);
             BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(()=> IsBackPossible);
-            NewResponseComeEvent += ()=>ClearLookup();
+            NewResponseComeEvent += ClearLookup;
         }
         #endregion
 
@@ -141,6 +141,7 @@ namespace WPFApp.ViewModels
             }
             catch (Exception ex)
             {
+                ex.Log();
                 Exception = ex;
             }
         }
@@ -155,6 +156,7 @@ namespace WPFApp.ViewModels
             }
             catch (Exception ex)
             {
+                ex.Log();
                 Exception = ex;
             }
         }
@@ -163,12 +165,13 @@ namespace WPFApp.ViewModels
         {
             try
             {
-                //IsLoadingMenu = !IsLoadingMenu;
+                IsLoadingMenu = !IsLoadingMenu;
                 Ex.Log($"VM => Logic BackPage()");
                 Responce = await StaticMain.HomePage();
             }
             catch (Exception ex)
             {
+                ex.Log();
                 Exception = ex;
             }
         }
@@ -191,16 +194,15 @@ namespace WPFApp.ViewModels
             }
         }
 
-        private async void ClearLookup()
+        private void ClearLookup()
         {
             _lookupVMList = new List<LookupVM>();
             _lookupVM = null; ;
         }
         private async void SetLookup(LookupItem param)
         {
-            
-        }
 
+        }
         #endregion
     }
 }

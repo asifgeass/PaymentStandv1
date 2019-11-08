@@ -1631,6 +1631,7 @@ APP: Mastercard
       </PS_ERIP>
 
 
+      Error
       <PS_ERIP>
         <RunOperationRequest>
           <Key/>
@@ -1652,7 +1653,7 @@ APP: Mastercard
           </PayRecord>
         </RunOperationRequest>
       </PS_ERIP>
-      <!--error Responce=38; GetRequestStream=22;-->
+      <!--Responce=38; GetRequestStream=22;-->
       <PS_ERIP>
         <RunOperationResponse>
           <KioskReceipt/>
