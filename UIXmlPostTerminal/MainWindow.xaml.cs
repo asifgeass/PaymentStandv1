@@ -187,7 +187,7 @@ namespace UIXmlPostTerminal
             }
         }
 
-        private void button_Click_3(object sender, RoutedEventArgs e)
+        private void buttonPrint_Click(object sender, RoutedEventArgs e)
         {
             // задаем текст для печати
             var print = textboxXMLCustom.Text;

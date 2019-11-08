@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UIXmlPostTerminal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="#FFC2D2D3" Margin="0,0,-8,-31">
+        Title="MainWindow" Height="512" Width="819">
+    <Grid Background="#FFC2D2D3" Margin="0,0,2,-1">
 
         <Grid x:Name="myGrid" Margin="10,10,0,0" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
@@ -16,7 +16,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBox VerticalScrollBarVisibility="Auto" Grid.Column="0" 
-                     x:Name="textboxResponceXML" Margin="0,53,10,39" 
+                     x:Name="textboxResponceXML" Margin="10,53,10,10" 
                      TextWrapping="Wrap" AcceptsReturn="True" >
                 <TextBox.RenderTransform>
                     <TransformGroup>
@@ -28,21 +28,19 @@
             </TextBox>
 
             <GridSplitter Grid.Column="1" ShowsPreview="False" Width="4"
-                        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+                        HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,-10,0,0" />
 
             <Grid x:Name="gridButtons" HorizontalAlignment="Left" Height="60" Margin="0,9,0,0" VerticalAlignment="Top" Width="449">
                 <Button Content="Req1"  Margin="10,15,364,23"  Width="75" Click="Button_Click" Height="20"/>
                 <Label Content="SesID"  Margin="95,12,315,20"  Height="26" Width="39" />
                 <TextBox x:Name="textBoxSessionID" Height="17" Margin="134,18,199,23" TextWrapping="Wrap" Width="116"/>
-                <Button Content="Req2" Margin="261,17,126,23"  Click="Button_Click_1" Width="62" Height="20"/>
-                <Button Content="Req3" Height="20" Margin="328,17,63,23"  Click="Button_Click_2"  Width="58"/>
-                <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="391,17,0,0" VerticalAlignment="Top" Width="58" Click="ButtonClear_Click"/>
+                <Button x:Name="buttonClear" Content="Clear" HorizontalAlignment="Left" Margin="306,17,0,0" VerticalAlignment="Top" Width="58" Click="ButtonClear_Click"/>
             </Grid>
-            <TextBox x:Name="textboxXMLCustom" Grid.Column="2" Margin="10,53,19,39" TextWrapping="Wrap" AcceptsReturn="True" Text="    &lt;MDOM_POS&gt;&#xD;&#xA;      &lt;PURRequest&gt;&#xD;&#xA;        &lt;TerminalId&gt;KKM1&lt;/TerminalId&gt;&#xD;&#xA;        &lt;Version&gt;1&lt;/Version&gt;&#xD;&#xA;        &lt;PaySumma&gt;0.1&lt;/PaySumma&gt;&#xD;&#xA;      &lt;/PURRequest&gt;&#xD;&#xA;    &lt;/MDOM_POS&gt;"/>
+            <TextBox x:Name="textboxXMLCustom" Grid.Column="2" Margin="10,53,10,10" TextWrapping="Wrap" AcceptsReturn="True" Text="    &lt;MDOM_POS&gt;&#xD;&#xA;      &lt;PURRequest&gt;&#xD;&#xA;        &lt;TerminalId&gt;KKM1&lt;/TerminalId&gt;&#xD;&#xA;        &lt;Version&gt;1&lt;/Version&gt;&#xD;&#xA;        &lt;PaySumma&gt;0.1&lt;/PaySumma&gt;&#xD;&#xA;      &lt;/PURRequest&gt;&#xD;&#xA;    &lt;/MDOM_POS&gt;"/>
             <Button x:Name="buttonXMLCustom" Content="Send XML" Grid.Column="2" Margin="10,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75" Click="ButtonXMLCustom_Click"/>
-            <Button x:Name="buttonReceiveXML" Content="Receive XML" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="243,25,0,0" VerticalAlignment="Top" Width="110" Click="buttonReceiveXML_Click"/>
-            <Button x:Name="buttonTerminalPost" Content="Send Terminal" Grid.Column="2" HorizontalAlignment="Left" Margin="113,25,0,0" VerticalAlignment="Top" Width="95" Click="buttonTerminalPost_Click"/>
-            <Button x:Name="button" Content="Print" Grid.Column="2" HorizontalAlignment="Left" Margin="68,5,0,0" VerticalAlignment="Top" Width="75" Click="button_Click_3"/>
+            <Button x:Name="buttonReceiveXML" Content="Receive XML" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="304,28,0,0" VerticalAlignment="Top" Width="80" Click="buttonReceiveXML_Click"/>
+            <Button x:Name="buttonTerminalPost" Content="Send Terminal" Grid.Column="2" HorizontalAlignment="Left" Margin="92,28,0,0" VerticalAlignment="Top" Width="95" Click="buttonTerminalPost_Click"/>
+            <Button x:Name="button" Content="Print" Grid.Column="2" HorizontalAlignment="Left" Margin="202,28,0,0" VerticalAlignment="Top" Width="75" Click="buttonPrint_Click"/>
 
 
         </Grid>
