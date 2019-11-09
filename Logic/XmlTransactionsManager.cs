@@ -165,26 +165,17 @@ namespace Logic
             await HandleResponseWithoutUI(response);
             return response;
         }
-        private async Task HandleResponseWithoutUI(PS_ERIP response)
-        {
-            await CheckRunOperationResponse(response);
-        }
-        private async Task<MDOM_POS> GetPosResponse(string argReq)
-        {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetPosResponse)}()");
-            XDocument respXml = await PostGetHTTP.PostStringGetXML(POSManager.Url, argReq);
-            MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
-            return respPos;
-        }
         private Task CheckRunOperationResponse(PS_ERIP responArg)
         {
             if (responArg.EnumType == EripQAType.RunOperationResponse)
             {
                 Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(CheckRunOperationResponse)}()");
-                string confirmArg="0";
+                string confirmArg = "0";
                 if (responArg.ResponseReq.ErrorCode == 0)// УСПЕХ RunOper
                 {
                     list.Current.SetBackToHome();
+                    this.lastPCID = null;
+                    this.lastKioskReceipt = null;
                     confirmArg = "1";
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
@@ -195,6 +186,17 @@ namespace Logic
                 ConfirmTransactionAsync(responArg, confirmArg).RunAsync();
             }
             return Task.CompletedTask;
+        }
+        private async Task HandleResponseWithoutUI(PS_ERIP response)
+        {
+            await CheckRunOperationResponse(response);
+        }
+        private async Task<MDOM_POS> GetPosResponse(string argReq)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetPosResponse)}()");
+            XDocument respXml = await PostGetHTTP.PostStringGetXML(POSManager.Url, argReq);
+            MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
+            return respPos;
         }
         private async Task ConfirmTransactionAsync(PS_ERIP responArg, string confirmArg)
         {

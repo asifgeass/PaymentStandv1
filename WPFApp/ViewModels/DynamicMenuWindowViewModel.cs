@@ -26,9 +26,8 @@ namespace WPFApp.ViewModels
             SendParamCommand = new DelegateCommand<object>(NextPage);
             LoadedCommand = new DelegateCommand(()=> NextPage(null));
             SendVmPayrecCommand = new DelegateCommand(() => NextPage(PayrecToSend));
-            LookupCommand = new DelegateCommand<LookupItem>(SetLookup);
-            HomePageCommand = new DelegateCommand(HomePage);
-            BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(()=> IsBackPossible);
+            HomePageCommand = new DelegateCommand(HomePage).ObservesCanExecute(()=>IsHomeButtonActive);
+            BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(()=> IsBackButtonActive);
             NewResponseComeEvent += ClearLookup;
         }
         #endregion
@@ -44,7 +43,8 @@ namespace WPFApp.ViewModels
         private LookupVM _lookupVM;
         private List<LookupVM> _lookupVMList = new List<LookupVM>();
         private Exception _exception;
-        private bool _isBackPossible;
+        private bool _isHomeButtonActive = true;
+        private bool _isBackButtonActive;
         #endregion
 
         #region Properties
@@ -53,9 +53,10 @@ namespace WPFApp.ViewModels
             get => _responce;
             set 
             {
+                this.IsHomeButtonActive = true;
                 if (value?.ResponseReq?.PayRecord?.Count == 1)
                 { PayrecToSend = value?.ResponseReq?.PayRecord?.FirstOrDefault(); }
-                IsBackPossible = StaticMain.IsBackPossible();
+                IsBackButtonActive = IsBackRequestPossible;
                 SetProperty(ref _responce, value, NewResponseComeEvent);
             }
         }
@@ -105,15 +106,26 @@ namespace WPFApp.ViewModels
             get => _isLoadingMenu;
             set => SetProperty(ref _isLoadingMenu, value);
         }
-        public bool IsBackPossible
+        public bool IsHomeButtonActive
         {
-            get => _isBackPossible;
-            set => SetProperty(ref _isBackPossible, value);
+            get => _isHomeButtonActive;
+            set => SetProperty(ref _isHomeButtonActive, value);
         }
+        public bool IsBackButtonActive
+        {
+            get => _isBackButtonActive;
+            set => SetProperty(ref _isBackButtonActive, value);
+        }
+        public bool IsBackRequestPossible => StaticMain.IsBackPossible();
         public Exception Exception
         {
             get => _exception;
-            set => SetProperty(ref _exception, value);
+            set 
+            {
+                SetProperty(ref _exception, value);
+                this.IsHomeButtonActive = true;
+                IsBackButtonActive = IsBackRequestPossible;
+            }
         }
         #endregion
 
@@ -129,11 +141,13 @@ namespace WPFApp.ViewModels
         //public DelegateCommand SendVmAttrCommand { get; }
         #endregion
 
-        #region Private Methods
+        #region Pages
         private async void NextPage(object param=null)
         {
             try
             {
+                this.IsHomeButtonActive = false;
+                this.IsBackButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
                 FillPayrecToSendWithLookup();
                 Ex.Log($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
@@ -149,6 +163,7 @@ namespace WPFApp.ViewModels
         {
             try
             {
+                this.IsBackButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
                 Ex.Log($"VM => Logic BackPage()");
                 Responce = await StaticMain.BackPage();
@@ -163,6 +178,7 @@ namespace WPFApp.ViewModels
         {
             try
             {
+                this.IsHomeButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
                 Ex.Log($"VM => Logic BackPage()");
                 Responce = await StaticMain.HomePage();
@@ -172,7 +188,9 @@ namespace WPFApp.ViewModels
                 Exception = ex;
             }
         }
+        #endregion
 
+        #region Private Methods
         private void FillPayrecToSendWithLookup()
         {
             Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): childVM count={ChildLookupVMList.Count}");
@@ -195,10 +213,6 @@ namespace WPFApp.ViewModels
         {
             _lookupVMList = new List<LookupVM>();
             _lookupVM = null; ;
-        }
-        private async void SetLookup(LookupItem param)
-        {
-
         }
         #endregion
     }

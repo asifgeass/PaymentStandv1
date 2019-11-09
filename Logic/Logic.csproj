@@ -73,6 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticMain.cs" />
     <Compile Include="StaticExtensions.cs" />
+    <Compile Include="XML\TerminalSettings.cs" />
+    <Compile Include="XML\EripComplatSettings.cs" />
+    <Compile Include="XML\Settings.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

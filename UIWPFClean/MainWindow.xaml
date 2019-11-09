@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="600" Width="350" FontSize="48">
+        Title="MainWindow" Height="800" Width="450" >
     <Window.Resources>
         <!--<Style x:Key="{x:Type Button}" 
                TargetType="Button" 
@@ -56,6 +56,11 @@
                 <Button Content="Button test"/>
                 <Label Content="Label test"/>
                 <TextBox Text="Text Box test"/>
+                <Button>
+                    <materialDesign:Card Padding="32" Margin="16" >
+                        <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">My First Material Design App</TextBlock>
+                    </materialDesign:Card>
+                </Button>
             </StackPanel>
         </ScrollViewer>
     </Grid>

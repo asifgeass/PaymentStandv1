@@ -46,7 +46,7 @@
             </Button>
 
             <Button Grid.Row="1" Name="BackButton" HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
+                    VerticalAlignment="Stretch" IsEnabled="{Binding IsBackButtonActive}"
                     Style="{StaticResource MaterialDesignFloatingActionDarkButton}">
                 <materialDesign:PackIcon
                     Kind="ArrowBack"
