@@ -98,6 +98,8 @@ namespace Logic
                             //Ex.Log($"TEST ПОДСТАВА ответа от POS вместо реального");
                             if (PosRespon.ResponseReq.ErrorCode == 0) //УСПЕХ POS
                             {
+                                this.lastPCID = PosRespon?.ResponseReq?.PC_ID;
+                                this.lastKioskReceipt = PosRespon?.ResponseReq?.KioskReceipt;
                                 var responCopy = list.Current.Response.Copy();
                                 responCopy.EnumType = EripQAType.RunOperationRequest;
                                 responCopy.Accept(requestCopy);
@@ -105,9 +107,9 @@ namespace Logic
                                 responCopy.ResponseReq.SessionId = payrecArg.SessionId;
                                 var payrec = responCopy.ResponseReq.PayRecord.First();
                                 payrec.SessionId = payrecArg.SessionId;
-                                Ex.Log("TEST ПОДСТАВА суммы");
                                 if (responCopy.ResponseReq.PayRecord[0].Summa == "0.00")
                                 {
+                                    Ex.Log("TEST ПОДСТАВА суммы 1 вместо 0");
                                     responCopy.ResponseReq.PayRecord[0].Summa = "1";
                                 }
                                 responCopy.Clear();
@@ -115,8 +117,8 @@ namespace Logic
                             }
                             if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS
                             {
-                                var temp = new PS_ERIP().SetPosError(PosRespon);
-                                return temp;
+                                var eripResponPosError = new PS_ERIP().SetPosError(PosRespon);
+                                return eripResponPosError;
                             }
                         }
                     }
@@ -160,12 +162,12 @@ namespace Logic
         {
             string request = await Serialize(reqArg ?? list.Current.Request);
             var response = await GetEripResponse(request);
-            HandleResponseWithoutUI(response).RunParallel();
+            await HandleResponseWithoutUI(response);
             return response;
         }
         private async Task HandleResponseWithoutUI(PS_ERIP response)
         {
-            CheckRunOperationResponse(response).RunParallel();
+            await CheckRunOperationResponse(response);
         }
         private async Task<MDOM_POS> GetPosResponse(string argReq)
         {
@@ -174,25 +176,30 @@ namespace Logic
             MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
             return respPos;
         }
-        private async Task CheckRunOperationResponse(PS_ERIP responArg)
+        private Task CheckRunOperationResponse(PS_ERIP responArg)
         {
             if (responArg.EnumType == EripQAType.RunOperationResponse)
             {
                 Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(CheckRunOperationResponse)}()");
-                PS_ERIP confirmRequest = new PS_ERIP();
+                string confirmArg="0";
                 if (responArg.ResponseReq.ErrorCode == 0)// УСПЕХ RunOper
                 {
                     list.Current.SetBackToHome();
-                    confirmRequest = await GetConfirmRequest(responArg, "1");
+                    confirmArg = "1";
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
                 {
-                    CancelPayPOS().RunParallel();
-                    confirmRequest = await GetConfirmRequest(responArg, "0");
-                    
+                    CancelPayPOS().RunAsync();
+                    confirmArg = "0";
                 }
-                SendConfirmRequest(confirmRequest).RunParallel();
+                ConfirmTransactionAsync(responArg, confirmArg).RunAsync();
             }
+            return Task.CompletedTask;
+        }
+        private async Task ConfirmTransactionAsync(PS_ERIP responArg, string confirmArg)
+        {
+            var confirmRequest = await GetConfirmRequest(responArg, confirmArg);
+            SendConfirmRequest(confirmRequest).RunAsync();
         }
         private async Task CancelPayPOS()
         {
