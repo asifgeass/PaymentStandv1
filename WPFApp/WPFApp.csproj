@@ -142,7 +142,7 @@
       <Name>ExceptionManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logic\Logic.csproj">
-      <Project>{F0636A56-60B2-4633-9343-565C8E1E16B4}</Project>
+      <Project>{f0636a56-60b2-4633-9343-565c8e1e16b4}</Project>
       <Name>Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\XmlStructureComplat\XmlStructureComplat.csproj">
