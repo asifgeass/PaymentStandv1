@@ -141,7 +141,6 @@ namespace WPFApp.ViewModels
             }
             catch (Exception ex)
             {
-                ex.Log();
                 Exception = ex;
             }
         }
@@ -156,7 +155,6 @@ namespace WPFApp.ViewModels
             }
             catch (Exception ex)
             {
-                ex.Log();
                 Exception = ex;
             }
         }
@@ -171,7 +169,6 @@ namespace WPFApp.ViewModels
             }
             catch (Exception ex)
             {
-                ex.Log();
                 Exception = ex;
             }
         }

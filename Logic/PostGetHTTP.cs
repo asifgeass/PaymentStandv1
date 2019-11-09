@@ -70,10 +70,10 @@ namespace Logic
             }
             catch (Exception ex)
             {
-                ex.Log();
                 var msg = $"Error at {nameof(PostStringGetXML)}()";
                 WriteTextBox(msg);
-                throw new Exception(msg, ex);
+                ex.Throw(msg);
+                return null;
             }
         }
         public static async Task<string> PostStringGetString(string destinationUrl, string requestXml)
@@ -122,7 +122,6 @@ namespace Logic
             }
             catch (Exception ex)
             {
-                ex.Log();
                 var msg = $"1postXMLData():\n{ex.Message}";
                 WriteTextBox(msg);
                 throw new Exception($"Error at {nameof(PostStringGetString)}()", ex);
