@@ -54,10 +54,16 @@ namespace WPFApp.ViewModels
             set 
             {
                 this.IsHomeButtonActive = true;
+                Task.Run(async() =>
+                {
+                    var xml = await SerializationUtil.Serialize(value);
+                    Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
+                });
                 if (value?.ResponseReq?.PayRecord?.Count == 1)
                 { PayrecToSend = value?.ResponseReq?.PayRecord?.FirstOrDefault(); }
                 IsBackButtonActive = IsBackRequestPossible;
-                SetProperty(ref _responce, value, NewResponseComeEvent);
+                SetProperty(ref _responce, value);
+                NewResponseComeEvent();
             }
         }
         public PayRecord PayrecToSend
@@ -122,6 +128,11 @@ namespace WPFApp.ViewModels
             get => _exception;
             set 
             {
+                ///если мы хотим вернуться на предыдущую страницу (которая по факту
+                ///может остаться текущей, ибо ошибка может случится ДО получения респонса)
+                ///если респонс получает то же значение что уже имеет, то не срабатывает 
+                ///ивент получения респонса и поэтмоу View не поменяется
+                //_responce = null; 
                 SetProperty(ref _exception, value);
                 this.IsHomeButtonActive = true;
                 IsBackButtonActive = IsBackRequestPossible;

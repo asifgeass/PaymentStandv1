@@ -50,13 +50,20 @@ namespace Logic
 
         public EripRequest Previos()
         {
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(Previos)}() before: curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             int prevIndex = list[currentIndex].PrevIndex;
             currentIndex = prevIndex;
             var prevPage = list[currentIndex];
             if (currentIndex == 0) 
             { prevPage.SetPrevIndex(0); }
-            Ex.Log($"{nameof(XmlHistory)}.{nameof(Previos)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(Previos)}() after: curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(Previos)}() after: page={prevPage.Response.EnumType}, ErrText={prevPage.Response.ResponseReq.ErrorText};");
             return prevPage;
+        }
+        public XmlHistory SetResponse(PS_ERIP argResponse)
+        {
+            this.Current.SetResponse(argResponse);
+            return this;
         }
         #endregion
         #region Private Methods
