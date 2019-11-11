@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +25,9 @@ namespace WPFApp
         private ViewPagesManager views = new ViewPagesManager();
         private int fakeCount;
         private Style loadingBarStyle;
+        private Task CheckHomeButtonDisabled = Task.CompletedTask;
+        private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        //private CancellationToken token; 
         #endregion
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
@@ -31,6 +35,7 @@ namespace WPFApp
             window = incWindow;
             try
             {
+                //token = cancelTokenSource.Token;
                 model = window.DataContext as DynamicMenuWindowViewModel;
                 model.NewResponseComeEvent += BuildMenuOnReponse;
                 model.PropertyChanged += IsLoadingMenuChanged;
@@ -38,12 +43,12 @@ namespace WPFApp
             }
             catch (Exception ex)
             {
-                ex.Throw();
+                ex.Show();
             }
         }
         #endregion
 
-        private void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private async void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(model.IsLoadingMenu))
             {
@@ -59,6 +64,39 @@ namespace WPFApp
             {
                 DisplayErrorPage(model.Exception);
             }
+            if (e.PropertyName == nameof(model.IsHomeButtonActive))
+            {
+                try
+                {
+                    if (model.IsHomeButtonActive)
+                    {
+                        cancelTokenSource.Cancel();
+                        if (!CheckHomeButtonDisabled.IsCanceled)
+                        { await CheckHomeButtonDisabled; }
+                    }
+                    else
+                    {
+                        //await CheckHomeButtonDisabled;   
+                        CheckHomeButtonDisabled = new Task(async ()=> await testsome(cancelTokenSource.Token));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    DisplayErrorPage(ex);
+                }
+            }
+        }
+        private async Task testsome(CancellationToken token)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                await Task.Delay(1000);
+                if (token.IsCancellationRequested) return;
+                Ex.Log("Я тут тикаю пока ХОУМ батон отключена");
+            }
+            Ex.Log("Я тут врубаю кнопку ХОУМ");
+            model.IsHomeButtonActive = true;
+            return;
         }
 
         private void SetWindow(UIElement argElement)
@@ -131,7 +169,7 @@ namespace WPFApp
             {
                 var str = "Извините, мы не смогли построить никакой " +
                     "страницы на ответ сервера.\n(pages.Count <= 0)";
-                SetWindow(Controls.CentralLabelBorder(str));                
+                DisplayErrorPage(str);
             }
         }
         private void ResponseAnalizeAndBuild()
@@ -141,7 +179,7 @@ namespace WPFApp
             var resp = rootResponse.ResponseReq;
             if (resp != null && resp?.ErrorCode != 0)
             {
-                string str = $"{resp.ErrorCode}\n{resp.ErrorText}";
+                string str = $"ErrorCode={resp.ErrorCode}\nErrorText={resp.ErrorText}";
                 var control = Controls.CentralLabelBorder(str);
                 views.AddControl(control);
             }

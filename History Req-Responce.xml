@@ -343,7 +343,7 @@ APP: Mastercard
           <PaySumma>0.1</PaySumma>
         </PURRequest>
       </MDOM_POS>
-      Response 
+      16 
       <MDOM_POS>
         <PURResponse>
           <ErrorCode>16</ErrorCode>
@@ -359,7 +359,7 @@ APP: Mastercard
           <PaySumma>0.1</PaySumma>
         </PURRequest>
       </MDOM_POS>
-      Response
+      128 (or 16)
       <MDOM_POS>
         <PURResponse>
           <ErrorCode>128</ErrorCode>
