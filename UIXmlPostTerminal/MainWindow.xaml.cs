@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,15 +41,13 @@ namespace UIXmlPostTerminal
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            //listBox1.Items.Clear();
-            //Assembly[] sborki = AppDomain.CurrentDomain.GetAssemblies();
-            //foreach (Assembly item in sborki)
-            //{
-            //    listBox1.Items.Add(item.FullName);
-            //}
-            //var hzxml = PostGetHTTP.XML();
+            List<string> strings = new List<string>() { "0.01", "0,01", "0", "1" };
+            strings.ForEach(x =>
+            {
+                decimal dec = decimal.Parse(x.Replace(',', '.'), NumberStyles.Currency, CultureInfo.InvariantCulture);
+                WriteToTextbox(dec.ToString());
+            });
 
-            //textbox1.Text = await PostGetHTTP.AllTypePost();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
