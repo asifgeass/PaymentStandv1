@@ -78,6 +78,7 @@ namespace WPFApp
                     {
                         //await CheckHomeButtonDisabled;   
                         CheckHomeButtonDisabled = new Task(async ()=> await testsome(cancelTokenSource.Token));
+                        await CheckHomeButtonDisabled;
                     }
                 }
                 catch (Exception ex)
@@ -138,6 +139,12 @@ namespace WPFApp
                 msg = "Извините, произошла ошибка интернет-соединения.\n"
                     + "Попробуйте еще раз или обратитесь к администратору.";
                 DisplayErrorPage($"{ex.Message.prefix(msg,2)}");
+                return;
+            }
+            if(innerEx is System.IO.IOException)
+            {
+                msg = "Ошибка: у данного IP-адреса нет доступа к серверу.";
+                DisplayErrorPage($"{ex.Message.prefix(msg, 2)}");
                 return;
             }
             msg = "Извините, произошла непредвиденная ошибка. " +
