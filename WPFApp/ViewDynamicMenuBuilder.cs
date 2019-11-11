@@ -308,7 +308,7 @@ namespace WPFApp
         }
         private void PrevPage()
         {
-            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if (views.IsPrevAvaible)
             {
                 SetWindow(views.PrevPage());
