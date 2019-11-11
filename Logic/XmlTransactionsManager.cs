@@ -15,6 +15,7 @@ namespace Logic
         private XmlHistory list = new XmlHistory();
         private string lastPCID;
         private string lastKioskReceipt;
+        private bool isBackToCurrent { get; set; } = false;
         private async Task<PS_ERIP> HandleResponseFromUI(object param)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(HandleResponseFromUI)}()");
@@ -41,7 +42,7 @@ namespace Logic
                         PayRecord payrecArg = param as PayRecord;
                         if (payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
                         {
-
+                            Ex.Log($"GetPayListType=1/2; SessionID={payrecArg.SessionId}");
                             requestCopy.ResponseReq.SessionId = payrecArg.SessionId;
                             requestCopy.ResponseReq.AttrRecord = new List<AttrRecordRequest>();
                             payrecArg.AttrRecord.ForEach(attr =>
@@ -54,6 +55,7 @@ namespace Logic
                         }
                         if (payrecArg.GetPayListType == "0")
                         {
+                            Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
                             MDOM_POS PosReq = new POSManager().PayPURRequest(payrecArg);
                             string request = await Serialize(PosReq);
                             MDOM_POS PosRespon = await GetPosResponse(request);
@@ -130,13 +132,19 @@ namespace Logic
         public async Task<PS_ERIP> NextRequest(object arg=null)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(NextRequest)}()");
+            isBackToCurrent = true;
             await CreateNextRequest(arg);
+            isBackToCurrent = false;
             return await Transaction();
         }
         public Task<PS_ERIP> PrevRequest(object arg = null)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(PrevRequest)}()");
-            return Task.FromResult( list.Previos().Response);
+            Ex.Log($"XmlTransactionsManager.{nameof(isBackToCurrent)}={isBackToCurrent}");
+            
+            EripRequest transaction  = (isBackToCurrent) ? list.Current : list.Previos();
+            isBackToCurrent = false;
+            return Task.FromResult(transaction.Response);
         }
         public bool IsPrevRequestPossible()
         {
@@ -144,16 +152,17 @@ namespace Logic
         }
         public async Task<PS_ERIP> HomeRequest()
         {
+            isBackToCurrent = false;
+            PS_ERIP req = null; ;
             if (list.Count <= 0)
             {
                 await CreateInitialRequest();
-                return await Transaction();
             }
             else
             {
-                var req = list.HomePage().Request;
-                return await Transaction(req);
+                req = list.HomePage().Request;                
             }
+            return await Transaction(req);
         }
         #endregion
 
@@ -162,6 +171,7 @@ namespace Logic
         {
             string request = await Serialize(reqArg ?? list.Current.Request);
             var response = await GetEripResponse(request);
+            list.SetResponse(response);
             await HandleResponseWithoutUI(response);
             return response;
         }
@@ -173,15 +183,16 @@ namespace Logic
                 string confirmArg = "0";
                 if (responArg.ResponseReq.ErrorCode == 0)// УСПЕХ RunOper
                 {
-                    list.Current.SetBackToHome();
+                    confirmArg = "1";
                     this.lastPCID = null;
                     this.lastKioskReceipt = null;
-                    confirmArg = "1";
+                    list.Current.SetBackToHome();
+                    
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
                 {
-                    CancelPayPOS().RunAsync();
                     confirmArg = "0";
+                    CancelPayPOS().RunAsync();                    
                 }
                 ConfirmTransactionAsync(responArg, confirmArg).RunAsync();
             }
@@ -245,7 +256,7 @@ namespace Logic
             {
                 if (confirmRequestArg.ResponseReq.ErrorCode == 0)
                 { success = true; }
-                Ex.Log($"{nameof(SendConfirmRequest)}(): Conf Error={confirmRequestArg.ResponseReq.ErrorCode};");
+                Ex.Log($"{nameof(SendConfirmRequest)}(): ConfirmResponse Error={confirmRequestArg.ResponseReq.ErrorCode};");
                 await Task.Delay(interval * 1000);
                 if (interval < 1400) { interval *= 3; }
             }
@@ -268,19 +279,16 @@ namespace Logic
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetEripResponse)}()");
             XDocument responseXml = await PostGetHTTP.PostStringGetXML(request);
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
-            list.Current.Response = response;
             return response;
         }
         private async Task<string> Serialize(MDOM_POS PosArg)
         {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Serialize)}()");
             XDocument reqXml = await SerializationUtil.Serialize(PosArg);
             string request = $"xml={reqXml?.ToString()}";
             return request;
         }
         private async Task<string> Serialize(PS_ERIP argReq)
         {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Serialize)}()");
             XDocument reqXml = await SerializationUtil.Serialize(argReq);
             string request = reqXml?.ToString();
             return request;
@@ -288,10 +296,11 @@ namespace Logic
         private async Task<PS_ERIP> GetConfirmRequest(PS_ERIP RespRunOper, string argConfirmCode)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetConfirmRequest)}()");
-            PS_ERIP confirmReq = RespRunOper.Copy();
-            confirmReq.Accept(this.Request)?.ConfirmClear();
+            PS_ERIP confirmReq = new PS_ERIP();
             confirmReq.EnumType = EripQAType.ConfirmRequest;
-            confirmReq.ResponseReq.PayRecord[0].KioskReceipt = confirmReq.ResponseReq.KioskReceipt;
+            confirmReq.ResponseReq.PayRecord = RespRunOper.ResponseReq.PayRecord.Copy();
+            confirmReq.Accept(this.Request)?.ConfirmClear();            
+            confirmReq.ResponseReq.PayRecord[0].KioskReceipt = RespRunOper.ResponseReq.KioskReceipt.Copy();
             confirmReq.ResponseReq.PayRecord[0].ConfirmCode = argConfirmCode;
             string req = await Serialize(confirmReq);
             PS_ERIP resp = await GetEripResponse(req);
