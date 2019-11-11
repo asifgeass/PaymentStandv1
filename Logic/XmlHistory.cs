@@ -23,7 +23,7 @@ namespace Logic
             ? null : list[currentIndex];
 
         public EripRequest PrevTransaction
-            => (currentIndex < 1 || currentIndex >= list.Count)
+            => (1 > currentIndex || currentIndex >= list.Count)
             ? null : list[currentIndex - 1];
         #endregion
         #region Public Methods
@@ -39,13 +39,22 @@ namespace Logic
             return list[0];
         }
 
-        public void Next(PS_ERIP item)
+        public void CreateNextPage(PS_ERIP item)
         {
             var page = new RequestNavigation();
-            page.Request = item;
+            if (item.EnumType == EripQAType.POSPayResponse)
+            {
+                page.SetResponse(item);
+            }
+            else
+            {
+                page.Request = item;
+            }
+            
             page.SetPrevIndex (currentIndex);
             this.Add(page);
-            Ex.Log($"{nameof(XmlHistory)}.{nameof(Next)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(CreateNextPage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(CreateNextPage)}(): currReq={Current?.Request?.EnumType} prevReq={PrevTransaction?.Request?.EnumType};");
         }
 
         public EripRequest Previos()
@@ -62,6 +71,7 @@ namespace Logic
         }
         public XmlHistory SetResponse(PS_ERIP argResponse)
         {
+            Ex.Log($"{nameof(XmlHistory)}.{nameof(SetResponse)}() before: CurrRespon={Current?.Response?.EnumType}, newRespon={argResponse};");
             this.Current.SetResponse(argResponse);
             return this;
         }

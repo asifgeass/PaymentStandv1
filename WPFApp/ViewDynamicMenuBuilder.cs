@@ -93,9 +93,9 @@ namespace WPFApp
         private void DisplayErrorPage(Exception ex)
         {
             ex.Log();
+            var innerEx = ex.InnerGetLast();
             string msg = string.Empty;
-            ex = ex.InnerGetLast();
-            if (ex is System.Net.WebException)
+            if (innerEx is System.Net.WebException)
             {
                 msg = "Извините, произошла ошибка интернет-соединения.\n"
                     + "Попробуйте еще раз или обратитесь к администратору.";

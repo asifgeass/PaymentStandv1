@@ -21,8 +21,8 @@ namespace XmlStructureComplat
         [XmlElement("RunOperationResponse")]
         [XmlElement("UnknownResponse")]
         [XmlElement("ConfirmResponse")]
-        [XmlElement("POSPayError")]
-        [XmlElement("POSCancelError")]
+        [XmlElement("POSPayResponse")]
+        [XmlElement("POSCancelResponse")]
         public GetPayResponse ResponseReq { get; set; } = new GetPayResponse();
         public PS_ERIP Clear()
         {
@@ -87,9 +87,9 @@ namespace XmlStructureComplat
             try
             {
                 if(arg.EnumType == PosQAType.PURResponse)
-                { this.EnumType = EripQAType.POSPayError; }
+                { this.EnumType = EripQAType.POSPayResponse; }
                 if (arg.EnumType == PosQAType.VOIResponse)
-                { this.EnumType = EripQAType.POSCancelError; }
+                { this.EnumType = EripQAType.POSCancelResponse; }
                 if (arg.EnumType == PosQAType.UnknownResponse)
                 { this.EnumType = EripQAType.UnknownResponse; }
                 this.ResponseReq.ErrorCode = arg.ResponseReq.ErrorCode;
@@ -109,8 +109,8 @@ namespace XmlStructureComplat
         ConfirmRequest,
         RunOperationResponse,
         UnknownResponse,
-        POSPayError,
-        POSCancelError,
+        POSPayResponse,
+        POSCancelResponse,
         ConfirmResponse
     }
 }

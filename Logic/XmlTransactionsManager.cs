@@ -133,8 +133,12 @@ namespace Logic
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(NextRequest)}()");
             isBackToCurrent = true;
-            await CreateNextRequest(arg);
+            await CheckForNULL();
+            PS_ERIP eripBody = await HandleResponseFromUI(arg);
             isBackToCurrent = false;
+            list.CreateNextPage(eripBody);
+            if (eripBody.EnumType == EripQAType.POSPayResponse || eripBody.EnumType== EripQAType.POSCancelResponse)
+            { return eripBody; }
             return await Transaction();
         }
         public Task<PS_ERIP> PrevRequest(object arg = null)
@@ -266,14 +270,9 @@ namespace Logic
             string strxml = GetHardCodeInitialRequest();
             XDocument xml = await PostGetHTTP.XmlLoadAsync(strxml);
             PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
-            this.CreateNextPage(eripReq);
+            list.CreateNextPage(eripReq);
         }
         private PS_ERIP Request => list.Current.Request;
-        private void CreateNextPage(PS_ERIP request)
-        {
-            if (request == null) return;
-            list.Next(request);
-        }
         private async Task<PS_ERIP> GetEripResponse(string request)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetEripResponse)}()");
@@ -306,16 +305,11 @@ namespace Logic
             PS_ERIP resp = await GetEripResponse(req);
             return resp;
         }
-        private async Task CreateNextRequest(object arg)
+        private async Task CheckForNULL()
         {
             if (list.Count <= 0)
             {
                 await CreateInitialRequest();
-            }
-            else
-            {
-                var returnReq = await HandleResponseFromUI(arg);
-                this.CreateNextPage(returnReq);
             }
         }
         private string GetHardCodeInitialRequest()
