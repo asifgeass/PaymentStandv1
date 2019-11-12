@@ -47,7 +47,7 @@ namespace WPFApp
             }
         }
         #endregion
-
+        public bool IsPageAvaiable => views.IsNextAvaible;
         private async void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(model.IsLoadingMenu))
@@ -66,127 +66,47 @@ namespace WPFApp
             }
             if (e.PropertyName == nameof(model.IsHomeButtonActive))
             {
-                try
-                {
-                    if (model.IsHomeButtonActive)
-                    {
-                        cancelTokenSource.Cancel();
-                        if (!CheckHomeButtonDisabled.IsCanceled)
-                        { await CheckHomeButtonDisabled; }
-                    }
-                    else
-                    {
-                        //await CheckHomeButtonDisabled;   
-                        CheckHomeButtonDisabled = new Task(async ()=> await testsome(cancelTokenSource.Token));
-                        await CheckHomeButtonDisabled;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    DisplayErrorPage(ex);
-                }
-            }
-        }
-        private async Task testsome(CancellationToken token)
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                await Task.Delay(1000);
-                if (token.IsCancellationRequested) return;
-                Ex.Log("Я тут тикаю пока ХОУМ батон отключена");
-            }
-            Ex.Log("Я тут врубаю кнопку ХОУМ");
-            model.IsHomeButtonActive = true;
-            return;
-        }
-
-        private void SetWindow(UIElement argElement)
-        {
-            var around = new FormAround();
-            around.BackButton.Click += (s, e) => PrevPage();
-            around.ContentControls = argElement;
-            window.Content = around;
-        }
-
-        #region Properties
-        public bool IsPageAvaiable => views.IsNextAvaible;
-        #endregion
-        private void ClearOnResponse()
-        {
-            views = new ViewPagesManager();
-            fakeCount = 0;
-        }
-        private void BuildMenuOnReponse()
-        {
-            try
-            {
-                ClearOnResponse();
-                BuildsPages();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorPage(ex);
-            }
-        }
-
-        private void DisplayErrorPage(Exception ex)
-        {
-            ex.Log();
-            var innerEx = ex.InnerGetLast();
-            string msg = string.Empty;
-            if (innerEx is System.Net.WebException)
-            {
-                msg = "Извините, произошла ошибка интернет-соединения.\n"
-                    + "Попробуйте еще раз или обратитесь к администратору.";
-                DisplayErrorPage($"{ex.Message.prefix(msg,2)}");
-                return;
-            }
-            if(innerEx is System.IO.IOException)
-            {
-                msg = "Ошибка: у данного IP-адреса нет доступа к серверу.";
-                DisplayErrorPage($"{ex.Message.prefix(msg, 2)}");
-                return;
-            }
-            msg = "Извините, произошла непредвиденная ошибка. " +
-                $"Обратитесь к администратору.";
-            DisplayErrorPage($"{ex.Info().prefix(msg)}");
-        }
-        private void DisplayErrorPage(string msgError)
-        {
-            SetWindow(Controls.CentralLabelBorder(msgError) );
-        }
-
-        private void BuildsPages()
-        {
-            this.ResponseAnalizeAndBuild();
-            this.fakeCount = views.Count;
-            if (views.Count == 1)
-            {
-                this.NextPage();
-            }
-            if (views.Count > 1)
-            {
-                this.views = new ViewPagesManager();
-                model.ClearChildLookupVM();
-                Ex.Log($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
-                this.ResponseAnalizeAndBuild();
-                this.NextPage();
-            }
-            if (views.Count <= 0)
-            {
-                var str = "Извините, мы не смогли построить никакой " +
-                    "страницы на ответ сервера.\n(pages.Count <= 0)";
-                DisplayErrorPage(str);
+                //try
+                //{
+                //    if (model.IsHomeButtonActive)
+                //    {
+                //        cancelTokenSource.Cancel();
+                //        if (!CheckHomeButtonDisabled.IsCanceled)
+                //        { await CheckHomeButtonDisabled; }
+                //    }
+                //    else
+                //    {
+                //        //await CheckHomeButtonDisabled;   
+                //        CheckHomeButtonDisabled = new Task(async ()=> await testsome(cancelTokenSource.Token));
+                //        await CheckHomeButtonDisabled;
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    DisplayErrorPage(ex);
+                //}
             }
         }
         private void ResponseAnalizeAndBuild()
         {
+            Ex.Log($"{nameof(ViewDynamicMenuBuilder)}.{nameof(ResponseAnalizeAndBuild)}()");
             if (model == null) { throw new NullReferenceException("main VM = null"); };
             var rootResponse = model.Responce;
             var resp = rootResponse.ResponseReq;
             if (resp != null && resp?.ErrorCode != 0)
             {
                 string str = $"ErrorCode={resp.ErrorCode}\nErrorText={resp.ErrorText}";
+                if(rootResponse.EnumType == EripQAType.POSPayResponse)
+                { 
+                    str = $"Оплата не была произведена.\n\nError Code={resp.ErrorCode};\nОписание={resp.ErrorText};";
+                    if(resp.ErrorCode != 128 && resp.ErrorCode != 16)
+                    { Ex.Error($"Unknown MDOM POS Pay Error:\nCode={resp.ErrorCode}; Text={resp.ErrorText}"); }
+                }
+                if(resp.ErrorCode == 128) //timeout 30s
+                { str = "Оплата не была произведена.\nУ терминала истекло время ожидания карты.\n\nПопробуйте еще раз."; }
+                if (resp.ErrorCode == 16) //canceled by user
+                { str = "Оплата не была произведена.\nОтменено пользователем."; }
+                Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
                 views.AddControl(control);
             }
@@ -299,7 +219,74 @@ namespace WPFApp
                 }
             }
         }
-
+        private void BuildMenuOnReponse()
+        {
+            try
+            {
+                ClearOnResponse();
+                BuildsPages();
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorPage(ex);
+            }
+        }
+        private void BuildsPages()
+        {
+            this.ResponseAnalizeAndBuild();
+            this.fakeCount = views.Count;
+            if (views.Count == 1)
+            {
+                this.NextPage();
+            }
+            if (views.Count > 1)
+            {
+                this.views = new ViewPagesManager();
+                model.ClearChildLookupVM();
+                Ex.Log($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
+                this.ResponseAnalizeAndBuild();
+                this.NextPage();
+            }
+            if (views.Count <= 0)
+            {
+                var str = "Извините, мы не смогли построить никакой " +
+                    "страницы на ответ сервера.\n(pages.Count <= 0)";
+                DisplayErrorPage(str);
+            }
+        }
+        private void SetWindow(UIElement argElement)
+        {
+            var around = new FormAround();
+            around.BackButton.Click += (s, e) => PrevPage();
+            around.ContentControls = argElement;
+            window.Content = around;
+        }
+        private void DisplayErrorPage(Exception ex)
+        {
+            ex.Log();
+            var innerEx = ex.InnerGetLast();
+            string msg = string.Empty;
+            if (innerEx is System.Net.WebException)
+            {
+                msg = "Извините, произошла ошибка интернет-соединения.\n"
+                    + "Попробуйте еще раз или обратитесь к администратору.";
+                DisplayErrorPage($"{ex.Message.prefix(msg, 2)}");
+                return;
+            }
+            if (innerEx is System.IO.IOException)
+            {
+                msg = "Ошибка: у данного IP-адреса нет доступа к серверу.";
+                DisplayErrorPage($"{ex.Message.prefix(msg, 2)}");
+                return;
+            }
+            msg = "Извините, произошла непредвиденная ошибка. " +
+                $"Обратитесь к администратору.";
+            DisplayErrorPage($"{ex.Info().prefix(msg)}");
+        }
+        private void DisplayErrorPage(string msgError)
+        {
+            SetWindow(Controls.CentralLabelBorder(msgError));
+        }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {
             if (isLastPage) return;
@@ -377,6 +364,23 @@ namespace WPFApp
                     Content = $"{x.Value}",
                 });
             });
+        }
+        private async Task testsome(CancellationToken token)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                await Task.Delay(1000);
+                if (token.IsCancellationRequested) return;
+                Ex.Log("Я тут тикаю пока ХОУМ батон отключена");
+            }
+            Ex.Log("Я тут врубаю кнопку ХОУМ");
+            model.IsHomeButtonActive = true;
+            return;
+        }
+        private void ClearOnResponse()
+        {
+            views = new ViewPagesManager();
+            fakeCount = 0;
         }
     }
 }
