@@ -119,7 +119,7 @@ namespace Logic
                             }
                             if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS
                             {
-                                var eripResponPosError = new PS_ERIP().SetPosError(PosRespon);
+                                var eripResponPosError = Factory.PsEripCreate().SetPosError(PosRespon);
                                 return eripResponPosError;
                             }
                         }
@@ -209,7 +209,7 @@ namespace Logic
         private async Task<MDOM_POS> GetPosResponse(string argReq)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetPosResponse)}()");
-            XDocument respXml = await PostGetHTTP.PostStringGetXML(POSManager.Url, argReq);
+            XDocument respXml = await PostGetHTTP.PostStringGetXML(StaticMain.Settings.Terminal_MdomPOS.url, argReq);
             MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
             return respPos;
         }
@@ -226,7 +226,7 @@ namespace Logic
             if (RunOpReq.EnumType != EripQAType.RunOperationRequest)
             {
                 Ex.Log($"Error: {nameof(CancelPayPOS)} RunOpReq.EnumType != RunOperationRequest");
-                CancelPOSReq = new POSManager(lastPCID, lastKioskReceipt).Request;
+                CancelPOSReq = new POSManager().GetCancelVOIRequest(lastPCID, lastKioskReceipt);
             }
             else
             {
@@ -267,16 +267,17 @@ namespace Logic
         }
         private async Task CreateInitialRequest()
         {
-            string strxml = GetHardCodeInitialRequest();
-            XDocument xml = await PostGetHTTP.XmlLoadAsync(strxml);
-            PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
-            list.CreateNextPage(eripReq);
+            //string strxml = GetHardCodeInitialRequest();
+            //XDocument xml = await PostGetHTTP.XmlLoadAsync(strxml);
+            //PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
+            PS_ERIP homeErip = Factory.PsEripHomeCreate();
+            list.CreateNextPage(homeErip);
         }
         private PS_ERIP Request => list.Current.Request;
         private async Task<PS_ERIP> GetEripResponse(string request)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetEripResponse)}()");
-            XDocument responseXml = await PostGetHTTP.PostStringGetXML(request);
+            XDocument responseXml = await PostGetHTTP.PostStringGetXML(StaticMain.Settings.ERIP.url, request);
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
             return response;
         }
@@ -295,7 +296,7 @@ namespace Logic
         private async Task<PS_ERIP> GetConfirmRequest(PS_ERIP RespRunOper, string argConfirmCode)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetConfirmRequest)}()");
-            PS_ERIP confirmReq = new PS_ERIP();
+            PS_ERIP confirmReq = Factory.PsEripCreate();
             confirmReq.EnumType = EripQAType.ConfirmRequest;
             confirmReq.ResponseReq.PayRecord = RespRunOper.ResponseReq.PayRecord.Copy();
             confirmReq.Accept(this.Request)?.ConfirmClear();            

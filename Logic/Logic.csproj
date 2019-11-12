@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factory.cs" />
     <Compile Include="POSManager.cs" />
     <Compile Include="RequestNavigation.cs" />
     <Compile Include="XmlHistory.cs" />

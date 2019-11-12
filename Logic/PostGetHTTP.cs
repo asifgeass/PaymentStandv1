@@ -16,11 +16,9 @@ namespace Logic
 {
     public static class PostGetHTTP
     {
-        private static readonly string url = "http://public.softclub.by:3007/komplat/online.request"; //"http://public.softclub.by:3007/komplat/online.request"
+        private static readonly string url = "http://public.softclub.by:3007/komplat/online.request";
         private static readonly HttpClient httpClient = new HttpClient();
         private static readonly Stopwatch timer = new Stopwatch();
-        private static List<XDocument> ResponceHistory = new List<XDocument>();
-        private static List<XDocument> RequestHistory = new List<XDocument>();
         private static StringBuilder timings = new StringBuilder();
 
 
