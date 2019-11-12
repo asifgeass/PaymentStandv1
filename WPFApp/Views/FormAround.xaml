@@ -21,13 +21,11 @@
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="100*"/>
-            </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Name="groupLabel" Content="{Binding LabelParentGroup}"/>
-            <Label Grid.Row="1" Name="currentLabel" Content="{Binding LabelCurrent}"/>
+            <Label Name="currentLabel" 
+                   Content="{Binding LabelCurrent}"
+                   HorizontalContentAlignment="Center"
+                   />
         </Grid>
 
         <Grid x:Name="ButtonsLeftGrid" Grid.Row="1" Grid.Column="0">

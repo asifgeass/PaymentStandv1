@@ -15,6 +15,7 @@ namespace XmlStructureComplat
         public string TerminalID { get; set; }
         public string Version { get; set; }
         public string PayCode { get; set; }
+        public string PaySumma { get; set; }
         public string PAN { get; set; }
         public string TypePAN { get; set; }
         public string SessionId { get; set; }

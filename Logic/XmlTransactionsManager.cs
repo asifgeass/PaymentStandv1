@@ -16,50 +16,31 @@ namespace Logic
         private string lastPCID;
         private string lastKioskReceipt;
         private bool isBackToCurrent { get; set; } = false;
-        private async Task<PS_ERIP> HandleResponseFromUI(object param)
+        private async Task<PS_ERIP> HandlePayRecordParam(PayRecord payrecArg, PS_ERIP requestArg=null)
         {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(HandleResponseFromUI)}()");
             PS_ERIP @return = null;
-            var rootResponse = list.Current.Response;
-            if (rootResponse.EnumType == EripQAType.GetPayListResponse)
+            if (payrecArg == null) Ex.Throw<ArgumentNullException>($"{nameof(HandlePayRecordParam)}(): PayRecord argument = null");
+            PS_ERIP requestCopy = requestArg ?? list.Current.Request.Copy();
+            if (payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
             {
-                var paylist = rootResponse.ResponseReq.PayRecord;
-                if (paylist.Count > 1)
+                Ex.Log($"{nameof(HandlePayRecordParam)}(): GetPayListType=1/2; SessionID={payrecArg.SessionId}");
+                requestCopy.ResponseReq.SessionId = payrecArg.SessionId;
+                requestCopy.ResponseReq.AttrRecord = new List<AttrRecordRequest>();
+                payrecArg.AttrRecord.ForEach(attr =>
                 {
-                    if (param is PayRecord)
-                    {
-                        PayRecord payrecArg = param as PayRecord;
-                        var requestCopy = list.Current.Request.Copy();
-                        requestCopy.ResponseReq.PayCode = payrecArg.Code;
-                        return requestCopy;
-                    }
-                }
-                if (paylist.Count == 1)
-                {
-                    if (param is PayRecord)
-                    {
-                        var requestCopy = list.Current.Request.Copy();
-                        PayRecord payrecArg = param as PayRecord;
-                        if (payrecArg.GetPayListType == "1" || payrecArg.GetPayListType == "2")
-                        {
-                            Ex.Log($"GetPayListType=1/2; SessionID={payrecArg.SessionId}");
-                            requestCopy.ResponseReq.SessionId = payrecArg.SessionId;
-                            requestCopy.ResponseReq.AttrRecord = new List<AttrRecordRequest>();
-                            payrecArg.AttrRecord.ForEach(attr =>
-                            {
-                                var newAttr = new AttrRecordRequest(attr);
-                                newAttr.Change = 1;
-                                requestCopy.ResponseReq.AttrRecord.Add(newAttr);
-                            });
-                            return requestCopy;
-                        }
-                        if (payrecArg.GetPayListType == "0")
-                        {
-                            Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
-                            MDOM_POS PosReq = new POSManager().PayPURRequest(payrecArg);
-                            string request = await Serialize(PosReq);
-                            MDOM_POS PosRespon = await GetPosResponse(request);
-                            string fakeRespon = @"      <MDOM_POS>
+                    var newAttr = new AttrRecordRequest(attr);
+                    newAttr.Change = 1;
+                    requestCopy.ResponseReq.AttrRecord.Add(newAttr);
+                });
+                return requestCopy;
+            }
+            if (payrecArg.GetPayListType == "0")
+            {
+                Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
+                MDOM_POS PosReq = new POSManager().PayPURRequest(payrecArg);
+                string request = await Serialize(PosReq);
+                MDOM_POS PosRespon = await GetPosResponse(request);
+                string fakeRespon = @"      <MDOM_POS>
         <PURResponse>
           <ErrorCode>0</ErrorCode>
           <PayDate>04/11/2019 15:54:18</PayDate>
@@ -97,34 +78,74 @@ namespace Logic
           </Receipt>
         </PURResponse>
       </MDOM_POS>"; //FAKE RESPONSE
-                            //Ex.Log($"TEST ПОДСТАВА ответа от POS вместо реального");
-                            if (PosRespon.ResponseReq.ErrorCode == 0) //УСПЕХ POS
-                            {
-                                this.lastPCID = PosRespon?.ResponseReq?.PC_ID;
-                                this.lastKioskReceipt = PosRespon?.ResponseReq?.KioskReceipt;
-                                var responCopy = list.Current.Response.Copy();
-                                responCopy.EnumType = EripQAType.RunOperationRequest;
-                                responCopy.Accept(requestCopy);
-                                responCopy.Accept(PosRespon);
-                                responCopy.ResponseReq.SessionId = payrecArg.SessionId;
-                                var payrec = responCopy.ResponseReq.PayRecord.First();
-                                payrec.SessionId = payrecArg.SessionId;
-                                if (responCopy.ResponseReq.PayRecord[0].Summa == "0.00")
-                                {
-                                    Ex.Log("TEST ПОДСТАВА суммы 1 вместо 0");
-                                    responCopy.ResponseReq.PayRecord[0].Summa = "1";
-                                }
-                                responCopy.Clear();
-                                return responCopy;
-                            }
-                            if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS
-                            {
-                                var eripResponPosError = Factory.PsEripCreate().SetPosError(PosRespon);
-                                return eripResponPosError;
-                            }
-                        }
+                    //Ex.Log($"TEST ПОДСТАВА ответа от POS вместо реального");
+                if (PosRespon.ResponseReq.ErrorCode == 0) //УСПЕХ POS
+                {
+                    this.lastPCID = PosRespon?.ResponseReq?.PC_ID;
+                    this.lastKioskReceipt = PosRespon?.ResponseReq?.KioskReceipt;
+                    var responCopy = list.Current.Response.Copy();
+                    responCopy.EnumType = EripQAType.RunOperationRequest;
+                    responCopy.Accept(requestCopy);
+                    responCopy.Accept(PosRespon);
+                    responCopy.ResponseReq.SessionId = payrecArg.SessionId;
+                    var payrec = responCopy.ResponseReq.PayRecord.First();
+                    payrec.SessionId = payrecArg.SessionId;
+                    //if (responCopy.ResponseReq.PayRecord[0].Summa == "0.00")
+                    //{
+                    //    Ex.Log("TEST ПОДСТАВА суммы 1 вместо 0");
+                    //    responCopy.ResponseReq.PayRecord[0].Summa = "1";
+                    //}
+                    responCopy.Clear();
+                    return responCopy;
+                }
+                if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS
+                {
+                    var eripResponPosError = Factory.PsEripCreate().SetPosError(PosRespon);
+                    return eripResponPosError;
+                }
+            }
+            return @return;
+        }
+        private async Task<PS_ERIP> HandleResponseFromUI(object param)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(HandleResponseFromUI)}()");
+            PS_ERIP @return = null;
+            var rootResponse = list.Current.Response;
+            if (rootResponse.EnumType == EripQAType.GetPayListResponse)
+            {
+                var paylist = rootResponse.ResponseReq.PayRecord;
+                if (paylist.Count > 1)
+                {
+                    if (param is PayRecord)
+                    {
+                        PayRecord payrecArg = param as PayRecord;
+                        var requestCopy = list.Current.Request.Copy();
+                        requestCopy.ResponseReq.PayCode = payrecArg.Code;
+                        return requestCopy;
                     }
                 }
+                if (paylist.Count == 1)
+                {
+                    if (param is PS_ERIP)
+                    {
+                        PS_ERIP eripArg = param as PS_ERIP;
+                        PS_ERIP requestCopy = null;
+                        //if (eripArg.ResponseReq.PaySumma != null)
+                        //{
+                        //    requestCopy = list.Current.Request.Copy();
+                        //    requestCopy.ResponseReq.PaySumma = eripArg.ResponseReq.PaySumma;
+                        //}
+
+                        PayRecord payrecArg = eripArg.ResponseReq.PayRecord.First();
+                        return await HandlePayRecordParam(payrecArg, requestCopy);
+                    }
+                    if (param is PayRecord)
+                    {
+                        PayRecord payrecArg = param as PayRecord;
+                        return await HandlePayRecordParam(payrecArg);
+                    }
+                }
+                if (paylist.Count <= 0) { Ex.Throw($"{nameof(HandleResponseFromUI)}(): paylist.Count <= 0)"); }
             }
             return @return;
         }

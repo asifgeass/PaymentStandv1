@@ -41,10 +41,10 @@ namespace Logic
 
         }
 
-        public static Task<PS_ERIP> HomePage()
+        public static async Task<PS_ERIP> HomePage()
         {
-            LoadSettings().RunAsync();
-            return manager.HomeRequest();
+            await LoadSettings();
+            return await manager.HomeRequest();
         }
 
         public static async Task LoadSettings()
@@ -63,7 +63,7 @@ namespace Logic
                             var inMemParts = memory.Descendants();
                             var fileParts = fileXml.Descendants();
                             if (inMemParts.Count() != fileParts.Count())
-                            { SaveSettings().RunAsync(); }
+                            { SaveSettings().RunAsync(); Ex.Log("inMemParts != fileParts"); }
                         }
                         catch (Exception ex)
                         {

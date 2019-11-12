@@ -121,6 +121,7 @@ namespace WPFApp
                         var button = Controls.Button(payrec.Name);
                         button.Command = model.SendParamCommand;
                         button.CommandParameter = payrec;
+                        model.LabelCurrent = payrec?.GroupRecord?.Name;//????
                         CheckButtonCommand(button, paylist.Last() == payrec);
                         views.AddControl(button);
                     }
@@ -129,14 +130,17 @@ namespace WPFApp
                 {
                     var payrec = paylist.First();
                     var attrRecords = payrec.AttrRecord;
+                    model.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
                     //LOOKUPs display every lookup as 1 page
                     foreach (var attr in attrRecords)
                     {
                         if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                         {
                             Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
-                            List<Lookup> lookups = paylist?.First()?.Lookups;
-                            Lookup selectedLookup = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower())?.Single();
+                            List<Lookup> lookups = paylist?.First()?.Lookups;                            
+                            var list = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower());
+                            Lookup selectedLookup = list?.FirstOrDefault();
+                            if (selectedLookup == null) { continue; }
                             int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                             views.NewPage();
                             LookupVM childVM = model.GetNewLookupVM();
@@ -169,15 +173,31 @@ namespace WPFApp
                             views.AddControl(label);
                         }
                     }
+                    #region display PAYRecord Parameters
                     var payLabel = Controls.LabelInfo();
-                    payLabel.Content = $"Summa = {payrec.Summa}";
-                    views.AddControl(payLabel);
+                    if (payrec.Summa != "0.00")
+                    {                        
+                        payLabel.Content = $"Summa = {payrec.Summa}";
+                        views.AddControl(payLabel);
+                    }
                     payLabel = Controls.LabelInfo();
                     payLabel.Content = $"Commission = {payrec.Commission}";
                     views.AddControl(payLabel);
                     payLabel = Controls.LabelInfo();
                     payLabel.Content = $"Fine = {payrec.Fine}";
                     views.AddControl(payLabel);
+                    if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
+                    {
+                        var label = Controls.LabelInfo("Сумма оплаты");
+                        var inputbox = Controls.TextBox();                        
+                        var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
+                        binding.Mode = BindingMode.TwoWay;
+                        inputbox.SetBinding(TextBox.TextProperty, binding);
+
+                        views.AddControl(label);
+                        views.AddControl(inputbox);
+                    }
+#endregion
                     //ATTRs at last display attrs need to enter with textbox
                     foreach (var attr in attrRecords)
                     {
@@ -199,7 +219,7 @@ namespace WPFApp
                     var button = Controls.ButtonAccept("Продолжить");
                     if (payrec.GetPayListType == "0")
                     { button.Content = "Оплатить"; }
-                    button.Command = model.SendVmPayrecCommand;
+                    button.Command = model.NextPageCommand;
                     views.AddControl(button);
                 }
             }

@@ -20,16 +20,15 @@ namespace WPFApp.ViewModels
         #region ctor
         public DynamicMenuWindowViewModel()
         {
-            //SendVmAttrCommand = new DelegateCommand(() => NextPage(AttrToSend));
+            HomePageCommand = new DelegateCommand(HomePage).ObservesCanExecute(() => IsHomeButtonActive);
+            BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(() => IsBackButtonActive);
             SetCurrMenuHeaderCommand = new DelegateCommand<string>(x => LabelCurrent = x);
             SetParentGroupHeaderCommand = new DelegateCommand<string>(x => LabelParentGroup = x);
             SendParamCommand = new DelegateCommand<object>(NextPage);
-            LoadedCommand = new DelegateCommand(()=> NextPage(null));
-            SendVmPayrecCommand = new DelegateCommand(() => NextPage(PayrecToSend));
-            HomePageCommand = new DelegateCommand(HomePage).ObservesCanExecute(()=>IsHomeButtonActive);
-            BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(()=> IsBackButtonActive);
+            NextPageCommand = new DelegateCommand(() => NextPage(null));
             NewResponseComeEvent += ClearLookup;
         }
+
         #endregion
 
         #region fields
@@ -39,6 +38,7 @@ namespace WPFApp.ViewModels
         private bool _isLoadingMenu;
         private PS_ERIP _responce;
         private PayRecord _payrecToSend;
+        private PS_ERIP _eripToSend = new PS_ERIP();
         private List<AttrRecord> _attrToSend;
         private LookupVM _lookupVM;
         private List<LookupVM> _lookupVMList = new List<LookupVM>();
@@ -54,15 +54,16 @@ namespace WPFApp.ViewModels
             set 
             {
                 this.IsHomeButtonActive = true;
-                Task.Run(async() =>
+                SetProperty(ref _responce, value);                
+                Task.Run(async () =>
                 {
                     var xml = await SerializationUtil.Serialize(value);
                     Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
                 });
-                if (value?.ResponseReq?.PayRecord?.Count == 1)
-                { PayrecToSend = value?.ResponseReq?.PayRecord?.FirstOrDefault(); }
+                if (Responce?.ResponseReq?.PayRecord?.Count == 1)
+                { PayrecToSend = Responce?.ResponseReq?.PayRecord?.FirstOrDefault(); }
+                EripToSend = new PS_ERIP();
                 IsBackButtonActive = IsBackRequestPossible;
-                SetProperty(ref _responce, value);
                 NewResponseComeEvent();
             }
         }
@@ -73,7 +74,14 @@ namespace WPFApp.ViewModels
             {
                 AttrToSend = value?.AttrRecord;
                 SetProperty(ref _payrecToSend, value);
-                //Ex.Log($"{nameof(PayrecToSend)}():");
+            }
+        }
+        public PS_ERIP EripToSend
+        {
+            get => _eripToSend;
+            set
+            {
+                SetProperty(ref _eripToSend, value);
             }
         }
         public List<AttrRecord> AttrToSend
@@ -141,15 +149,13 @@ namespace WPFApp.ViewModels
         #endregion
 
         #region Public Commands
+        public DelegateCommand HomePageCommand { get; }
+        public DelegateCommand BackUserCommand { get; }
         public DelegateCommand<string> SetParentGroupHeaderCommand { get; }
         public DelegateCommand<string> SetCurrMenuHeaderCommand { get; }
         public DelegateCommand<object> SendParamCommand { get; }
         public DelegateCommand<LookupItem> LookupCommand { get; }
-        public DelegateCommand LoadedCommand { get; }
-        public DelegateCommand HomePageCommand { get; }
-        public DelegateCommand BackUserCommand { get; }
-        public DelegateCommand SendVmPayrecCommand { get; }
-        //public DelegateCommand SendVmAttrCommand { get; }
+        public DelegateCommand NextPageCommand { get; }
         #endregion
 
         #region Pages
@@ -160,9 +166,10 @@ namespace WPFApp.ViewModels
                 this.IsHomeButtonActive = false;
                 this.IsBackButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
+                Ex.Log($"VM => Logic NextPage() param={param};");
                 FillPayrecToSendWithLookup();
-                Ex.Log($"VM => Logic NextPage() param={param}; PayrecToSend={PayrecToSend?.Name}");
-                Responce = await StaticMain.NextPage(param ?? PayrecToSend);
+                EripToSend.ResponseReq.PayRecord = new List<PayRecord>() { PayrecToSend };
+                Responce = await StaticMain.NextPage(param ?? EripToSend);
             }
             catch (Exception ex)
             {

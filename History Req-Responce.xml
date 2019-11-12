@@ -506,17 +506,6 @@ APP: Mastercard
       </PS_ERIP>
     </x11>
 
-    <x12>
-      <PS_ERIP>
-        <GetPayListRequest>
-          <TerminalID>TEST_TERMINAL</TerminalID>
-          <Version>3</Version>
-          <PayCode>401</PayCode>
-        </GetPayListRequest>
-      </PS_ERIP>
-      <!--Responce=78; GetRequestStream=17;-->
-    </x12>
-
     <x2-gos-poslina>
 
       <PS_ERIP>

@@ -62,7 +62,7 @@ namespace UIXmlPostTerminal
         {
             try
             {
-                PostGetHTTP.PostStringGetXML(textboxXMLCustom.Text);
+                PostGetHTTP.PostStringGetString(textboxXMLCustom.Text);
             }
             catch (Exception ex)
             {

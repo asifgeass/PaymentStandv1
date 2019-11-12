@@ -57,10 +57,10 @@ namespace Logic
             }
             decimal PayAllPOS = summa + fine + commission;
             //TEST
-            if (PayAllPOS == 0)
-            {
-                PayAllPOS = 1.11M;
-            }
+            //if (PayAllPOS == 0)
+            //{
+            //    PayAllPOS = 1.11M;
+            //}
             //TEST
             Request.ResponseReq.PaySumma = PayAllPOS.ToString().Replace(',', '.');
             return Request;
