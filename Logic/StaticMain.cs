@@ -62,15 +62,17 @@ namespace Logic
         }
         public static async Task<Settings> LoadSettings()
         {
-            XDocument xml;
+            XDocument fileXml;
             if (File.Exists(settingsPath))
             {
-                xml = await Task.Run(()=> XDocument.Load(settingsPath));                
-                Settings = await SerializationUtil.Deserialize<Settings>(xml);
+                fileXml = await Task.Run(()=> XDocument.Load(settingsPath));                
+                Settings = await SerializationUtil.Deserialize<Settings>(fileXml);
                 Task.Run(async() =>
                 {
-                    var memory = await SerializationUtil.Serialize(Settings);
-                    if(!xml.Equals(memory))
+                    XDocument memory = await SerializationUtil.Serialize(Settings);
+                    var inMemParts = memory.Descendants();
+                    var fileParts = fileXml.Descendants();
+                    if (inMemParts.Count() != fileParts.Count())
                     { SaveSettings().RunAsync(); }
                 }).RunAsync();
                 
