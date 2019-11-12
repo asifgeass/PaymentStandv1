@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ namespace Logic
         private XmlHistory list = new XmlHistory();
         private string lastPCID;
         private string lastKioskReceipt;
+        private POSManager lastPOSTransaction = new POSManager();
         private bool isBackToCurrent { get; set; } = false;
         private async Task<PS_ERIP> HandlePayRecordParam(PayRecord payrecArg, PS_ERIP requestArg=null)
         {
@@ -37,9 +40,10 @@ namespace Logic
             if (payrecArg.GetPayListType == "0")
             {
                 Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
-                MDOM_POS PosReq = new POSManager().PayPURRequest(payrecArg);
-                string request = await Serialize(PosReq);
+                lastPOSTransaction.Request = new POSManager().PayPURRequest(payrecArg);
+                string request = await Serialize(lastPOSTransaction.Request);
                 MDOM_POS PosRespon = await GetPosResponse(request);
+                lastPOSTransaction.Response = PosRespon;
                 string fakeRespon = @"      <MDOM_POS>
         <PURResponse>
           <ErrorCode>0</ErrorCode>
@@ -212,7 +216,7 @@ namespace Logic
                     this.lastPCID = null;
                     this.lastKioskReceipt = null;
                     list.Current.SetBackToHome();
-                    
+                    Print(lastPOSTransaction.Response.ResponseReq.Receipt);
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
                 {
@@ -223,6 +227,14 @@ namespace Logic
             }
             return Task.CompletedTask;
         }
+
+        private void Print(string textArg)
+        {
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrintPage += (s,e)=> e.Graphics.DrawString(textArg, new Font("Courier", 12), Brushes.Black, 0, 0);
+            printDocument.Print();
+        }
+
         private async Task HandleResponseWithoutUI(PS_ERIP response)
         {
             await CheckRunOperationResponse(response);

@@ -143,7 +143,7 @@ namespace WPFApp.ViewModels
                 //_responce = null; 
                 SetProperty(ref _exception, value);
                 this.IsHomeButtonActive = true;
-                IsBackButtonActive = IsBackRequestPossible;
+                Ex.TryLog(()=> IsBackButtonActive = IsBackRequestPossible);
             }
         }
         #endregion

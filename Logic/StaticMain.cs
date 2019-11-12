@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Logic
 {
-    public class StaticMain
+    public static class StaticMain
     {
         //private static Lazy<PagesManager> manager = new Lazy<PagesManager>();
         private static XmlTransactionsManager manager = new XmlTransactionsManager();      
