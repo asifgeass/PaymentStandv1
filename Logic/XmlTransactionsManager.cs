@@ -40,7 +40,7 @@ namespace Logic
             if (payrecArg.GetPayListType == "0")
             {
                 Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
-                lastPOSTransaction.Request = new POSManager().PayPURRequest(payrecArg);
+                lastPOSTransaction.CreatePayPosRequest(payrecArg);
                 string request = await Serialize(lastPOSTransaction.Request);
                 MDOM_POS PosRespon = await GetPosResponse(request);
                 lastPOSTransaction.Response = PosRespon;
@@ -259,15 +259,15 @@ namespace Logic
             if (RunOpReq.EnumType != EripQAType.RunOperationRequest)
             {
                 Ex.Log($"Error: {nameof(CancelPayPOS)} RunOpReq.EnumType != RunOperationRequest");
-                CancelPOSReq = new POSManager().GetCancelVOIRequest(lastPCID, lastKioskReceipt);
+                CancelPOSReq = lastPOSTransaction.GetCancelVOIRequest(lastPCID, lastKioskReceipt);
             }
             else
             {
-                CancelPOSReq = new POSManager().GetCancelVOIRequest(RunOpReq);
+                CancelPOSReq = lastPOSTransaction.GetCancelVOIRequest(RunOpReq);
             }
             string request = await Serialize(CancelPOSReq);
-            MDOM_POS CancelRespon = await GetPosResponse(request);
-            Ex.Catch(() => HandleCancelPOSResponse(CancelRespon));
+            lastPOSTransaction.Response = await GetPosResponse(request);
+            Ex.Catch(() => HandleCancelPOSResponse(lastPOSTransaction.Response));
         }
         private void HandleCancelPOSResponse(MDOM_POS arg)
         {

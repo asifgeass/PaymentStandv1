@@ -471,6 +471,54 @@ APP: Mastercard
   </Terminal>
 
   <complat>
+
+    <ErrorsMy>
+      ConfirmResponse 541099
+      <PS_ERIP>
+        <RunOperationResponse>
+          <KioskReceipt>0001</KioskReceipt>
+          <ErrorCode>666</ErrorCode>
+          <ErrorText>Платеж уже регистрировался ранее, найден в базе данных</ErrorText>
+          <PayRecord Code="411" RecordID="0" PaymentID="3808455" PayAll="1.00" Summa="1.00" PayCommission="0.00" Currency="933" Date="08/11/2019 17:19:58">
+            <AttrRecord Code="745" CodeOut="0" Name="Лицевой счет" Print="1" Value="123456789" View="1" />
+            <Check>
+              <CheckHeader Count="14">
+                <CheckLine Idx="1">                                  535104******9219</CheckLine>
+                <CheckLine Idx="2">Дата платежа:                  08/11/2019 17:19:58</CheckLine>
+                <CheckLine Idx="3">Отправитель платежа: 765 Г.МИНСК,ОАО 'БНБ-БАНК'. р</CheckLine>
+                <CheckLine Idx="4">/с 3819800000001                                  </CheckLine>
+                <CheckLine Idx="5" />
+                <CheckLine Idx="6">Получатель платежа: Гостехосмотр, р/с BY50REDJ3012</CheckLine>
+                <CheckLine Idx="7">1000262600000000 в 110 Г.МИНСК,ЗАО 'РРБ-БАНК'     </CheckLine>
+                <CheckLine Idx="8">                                                  </CheckLine>
+                <CheckLine Idx="9">Госпошлина за выдачу разрешения                   </CheckLine>
+                <CheckLine Idx="10">                                                  </CheckLine>
+                <CheckLine Idx="11">Лицевой счет:                            123456789</CheckLine>
+                <CheckLine Idx="12">Сумма, оплаченная по услуге:                 1 BYN</CheckLine>
+                <CheckLine Idx="13">Сумма:                                       1 BYN</CheckLine>
+                <CheckLine Idx="14">Сумма вознаграждения:                        0 BYN</CheckLine>
+              </CheckHeader>
+            </Check>
+          </PayRecord>
+        </RunOperationResponse>
+      </PS_ERIP>
+      <PS_ERIP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <ConfirmRequest>
+          <ErrorCode>0</ErrorCode>
+          <TerminalID>TEST_TERMINAL</TerminalID>
+          <Version>3</Version>
+          <PayRecord Code="411" View="1" RecordID="0" PaymentID="3808455" PayAll="1.00" KioskReceipt="0001" Date="08/11/2019 17:19:58" Currency="933" ConfirmCode="0" />
+        </ConfirmRequest>
+      </PS_ERIP>
+      <PS_ERIP>
+        <ConfirmResponse>
+          <ErrorCode>541099</ErrorCode>
+          <ErrorText>Не верный статус платежа</ErrorText>
+          <PayRecord PaymentID="3808455" Date="08/11/2019 17:19:58" KioskReceipt="0001" RecordID="0">
+          </PayRecord>
+        </ConfirmResponse>
+      </PS_ERIP>
+    </ErrorsMy>
     
     <x11>
       <PS_ERIP>
@@ -1060,7 +1108,7 @@ APP: Mastercard
         </GetPayListResponse>
       </PS_ERIP>
 
-
+      Error
       <PS_ERIP>
         <GetPayListRequest>
           <TerminalID>TEST_TERMINAL</TerminalID>
@@ -1076,7 +1124,7 @@ APP: Mastercard
           <AttrRecord Code="0" CodeOut="10005" Name="Тип двигателя" MinLength="0" MaxLength="30" Edit="1" Lookup="ТИП ДВИГАТЕЛЯ АВТО" View="1" Value="Бензиновый"/>
         </GetPayListRequest>
       </PS_ERIP>
-      <!--Error Responce=38; GetRequestStream=24;-->
+       Responce=38; GetRequestStream=24;
       <PS_ERIP>
         <GetPayListResponse>
           <ErrorCode>811123</ErrorCode>
@@ -1156,6 +1204,7 @@ APP: Mastercard
       </PS_ERIP>
 
 
+      Error 
       <PS_ERIP>
         <RunOperationRequest>
           <Key/>
@@ -1177,7 +1226,7 @@ APP: Mastercard
           </PayRecord>
         </RunOperationRequest>
       </PS_ERIP>
-      <!--Error Responce=1008; GetRequestStream=15;-->
+      Responce=1008; GetRequestStream=15;
       <PS_ERIP>
         <RunOperationResponse>
           <KioskReceipt>17092019090006</KioskReceipt>
