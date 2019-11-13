@@ -23,11 +23,18 @@ namespace WPFApp.Views
         public DynamicMenuWindow()
         {
             InitializeComponent();
+            this.WindowStyle = WindowStyle.None;
+            //this.WindowState = WindowState.Maximized;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var builder = new ViewDynamicMenuBuilder(this);
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

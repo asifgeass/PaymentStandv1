@@ -15,6 +15,7 @@ namespace WPFApp
 {
     public static class Controls
     {
+        private const double Margin = 50;
         public static Label CentralLabelBorder(string arg = "")
         {
             var info = new Label();
@@ -35,7 +36,7 @@ namespace WPFApp
             var button = new CardButton();
             if(argName!=null) button.Button.Content = argName; 
             //button.Style = Application.Current.TryFindResource("CardButton") as Style;            
-            button.Button.Margin = new Thickness(button.Margin.Left, button.Margin.Top, button.Margin.Right, 20);            
+            button.Button.Margin = new Thickness(button.Margin.Left, button.Margin.Top, button.Margin.Right, Margin);            
             return button;
         }
 
@@ -71,6 +72,7 @@ namespace WPFApp
         public static TextBox TextBoxHint(string hintArg, string nameArg = null)
         {
             var textBox = new TextBox();
+            textBox.Margin = new Thickness(textBox.Margin.Left, textBox.Margin.Top, textBox.Margin.Right, Margin);
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
             if (nameArg != null) textBox.Text = nameArg;            
             return textBox;

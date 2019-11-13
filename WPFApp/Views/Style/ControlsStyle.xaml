@@ -4,7 +4,7 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     >
-    <sys:Double x:Key="globalFontSize">30</sys:Double>
+    <sys:Double x:Key="globalFontSize">48</sys:Double>
     
     <Style x:Key="{x:Type TextBox}" 
                TargetType="TextBox" 

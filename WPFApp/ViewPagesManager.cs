@@ -15,10 +15,11 @@ namespace WPFApp
         #region fields
         private List<Panel> pages = new List<Panel>();
         private int currentPageIndex = -1;
-        private StackPanel tempPnl = new StackPanel() { VerticalAlignment = VerticalAlignment.Center };
+        Grid grid = new Grid();
+        private StackPanel tempPnl = new StackPanel();
+        private const int column = 1;
         #endregion
         #region Public Methods
-        #region Get Page
         public Panel NextPage()
         {
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
@@ -28,7 +29,6 @@ namespace WPFApp
             }
             return GetPage();
         }
-        #endregion
         
         public Panel PrevPage()
         {
@@ -52,8 +52,8 @@ namespace WPFApp
         {
             if (tempPnl.Children.Count > 0)
             {
-                tempPnlClear();
-                pages.Add(tempPnl);
+                InitializeContainer();
+                pages.Add(grid);
             }
             CheckEmpty();
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
@@ -68,6 +68,7 @@ namespace WPFApp
         {
             CheckEmpty();
             tempPnl.Children.Add(arg);
+            
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }
@@ -76,14 +77,14 @@ namespace WPFApp
         {
             if (pages.Count <= 0)
             {
-                pages.Add(tempPnl);
+                pages.Add(grid);
             }
         }
 
         public ViewPagesManager AddDataContext(object arg)
         {
             Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddDataContext)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
-            tempPnl.DataContext = arg;
+            grid.DataContext = arg;
             return this;
         }
         public ViewPagesManager AddPage(Panel arg)
@@ -108,11 +109,22 @@ namespace WPFApp
             ? null : pages[currentPageIndex - 1];
         #endregion
         #region Private Methods
-        private void tempPnlClear()
+        private Grid InitializeContainer()
         {
-            tempPnl = new StackPanel() { VerticalAlignment= VerticalAlignment.Center};
+            grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
+            tempPnl = new StackPanel();
+            Grid.SetColumn(tempPnl, column);
+            grid.Children.Add(tempPnl);
+            return grid;
         }
-        
+
         #endregion
+        public ViewPagesManager()
+        {
+            InitializeContainer();
+        }
     }
 }
