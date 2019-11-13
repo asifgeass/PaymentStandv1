@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace WPFApp.Helpers
+namespace WPFApp
 {
     public class MatDesDarkerLightTheme : IBaseTheme
     {
         public Color ValidationErrorColor { get; } = (Color)ColorConverter.ConvertFromString("#f44336");
         public Color MaterialDesignBackground { get; } = (Color)ColorConverter.ConvertFromString("#FFFFFFFF");
-        public Color MaterialDesignPaper { get; } = (Color)ColorConverter.ConvertFromString("#FFfafafa");
+        public Color MaterialDesignPaper { get; } = (Color)ColorConverter.ConvertFromString("#f7f6f2"); //FFfafafa
         public Color MaterialDesignCardBackground { get; } = (Color)ColorConverter.ConvertFromString("#FFFFFFFF");
         public Color MaterialDesignToolBarBackground { get; } = (Color)ColorConverter.ConvertFromString("#FFF5F5F5");
         public Color MaterialDesignBody { get; } = (Color)ColorConverter.ConvertFromString("#DD000000");

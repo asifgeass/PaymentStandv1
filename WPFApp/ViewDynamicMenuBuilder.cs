@@ -406,44 +406,12 @@ namespace WPFApp
             fakeCount = 0;
         }
 
-        private void test()
+        private void ChangeThemePalette()
         {
             var paletteHelper = new PaletteHelper();
             ITheme theme = paletteHelper.GetTheme();
-            
-            IBaseTheme baseThem = new MaterialDesignLightTheme();
-            
-            var tem = new MaterialDesignLightTheme();
-            var hz = tem.MaterialDesignBackground;
-            #region ThemeColors
-            var list = new List<Color>();
-            list.Add(tem.MaterialDesignBackground);
-            list.Add(tem.MaterialDesignBody);
-            list.Add(tem.MaterialDesignBodyLight);
-            list.Add(tem.MaterialDesignCardBackground);
-            list.Add(tem.MaterialDesignCheckBoxDisabled);
-            list.Add(tem.MaterialDesignCheckBoxOff);
-            list.Add(tem.MaterialDesignChipBackground);
-            list.Add(tem.MaterialDesignColumnHeader);
-            list.Add(tem.MaterialDesignDivider);
-            list.Add(tem.MaterialDesignFlatButtonClick);
-            list.Add(tem.MaterialDesignFlatButtonRipple);
-            list.Add(tem.MaterialDesignPaper);
-            list.Add(tem.MaterialDesignSelection);
-            list.Add(tem.MaterialDesignSnackbarBackground);
-            list.Add(tem.MaterialDesignSnackbarMouseOver);
-            list.Add(tem.MaterialDesignSnackbarRipple);
-            list.Add(tem.MaterialDesignTextAreaBorder);
-            list.Add(tem.MaterialDesignTextAreaInactiveBorder);
-            list.Add(tem.MaterialDesignTextBoxBorder);
-            list.Add(tem.MaterialDesignTextFieldBoxBackground);
-            list.Add(tem.MaterialDesignTextFieldBoxDisabledBackground);
-            list.Add(tem.MaterialDesignTextFieldBoxHoverBackground);
-            list.Add(tem.MaterialDesignToolBarBackground);
-            list.Add(tem.MaterialDesignToolTipBackground);
-            list.Add(tem.ValidationErrorColor);
-            #endregion
-
+            theme.SetBaseTheme( new MatDesDarkerLightTheme() );
+            paletteHelper.SetTheme(theme);
         }
     }
 }
