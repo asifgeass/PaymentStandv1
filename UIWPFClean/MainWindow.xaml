@@ -15,35 +15,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Title="MainWindow" Height="800" Width="450" >
     <Window.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!--<Style x:Key="{x:Type Button}" 
-               TargetType="Button" 
-               BasedOn="{StaticResource MaterialDesignRaisedButton}">
-            <Setter Property="Margin" Value="20 5 20 5" />
-        </Style>
-        <Style x:Key="{x:Type TextBox}" 
-               TargetType="TextBox" 
-               BasedOn="{StaticResource MaterialDesignTextBoxBase}">
-            <Setter Property="Margin" Value="20 5 20 5" />
-        </Style>
-        <Style x:Key="{x:Type Label}" 
-               TargetType="Label" 
-               BasedOn="{StaticResource MaterialDesignLabel}">
-            <Setter Property="Margin" Value="20 5 20 5" />
-        </Style>
-        <Style x:Key="{x:Type TextBlock}" 
-               TargetType="TextBlock" 
-               BasedOn="{StaticResource MaterialDesignCaptionTextBlock}">
-            <Setter Property="Margin" Value="20 5 20 5" />
-        </Style>-->
+        <ResourceDictionary Source="Style/ControlsStyle.xaml"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -65,13 +37,14 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Name="StackPanel1" Grid.Column="1">
 
-                    <TextBlock Text="Text Block test"/>
-                    <Button Content="Default button"
+                    <Button Content="Default button + depth shadow"
                             materialDesign:ShadowAssist.ShadowDepth="Depth3"
                             materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"
                             />
-                    <Label Content="Label test"/>
-                    <TextBox Text="Text Box test"/>
+                    <Label Content="Pure default Label"/>
+                    <Button Content="Pure default Button"/>
+                    <TextBlock/>
+                    <TextBox Text="Pure default Text Box"/>
                     <Button
                             Width="Auto" Height="Auto" 
                             Click="button_Click" 
@@ -113,6 +86,7 @@
                         materialDesign:RippleAssist.Feedback="Gray"
                         FontFamily="{DynamicResource MaterialDesignFont}"
                         Foreground="{DynamicResource MaterialDesignBody}"
+                        Click="button_Click" 
                         >
                         MaterialDesignRaisedLightButton
                     </Button>
@@ -127,6 +101,13 @@
                             Card
                         </TextBlock>
                     </materialDesign:Card>
+                    <TextBox Text="xaml designed Textbox"
+                             Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             materialDesign:HintAssist.Hint="Floating hint in a box"
+                             />
+
                 </StackPanel>
             </Grid>
             

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
+using MaterialDesignThemes;
+using MaterialDesignColors;
 
 namespace UIWPFClean
 {
@@ -20,6 +23,7 @@ namespace UIWPFClean
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int count = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +36,28 @@ namespace UIWPFClean
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            TextBox txtbox = new TextBox();
+            HintAssist.SetHint(txtbox, "Hint #"+count);
 
+            Button btn = new Button();
+
+            btn.BorderBrush = null;
+            btn.Background = Brushes.Gray;
+            btn.SetResourceReference(Button.BackgroundProperty, "MaterialDesignPaper");
+            btn.Content = $"Added {count} button";
+            ShadowAssist.SetShadowDepth(btn, ShadowDepth.Depth3);
+            ShadowAssist.SetShadowEdges(btn, ShadowEdges.Right);
+            ShadowAssist.SetShadowEdges(btn, ShadowEdges.Top);
+            SolidColorBrush brush = Application.Current.TryFindResource("PrimaryHueDarkBrush") as SolidColorBrush;
+            RippleAssist.SetFeedback(btn, brush);
+            
+            //ShadowAssist.SetShadowEdges(btn, ShadowEdges.Bottom);
+            btn.SetResourceReference(Button.ForegroundProperty, "MaterialDesignBody");
+            //btn.SetResourceReference(Button.FontFamilyProperty, "MaterialDesignFont");
+
+            this.StackPanel1.Children.Add(new TextBlock());
+            this.StackPanel1.Children.Add(btn);
+            count++;
         }
     }
 }
