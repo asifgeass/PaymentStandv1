@@ -37,7 +37,7 @@ namespace Logic
                 request.ContentLength = bytes.Length;
                 request.Method = "POST";
                 XDocument doc;
-                Ex.Log($"=>>\n{requestXml}\n=>>");
+                Ex.Log($"=>>{requestXml}\n=>>");
                 using (Stream requestStream = await request.GetRequestStreamAsync())
                 {
                     WriteTextBox(requestXml);

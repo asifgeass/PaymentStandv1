@@ -11,12 +11,17 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="18"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="DynamicMenuWindow" Height="800" Width="450" Loaded="Window_Loaded">
+        Title="DynamicMenuWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <!--TextElement.FontSize="{StaticResource fontSize}"-->
+    
+    <Window.Resources>
+        <ResourceDictionary Source="Style/ControlsStyle.xaml"/>
+    </Window.Resources>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding HomePageCommand}" />

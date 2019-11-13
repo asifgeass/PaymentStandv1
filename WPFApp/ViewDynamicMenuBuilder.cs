@@ -118,11 +118,11 @@ namespace WPFApp
                     views.NewPage();
                     foreach (var payrec in paylist)
                     {
-                        var button = Controls.Button(payrec.Name);
-                        button.Command = model.SendParamCommand;
-                        button.CommandParameter = payrec;
+                        var button = Controls.ButtonCard(payrec.Name);
+                        button.Button.Command = model.SendParamCommand;
+                        button.Button.CommandParameter = payrec;
                         model.LabelCurrent = payrec?.GroupRecord?.Name;//????
-                        CheckButtonCommand(button, paylist.Last() == payrec);
+                        CheckButtonCommand(button.Button, paylist.Last() == payrec);
                         views.AddControl(button);
                     }
                 }
@@ -150,10 +150,10 @@ namespace WPFApp
                             var lookItems = selectedLookup.Item;
                             lookItems.ForEach(arg =>
                             {
-                                var btn = Controls.Button(arg.Value);
-                                btn.Command = childVM?.SelectLookupCommand;
-                                btn.CommandParameter = arg;
-                                btn.Click += (sender, evArg) => NextPage();
+                                var btn = Controls.ButtonCard(arg.Value);
+                                btn.Button.Command = childVM?.SelectLookupCommand;
+                                btn.Button.CommandParameter = arg;
+                                btn.Button.Click += (sender, evArg) => NextPage();
                                 views.AddControl(btn);
                             });
                             //LookupButtons(selectedLookup);
@@ -189,12 +189,12 @@ namespace WPFApp
                     if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
                     {
                         var label = Controls.LabelInfo("Сумма оплаты");
-                        var inputbox = Controls.TextBox();                        
+                        var inputbox = Controls.TextBoxHint("Сумма оплаты");                        
                         var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
                         binding.Mode = BindingMode.TwoWay;
                         inputbox.SetBinding(TextBox.TextProperty, binding);
 
-                        views.AddControl(label);
+                        //views.AddControl(label);
                         views.AddControl(inputbox);
                     }
 #endregion
@@ -205,13 +205,13 @@ namespace WPFApp
                         {
                             Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
                             var label = Controls.LabelInfo(attr.Name);
-                            var inputbox = Controls.TextBox();
+                            var inputbox = Controls.TextBoxHint(attr.Name);
                             int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                             var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
                             binding.Mode = BindingMode.TwoWay;
                             inputbox.SetBinding(TextBox.TextProperty, binding);
 
-                            views.AddControl(label);
+                            //views.AddControl(label);
                             views.AddControl(inputbox);
                         }
                     }

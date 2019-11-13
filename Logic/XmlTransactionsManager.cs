@@ -94,11 +94,6 @@ namespace Logic
                     responCopy.ResponseReq.SessionId = payrecArg.SessionId;
                     var payrec = responCopy.ResponseReq.PayRecord.First();
                     payrec.SessionId = payrecArg.SessionId;
-                    //if (responCopy.ResponseReq.PayRecord[0].Summa == "0.00")
-                    //{
-                    //    Ex.Log("TEST ПОДСТАВА суммы 1 вместо 0");
-                    //    responCopy.ResponseReq.PayRecord[0].Summa = "1";
-                    //}
                     responCopy.Clear();
                     return responCopy;
                 }
@@ -139,7 +134,6 @@ namespace Logic
                         //    requestCopy = list.Current.Request.Copy();
                         //    requestCopy.ResponseReq.PaySumma = eripArg.ResponseReq.PaySumma;
                         //}
-
                         PayRecord payrecArg = eripArg.ResponseReq.PayRecord.First();
                         return await HandlePayRecordParam(payrecArg, requestCopy);
                     }
@@ -300,9 +294,6 @@ namespace Logic
         }
         private async Task CreateInitialRequest()
         {
-            //string strxml = GetHardCodeInitialRequest();
-            //XDocument xml = await PostGetHTTP.XmlLoadAsync(strxml);
-            //PS_ERIP eripReq = await SerializationUtil.Deserialize<PS_ERIP>(xml);
             PS_ERIP homeErip = Factory.PsEripHomeCreate();
             list.CreateNextPage(homeErip);
         }

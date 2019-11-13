@@ -7,6 +7,9 @@ using WPFApp.Interfaces;
 using XmlStructureComplat;
 using System.Windows.Controls;
 using System.Windows;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Media;
+using WPFApp.Views;
 
 namespace WPFApp
 {
@@ -27,11 +30,12 @@ namespace WPFApp
             return info;
         }
 
-        public static Button Button(string argName=null)
+        public static CardButton ButtonCard(string argName=null)
         {
-            var button = new Button();
-            if(argName!=null) button.Content = argName;
-            button.Margin = new Thickness(0,0,0, button.Height/2);
+            var button = new CardButton();
+            if(argName!=null) button.Button.Content = argName; 
+            //button.Style = Application.Current.TryFindResource("CardButton") as Style;            
+            button.Button.Margin = new Thickness(button.Margin.Left, button.Margin.Top, button.Margin.Right, 20);            
             return button;
         }
 
@@ -39,8 +43,6 @@ namespace WPFApp
         {
             var button = new Button();
             if (argName != null) button.Content = argName;
-            button.Margin = new Thickness(0, 0, 0, button.Height / 2);
-            button.FontSize = new TextBlock().FontSize;
             return button;
         }
 
@@ -64,6 +66,14 @@ namespace WPFApp
             var TextBox = new TextBox();
             if (argName != null) TextBox.Text = argName;
             return TextBox;
+        }
+
+        public static TextBox TextBoxHint(string hintArg, string nameArg = null)
+        {
+            var textBox = new TextBox();
+            if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
+            if (nameArg != null) textBox.Text = nameArg;            
+            return textBox;
         }
     }
 }
