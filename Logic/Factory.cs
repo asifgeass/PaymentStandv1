@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExceptionManager;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,13 +49,19 @@ namespace Logic
         {
             try
             {
-                eripArg.ResponseReq.PayRecord[0].AttrRecord = null;
-                eripArg.ResponseReq.PayRecord[0].Check = null;
-                eripArg.ResponseReq.PayRecord[0].Lookups = null;
-                eripArg.ResponseReq.PayRecord[0].PayCommission = null;
-                eripArg.ResponseReq.PayRecord[0].Summa = null;
+                PayRecord payrec = eripArg.ResponseReq.PayRecord[0];
+                Ex.TryLog(() => payrec.AttrRecord = null);
+                Ex.TryLog(() => payrec.Check = null);
+                Ex.TryLog(() => payrec.Lookups = null);
+                Ex.TryLog(() => payrec.PayCommission = null);
+                Ex.TryLog(() => payrec.Summa = null);
+                Ex.TryLog(() => payrec.PayAll = null);
+                Ex.TryLog(() => payrec.Currency = null);
+                Ex.TryLog(() => payrec.Fine = null);
+                Ex.TryLog(() => payrec.ClaimID = null);
+                Ex.TryLog(() => payrec.AttrRecord = null);
             }
-            catch (Exception) { }
+            catch (Exception ex) { ex.Log(); }
             return eripArg;
         }
         public static PS_ERIP Accept(this PS_ERIP eripArg, PS_ERIP arg)
