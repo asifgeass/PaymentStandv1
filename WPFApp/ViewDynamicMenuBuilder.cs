@@ -109,6 +109,7 @@ namespace WPFApp
                 Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
                 views.AddControl(control);
+                return;
             }
             if (rootResponse.EnumType == EripQAType.GetPayListResponse)
             {
