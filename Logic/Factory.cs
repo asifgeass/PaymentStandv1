@@ -26,7 +26,7 @@ namespace Logic
         }
 
         #region Erip Extensions
-        public static PS_ERIP Clear(this PS_ERIP eripArg)
+        public static PS_ERIP ClearAttrRecords(this PS_ERIP eripArg)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Logic
                     attr.Hint = null;
                 });
             }
-            catch (Exception) { }
+            catch (Exception ex) { ex.Log(); }
             return eripArg;
         }
         public static PS_ERIP ConfirmClear(this PS_ERIP eripArg)
@@ -70,9 +70,10 @@ namespace Logic
             {
                 PayRecord payrec = eripArg.ResponseReq.PayRecord[0];
                 Ex.TryLog(() => payrec.Lookups = null);
-                Ex.TryLog(() => payrec.GetPayListType = null);
                 Ex.TryLog(() => payrec.Check = null);                
                 Ex.TryLog(() => payrec.GroupRecord = null);
+                Ex.TryLog(() => payrec.GetPayListType = null);
+                Ex.TryLog(() => payrec.StornoMode = null);
             }
             catch (Exception ex) { ex.Log(); }
             return eripArg;
@@ -84,7 +85,7 @@ namespace Logic
                 eripArg.ResponseReq.TerminalID = arg.ResponseReq.TerminalID ?? eripArg.ResponseReq.TerminalID;
                 eripArg.ResponseReq.Version = arg.ResponseReq.Version ?? eripArg.ResponseReq.Version;
             }
-            catch (Exception) { }
+            catch (Exception ex) { ex.Log(); }
             return eripArg;
         }
         public static PS_ERIP Accept(this PS_ERIP eripArg, MDOM_POS arg)
@@ -99,7 +100,7 @@ namespace Logic
                 var payrec = eripArg.ResponseReq?.PayRecord?.First();
                 payrec.PC_ID = arg.ResponseReq?.PC_ID;
             }
-            catch (Exception) { }
+            catch (Exception ex) { ex.Log(); }
             return eripArg;
         }
         public static PS_ERIP SetPosError(this PS_ERIP eripArg, MDOM_POS arg)
@@ -115,7 +116,7 @@ namespace Logic
                 eripArg.ResponseReq.ErrorCode = arg.ResponseReq.ErrorCode;
                 eripArg.ResponseReq.ErrorText = arg.ResponseReq.ErrorText;
             }
-            catch (Exception) { }
+            catch (Exception ex) { ex.Log(); }
             return eripArg;
         }
 #endregion
