@@ -90,11 +90,11 @@ namespace Logic
                     var responCopy = list.Current.Response.Copy();
                     responCopy.EnumType = EripQAType.RunOperationRequest;
                     responCopy.Accept(requestCopy);
-                    responCopy.Accept(PosRespon);
+                    responCopy.Accept(PosRespon).RunOpRequestClear(); ;
                     responCopy.ResponseReq.SessionId = payrecArg.SessionId;
                     var payrec = responCopy.ResponseReq.PayRecord.First();
                     payrec.SessionId = payrecArg.SessionId;
-                    responCopy.Clear();
+                    responCopy.ClearAttrRecords();
                     return responCopy;
                 }
                 if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS

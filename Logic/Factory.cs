@@ -64,6 +64,19 @@ namespace Logic
             catch (Exception ex) { ex.Log(); }
             return eripArg;
         }
+        public static PS_ERIP RunOpRequestClear(this PS_ERIP eripArg)
+        {
+            try
+            {
+                PayRecord payrec = eripArg.ResponseReq.PayRecord[0];
+                Ex.TryLog(() => payrec.Lookups = null);
+                Ex.TryLog(() => payrec.GetPayListType = null);
+                Ex.TryLog(() => payrec.Check = null);                
+                Ex.TryLog(() => payrec.GroupRecord = null);
+            }
+            catch (Exception ex) { ex.Log(); }
+            return eripArg;
+        }
         public static PS_ERIP Accept(this PS_ERIP eripArg, PS_ERIP arg)
         {
             try
