@@ -22,9 +22,9 @@
            BasedOn="{StaticResource MaterialDesignRaisedButton}"
            >
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2" />
-        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />        
-        <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
         <Setter Property="Margin" Value="2" />
         <Setter Property="Height" Value="Auto" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />

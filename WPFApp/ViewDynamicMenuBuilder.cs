@@ -153,7 +153,7 @@ namespace WPFApp
                 }
                 if (resp.ErrorCode != 0)
                 {
-                    var control = Controls.CentralLabelBorder($"Оплата отменена!\n{resp.ErrorCode}\n{resp.ErrorText}");                    
+                    var control = Controls.CentralLabelBorder($"Ошибка оплаты!\n{resp.ErrorCode}\n{resp.ErrorText}");                    
                     views.AddControl(control);
                 }
             }
