@@ -96,6 +96,9 @@
     <Compile Include="Interfaces\iControls.cs" />
     <Compile Include="ViewPagesManager.cs" />
     <Compile Include="ViewModels\LookupVM.cs" />
+    <Compile Include="Views\Elements\ButtonTextblock.xaml.cs">
+      <DependentUpon>ButtonTextblock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Elements\CardButton.xaml.cs">
       <DependentUpon>CardButton.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,10 @@
     <Compile Include="ViewModels\DynamicMenuWindowViewModel.cs" />
     <Compile Include="ViewModels\TestWindowViewModel.cs" />
     <Page Include="AssemblyStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\ButtonTextblock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

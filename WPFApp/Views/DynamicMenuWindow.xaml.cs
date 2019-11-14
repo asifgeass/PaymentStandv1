@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +31,11 @@ namespace WPFApp.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var builder = new ViewDynamicMenuBuilder(this);
+            var paletteHelper = new PaletteHelper();
+            ITheme theme = paletteHelper.GetTheme();
+            //theme.SetBaseTheme(new MatDesDarkerLightTheme());
+            theme.SetBaseTheme(new MatDesDarkerLightTheme());
+            paletteHelper.SetTheme(theme);
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

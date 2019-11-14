@@ -29,7 +29,6 @@ namespace WPFApp
         private Style loadingBarStyle;
         private Task CheckHomeButtonDisabled = Task.CompletedTask;
         private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-        //private CancellationToken token; 
         #endregion
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
@@ -110,120 +109,29 @@ namespace WPFApp
                 { str = "Оплата не была произведена.\nОтменено пользователем."; }
                 Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
+                var pic = new PackIcon();
+                pic.Kind = PackIconKind.CloseCircleOutline;
+                pic.Height = 250;
+                pic.Width = 250;
+                pic.HorizontalAlignment = HorizontalAlignment.Center;
+                pic.VerticalAlignment = VerticalAlignment.Center;
+                views.AddControl(pic);
                 views.AddControl(control);
                 return;
             }
             if (rootResponse.EnumType == EripQAType.GetPayListResponse)
             {
                 var paylist = resp.PayRecord;
-                if (paylist.Count > 1)
-                {
-                    views.NewPage();
-                    foreach (var payrec in paylist)
-                    {
-                        var cardButton = Controls.ButtonCard(payrec.Name);
-                        cardButton.Button.Command = model.SendParamCommand;
-                        cardButton.Button.CommandParameter = payrec;
-                        model.LabelCurrent = payrec?.GroupRecord?.Name;//????
-                        //CheckButtonCommand(button.Button, paylist.Last() == payrec);
-                        views.AddControl(cardButton);
-                    }
-                }
+                BuildSelectPayrecord(paylist);
                 if (paylist.Count == 1)
                 {
                     var payrec = paylist.First();
                     var attrRecords = payrec.AttrRecord;
                     model.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
-                    //LOOKUPs display every lookup as 1 page
-                    foreach (var attr in attrRecords)
-                    {
-                        if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
-                        {
-                            Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
-                            List<Lookup> lookups = paylist?.First()?.Lookups;                            
-                            var list = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower());
-                            Lookup selectedLookup = list?.FirstOrDefault();
-                            if (selectedLookup == null) { continue; }
-                            int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                            views.NewPage();
-                            LookupVM childVM = model.GetNewLookupVM();
-                            childVM.Lookup = selectedLookup;
-                            views.AddDataContext(childVM);
-                            views.AddControl(Controls.LabelHeader(selectedLookup.Name));
-                            var lookItems = selectedLookup.Item;
-                            lookItems.ForEach(arg =>
-                            {
-                                var btn = Controls.ButtonCard(arg.Value);
-                                btn.Button.Command = childVM?.SelectLookupCommand;
-                                btn.Button.CommandParameter = arg;
-                                btn.Button.Click += (sender, evArg) => NextPage();
-                                views.AddControl(btn);
-                            });
-                            //LookupButtons(selectedLookup);
-                            views.NewPage();
-                        }
-                    }
-                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): After LOOKup ViewPages={views.Count};");
-                    views.NewPage();
-                    //ATTRs first display filled data attrs
-                    foreach (var attr in attrRecords)
-                    {
-                        if (attr.Edit != 1 && attr.View == 1)
-                        {
-                            Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
-                            var label = Controls.LabelInfo();
-                            label.Content = $"{attr.Name} = {attr.Value}";
-                            views.AddControl(label);
-                        }
-                    }
-                    #region display PAYRecord Parameters
-                    var payLabel = Controls.LabelInfo();
-                    if (payrec.Summa != "0.00")
-                    {                        
-                        payLabel.Content = $"Summa = {payrec.Summa}";
-                        views.AddControl(payLabel);
-                    }
-                    payLabel = Controls.LabelInfo();
-                    payLabel.Content = $"Commission = {payrec.Commission}";
-                    views.AddControl(payLabel);
-                    payLabel = Controls.LabelInfo();
-                    payLabel.Content = $"Fine = {payrec.Fine}";
-                    views.AddControl(payLabel);
-                    if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
-                    {
-                        var label = Controls.LabelInfo("Сумма оплаты");
-                        var inputbox = Controls.TextBoxHint("Сумма оплаты");                        
-                        var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
-                        binding.Mode = BindingMode.TwoWay;
-                        inputbox.SetBinding(TextBox.TextProperty, binding);
-
-                        //views.AddControl(label);
-                        views.AddControl(inputbox);
-                    }
-#endregion
-                    //ATTRs at last display attrs need to enter with textbox
-                    foreach (var attr in attrRecords)
-                    {
-                        if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
-                        {
-                            Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
-                            var label = Controls.LabelInfo(attr.Name);
-                            var inputbox = Controls.TextBoxHint(attr.Name);
-                            int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                            var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
-                            binding.Mode = BindingMode.TwoWay;
-                            inputbox.SetBinding(TextBox.TextProperty, binding);
-
-                            //views.AddControl(label);
-                            views.AddControl(inputbox);
-                        }
-                    }
-                    views.AddControl(new TextBlock());
-                    var button = Controls.ButtonAccept("Продолжить");
-                    if (payrec.GetPayListType == "0")
-                    { button.Content = "Оплатить"; }
-                    button.Command = model.NextPageCommand;
-                    views.AddControl(button);
+                    this.BuildLookups(paylist);
+                    this.BuildDisplayInfo(payrec);
+                    this.BuildInputFields(attrRecords);
+                    this.BuildFinalButton(payrec);
                 }
             }
             if (rootResponse.EnumType == EripQAType.RunOperationResponse)
@@ -233,12 +141,136 @@ namespace WPFApp
                 {
                     var control = Controls.CentralLabelBorder("Оплата успешно произведена!");
                     control.BorderBrush = Brushes.Green;
+                    var pic = new PackIcon();
+                    pic.Kind = PackIconKind.CheckboxMarkedCircle;
+                    pic.Height = 250;
+                    pic.Width = 250;
+                    pic.HorizontalAlignment = HorizontalAlignment.Center;
+                    pic.VerticalAlignment = VerticalAlignment.Center;
+                    pic.BorderBrush = Brushes.Green;
+                    views.AddControl(pic);
                     views.AddControl(control);
                 }
                 if (resp.ErrorCode != 0)
                 {
                     var control = Controls.CentralLabelBorder($"Оплата отменена!\n{resp.ErrorCode}\n{resp.ErrorText}");                    
                     views.AddControl(control);
+                }
+            }
+        }
+
+        private void BuildFinalButton(PayRecord payrec)
+        {
+            views.AddControl(new TextBlock()); //отступ
+            var button = Controls.ButtonAccept("Продолжить");
+            if (payrec.GetPayListType == "0")
+            { button.Text = "Оплатить"; }
+            button.ButtonControl.Command = model.NextPageCommand;
+            views.AddControl(button);
+        }
+
+        private void BuildInputFields(List<AttrRecord> attrRecords)
+        {
+            foreach (var attr in attrRecords)
+            {
+                if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
+                {
+                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
+                    var inputbox = Controls.TextBoxHint(attr.Name);
+                    int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
+                    var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+                    binding.Mode = BindingMode.TwoWay;
+                    inputbox.SetBinding(TextBox.TextProperty, binding);
+                    views.AddControl(inputbox);
+                }
+            }
+        }
+
+        private void BuildSelectPayrecord(List<PayRecord> paylist)
+        {
+            if (paylist.Count > 1)
+            {
+                views.NewPage();
+                foreach (var payrec in paylist)
+                {
+                    var cardButton = Controls.ButtonCard(payrec.Name);
+                    cardButton.ButtonControl.Command = model.SendParamCommand;
+                    cardButton.ButtonControl.CommandParameter = payrec;
+                    model.LabelCurrent = payrec?.GroupRecord?.Name;//????
+                                                                   //CheckButtonCommand(button.Button, paylist.Last() == payrec);
+                    views.AddControl(cardButton);
+                }
+            }
+        }
+        private void BuildDisplayInfo(PayRecord payrec)
+        {
+            foreach (var attr in payrec.AttrRecord)
+            {
+                if (attr.Edit != 1 && attr.View == 1)
+                {
+                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
+                    var label = Controls.LabelInfo();
+                    label.Content = $"{attr.Name} = {attr.Value}";
+                    views.AddControl(label);
+                }
+            }
+            #region display PAYRecord Parameters
+            var payLabel = Controls.LabelInfo();
+            if (payrec.Summa != "0.00")
+            {
+                payLabel.Content = $"Summa = {payrec.Summa}";
+                views.AddControl(payLabel);
+            }
+            payLabel = Controls.LabelInfo();
+            payLabel.Content = $"Commission = {payrec.Commission}";
+            views.AddControl(payLabel);
+            payLabel = Controls.LabelInfo();
+            payLabel.Content = $"Fine = {payrec.Fine}";
+            views.AddControl(payLabel);
+            if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
+            {
+                var label = Controls.LabelInfo("Сумма оплаты");
+                var inputbox = Controls.TextBoxHint("Сумма оплаты");
+                var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
+                binding.Mode = BindingMode.TwoWay;
+                inputbox.SetBinding(TextBox.TextProperty, binding);
+
+                //views.AddControl(label);
+                views.AddControl(inputbox);
+            }
+            #endregion
+        }
+        private void BuildLookups(List<PayRecord> paylist)
+        {
+            var payrec = paylist.First();
+            var attrRecords = payrec.AttrRecord;
+            foreach (var attr in attrRecords)
+            {
+                if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
+                {
+                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
+                    List<Lookup> lookups = paylist?.First()?.Lookups;
+                    var list = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower());
+                    Lookup selectedLookup = list?.FirstOrDefault();
+                    if (selectedLookup == null) { continue; }
+                    int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
+                    views.NewPage();
+                    LookupVM childVM = model.GetNewLookupVM();
+                    childVM.Lookup = selectedLookup;
+                    views.AddDataContext(childVM);
+                    views.AddControl(Controls.LabelHeader(selectedLookup.Name));
+                    //model.LabelCurrent = $"{selectedLookup.Name} ({payrec.Name})";
+                    var lookItems = selectedLookup.Item;
+                    lookItems.ForEach(arg =>
+                    {
+                        var btn = Controls.ButtonCard(arg.Value);
+                        btn.ButtonControl.Command = childVM?.SelectLookupCommand;
+                        btn.ButtonControl.CommandParameter = arg;
+                        btn.ButtonControl.Click += (sender, evArg) => NextPage();
+                        views.AddControl(btn);
+                    });
+                    //LookupButtons(selectedLookup);
+                    views.NewPage();
                 }
             }
         }

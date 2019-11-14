@@ -16,14 +16,15 @@ using System.Windows.Shapes;
 namespace WPFApp.Views
 {
     /// <summary>
-    /// Interaction logic for CardButton.xaml
+    /// Interaction logic for ButtonTextblock.xaml
     /// </summary>
-    public partial class CardButton : UserControl
+    public partial class ButtonTextblock : UserControl
     {
-        public CardButton()
+        public ButtonTextblock()
         {
             InitializeComponent();
         }
+
         public Button ButtonControl => this.ButtonXaml;
         public TextBlock TextBlock => this.Textblock;
         public string Text
@@ -32,10 +33,10 @@ namespace WPFApp.Views
             set => this.Textblock.Text = value;
         }
 
-        public Style StyleButton
+        public Style StyleButton 
         {
             get => this.ButtonControl.Style;
-            set => this.ButtonXaml.Style = value;
+            set=> this.ButtonXaml.Style = value; 
         }
     }
 }

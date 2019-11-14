@@ -16,13 +16,14 @@ namespace WPFApp
     public static class Controls
     {
         private const double Margin = 50;
+        private const double MarginBetween = 27;
         public static Label CentralLabelBorder(string arg = "")
         {
             var info = new Label();
             info.HorizontalContentAlignment = HorizontalAlignment.Center;
             info.VerticalContentAlignment = VerticalAlignment.Center;
             info.BorderThickness = new Thickness(2);
-            info.BorderBrush = System.Windows.Media.Brushes.Red;
+            info.BorderBrush = Brushes.Red;
             info.Margin = info.BorderThickness;
             var text = new TextBlock();
             text.Text = arg;
@@ -36,14 +37,15 @@ namespace WPFApp
             var cardButton = new CardButton();
             if(argName!=null) cardButton.Text = argName; 
             //button.Style = Application.Current.TryFindResource("CardButton") as Style;            
-            cardButton.Margin = new Thickness(cardButton.Margin.Left, cardButton.Margin.Top, cardButton.Margin.Right, Margin);            
+            cardButton.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);       
             return cardButton;
         }
 
-        public static Button ButtonAccept(string argName = null)
+        public static ButtonTextblock ButtonAccept(string argName = null)
         {
-            var button = new Button();
-            if (argName != null) button.Content = argName;
+            var button = new ButtonTextblock();
+            if (argName != null) button.Text = argName;
+            button.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);
             return button;
         }
 
@@ -59,20 +61,14 @@ namespace WPFApp
             var label = new Label();
             if (argName != null) label.Content = argName;
             label.HorizontalContentAlignment = HorizontalAlignment.Center;
+            label.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);
             return label;
-        }
-
-        public static TextBox TextBox(string argName = null)
-        {
-            var TextBox = new TextBox();
-            if (argName != null) TextBox.Text = argName;
-            return TextBox;
         }
 
         public static TextBox TextBoxHint(string hintArg, string nameArg = null)
         {
             var textBox = new TextBox();
-            textBox.Margin = new Thickness(textBox.Margin.Left, textBox.Margin.Top, textBox.Margin.Right, Margin);
+            textBox.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
             if (nameArg != null) textBox.Text = nameArg;            
             return textBox;
