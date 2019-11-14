@@ -112,6 +112,7 @@ namespace WPFApp
         private Grid InitializeContainer()
         {
             grid = new Grid();
+            grid.VerticalAlignment = VerticalAlignment.Center;
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });

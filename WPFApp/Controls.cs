@@ -33,11 +33,11 @@ namespace WPFApp
 
         public static CardButton ButtonCard(string argName=null)
         {
-            var button = new CardButton();
-            if(argName!=null) button.Button.Content = argName; 
+            var cardButton = new CardButton();
+            if(argName!=null) cardButton.Text = argName; 
             //button.Style = Application.Current.TryFindResource("CardButton") as Style;            
-            button.Button.Margin = new Thickness(button.Margin.Left, button.Margin.Top, button.Margin.Right, Margin);            
-            return button;
+            cardButton.Margin = new Thickness(cardButton.Margin.Left, cardButton.Margin.Top, cardButton.Margin.Right, Margin);            
+            return cardButton;
         }
 
         public static Button ButtonAccept(string argName = null)

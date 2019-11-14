@@ -25,5 +25,11 @@ namespace WPFApp.Views
             InitializeComponent();
         }
         public Button Button => this.CardButtonControl;
+        public TextBlock TextBlock => this.Textblock;
+        public string Text
+        {
+            get => this.Textblock.Text;
+            set => this.Textblock.Text = value;
+        }
     }
 }
