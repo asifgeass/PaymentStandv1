@@ -7,159 +7,115 @@
         xmlns:local="clr-namespace:UIWPFClean"
         mc:Ignorable="d"
         TextElement.FontWeight="Regular"
-        TextElement.FontSize="36"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Title="MainWindow" Height="800" Width="450" >
+        Title="MainWindow" Height="782" Width="800" >
     <Window.Resources>
-        <ResourceDictionary Source="Style/ControlsStyle.xaml"/>
+        <ResourceDictionary Source="Styles/ControlsStyle.xaml"/>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="14*"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+
+    <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Center">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="100*"/>
                     <ColumnDefinition Width="10*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Name="StackPanel1" Grid.Column="1">
+                <StackPanel Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center">
+                    
+                <TextBox materialDesign:HintAssist.Hint="Hint" 
+                         Height="Auto" 
+                         materialDesign:HintAssist.FloatingScale="0.5"/>
+                <TextBox materialDesign:HintAssist.Hint="default hint" Height="Auto"/>
 
-                    <Button Content="Default button + depth shadow"
-                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                            materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"
-                            />
-                    <Label Content="Pure default Label"/>
-                    <Button Content="Pure default Button"/>
-                    <TextBlock/>
-                    <TextBox Text="Pure default Text Box"/>
-                    <Button
-                            Width="Auto" Height="Auto" 
-                            Click="button_Click" 
-                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                            materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"
-                            >
-                        <Button.Content>
-                            <materialDesign:Card Margin="16">
-                                <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">
-                                Button.Content=Card
-                                </TextBlock>
-                            </materialDesign:Card>
-                        </Button.Content>
-                    </Button>
-                    <TextBlock/>
-                    <Button Style="{StaticResource ImageButtonStyle}" 
-                            Click="button_Click" 
-                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                            materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"
-                            >
-                        <materialDesign:Card  
-                            MouseDoubleClick="Card_MouseDoubleClick" 
-                            Height="30"
-                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                            materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"
-                            >
-                            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" TextAlignment="Center">
-                            Image Button Style
-                            </TextBlock>
-                        </materialDesign:Card>
-                    </Button>
-                    <TextBlock/>
-                    <Button
-                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                        materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"  
-                        Background="{DynamicResource MaterialDesignPaper}"
-                        BorderBrush="{x:Null}"
-                        materialDesign:RippleAssist.Feedback="Gray"
-                        FontFamily="{DynamicResource MaterialDesignFont}"
-                        Foreground="{DynamicResource MaterialDesignBody}"
-                        Click="button_Click" 
-                        >
-                        MaterialDesignRaisedLightButton
-                    </Button>
-                    <TextBlock/>
-                    <materialDesign:Card  
-                            MouseDoubleClick="Card_MouseDoubleClick" 
-                            Height="30"
-                            materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                            materialDesign:ShadowAssist.ShadowEdges="Bottom,Left"                       
-                            >
-                        <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}" TextAlignment="Center">
-                            Card
-                        </TextBlock>
-                    </materialDesign:Card>
-                    <TextBox Text="xaml designed Textbox"
-                             Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap"
-                             materialDesign:HintAssist.Hint="Floating hint in a box"
-                             />
+                <Button Style="{StaticResource CardButton}" 
+                        Content="CardButton default"
+                        Height="200"
+                        />
 
-                </StackPanel>
+                <Button>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Width="Auto" HorizontalAlignment="Center">
+                                <Label.Content>
+                                    <materialDesign:PackIcon Kind="CheckboxMarkedCircle" HorizontalAlignment="Center"/>
+                                </Label.Content>
+                            </Label>
+                            <Label Grid.Column="1" Width="Auto" HorizontalAlignment="Center">
+                                <Label.Content>
+                                    <materialDesign:PackIcon Kind="CheckboxMarkedCircleOutline" HorizontalAlignment="Center"/>
+                                </Label.Content>
+                            </Label>
+                            
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button>
+                    <Button.Content>
+                        <TextBlock TextWrapping="Wrap" 
+                                   Margin="16"
+                                   Text="Button Content=TextBlock with very long text endless thread of symbols letters and other stuff"/>
+                    </Button.Content>
+                </Button>
+                <Button>
+                    <Button.Content>
+                        <TextBlock TextWrapping="Wrap" 
+                                   Margin="16"
+                                   Text="Button Content=TextBlock"/>
+                    </Button.Content>
+                </Button>
+                <Button>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="100*"/>
+                                <ColumnDefinition Width="20*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="100*"/>
+                                <RowDefinition Height="20*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="1" Grid.Column="1" 
+                                       TextWrapping="Wrap" 
+                                       Text="Button Content=Grid with TextBlock"
+                                       />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+                <Button>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="100*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="100*"/>
+                                <RowDefinition Height="20*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="1" Grid.Column="1" 
+                                       TextWrapping="Wrap" 
+                                       Text="Button Content=Grid with TextBlock with very long text endless thread of symbols letters and other stuff"
+                                       />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+            </StackPanel>
             </Grid>
             
-        </ScrollViewer>
-        <Grid Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="75*"/>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0" Height="Auto" 
-                    Margin="0 2 0 2" 
-                    materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                <materialDesign:PackIcon
-                    Kind="Home" HorizontalAlignment="Stretch" 
-                    HorizontalContentAlignment="Stretch" 
-                    Width="24" Height="24"/>
-            </Button>
-            <Button Grid.Row="1" Height="Auto" 
-                    Margin="0 2 0 2" 
-                    HorizontalContentAlignment="Left"
-                    VerticalContentAlignment="Stretch"
-                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                    >
-
-                <Grid Height="Auto"                       
-                      >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                        <RowDefinition Height="10*"/>
-                    </Grid.RowDefinitions>
-                    <materialDesign:PackIcon
-                        Kind="ArrowBack"
-                        Height="24"
-                        Width="24" 
-                        Grid.Row="0"
-                        />
-                    <materialDesign:PackIcon
-                        Kind="ArrowBack"
-                        Height="24"
-                        Width="24"
-                        Grid.Row="1"
-                        />
-                    <materialDesign:PackIcon
-                        Kind="ArrowBack"
-                        Height="24"
-                        Width="24" 
-                        Grid.Row="2"
-                        />
-                </Grid>
-            </Button>
-        </Grid>
-    </Grid>
+        </ScrollViewer>        
 
 </Window>

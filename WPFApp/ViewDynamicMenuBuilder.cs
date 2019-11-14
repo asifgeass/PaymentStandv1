@@ -121,12 +121,12 @@ namespace WPFApp
                     views.NewPage();
                     foreach (var payrec in paylist)
                     {
-                        var button = Controls.ButtonCard(payrec.Name);
-                        button.Button.Command = model.SendParamCommand;
-                        button.Button.CommandParameter = payrec;
+                        var customBtn = Controls.ButtonCard(payrec.Name);
+                        customBtn.Button.Command = model.SendParamCommand;
+                        customBtn.Button.CommandParameter = payrec;
                         model.LabelCurrent = payrec?.GroupRecord?.Name;//????
-                        CheckButtonCommand(button.Button, paylist.Last() == payrec);
-                        views.AddControl(button);
+                        //CheckButtonCommand(button.Button, paylist.Last() == payrec);
+                        views.AddControl(customBtn);
                     }
                 }
                 if (paylist.Count == 1)

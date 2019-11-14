@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Drawing.Text;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -188,11 +191,42 @@ namespace UIXmlPostTerminal
 
         private void buttonPrint_Click(object sender, RoutedEventArgs e)
         {
+            PrintDocument printDocument = new PrintDocument();
+            var sets = new PrinterSettings();
+
+            //IEnumerable<PaperSize> paperSizes = sets.PaperSizes.Cast<PaperSize>();
+            //PaperSize mySizePaper = paperSizes.First<PaperSize>(size => size.Kind == PaperKind.A6); ; // setting paper size to A4 size
+            //printDocument.DefaultPageSettings.PaperSize = mySizePaper;
+            //printDocument.PrinterSettings = sets;
+
+            //printDocument.DefaultPageSettings.PaperSize = new PaperSize("80 x 80 mm", 400, 400);             
+
+            string str = textboxXMLCustom.Text;
+            string path = $@"{Environment.CurrentDirectory}\Resources\Courier.ttf";
+            //Stream fontStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UIXmlPostTerminal.Courier.ttf");
+
+            bool ist = File.Exists(path);
+
+            PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+            privateFontCollection.AddFontFile(path);
+            var fontFam = privateFontCollection.Families.First();
+
+            Font font;
+
+            font = new Font(fontFam, 9f);
+            //font = new Font("Courier", 8.8f);
+
+            printDocument.PrintPage += (s, arg) => arg.Graphics.DrawString(str, font, System.Drawing.Brushes.Black, 0, 0);
+            printDocument.Print();
+        }
+
+        private void googlePrint()
+        {
             // задаем текст для печати
             var print = textboxXMLCustom.Text;
             // объект для печати
             PrintDocument printDocument = new PrintDocument();
-            
+
             // обработчик события печати
             printDocument.PrintPage += PrintPageHandler;
             printDocument.Print();

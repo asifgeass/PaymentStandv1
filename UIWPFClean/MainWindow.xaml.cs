@@ -50,6 +50,7 @@ namespace UIWPFClean
             ShadowAssist.SetShadowEdges(btn, ShadowEdges.Top);
             SolidColorBrush brush = Application.Current.TryFindResource("PrimaryHueDarkBrush") as SolidColorBrush;
             RippleAssist.SetFeedback(btn, brush);
+            //HintAssist.SetFloatingScale
             
             //ShadowAssist.SetShadowEdges(btn, ShadowEdges.Bottom);
             btn.SetResourceReference(Button.ForegroundProperty, "MaterialDesignBody");

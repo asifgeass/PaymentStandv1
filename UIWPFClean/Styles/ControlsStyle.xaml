@@ -2,23 +2,69 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:UIWPFClean.Styles"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     >
 
-    <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <ContentPresenter/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <sys:Double x:Key="globalFontSize">35</sys:Double>
+    <sys:Double x:Key="fontSize7">42</sys:Double>
+
     <Style x:Key="{x:Type TextBox}" 
                TargetType="TextBox" 
                BasedOn="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                >
         <Setter Property="AcceptsReturn" Value="true" />
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="materialDesign:HintAssist.Hint" Value="Floating hint in a box" />
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.4" />
     </Style>
+
+    <Style x:Key="CardButton"
+           TargetType="Button" 
+           BasedOn="{StaticResource MaterialDesignRaisedButton}"
+           >
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />
+        <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock TextWrapping="Wrap"
+                               Margin="20"
+                               Text="Style Text"/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type Button}" 
+               TargetType="Button" 
+               BasedOn="{StaticResource MaterialDesignRaisedButton}"           
+               >
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+    </Style>
+
+    <Style x:Key="{x:Type TextBlock}" 
+               TargetType="TextBlock" 
+               BasedOn="{StaticResource MaterialDesignCaptionTextBlock}"
+               >
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style x:Key="{x:Type Label}" 
+               TargetType="Label" 
+               BasedOn="{StaticResource MaterialDesignLabel}"
+               >
+        <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
+    </Style>
+    
 </ResourceDictionary>
