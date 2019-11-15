@@ -19,17 +19,15 @@ namespace WPFApp
         private const double MarginBetween = 27;
         public static Label CentralLabelBorder(string arg = "")
         {
-            var info = new Label();
-            info.HorizontalContentAlignment = HorizontalAlignment.Center;
-            info.VerticalContentAlignment = VerticalAlignment.Center;
-            info.BorderThickness = new Thickness(2);
-            info.BorderBrush = Brushes.Red;
-            info.Margin = info.BorderThickness;
-            var text = new TextBlock();
-            text.Text = arg;
-            text.TextWrapping = TextWrapping.Wrap;
-            info.Content = text;
-            return info;
+            var lbl = new Label();
+            lbl.HorizontalContentAlignment = HorizontalAlignment.Center;
+            lbl.VerticalContentAlignment = VerticalAlignment.Center;
+            var textBlock = new TextBlock();
+            textBlock.Text = arg;
+            textBlock.TextWrapping = TextWrapping.Wrap;
+            textBlock.TextAlignment = TextAlignment.Center;
+            lbl.Content = textBlock;
+            return lbl;
         }
 
         public static CardButton ButtonCard(string argName=null)

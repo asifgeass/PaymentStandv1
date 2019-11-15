@@ -96,7 +96,7 @@ namespace WPFApp
             var resp = rootResponse.ResponseReq;
             if (resp != null && resp?.ErrorCode != 0)
             {
-                string str = $"ErrorCode={resp.ErrorCode}\nErrorText={resp.ErrorText}";
+                string str = $"Ошибка {resp.ErrorCode}: {resp.ErrorText}";
                 if(rootResponse.EnumType == EripQAType.POSPayResponse)
                 { 
                     str = $"Оплата не была произведена.\n\nError Code={resp.ErrorCode};\nОписание={resp.ErrorText};";
@@ -109,12 +109,15 @@ namespace WPFApp
                 { str = "Оплата не была произведена.\nОтменено пользователем."; }
                 Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
+                control.Foreground = Brushes.DarkRed;
+                //(control.Content as TextBlock).Foreground = Brushes.DarkRed;
                 var pic = new PackIcon();
                 pic.Kind = PackIconKind.CloseCircleOutline;
                 pic.Height = 250;
                 pic.Width = 250;
                 pic.HorizontalAlignment = HorizontalAlignment.Center;
                 pic.VerticalAlignment = VerticalAlignment.Center;
+                pic.Foreground = Brushes.Red;
                 views.AddControl(pic);
                 views.AddControl(control);
                 return;
@@ -140,20 +143,20 @@ namespace WPFApp
                 if (resp.ErrorCode == 0)
                 {
                     var control = Controls.CentralLabelBorder("Оплата успешно произведена!");
-                    control.BorderBrush = Brushes.Green;
+                    control.Foreground = Brushes.DarkOliveGreen;
                     var pic = new PackIcon();
                     pic.Kind = PackIconKind.CheckboxMarkedCircle;
                     pic.Height = 250;
                     pic.Width = 250;
                     pic.HorizontalAlignment = HorizontalAlignment.Center;
                     pic.VerticalAlignment = VerticalAlignment.Center;
-                    pic.BorderBrush = Brushes.Green;
+                    pic.Foreground = Brushes.Green;
                     views.AddControl(pic);
                     views.AddControl(control);
                 }
                 if (resp.ErrorCode != 0)
                 {
-                    var control = Controls.CentralLabelBorder($"Ошибка оплаты!\n{resp.ErrorCode}\n{resp.ErrorText}");                    
+                    var control = Controls.CentralLabelBorder($"Ошибка оплаты {resp.ErrorCode}!\n{resp.ErrorText}");                    
                     views.AddControl(control);
                 }
             }
