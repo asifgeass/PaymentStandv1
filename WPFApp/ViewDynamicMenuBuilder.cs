@@ -175,7 +175,6 @@ namespace WPFApp
                 }
             }
         }
-
         private void BuildSelectPayrecord(List<PayRecord> paylist)
         {
             if (paylist.Count > 1)
@@ -205,27 +204,32 @@ namespace WPFApp
                 }
             }
             #region display PAYRecord Parameters
-            var payLabel = Controls.LabelInfo();
+            
             if (payrec.Summa != "0.00")
             {
-                payLabel.Content = $"Summa = {payrec.Summa}";
+                var payLabel = Controls.LabelInfo();
+                payLabel.Content = $"Сумма оплаты = {payrec.Summa}";
                 views.AddControl(payLabel);
             }
-            payLabel = Controls.LabelInfo();
-            payLabel.Content = $"Commission = {payrec.Commission}";
-            views.AddControl(payLabel);
-            payLabel = Controls.LabelInfo();
-            payLabel.Content = $"Fine = {payrec.Fine}";
-            views.AddControl(payLabel);
+            if (payrec.Commission != "0.00")
+            {
+                var payLabel = Controls.LabelInfo();
+                payLabel.Content = $"Коммиссия = {payrec.Commission}";
+                views.AddControl(payLabel);
+            }
+            if (payrec.Fine != "0.00")
+            {
+                var payLabel = Controls.LabelInfo();
+                payLabel.Content = $"Пеня = {payrec.Fine}";
+                views.AddControl(payLabel);
+            }
+
             if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
             {
-                var label = Controls.LabelInfo("Сумма оплаты");
                 var inputbox = Controls.TextBoxHint("Сумма оплаты");
                 var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
                 binding.Mode = BindingMode.TwoWay;
                 inputbox.SetBinding(TextBox.TextProperty, binding);
-
-                //views.AddControl(label);
                 views.AddControl(inputbox);
             }
             #endregion

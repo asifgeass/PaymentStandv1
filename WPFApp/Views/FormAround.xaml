@@ -12,12 +12,12 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*" MinHeight="60"/>
+            <RowDefinition Height="10*" MinHeight="70"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" MinWidth="70"/>
+            <ColumnDefinition Width="6*" MinWidth="80"/>
             <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
@@ -25,10 +25,14 @@
         <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
 
             <Label Name="currentLabel" 
-                   Content="{Binding LabelCurrent}"
                    HorizontalContentAlignment="Center"    
                    Foreground="{DynamicResource MaterialDesignBody}"
-                   />
+                   Background="{DynamicResource MaterialDesignToolBarBackground}">
+                <Label.Content>
+                    <TextBlock Text="{Binding LabelCurrent}" Margin="5" FontWeight="DemiBold"/>
+                </Label.Content>
+            </Label>
+
         </Grid>
 
         <Grid x:Name="ButtonsLeftGrid" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
@@ -48,7 +52,8 @@
                 <materialDesign:PackIcon
                     Kind="Home"
                     Height="48"
-                    Width="48" />
+                    Width="48" 
+                    />
             </Button>
 
             <Button Grid.Row="1" 
@@ -62,7 +67,8 @@
                 <materialDesign:PackIcon
                     Kind="ArrowBack"
                     Height="48"
-                    Width="48" />
+                    Width="48"
+                    />
             </Button> 
         </Grid>
 
