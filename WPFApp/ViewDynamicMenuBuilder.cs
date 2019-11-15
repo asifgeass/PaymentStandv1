@@ -13,6 +13,7 @@ using System.Windows.Media;
 using WPFApp.Interfaces;
 using WPFApp.ViewModels;
 using XmlStructureComplat;
+using XmlStructureComplat.Validators;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 
@@ -148,17 +149,37 @@ namespace WPFApp
                 }
             }
         }
-
         private void BuildFinalButton(PayRecord payrec)
         {
+            if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
+            {
+                views.AddControl(new TextBlock()); //отступ
+                var inputbox = Controls.TextBoxHint("Сумма оплаты");
+                var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
+                binding.Mode = BindingMode.TwoWay;
+                binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                binding.ValidatesOnDataErrors = true; //must have
+                //binding.NotifyOnValidationError = true;                             
+                //binding.ValidatesOnExceptions = true;
+                inputbox.SetBinding(TextBox.TextProperty, binding);
+                var h1 = ValidationAssist.GetBackground(inputbox);
+                var h2 = ValidationAssist.GetFontSize(inputbox);
+                var h3 = ValidationAssist.GetOnlyShowOnFocus(inputbox);
+                var h4 = ValidationAssist.GetPopupPlacement(inputbox);
+                var h5 = ValidationAssist.GetUsePopup(inputbox);
+                
+                views.AddControl(inputbox);
+            }
+
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
             if (payrec.GetPayListType == "0")
-            { button.Text = "Оплатить"; }
+            { 
+                button.Text = "Оплатить"; 
+            }
             button.ButtonControl.Command = model.NextPageCommand;
             views.AddControl(button);
         }
-
         private void BuildInputFields(List<AttrRecord> attrRecords)
         {
             foreach (var attr in attrRecords)
@@ -166,7 +187,9 @@ namespace WPFApp
                 if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                 {
                     Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
-                    var inputbox = Controls.TextBoxHint(attr.Name);
+                    string hint = attr.Name;
+                    if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
+                    var inputbox = Controls.TextBoxHint(hint);
                     int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                     var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
                     binding.Mode = BindingMode.TwoWay;
@@ -198,8 +221,7 @@ namespace WPFApp
                 if (attr.Edit != 1 && attr.View == 1)
                 {
                     Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
-                    var label = Controls.LabelInfo();
-                    label.Content = $"{attr.Name} = {attr.Value}";
+                    var label = Controls.LabelInfo($"{attr.Name} = {attr.Value};");
                     views.AddControl(label);
                 }
             }
@@ -207,30 +229,18 @@ namespace WPFApp
             
             if (payrec.Summa != "0.00")
             {
-                var payLabel = Controls.LabelInfo();
-                payLabel.Content = $"Сумма оплаты = {payrec.Summa}";
+                var payLabel = Controls.LabelInfo($"Сумма оплаты = {payrec.Summa}");
                 views.AddControl(payLabel);
             }
             if (payrec.Commission != "0.00")
             {
-                var payLabel = Controls.LabelInfo();
-                payLabel.Content = $"Коммиссия = {payrec.Commission}";
+                var payLabel = Controls.LabelInfo($"Коммиссия = {payrec.Commission}");
                 views.AddControl(payLabel);
             }
             if (payrec.Fine != "0.00")
             {
-                var payLabel = Controls.LabelInfo();
-                payLabel.Content = $"Пеня = {payrec.Fine}";
+                var payLabel = Controls.LabelInfo($"Пеня = {payrec.Fine}");
                 views.AddControl(payLabel);
-            }
-
-            if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
-            {
-                var inputbox = Controls.TextBoxHint("Сумма оплаты");
-                var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
-                binding.Mode = BindingMode.TwoWay;
-                inputbox.SetBinding(TextBox.TextProperty, binding);
-                views.AddControl(inputbox);
             }
             #endregion
         }
@@ -330,7 +340,7 @@ namespace WPFApp
             }
             msg = "Извините, произошла непредвиденная ошибка. " +
                 $"Обратитесь к администратору.";
-            DisplayErrorPage($"{ex.Info().prefix(msg)}");
+            DisplayErrorPage($"{ex.Message.prefix(msg, 2)}");
         }
         private void DisplayErrorPage(string msgError)
         {

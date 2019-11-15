@@ -60,11 +60,13 @@ namespace WPFApp
             return button;
         }
 
-        public static Label LabelInfo(string argName = null)
+        public static TextBlock LabelInfo(string argName = null)
         {
-            var label = new Label();
-            if (argName != null) label.Content = argName;
-            return label;
+            var txtBlock = new TextBlock();
+            if (argName != null) txtBlock.Text = argName;
+            txtBlock.TextWrapping = TextWrapping.Wrap;
+            txtBlock.FontSize = 38;
+            return txtBlock;
         }
 
         public static Label LabelHeader(string argName = null)

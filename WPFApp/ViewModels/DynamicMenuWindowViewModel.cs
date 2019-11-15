@@ -10,12 +10,17 @@ using Logic;
 using XmlStructureComplat;
 using System.Diagnostics;
 using ExceptionManager;
+using XmlStructureComplat.Validators;
+using FluentValidation;
+using System.ComponentModel;
 
 namespace WPFApp.ViewModels
 {
-    public class DynamicMenuWindowViewModel : BindableBase
+    public class DynamicMenuWindowViewModel : BindableBase /*,IDataErrorInfo, INotifyDataErrorInfo*/
     {
         public event Action NewResponseComeEvent = ()=>{ };
+        private readonly PayRecordValidator payValidator = new PayRecordValidator();
+        private readonly AttrRecordValidator attrValidator = new AttrRecordValidator();
 
         #region ctor
         public DynamicMenuWindowViewModel()
@@ -72,8 +77,9 @@ namespace WPFApp.ViewModels
             get => _payrecToSend;
             set
             {
-                AttrToSend = value?.AttrRecord;
+                var hz = payValidator.Validate(value);                
                 SetProperty(ref _payrecToSend, value);
+                AttrToSend = value?.AttrRecord;
             }
         }
         public PS_ERIP EripToSend
@@ -130,6 +136,9 @@ namespace WPFApp.ViewModels
             get => _isBackButtonActive;
             set => SetProperty(ref _isBackButtonActive, value);
         }
+        public bool IsFinalButtonActive { get; set; }
+        public bool IsAttrValid { get; set; }
+        public bool IsPayrecValid { get; set; }
         public bool IsBackRequestPossible => StaticMain.IsBackPossible();
         public Exception Exception
         {
