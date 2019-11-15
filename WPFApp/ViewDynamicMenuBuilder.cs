@@ -110,14 +110,7 @@ namespace WPFApp
                 Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
                 control.Foreground = Brushes.DarkRed;
-                //(control.Content as TextBlock).Foreground = Brushes.DarkRed;
-                var pic = new PackIcon();
-                pic.Kind = PackIconKind.CloseCircleOutline;
-                pic.Height = 250;
-                pic.Width = 250;
-                pic.HorizontalAlignment = HorizontalAlignment.Center;
-                pic.VerticalAlignment = VerticalAlignment.Center;
-                pic.Foreground = Brushes.Red;
+                var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
                 views.AddControl(pic);
                 views.AddControl(control);
                 return;
@@ -144,13 +137,7 @@ namespace WPFApp
                 {
                     var control = Controls.CentralLabelBorder("Оплата успешно произведена!");
                     control.Foreground = Brushes.DarkOliveGreen;
-                    var pic = new PackIcon();
-                    pic.Kind = PackIconKind.CheckboxMarkedCircle;
-                    pic.Height = 250;
-                    pic.Width = 250;
-                    pic.HorizontalAlignment = HorizontalAlignment.Center;
-                    pic.VerticalAlignment = VerticalAlignment.Center;
-                    pic.Foreground = Brushes.Green;
+                    var pic = Controls.IconBig(PackIconKind.CheckboxMarkedCircle, Brushes.Green);
                     views.AddControl(pic);
                     views.AddControl(control);
                 }
@@ -343,7 +330,11 @@ namespace WPFApp
         }
         private void DisplayErrorPage(string msgError)
         {
-            SetWindow(Controls.CentralLabelBorder(msgError));
+            var panel = new StackPanel();
+            panel.VerticalAlignment = VerticalAlignment.Center;
+            panel.Children.Add(Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red));
+            panel.Children.Add(Controls.CentralLabelBorder(msgError, Brushes.DarkRed));
+            SetWindow(panel);
         }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {

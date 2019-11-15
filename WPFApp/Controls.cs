@@ -17,17 +17,30 @@ namespace WPFApp
     {
         private const double Margin = 50;
         private const double MarginBetween = 27;
-        public static Label CentralLabelBorder(string arg = "")
+        public static Label CentralLabelBorder(string arg = "", SolidColorBrush brushArg=null)
         {
             var lbl = new Label();
             lbl.HorizontalContentAlignment = HorizontalAlignment.Center;
             lbl.VerticalContentAlignment = VerticalAlignment.Center;
+            lbl.Foreground = brushArg ?? lbl.Foreground;
             var textBlock = new TextBlock();
             textBlock.Text = arg;
             textBlock.TextWrapping = TextWrapping.Wrap;
             textBlock.TextAlignment = TextAlignment.Center;
             lbl.Content = textBlock;
             return lbl;
+        }
+
+        public static PackIcon IconBig(PackIconKind iconKindArg, SolidColorBrush brushArg =null)
+        {
+            var pic = new PackIcon();
+            pic.Kind = iconKindArg;
+            pic.Height = 250;
+            pic.Width = 250;
+            pic.HorizontalAlignment = HorizontalAlignment.Center;
+            pic.VerticalAlignment = VerticalAlignment.Center;
+            pic.Foreground = brushArg ?? pic.Foreground;
+            return pic;
         }
 
         public static CardButton ButtonCard(string argName=null)
