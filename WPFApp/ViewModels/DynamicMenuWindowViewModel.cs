@@ -13,10 +13,11 @@ using ExceptionManager;
 using XmlStructureComplat.Validators;
 using FluentValidation;
 using System.ComponentModel;
+using System.Collections;
 
 namespace WPFApp.ViewModels
 {
-    public class DynamicMenuWindowViewModel : BindableBase /*,IDataErrorInfo, INotifyDataErrorInfo*/
+    public class DynamicMenuWindowViewModel : BindableBase /*ValidatableBindableBase*/ , INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
         private readonly PayRecordValidator payValidator = new PayRecordValidator();
@@ -242,5 +243,96 @@ namespace WPFApp.ViewModels
             _lookupVM = null; ;
         }
         #endregion
+
+        #region INotifyDataErrorInfo members 2013 Magnus Montin
+        private readonly Dictionary<string, ICollection<string>> _validationErrors = new Dictionary<string, ICollection<string>>();
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = (s, e) => { };
+        private void RaiseErrorsChanged(string propertyName)
+        {
+            ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName) || !_validationErrors.ContainsKey(propertyName))
+            { return null; }
+
+            return _validationErrors[propertyName];
+        }
+        public bool HasErrors
+        {
+            get { return _validationErrors.Count > 0; }
+        }
+        private async void ValidatePropertyExample(string username)
+        {
+            const string propertyKey = "Username";
+            ICollection<string> validationErrors = null;
+            /* Call service asynchronously */
+            bool isValid = await Task<bool>.Run(() =>
+            {
+                return _service.ValidateUsername(username, out validationErrors);
+            })
+            .ConfigureAwait(false);
+
+            if (!isValid)
+            {
+                /* Update the collection in the dictionary returned by the GetErrors method */
+                _validationErrors[propertyKey] = validationErrors;
+                /* Raise event to tell WPF to execute the GetErrors method */
+                RaiseErrorsChanged(propertyKey);
+            }
+            else if (_validationErrors.ContainsKey(propertyKey))
+            {
+                /* Remove all errors for this property */
+                _validationErrors.Remove(propertyKey);
+                /* Raise event to tell WPF to execute the GetErrors method */
+                RaiseErrorsChanged(propertyKey);
+            }
+        }
+        #endregion
+
+        //#region iNotifyDataErrorInfo 2019 Matyaszek
+        //private readonly Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
+        //public bool HasErrors => _errorsByPropertyName.Any();
+        //public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        //public IEnumerable GetErrors(string propertyName)
+        //{
+        //    return _errorsByPropertyName.ContainsKey(propertyName) ?
+        //        _errorsByPropertyName[propertyName] : null;
+        //}
+        //private void OnErrorsChanged(string propertyName)
+        //{
+        //    ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        //}
+        //private void AddError(string propertyName, string error)
+        //{
+        //    if (!_errorsByPropertyName.ContainsKey(propertyName))
+        //        _errorsByPropertyName[propertyName] = new List<string>();
+
+        //    if (!_errorsByPropertyName[propertyName].Contains(error))
+        //    {
+        //        _errorsByPropertyName[propertyName].Add(error);
+        //        OnErrorsChanged(propertyName);
+        //    }
+        //}
+        //private void ClearErrors(string propertyName)
+        //{
+        //    if (_errorsByPropertyName.ContainsKey(propertyName))
+        //    {
+        //        _errorsByPropertyName.Remove(propertyName);
+        //        OnErrorsChanged(propertyName);
+        //    }
+        //}
+        //private void ValidatePropertyExample(string UserName)
+        //{
+        //    ClearErrors(nameof(UserName));
+        //    if (string.IsNullOrWhiteSpace(UserName))
+        //    { AddError(nameof(UserName), "Username cannot be empty."); }
+        //    if (string.Equals(UserName, "Admin", StringComparison.OrdinalIgnoreCase))
+        //    { AddError(nameof(UserName), "Admin is not valid username."); }
+        //    if (UserName == null || UserName?.Length <= 5)
+        //    { AddError(nameof(UserName), "Username must be at least 6 characters long."); }
+        //}
+        //#endregion
     }
 }
