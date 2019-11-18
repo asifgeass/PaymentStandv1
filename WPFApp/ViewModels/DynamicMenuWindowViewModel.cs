@@ -18,7 +18,7 @@ using FluentValidation.Results;
 
 namespace WPFApp.ViewModels
 {
-    public class DynamicMenuWindowViewModel : BindableBase /*ValidatableBindableBase*/ , INotifyDataErrorInfo
+    public class DynamicMenuWindowViewModel : ValidatableBindableBase /*ValidatableBindableBase*/ //, INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
         private readonly PayRecordValidator payValidator = new PayRecordValidator();
@@ -80,11 +80,20 @@ namespace WPFApp.ViewModels
             get => _payrecToSend;
             set
             {
-                Ex.Log($"VM: PayrecToSend changed: new sum={value?.Summa};");
                 SetProperty(ref _payrecToSend, value);
-                var valResult = payValidator.Validate(_payrecToSend);
-                var isValid = ValidateResult(valResult, nameof(_payrecToSend.Summa));
                 AttrToSend = value?.AttrRecord;
+            }
+        }
+        public string PayrecToSendSumma
+        {
+            get => PayrecToSend.Summa;
+            set
+            {
+                Ex.Log($"mainVM: PayrecToSendSumma SETTER val={value};");
+                PayrecToSend.Summa = value;
+                RaisePropertyChanged();
+                var valResult = payValidator.Validate(_payrecToSend);
+                var isValid = ValidateResult(valResult);
             }
         }
         public PS_ERIP EripToSend
@@ -253,79 +262,6 @@ namespace WPFApp.ViewModels
         {
             _lookupVMList = new List<LookupVM>();
             _lookupVM = null; ;
-        }
-        #endregion
-
-        #region INotifyDataErrorInfo members 2013 Magnus Montin
-        private bool ValidateResult(ValidationResult valResult, string nameArg)
-        {
-            if (valResult == null) return true;
-            var propertyKey = nameArg;
-            
-            if (!valResult.IsValid)
-            {
-                _validationErrors[propertyKey] = valResult.Errors;
-                /* Raise event to tell WPF to execute the GetErrors method */
-                RaiseErrorsChanged(propertyKey);
-            }
-            else if (_validationErrors.ContainsKey(propertyKey))
-            {
-                /* Remove all errors for this property */
-                _validationErrors.Remove(propertyKey);
-                /* Raise event to tell WPF to execute the GetErrors method */
-                RaiseErrorsChanged(propertyKey);
-            }
-            Ex.Log($"INotifyDataErrorInfo: ValidateResult({valResult}, {nameArg})");
-            return valResult.IsValid;
-        }
-        //private async void ValidatePropertyExample(string username)
-        //{
-        //    const string propertyKey = "Username";
-        //    ICollection<string> validationErrors = null;
-        //    /* Call service asynchronously */
-        //    bool isValid = await Task<bool>.Run(() =>
-        //    {
-        //        var valResult = payValidator.Validate(PayrecToSend);
-        //        return _service.ValidateUsername(username, out validationErrors);
-        //    })
-        //    .ConfigureAwait(false);
-
-        //    if (!isValid)
-        //    {
-        //        /* Update the collection in the dictionary returned by the GetErrors method */
-        //        _validationErrors[propertyKey] = validationErrors;
-        //        /* Raise event to tell WPF to execute the GetErrors method */
-        //        RaiseErrorsChanged(propertyKey);
-        //    }
-        //    else if (_validationErrors.ContainsKey(propertyKey))
-        //    {
-        //        /* Remove all errors for this property */
-        //        _validationErrors.Remove(propertyKey);
-        //        /* Raise event to tell WPF to execute the GetErrors method */
-        //        RaiseErrorsChanged(propertyKey);
-        //    }
-        //}
-
-        private readonly Dictionary<string, IList<ValidationFailure>> _validationErrors = new Dictionary<string, IList<ValidationFailure>>();
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = (s, e) => {};
-        private void RaiseErrorsChanged(string propertyName)
-        {
-            Ex.Log($"INotifyDataErrorInfo: RaiseErrorsChanged({propertyName})");
-            ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-        public System.Collections.IEnumerable GetErrors(string propertyName)
-        {
-            Ex.Log($"INotifyDataErrorInfo: IEnumerable GetErrors({propertyName})");
-            if (string.IsNullOrEmpty(propertyName) || !_validationErrors.ContainsKey(propertyName))
-            {                
-                return null; 
-            }
-            Ex.Log($"INotifyDataErrorInfo: IEnumerable GetErrors({propertyName})={_validationErrors[propertyName][0]}");
-            return _validationErrors[propertyName];
-        }
-        public bool HasErrors
-        {
-            get { Ex.Log($"INotifyDataErrorInfo: bool HasErrors count={_validationErrors.Count}"); return _validationErrors.Count > 0; }
         }
         #endregion
 

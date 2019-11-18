@@ -155,19 +155,10 @@ namespace WPFApp
             {
                 views.AddControl(new TextBlock()); //отступ
                 var inputbox = Controls.TextBoxHint("Сумма оплаты");
-                var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
-                //binding.Mode = BindingMode.TwoWay;
+                var binding = new Binding($"{nameof(model.PayrecToSendSumma)}");
+                binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                binding.ValidatesOnNotifyDataErrors = true;
                 inputbox.SetBinding(TextBox.TextProperty, binding);
-                ValidationAssist.SetUsePopup(inputbox, true);
-                ValidationAssist.SetBackground(inputbox, Brushes.MediumPurple);
-
-                var h1 = ValidationAssist.GetBackground(inputbox);
-                var h2 = ValidationAssist.GetFontSize(inputbox);
-                var h3 = ValidationAssist.GetOnlyShowOnFocus(inputbox);
-                //var h4 = ValidationAssist.GetPopupPlacement(inputbox);
-                var h5 = ValidationAssist.GetUsePopup(inputbox);
 
                 views.AddControl(inputbox);
             }
@@ -195,6 +186,7 @@ namespace WPFApp
                     var inputbox = Controls.TextBoxHint(hint);
                     int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                     var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+                    binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                     binding.Mode = BindingMode.TwoWay;
                     inputbox.SetBinding(TextBox.TextProperty, binding);
                     views.AddControl(inputbox);
