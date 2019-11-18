@@ -14,16 +14,15 @@ namespace XmlStructureComplat.Validators
             RuleFor(payrec => payrec.Summa)
                 .NotNull()
                 .NotEmpty()
-                .NotEqual("0.00")
+                .NotEqual("0.00").WithMessage("Сумма должна быть > 0")
                 .NotEqual("0,00")
                 .NotEqual("0")
                 .NotEqual("0.0")
                 .NotEqual("0,0")
-                .WithMessage("Сумма должна быть > 0");
+                .Matches(@"^.{0}\d+[\.,]?\d{0,2}.{0}$").WithMessage("Должно быть число, с дробной частью не более 2 цифры")
+                ;
 
-            RuleFor(payrec => payrec.Summa)
-                .Matches(@"\d+[\.,]?\d{0,2}") //numeric Summa 
-                .WithMessage("Должно быть число, с дробной частью не более 2 цифры"); 
+
 
         }
     }

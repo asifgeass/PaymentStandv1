@@ -156,28 +156,31 @@ namespace WPFApp
                 views.AddControl(new TextBlock()); //отступ
                 var inputbox = Controls.TextBoxHint("Сумма оплаты");
                 var binding = new Binding($"{nameof(model.PayrecToSend)}.{nameof(model.PayrecToSend.Summa)}");
-                binding.Mode = BindingMode.TwoWay;
+                //binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                binding.ValidatesOnDataErrors = true; //must have
-                //binding.NotifyOnValidationError = true;                             
-                //binding.ValidatesOnExceptions = true;
+                binding.ValidatesOnNotifyDataErrors = true;
                 inputbox.SetBinding(TextBox.TextProperty, binding);
+                ValidationAssist.SetUsePopup(inputbox, true);
+                ValidationAssist.SetBackground(inputbox, Brushes.MediumPurple);
+
                 var h1 = ValidationAssist.GetBackground(inputbox);
                 var h2 = ValidationAssist.GetFontSize(inputbox);
                 var h3 = ValidationAssist.GetOnlyShowOnFocus(inputbox);
-                var h4 = ValidationAssist.GetPopupPlacement(inputbox);
+                //var h4 = ValidationAssist.GetPopupPlacement(inputbox);
                 var h5 = ValidationAssist.GetUsePopup(inputbox);
-                
+
                 views.AddControl(inputbox);
             }
 
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
-            if (payrec.GetPayListType == "0")
-            { 
-                button.Text = "Оплатить"; 
-            }
             button.ButtonControl.Command = model.NextPageCommand;
+            if (payrec.GetPayListType == "0")
+            {
+                button.Text = "Оплатить";
+                button.ButtonControl.Command = model.NextPageTestValidate;
+                Ex.Log("========== ОПЛАТИТЬ КНОПКА ПОСТРОЕНА =============");
+            }
             views.AddControl(button);
         }
         private void BuildInputFields(List<AttrRecord> attrRecords)

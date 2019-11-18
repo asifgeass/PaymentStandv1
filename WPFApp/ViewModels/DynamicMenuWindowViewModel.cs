@@ -14,6 +14,7 @@ using XmlStructureComplat.Validators;
 using FluentValidation;
 using System.ComponentModel;
 using System.Collections;
+using FluentValidation.Results;
 
 namespace WPFApp.ViewModels
 {
@@ -30,8 +31,9 @@ namespace WPFApp.ViewModels
             BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(() => IsBackButtonActive);
             SetCurrMenuHeaderCommand = new DelegateCommand<string>(x => LabelCurrent = x);
             SetParentGroupHeaderCommand = new DelegateCommand<string>(x => LabelParentGroup = x);
-            SendParamCommand = new DelegateCommand<object>(NextPage);
-            NextPageCommand = new DelegateCommand(() => NextPage(null));
+            SendParamCommand = new DelegateCommand<object>(async x=>await NextPage(x));
+            NextPageCommand = new DelegateCommand(async() => await NextPage(null));
+            NextPageTestValidate = new DelegateCommand(async() => await NextPageValidate(null));
             NewResponseComeEvent += ClearLookup;
         }
 
@@ -78,8 +80,10 @@ namespace WPFApp.ViewModels
             get => _payrecToSend;
             set
             {
-                var hz = payValidator.Validate(value);                
+                Ex.Log($"VM: PayrecToSend changed: new sum={value?.Summa};");
                 SetProperty(ref _payrecToSend, value);
+                var valResult = payValidator.Validate(_payrecToSend);
+                var isValid = ValidateResult(valResult, nameof(_payrecToSend.Summa));
                 AttrToSend = value?.AttrRecord;
             }
         }
@@ -166,10 +170,11 @@ namespace WPFApp.ViewModels
         public DelegateCommand<object> SendParamCommand { get; }
         public DelegateCommand<LookupItem> LookupCommand { get; }
         public DelegateCommand NextPageCommand { get; }
+        public DelegateCommand NextPageTestValidate { get; }
         #endregion
 
         #region Pages
-        private async void NextPage(object param=null)
+        private async Task NextPage(object param=null)
         {
             try
             {
@@ -185,6 +190,13 @@ namespace WPFApp.ViewModels
             {
                 Exception = ex;
             }
+        }
+        private async Task NextPageValidate(object param = null)
+        {
+            Ex.Log($"VM: {nameof(NextPageValidate)}(): validate sum={PayrecToSend.Summa};");
+            var valResult = payValidator.Validate(PayrecToSend);
+            var isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));
+            if (isValid) { await NextPage(param); }
         }
 
         private async void BackPage()
@@ -245,38 +257,14 @@ namespace WPFApp.ViewModels
         #endregion
 
         #region INotifyDataErrorInfo members 2013 Magnus Montin
-        private readonly Dictionary<string, ICollection<string>> _validationErrors = new Dictionary<string, ICollection<string>>();
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = (s, e) => { };
-        private void RaiseErrorsChanged(string propertyName)
+        private bool ValidateResult(ValidationResult valResult, string nameArg)
         {
-            ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-        public System.Collections.IEnumerable GetErrors(string propertyName)
-        {
-            if (string.IsNullOrEmpty(propertyName) || !_validationErrors.ContainsKey(propertyName))
-            { return null; }
-
-            return _validationErrors[propertyName];
-        }
-        public bool HasErrors
-        {
-            get { return _validationErrors.Count > 0; }
-        }
-        private async void ValidatePropertyExample(string username)
-        {
-            const string propertyKey = "Username";
-            ICollection<string> validationErrors = null;
-            /* Call service asynchronously */
-            bool isValid = await Task<bool>.Run(() =>
+            if (valResult == null) return true;
+            var propertyKey = nameArg;
+            
+            if (!valResult.IsValid)
             {
-                return _service.ValidateUsername(username, out validationErrors);
-            })
-            .ConfigureAwait(false);
-
-            if (!isValid)
-            {
-                /* Update the collection in the dictionary returned by the GetErrors method */
-                _validationErrors[propertyKey] = validationErrors;
+                _validationErrors[propertyKey] = valResult.Errors;
                 /* Raise event to tell WPF to execute the GetErrors method */
                 RaiseErrorsChanged(propertyKey);
             }
@@ -287,6 +275,57 @@ namespace WPFApp.ViewModels
                 /* Raise event to tell WPF to execute the GetErrors method */
                 RaiseErrorsChanged(propertyKey);
             }
+            Ex.Log($"INotifyDataErrorInfo: ValidateResult({valResult}, {nameArg})");
+            return valResult.IsValid;
+        }
+        //private async void ValidatePropertyExample(string username)
+        //{
+        //    const string propertyKey = "Username";
+        //    ICollection<string> validationErrors = null;
+        //    /* Call service asynchronously */
+        //    bool isValid = await Task<bool>.Run(() =>
+        //    {
+        //        var valResult = payValidator.Validate(PayrecToSend);
+        //        return _service.ValidateUsername(username, out validationErrors);
+        //    })
+        //    .ConfigureAwait(false);
+
+        //    if (!isValid)
+        //    {
+        //        /* Update the collection in the dictionary returned by the GetErrors method */
+        //        _validationErrors[propertyKey] = validationErrors;
+        //        /* Raise event to tell WPF to execute the GetErrors method */
+        //        RaiseErrorsChanged(propertyKey);
+        //    }
+        //    else if (_validationErrors.ContainsKey(propertyKey))
+        //    {
+        //        /* Remove all errors for this property */
+        //        _validationErrors.Remove(propertyKey);
+        //        /* Raise event to tell WPF to execute the GetErrors method */
+        //        RaiseErrorsChanged(propertyKey);
+        //    }
+        //}
+
+        private readonly Dictionary<string, IList<ValidationFailure>> _validationErrors = new Dictionary<string, IList<ValidationFailure>>();
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = (s, e) => {};
+        private void RaiseErrorsChanged(string propertyName)
+        {
+            Ex.Log($"INotifyDataErrorInfo: RaiseErrorsChanged({propertyName})");
+            ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            Ex.Log($"INotifyDataErrorInfo: IEnumerable GetErrors({propertyName})");
+            if (string.IsNullOrEmpty(propertyName) || !_validationErrors.ContainsKey(propertyName))
+            {                
+                return null; 
+            }
+            Ex.Log($"INotifyDataErrorInfo: IEnumerable GetErrors({propertyName})={_validationErrors[propertyName][0]}");
+            return _validationErrors[propertyName];
+        }
+        public bool HasErrors
+        {
+            get { Ex.Log($"INotifyDataErrorInfo: bool HasErrors count={_validationErrors.Count}"); return _validationErrors.Count > 0; }
         }
         #endregion
 
@@ -297,7 +336,7 @@ namespace WPFApp.ViewModels
 
         //public IEnumerable GetErrors(string propertyName)
         //{
-        //    return _errorsByPropertyName.ContainsKey(propertyName) ?
+        //    return (_errorsByPropertyName.ContainsKey(propertyName)) ?
         //        _errorsByPropertyName[propertyName] : null;
         //}
         //private void OnErrorsChanged(string propertyName)
@@ -311,7 +350,7 @@ namespace WPFApp.ViewModels
 
         //    if (!_errorsByPropertyName[propertyName].Contains(error))
         //    {
-        //        _errorsByPropertyName[propertyName].Add(error);
+        //        _errorsByPropertyName[propertyName].Add(error);                
         //        OnErrorsChanged(propertyName);
         //    }
         //}
