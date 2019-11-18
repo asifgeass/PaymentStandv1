@@ -21,8 +21,7 @@ namespace WPFApp.ViewModels
     public class DynamicMenuWindowViewModel : ValidatableBindableBase /*ValidatableBindableBase*/ //, INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
-        private readonly PayRecordValidator payValidator = new PayRecordValidator();
-        private readonly AttrRecordValidator attrValidator = new AttrRecordValidator();
+        private readonly PayRecordValidator payValidator = new PayRecordValidator();        
 
         #region ctor
         public DynamicMenuWindowViewModel()
@@ -81,7 +80,6 @@ namespace WPFApp.ViewModels
             set
             {
                 SetProperty(ref _payrecToSend, value);
-                AttrToSend = value?.AttrRecord;
             }
         }
         public string PayrecToSendSumma
@@ -104,11 +102,7 @@ namespace WPFApp.ViewModels
                 SetProperty(ref _eripToSend, value);
             }
         }
-        public List<AttrRecord> AttrToSend
-        {
-            get => _attrToSend;
-            set => SetProperty(ref _attrToSend, value);
-        }
+        public List<AttrValidationVM> AttrVM { get; private set; } = new List<AttrValidationVM>();
         public LookupVM GetNewLookupVM()
         {
             var vm = new LookupVM();

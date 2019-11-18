@@ -97,7 +97,7 @@
     <Compile Include="Helpers\ValidatableBindableBase.cs" />
     <Compile Include="ViewDynamicMenuBuilder.cs" />
     <Compile Include="Interfaces\iControls.cs" />
-    <Compile Include="ViewModels\AttrValidationViewModel.cs" />
+    <Compile Include="ViewModels\AttrValidationVM.cs" />
     <Compile Include="ViewPagesManager.cs" />
     <Compile Include="ViewModels\LookupVM.cs" />
     <Compile Include="Views\Elements\ButtonTextblock.xaml.cs">

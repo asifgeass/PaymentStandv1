@@ -14,23 +14,21 @@ namespace XmlStructureComplat.Validators
         public AttrRecordValidator()
         {
             RuleFor(attr => attr.Value)
-                .NotNull()
-                .NotEmpty()
+                .NotNull().WithName("Значение")
+                .NotEmpty().WithName("Значение")
                 .When(attr => attr.Mandatory != null && attr.Mandatory == "1");
 
             RuleFor(attr => attr.Value)
-                .NotNull()
-                .NotEmpty()
-                .MinimumLength(minLength)
+                .MinimumLength(minLength).WithName("Значение")
                 .When(attr => !string.IsNullOrEmpty(attr.MinLength) 
-                && int.TryParse(attr.MinLength, out minLength));
+                && int.TryParse(attr.MinLength, out minLength)
+                && attr.Value != null);
 
             RuleFor(attr => attr.Value)
-                .NotNull()
-                .NotEmpty()
-                .MinimumLength(maxLength)
+                .MaximumLength(maxLength).WithName("Значение")
                 .When(attr => !string.IsNullOrEmpty(attr.MaxLength) 
-                && int.TryParse(attr.MaxLength, out maxLength));
+                && int.TryParse(attr.MaxLength, out maxLength)
+                && attr.Value != null);
 
         }
     }

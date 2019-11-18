@@ -11,19 +11,15 @@ namespace XmlStructureComplat.Validators
     {
         public PayRecordValidator()
         {
-            RuleFor(payrec => payrec.Summa)
-                .NotNull()
-                .NotEmpty()
-                .NotEqual("0.00").WithMessage("Сумма должна быть > 0")
-                .NotEqual("0,00")
-                .NotEqual("0")
-                .NotEqual("0.0")
-                .NotEqual("0,0")
-                .Matches(@"^.{0}\d+[\.,]?\d{0,2}.{0}$").WithMessage("Должно быть число, с дробной частью не более 2 цифры")
-                ;
-
-
-
+            RuleFor(payrec => payrec.Summa)               
+                  .NotNull().WithName("Сумма")
+                  .NotEmpty().WithName("Сумма")                  
+                  .Matches(@"^\s*\d+[\.,]?\d{0,2}\s*$")
+                  .WithMessage("Должно быть число, с дробной частью не более 2 цифры")
+                  .Must(sum =>decimal.Parse(sum) != 0)
+                  .WithMessage("Нельзя оплатить сумму 0")
+                  ;
         }
+
     }
 }
