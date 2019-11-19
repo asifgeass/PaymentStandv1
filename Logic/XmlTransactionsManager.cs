@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +42,7 @@ namespace Logic
             if (payrecArg.GetPayListType == "0")
             {
                 Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
+                Ex.Try(()=> payrecArg.Summa = payrecArg.Summa.Replace(",","."));
                 lastPOSTransaction.CreatePayPosRequest(payrecArg);
                 string request = await Serialize(lastPOSTransaction.Request);
                 MDOM_POS PosRespon = await GetPosResponse(request);
@@ -94,6 +97,7 @@ namespace Logic
                     responCopy.ResponseReq.SessionId = payrecArg.SessionId;
                     var payrec = responCopy.ResponseReq.PayRecord.First();
                     payrec.SessionId = payrecArg.SessionId;
+                    Ex.Try(() => payrec.Summa = payrec.Summa.Replace(",", "."));
                     responCopy.ClearAttrRecords();
                     return responCopy;
                 }
@@ -224,8 +228,23 @@ namespace Logic
 
         private void Print(string textArg)
         {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
             PrintDocument printDocument = new PrintDocument();
-            printDocument.PrintPage += (s,e)=> e.Graphics.DrawString(textArg, new Font("Courier", 12), Brushes.Black, 0, 0);
+            Font font = new Font("Courier", 9);
+            string path = $@"{Environment.CurrentDirectory}\Resources\Courier.ttf";
+            Ex.TryLog(() =>
+            {
+                bool isFile = File.Exists(path);
+                if (isFile)
+                {
+                    PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+                    privateFontCollection.AddFontFile(path);
+                    var fontFam = privateFontCollection.Families.FirstOrDefault();
+                    font = new Font(fontFam, 9f);
+                    Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}(): Printing local file font");
+                }
+            });
+            printDocument.PrintPage += (s,e)=> e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
             printDocument.Print();
         }
 
@@ -239,11 +258,6 @@ namespace Logic
             XDocument respXml = await PostGetHTTP.PostStringGetXML(StaticMain.Settings.Terminal_MdomPOS.url, argReq);
             MDOM_POS respPos = await SerializationUtil.Deserialize<MDOM_POS>(respXml);
             return respPos;
-        }
-        private async Task ConfirmTransactionAsync(PS_ERIP responArg, string confirmArg)
-        {
-            var confirmRequest = await GetConfirmRequest(responArg, confirmArg);
-            SendConfirmRequest(confirmRequest).RunAsync();
         }
         private async Task CancelPayPOS()
         {
@@ -277,20 +291,41 @@ namespace Logic
                 Ex.Throw(str);
             }
         }
+        private async Task ConfirmTransactionAsync(PS_ERIP responArg, string confirmArg)
+        {
+            PS_ERIP confirmRequest = await GetConfirmRequest(responArg, confirmArg);
+            SendConfirmRequest(confirmRequest).RunAsync();
+        }
         private async Task SendConfirmRequest(PS_ERIP confirmRequestArg)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(SendConfirmRequest)}()");
             bool success = false;
             int interval = 10;
+            string request = await Serialize(confirmRequestArg);
 
             while (!success)
-            {
-                if (confirmRequestArg.ResponseReq.ErrorCode == 0)
+            {                
+                var response = await GetEripResponse(request);
+                if (response.ResponseReq.ErrorCode == 0)
                 { success = true; }
-                Ex.Log($"{nameof(SendConfirmRequest)}(): ConfirmResponse Error={confirmRequestArg.ResponseReq.ErrorCode};");
+                Ex.Log($"{nameof(SendConfirmRequest)}(): ConfirmResponse Error={response.ResponseReq.ErrorCode};");
+                if (confirmRequestArg?.ResponseReq?.PayRecord?.FirstOrDefault()?.PaymentID == null) break;
                 await Task.Delay(interval * 1000);
                 if (interval < 1400) { interval *= 3; }
             }
+        }
+        private async Task<PS_ERIP> GetConfirmRequest(PS_ERIP RespRunOper, string argConfirmCode)
+        {
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetConfirmRequest)}()");
+            PS_ERIP confirmReq = Factory.PsEripCreate();
+            confirmReq.EnumType = EripQAType.ConfirmRequest;
+            confirmReq.ResponseReq.PayRecord = RespRunOper.ResponseReq.PayRecord.Copy();
+            confirmReq.Accept(this.Request)?.ConfirmClear();
+            confirmReq.ResponseReq.PayRecord[0].KioskReceipt = RespRunOper.ResponseReq.KioskReceipt.Copy();
+            confirmReq.ResponseReq.PayRecord[0].ConfirmCode = argConfirmCode;
+            //string req = await Serialize(confirmReq);
+            //PS_ERIP resp = await GetEripResponse(req);
+            return confirmReq;
         }
         private async Task CreateInitialRequest()
         {
@@ -316,19 +351,6 @@ namespace Logic
             XDocument reqXml = await SerializationUtil.Serialize(argReq);
             string request = reqXml?.ToString();
             return request;
-        }
-        private async Task<PS_ERIP> GetConfirmRequest(PS_ERIP RespRunOper, string argConfirmCode)
-        {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetConfirmRequest)}()");
-            PS_ERIP confirmReq = Factory.PsEripCreate();
-            confirmReq.EnumType = EripQAType.ConfirmRequest;
-            confirmReq.ResponseReq.PayRecord = RespRunOper.ResponseReq.PayRecord.Copy();
-            confirmReq.Accept(this.Request)?.ConfirmClear();            
-            confirmReq.ResponseReq.PayRecord[0].KioskReceipt = RespRunOper.ResponseReq.KioskReceipt.Copy();
-            confirmReq.ResponseReq.PayRecord[0].ConfirmCode = argConfirmCode;
-            string req = await Serialize(confirmReq);
-            PS_ERIP resp = await GetEripResponse(req);
-            return resp;
         }
         private async Task CheckForNULL()
         {
