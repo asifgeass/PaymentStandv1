@@ -21,7 +21,7 @@ namespace WPFApp.ViewModels
     public class DynamicMenuWindowViewModel : ValidatableBindableBase /*ValidatableBindableBase*/ //, INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
-        private readonly PayRecordValidator payValidator = new PayRecordValidator();        
+        private PayRecordValidator payValidator;        
 
         #region ctor
         public DynamicMenuWindowViewModel()
@@ -33,7 +33,7 @@ namespace WPFApp.ViewModels
             SendParamCommand = new DelegateCommand<object>(async x=>await NextPage(x));
             NextPageCommand = new DelegateCommand(async() => await NextPage(null));
             NextPageTestValidate = new DelegateCommand(async() => await NextPageValidate(null));
-            NewResponseComeEvent += ClearLookup;
+            //NewResponseComeEvent += ClearLookup;
         }
 
         #endregion
@@ -46,9 +46,6 @@ namespace WPFApp.ViewModels
         private PS_ERIP _responce;
         private PayRecord _payrecToSend;
         private PS_ERIP _eripToSend = new PS_ERIP();
-        private List<AttrRecord> _attrToSend;
-        private LookupVM _lookupVM;
-        private List<LookupVM> _lookupVMList = new List<LookupVM>();
         private Exception _exception;
         private bool _isHomeButtonActive = true;
         private bool _isBackButtonActive;
@@ -88,10 +85,14 @@ namespace WPFApp.ViewModels
             set
             {
                 Ex.Log($"mainVM: PayrecToSendSumma SETTER val={value};");
-                PayrecToSend.Summa = value;
+                PayrecToSend.Summa = value;                
+                Ex.TryLog(() =>
+                {
+                    payValidator = new PayRecordValidator();
+                    var valResult = payValidator.Validate(_payrecToSend);
+                    var isValid = ValidateResult(valResult);
+                });
                 RaisePropertyChanged();
-                var valResult = payValidator.Validate(_payrecToSend);
-                var isValid = ValidateResult(valResult);
             }
         }
         public PS_ERIP EripToSend
@@ -102,18 +103,8 @@ namespace WPFApp.ViewModels
                 SetProperty(ref _eripToSend, value);
             }
         }
-        public List<AttrValidationVM> AttrVM { get; private set; } = new List<AttrValidationVM>();
-        public LookupVM GetNewLookupVM()
-        {
-            var vm = new LookupVM();
-            _lookupVMList.Add(vm);
-            return vm;
-        }
-        public void ClearChildLookupVM()
-        {
-            _lookupVMList = new List<LookupVM>();
-        }
-        public List<LookupVM> ChildLookupVMList => _lookupVMList;
+        public List<AttrValidationVM> AttrVMList { get; private set; } = new List<AttrValidationVM>();
+        public List<LookupVM> LookupVMList { get; private set; } = new List<LookupVM>();
         public object SelectedXmlArg
         {
             get => _selectedXmlArg;
@@ -165,6 +156,21 @@ namespace WPFApp.ViewModels
         }
         #endregion
 
+        #region Public Methods
+        public LookupVM GetNewLookupVM()
+        {
+            var vm = new LookupVM();
+            LookupVMList.Add(vm);
+            return vm;
+        }
+        public AttrValidationVM GetNewAttrVM(AttrRecord AttrRecord)
+        {
+            var vm = new AttrValidationVM(AttrRecord);
+            AttrVMList.Add(vm);
+            return vm;
+        }
+        #endregion
+
         #region Public Commands
         public DelegateCommand HomePageCommand { get; }
         public DelegateCommand BackUserCommand { get; }
@@ -185,7 +191,8 @@ namespace WPFApp.ViewModels
                 this.IsBackButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
                 Ex.Log($"VM => Logic NextPage() param={param};");
-                FillPayrecToSendWithLookup();
+                FillWithLookupsVM();
+                FillWithAttrInputVM();
                 EripToSend.ResponseReq.PayRecord = new List<PayRecord>() { PayrecToSend };
                 Responce = await StaticMain.NextPage(param ?? EripToSend);
             }
@@ -197,9 +204,15 @@ namespace WPFApp.ViewModels
         private async Task NextPageValidate(object param = null)
         {
             Ex.Log($"VM: {nameof(NextPageValidate)}(): validate sum={PayrecToSend.Summa};");
-            var valResult = payValidator.Validate(PayrecToSend);
-            var isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));
+            bool isValid = true;
+            Ex.TryLog(() =>
+            {
+                payValidator = new PayRecordValidator();
+                var valResult = payValidator.Validate(PayrecToSend);
+                isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));                
+            });
             if (isValid) { await NextPage(param); }
+
         }
 
         private async void BackPage()
@@ -234,29 +247,44 @@ namespace WPFApp.ViewModels
         #endregion
 
         #region Private Methods
-        private void FillPayrecToSendWithLookup()
+        private void FillWithLookupsVM()
         {
-            Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): childVM count={ChildLookupVMList.Count}");
-            foreach (var lookupVM in ChildLookupVMList)
+            Ex.Log($"{nameof(FillWithLookupsVM)}(): childVM count={LookupVMList.Count}");
+            foreach (var lookupVM in LookupVMList)
             {
                 var selectedValue = lookupVM?.Lookup?.SelectedItem?.Value;
-                Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): lookup: name={lookupVM.Lookup.Name}; selected value={selectedValue}");
+                Ex.Log($"{nameof(FillWithLookupsVM)}(): lookup: name={lookupVM.Lookup.Name}; selected value={selectedValue}");
                 foreach (var attr in PayrecToSend?.AttrRecord)
                 {
-                    if (attr?.Lookup == lookupVM?.Lookup?.Name && attr?.Lookup!=null)
+                    if (attr?.Lookup == lookupVM?.Lookup?.Name && attr?.Lookup != null)
                     {
-                        Ex.Log($"{nameof(FillPayrecToSendWithLookup)}(): Match! attr: name={attr.Name}; value={attr.Value}; newValue={selectedValue}");
+                        Ex.Log($"{nameof(FillWithLookupsVM)}(): Match! attr: name={attr.Name}; value={attr.Value}; newValue={selectedValue}");
                         attr.Value = selectedValue;
                     }
                 }
             }
         }
-
-        private void ClearLookup()
+        private void FillWithAttrInputVM()
         {
-            _lookupVMList = new List<LookupVM>();
-            _lookupVM = null; ;
+            Ex.Log($"{nameof(FillWithAttrInputVM)}(): childVM count={AttrVMList.Count}");
+            foreach (var vmAttr in AttrVMList)
+            {
+                var nameAttr = vmAttr?.AttrRecord?.Name;
+                foreach (var attr in PayrecToSend?.AttrRecord)
+                {
+                    if (attr?.Name == nameAttr && attr?.Name!=null)
+                    {
+                        Ex.Log($"{nameof(FillWithAttrInputVM)}(): Match! attr: name={attr.Name}; value={attr.Value}; newValue={vmAttr.ValueAttrRecord}");
+                        attr.Value = vmAttr.ValueAttrRecord;
+                    }
+                }
+            }
         }
+        //private void ClearLookup()
+        //{
+        //    _lookupVMList = new List<LookupVM>();
+        //    _lookupVM = null; ;
+        //}
         #endregion
 
         //#region iNotifyDataErrorInfo 2019 Matyaszek

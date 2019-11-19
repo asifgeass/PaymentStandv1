@@ -9,26 +9,40 @@ namespace XmlStructureComplat.Validators
 {
     public class AttrRecordValidator : AbstractValidator<AttrRecord>
     {
-        private int minLength;
-        private int maxLength;
+        private int temp;
         public AttrRecordValidator()
         {
-            RuleFor(attr => attr.Value)
-                .NotNull().WithName("Значение")
-                .NotEmpty().WithName("Значение")
-                .When(attr => attr.Mandatory != null && attr.Mandatory == "1");
+            When(attr => attr.Mandatory != null && attr.Mandatory == "1", () =>
+            {
+                RuleFor(attr => attr.Value)
+                    .NotNull().WithName("Значение")
+                    .NotEmpty().WithName("Значение")
+                    ;
+            });
 
-            RuleFor(attr => attr.Value)
-                .MinimumLength(minLength).WithName("Значение")
-                .When(attr => !string.IsNullOrEmpty(attr.MinLength) 
-                && int.TryParse(attr.MinLength, out minLength)
-                && attr.Value != null);
+            When(x => x.MinLength != null && int.TryParse(x.MinLength, out temp) && !string.IsNullOrEmpty(x.Value), () =>
+            {
+                RuleFor(attr => attr.Value.Length)
+                    .GreaterThanOrEqualTo(attr => int.Parse(attr.MinLength)).WithName("Длина");
+            });
 
-            RuleFor(attr => attr.Value)
-                .MaximumLength(maxLength).WithName("Значение")
-                .When(attr => !string.IsNullOrEmpty(attr.MaxLength) 
-                && int.TryParse(attr.MaxLength, out maxLength)
-                && attr.Value != null);
+            When(x => x.MaxLength != null && int.TryParse(x.MaxLength, out temp) && !string.IsNullOrEmpty(x.Value), () =>
+            {
+                RuleFor(attr => attr.Value.Length)
+                    .LessThanOrEqualTo(attr => int.Parse(attr.MaxLength)).WithName("Длина");
+            });
+
+            //RuleFor(attr => attr.Value)
+            //    .MinimumLength(x=>x.).WithName("Значение2")
+            //    .When(attr => !string.IsNullOrEmpty(attr.MinLength) 
+            //    && int.Parse(attr.MinLength)
+            //    && attr.Value != null);
+
+            //RuleFor(attr => attr.Value)
+            //    .MaximumLength(int.Parse(attr.MaxLength) ).WithName("Значени3")
+            //    .When(attr => !string.IsNullOrEmpty(attr.MaxLength) 
+            //    && int.Parse(attr.MaxLength)
+            //    && attr.Value != null);
 
         }
     }

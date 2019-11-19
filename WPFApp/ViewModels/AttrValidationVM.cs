@@ -11,10 +11,19 @@ namespace WPFApp.ViewModels
     public class AttrValidationVM : ValidatableBindableBase
     {
         private readonly AttrRecordValidator attrValidator = new AttrRecordValidator();
-        private AttrRecord _attrRecord;
+        private AttrRecord _attrRecord = new AttrRecord();
+
+        #region ctor
+        public AttrValidationVM() { }
+        public AttrValidationVM(AttrRecord AttrRecord) : this()
+        {
+            _attrRecord = AttrRecord;
+        }
+        #endregion
+
         public AttrRecord AttrRecord
         {
-            get => AttrRecord;
+            get => _attrRecord;
             set => SetProperty(ref _attrRecord, value);
         }
 
@@ -23,9 +32,10 @@ namespace WPFApp.ViewModels
             get => AttrRecord.Value;
             set
             {
-                AttrRecord.Value = value;
-                RaisePropertyChanged();
+                AttrRecord.Value = value;                
                 var valResult = attrValidator.Validate(AttrRecord);
+                var isValid = ValidateResult(valResult);
+                RaisePropertyChanged();
             }
         }
     }

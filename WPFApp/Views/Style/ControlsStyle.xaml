@@ -15,6 +15,7 @@
         <Setter Property="Height" Value="Auto" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.5" />
+        <Setter Property="materialDesign:ValidationAssist.FontSize" Value="25" />
         <Setter Property="materialDesign:TextFieldAssist.TextFieldCornerRadius" Value="25 25 0 0" />
         <Setter Property="materialDesign:TextFieldAssist.TextBoxViewMargin" Value="0 6 0 0" />
     </Style>

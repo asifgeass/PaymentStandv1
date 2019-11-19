@@ -22,7 +22,7 @@ namespace WPFApp
     public class ViewDynamicMenuBuilder
     {
         #region fields
-        private DynamicMenuWindowViewModel model;
+        private DynamicMenuWindowViewModel vmodel;
         private Window window;
         private FormAround form = new FormAround();
         private ViewPagesManager views = new ViewPagesManager();
@@ -38,9 +38,9 @@ namespace WPFApp
             try
             {
                 //token = cancelTokenSource.Token;
-                model = window.DataContext as DynamicMenuWindowViewModel;
-                model.NewResponseComeEvent += BuildMenuOnReponse;
-                model.PropertyChanged += IsLoadingMenuChanged;
+                vmodel = window.DataContext as DynamicMenuWindowViewModel;
+                vmodel.NewResponseComeEvent += BuildMenuOnReponse;
+                vmodel.PropertyChanged += IsLoadingMenuChanged;
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace WPFApp
         public bool IsPageAvaiable => views.IsNextAvaible;
         private async void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(model.IsLoadingMenu))
+            if(e.PropertyName == nameof(vmodel.IsLoadingMenu))
             {
                 var bar = new ProgressBar();
                 bar.IsIndeterminate = true;
@@ -62,11 +62,11 @@ namespace WPFApp
                 bar.Width = 50;
                 SetWindow(bar);
             }
-            if (e.PropertyName == nameof(model.Exception))
+            if (e.PropertyName == nameof(vmodel.Exception))
             {
-                DisplayErrorPage(model.Exception);
+                DisplayErrorPage(vmodel.Exception);
             }
-            if (e.PropertyName == nameof(model.IsHomeButtonActive))
+            if (e.PropertyName == nameof(vmodel.IsHomeButtonActive))
             {
                 //try
                 //{
@@ -89,11 +89,12 @@ namespace WPFApp
                 //}
             }
         }
-        private void ResponseAnalizeAndBuild()
+        private void HandleResponse()
         {
-            Ex.Log($"{nameof(ViewDynamicMenuBuilder)}.{nameof(ResponseAnalizeAndBuild)}()");
-            if (model == null) { throw new NullReferenceException("main VM = null"); };
-            var rootResponse = model.Responce;
+            Ex.Log($"{nameof(ViewDynamicMenuBuilder)}.{nameof(HandleResponse)}()");
+            if (vmodel == null) { throw new NullReferenceException("main VM = null"); };
+            ResetBeforeHandle();
+            var rootResponse = vmodel.Responce;
             var resp = rootResponse.ResponseReq;
             if (resp != null && resp?.ErrorCode != 0)
             {
@@ -124,7 +125,7 @@ namespace WPFApp
                 {
                     var payrec = paylist.First();
                     var attrRecords = payrec.AttrRecord;
-                    model.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
+                    vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
                     this.BuildLookups(paylist);
                     this.BuildDisplayInfo(payrec);
                     this.BuildInputFields(attrRecords);
@@ -155,7 +156,7 @@ namespace WPFApp
             {
                 views.AddControl(new TextBlock()); //отступ
                 var inputbox = Controls.TextBoxHint("Сумма оплаты");
-                var binding = new Binding($"{nameof(model.PayrecToSendSumma)}");
+                var binding = new Binding($"{nameof(vmodel.PayrecToSendSumma)}");
                 binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 inputbox.SetBinding(TextBox.TextProperty, binding);
@@ -165,11 +166,11 @@ namespace WPFApp
 
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
-            button.ButtonControl.Command = model.NextPageCommand;
+            button.ButtonControl.Command = vmodel.NextPageCommand;
             if (payrec.GetPayListType == "0")
             {
                 button.Text = "Оплатить";
-                button.ButtonControl.Command = model.NextPageTestValidate;
+                button.ButtonControl.Command = vmodel.NextPageTestValidate;
                 Ex.Log("========== ОПЛАТИТЬ КНОПКА ПОСТРОЕНА =============");
             }
             views.AddControl(button);
@@ -180,15 +181,20 @@ namespace WPFApp
             {
                 if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                 {
-                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR input: attr={attr.Name}");
+                    Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
                     string hint = attr.Name;
                     if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
                     var inputbox = Controls.TextBoxHint(hint);
-                    int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                    var binding = new Binding($"{nameof(model.PayrecToSend)}.AttrRecord[{index}].Value");
+
+                    var vmAttr = vmodel.GetNewAttrVM(attr);
+                    inputbox.DataContext = vmAttr;
+
+                    //int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
+                    var binding = new Binding($"{nameof(vmAttr.ValueAttrRecord)}");
                     binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                     binding.Mode = BindingMode.TwoWay;
                     inputbox.SetBinding(TextBox.TextProperty, binding);
+
                     views.AddControl(inputbox);
                 }
             }
@@ -201,9 +207,9 @@ namespace WPFApp
                 foreach (var payrec in paylist)
                 {
                     var cardButton = Controls.ButtonCard(payrec.Name);
-                    cardButton.ButtonControl.Command = model.SendParamCommand;
+                    cardButton.ButtonControl.Command = vmodel.SendParamCommand;
                     cardButton.ButtonControl.CommandParameter = payrec;
-                    model.LabelCurrent = payrec?.GroupRecord?.Name;//????
+                    vmodel.LabelCurrent = payrec?.GroupRecord?.Name;//????
                                                                    //CheckButtonCommand(button.Button, paylist.Last() == payrec);
                     views.AddControl(cardButton);
                 }
@@ -215,7 +221,7 @@ namespace WPFApp
             {
                 if (attr.Edit != 1 && attr.View == 1)
                 {
-                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
+                    Ex.Log($"{nameof(HandleResponse)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
                     var label = Controls.LabelInfo($"{attr.Name} = {attr.Value};");
                     views.AddControl(label);
                 }
@@ -247,14 +253,14 @@ namespace WPFApp
             {
                 if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                 {
-                    Ex.Log($"{nameof(ResponseAnalizeAndBuild)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
+                    Ex.Log($"{nameof(HandleResponse)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
                     List<Lookup> lookups = paylist?.First()?.Lookups;
                     var list = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower());
                     Lookup selectedLookup = list?.FirstOrDefault();
                     if (selectedLookup == null) { continue; }
-                    int index = model.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
+                    int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                     views.NewPage();
-                    LookupVM childVM = model.GetNewLookupVM();
+                    LookupVM childVM = vmodel.GetNewLookupVM();
                     childVM.Lookup = selectedLookup;
                     views.AddDataContext(childVM);
                     views.AddControl(Controls.LabelHeader(selectedLookup.Name));
@@ -277,7 +283,7 @@ namespace WPFApp
         {
             try
             {
-                ClearOnResponse();
+                ClearViewPagesOnResponse();
                 BuildsPages();
             }
             catch (Exception ex)
@@ -287,18 +293,15 @@ namespace WPFApp
         }
         private void BuildsPages()
         {
-            this.ResponseAnalizeAndBuild();
+            this.HandleResponse();
             this.fakeCount = views.Count;
             if (views.Count == 1)
             {
                 this.NextPage();
             }
             if (views.Count > 1)
-            {
-                this.views = new ViewPagesManager();
-                model.ClearChildLookupVM();
-                Ex.Log($"{nameof(BuildsPages)}(): if(pages.Count > 1) Clear & reBuild");
-                this.ResponseAnalizeAndBuild();
+            {                
+                this.HandleResponse();
                 this.NextPage();
             }
             if (views.Count <= 0)
@@ -308,6 +311,14 @@ namespace WPFApp
                 DisplayErrorPage(str);
             }
         }
+
+        private void ResetBeforeHandle()
+        {
+            this.views = new ViewPagesManager();
+            vmodel.LookupVMList.Clear();
+            vmodel.AttrVMList.Clear();
+        }
+
         private void SetWindow(UIElement argElement)
         {
             var around = new FormAround();
@@ -393,7 +404,7 @@ namespace WPFApp
             }
             else
             {
-                model.SendParamCommand.Execute(param);
+                vmodel.SendParamCommand.Execute(param);
             }
         }
         private void PrevPage()
@@ -405,9 +416,9 @@ namespace WPFApp
             }
             else
             {
-                if (model.BackUserCommand.CanExecute())
+                if (vmodel.BackUserCommand.CanExecute())
                 {
-                    model.BackUserCommand.Execute();
+                    vmodel.BackUserCommand.Execute();
                 }
             }
         }
@@ -432,10 +443,10 @@ namespace WPFApp
                 Ex.Log("Я тут тикаю пока ХОУМ батон отключена");
             }
             Ex.Log("Я тут врубаю кнопку ХОУМ");
-            model.IsHomeButtonActive = true;
+            vmodel.IsHomeButtonActive = true;
             return;
         }
-        private void ClearOnResponse()
+        private void ClearViewPagesOnResponse()
         {
             views = new ViewPagesManager();
             fakeCount = 0;
