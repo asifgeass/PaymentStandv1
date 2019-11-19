@@ -27,9 +27,9 @@
             <Label Name="currentLabel" 
                    HorizontalContentAlignment="Center"    
                    Foreground="{DynamicResource MaterialDesignBody}"
-                   Background="{DynamicResource MaterialDesignToolBarBackground}">
+                   >
                 <Label.Content>
-                    <TextBlock Text="{Binding LabelCurrent}" Margin="5" FontWeight="DemiBold"/>
+                    <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold"/>
                 </Label.Content>
             </Label>
 
@@ -47,7 +47,7 @@
                     Command="{Binding HomePageCommand}"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                    Margin="2 0 0 0"
+                    Margin="2 2 0 2"
                     >
                 <materialDesign:PackIcon
                     Kind="Home"
@@ -62,7 +62,7 @@
                     Height="Auto"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                    Margin="2 5 0 2"
+                    Margin="2 2 0 2"
                     >
                 <materialDesign:PackIcon
                     Kind="ArrowBack"
@@ -76,6 +76,9 @@
                       Grid.Row="1" 
                       Grid.Column="1" 
                       VerticalScrollBarVisibility="Auto"
-                      VerticalContentAlignment="Center"/>
+                      VerticalContentAlignment="Center"
+                      PanningMode="None"
+                      CanContentScroll="False"
+                      />
     </Grid>
 </UserControl>

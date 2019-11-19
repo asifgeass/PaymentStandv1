@@ -24,8 +24,12 @@ namespace WPFApp.Views
         public DynamicMenuWindow()
         {
             InitializeComponent();
-            this.WindowStyle = WindowStyle.None;
+#if DEBUG
+            this.WindowState = WindowState.Normal;
+#else
             this.WindowState = WindowState.Maximized;
+            this.WindowStyle = WindowStyle.None;
+#endif
             //this.WindowState = WindowState.Maximized;
         }
 

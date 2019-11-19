@@ -15,9 +15,8 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        Title="DynamicMenuWindow" Height="900" Width="1600" Loaded="Window_Loaded" MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <!--TextElement.FontSize="{StaticResource fontSize}"-->
-    
+        Title="DynamicMenuWindow" Width="1600" Height="900"  Loaded="Window_Loaded">
+
     <Window.Resources>
         <ResourceDictionary Source="Style/ControlsStyle.xaml"/>
     </Window.Resources>

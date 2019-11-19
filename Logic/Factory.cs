@@ -58,7 +58,7 @@ namespace Logic
                 Ex.TryLog(() => payrec.PayAll = null);
                 Ex.TryLog(() => payrec.Currency = null);
                 Ex.TryLog(() => payrec.Fine = null);
-                Ex.TryLog(() => payrec.ClaimID = null);
+                //Ex.TryLog(() => payrec.ClaimID = null);
                 Ex.TryLog(() => payrec.AttrRecord = null);
             }
             catch (Exception ex) { ex.Log(); }

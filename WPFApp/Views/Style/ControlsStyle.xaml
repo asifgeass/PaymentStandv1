@@ -33,7 +33,7 @@
         <Setter Property="Height" Value="Auto" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="10 10 10 10" />
-        <Setter Property="materialDesign:RippleAssist.Feedback" Value="{DynamicResource PrimaryHueDarkBrush}"/>
+        <Setter Property="materialDesign:RippleAssist.Feedback" Value="{DynamicResource MaterialDesignFlatButtonRipple}"/>
     </Style>
 
     <Style x:Key="{x:Type Button}" 
@@ -45,7 +45,7 @@
         <Setter Property="Margin" Value="2" />
         <Setter Property="Height" Value="Auto" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
-        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="25 25 25 25" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="20 20 20 20" />
     </Style>
 
     <Style x:Key="{x:Type TextBlock}" 

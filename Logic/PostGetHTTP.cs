@@ -68,7 +68,7 @@ namespace Logic
             }
             catch (Exception ex)
             {
-                var msg = $"Error at {nameof(PostStringGetXML)}()";
+                var msg = $"POST Error";
                 WriteTextBox(msg);
                 ex.Throw(msg);
                 return null;
@@ -122,7 +122,7 @@ namespace Logic
             {
                 var msg = $"1postXMLData():\n{ex.Message}";
                 WriteTextBox(msg);
-                throw new Exception($"Error at {nameof(PostStringGetString)}()", ex);
+                throw new Exception($"POST Error", ex);
             }
         }
 

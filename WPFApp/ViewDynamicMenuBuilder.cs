@@ -101,14 +101,14 @@ namespace WPFApp
                 string str = $"Ошибка {resp.ErrorCode}: {resp.ErrorText}";
                 if(rootResponse.EnumType == EripQAType.POSPayResponse)
                 { 
-                    str = $"Оплата не была произведена.\n\nError Code={resp.ErrorCode};\nОписание={resp.ErrorText};";
+                    str = $"Оплата не была произведена.\n\nОшибка {resp.ErrorCode}: {resp.ErrorText};";
                     if(resp.ErrorCode != 128 && resp.ErrorCode != 16)
-                    { Ex.Error($"Unknown MDOM POS Pay Error:\nCode={resp.ErrorCode}; Text={resp.ErrorText}"); }
+                    { Ex.Error($"Unknown POS Error:\nОшибка {resp.ErrorCode}: {resp.ErrorText};"); }
                 }
                 if(resp.ErrorCode == 128) //timeout 30s
-                { str = "Оплата не была произведена.\nУ терминала истекло время ожидания карты.\n\nПопробуйте еще раз."; }
+                { str = $"Оплата не была произведена.\nУ терминала истекло время ожидания карты.(Код 128)\n\nПопробуйте еще раз."; }
                 if (resp.ErrorCode == 16) //canceled by user
-                { str = "Оплата не была произведена.\nОтменено пользователем."; }
+                { str = $"Оплата не была произведена.\nОтменено пользователем.(Код 16)"; }
                 Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
                 control.Foreground = Brushes.DarkRed;
