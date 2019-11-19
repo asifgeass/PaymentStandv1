@@ -10,7 +10,7 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="900" d:DesignWidth="1600">
 
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*" MinHeight="70"/>
             <RowDefinition Height="100*"/>
@@ -76,9 +76,8 @@
                       Grid.Row="1" 
                       Grid.Column="1" 
                       VerticalScrollBarVisibility="Auto"
-                      VerticalContentAlignment="Center"
-                      PanningMode="None"
-                      CanContentScroll="False"
+                      VerticalContentAlignment="Top"
+                      PanningMode="VerticalOnly"
                       />
     </Grid>
 </UserControl>

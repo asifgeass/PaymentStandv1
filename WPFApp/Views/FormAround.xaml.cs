@@ -32,6 +32,10 @@ namespace WPFApp
             get => this.panelStk.Content;
             set => this.panelStk.Content = value;
         }
-            
+
+        private void MainGrid_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
