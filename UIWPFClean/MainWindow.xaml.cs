@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes;
 using MaterialDesignColors;
+using WPFApp.ViewModels;
 
 namespace UIWPFClean
 {
@@ -24,9 +25,12 @@ namespace UIWPFClean
     public partial class MainWindow : Window
     {
         private int count = 0;
+        private DynamicMenuWindowViewModel vm;
         public MainWindow()
         {
             InitializeComponent();
+            this.vm = new DynamicMenuWindowViewModel();
+            this.DataContext = this.vm;
         }
 
         private void Card_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -37,25 +41,12 @@ namespace UIWPFClean
         private void button_Click(object sender, RoutedEventArgs e)
         {
             TextBox txtbox = new TextBox();
-            HintAssist.SetHint(txtbox, "Hint #"+count);
-
             Button btn = new Button();
 
-            btn.BorderBrush = null;
-            btn.Background = Brushes.Gray;
-            btn.SetResourceReference(Button.BackgroundProperty, "MaterialDesignPaper");
-            btn.Content = $"Added {count} button";
-            ShadowAssist.SetShadowDepth(btn, ShadowDepth.Depth3);
-            ShadowAssist.SetShadowEdges(btn, ShadowEdges.Right);
-            ShadowAssist.SetShadowEdges(btn, ShadowEdges.Top);
             SolidColorBrush brush = Application.Current.TryFindResource("PrimaryHueDarkBrush") as SolidColorBrush;
-            RippleAssist.SetFeedback(btn, brush);
-            //HintAssist.SetFloatingScale
-            
-            //ShadowAssist.SetShadowEdges(btn, ShadowEdges.Bottom);
             btn.SetResourceReference(Button.ForegroundProperty, "MaterialDesignBody");
-            //btn.SetResourceReference(Button.FontFamilyProperty, "MaterialDesignFont");
 
+            this.StackPanel1.Children.Add(txtbox);
             this.StackPanel1.Children.Add(new TextBlock());
             this.StackPanel1.Children.Add(btn);
             count++;

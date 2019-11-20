@@ -17,104 +17,19 @@
         <ResourceDictionary Source="Styles/ControlsStyle.xaml"/>
     </Window.Resources>
 
-    <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Center">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="10*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center">
-                    
-                <TextBox materialDesign:HintAssist.Hint="Hint" 
-                         Height="Auto" 
-                         materialDesign:HintAssist.FloatingScale="0.5"/>
-                <TextBox materialDesign:HintAssist.Hint="default hint" Height="Auto"/>
-
-                <Button Style="{StaticResource CardButton}" 
-                        Content="CardButton default"
-                        Height="200"
-                        />
-
-                <Button>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Width="Auto" HorizontalAlignment="Center">
-                                <Label.Content>
-                                    <materialDesign:PackIcon Kind="CheckboxMarkedCircle" HorizontalAlignment="Center"/>
-                                </Label.Content>
-                            </Label>
-                            <Label Grid.Column="1" Width="Auto" HorizontalAlignment="Center">
-                                <Label.Content>
-                                    <materialDesign:PackIcon Kind="CheckboxMarkedCircleOutline" HorizontalAlignment="Center"/>
-                                </Label.Content>
-                            </Label>
-                            
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>
-                        <TextBlock TextWrapping="Wrap" 
-                                   Margin="16"
-                                   Text="Button Content=TextBlock with very long text endless thread of symbols letters and other stuff"/>
-                    </Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>
-                        <TextBlock TextWrapping="Wrap" 
-                                   Margin="16"
-                                   Text="Button Content=TextBlock"/>
-                    </Button.Content>
-                </Button>
-                <Button>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20*"/>
-                                <ColumnDefinition Width="100*"/>
-                                <ColumnDefinition Width="20*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20*"/>
-                                <RowDefinition Height="100*"/>
-                                <RowDefinition Height="20*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="1" Grid.Column="1" 
-                                       TextWrapping="Wrap" 
-                                       Text="Button Content=Grid with TextBlock"
-                                       />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-
-                <Button>
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*"/>
-                                <ColumnDefinition Width="100*"/>
-                                <ColumnDefinition Width="10*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20*"/>
-                                <RowDefinition Height="100*"/>
-                                <RowDefinition Height="20*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="1" Grid.Column="1" 
-                                       TextWrapping="Wrap" 
-                                       Text="Button Content=Grid with TextBlock with very long text endless thread of symbols letters and other stuff"
-                                       />
-                        </Grid>
-                    </Button.Content>
-                </Button>
+    <ScrollViewer Grid.Column="1" Grid.Row="1" 
+                  VerticalScrollBarVisibility="Auto" 
+                  VerticalContentAlignment="Center">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center">
 
             </StackPanel>
-            </Grid>
+        </Grid>
             
         </ScrollViewer>        
 
