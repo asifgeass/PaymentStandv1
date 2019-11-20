@@ -40,13 +40,17 @@ namespace UIWPFClean
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            TextBox txtbox = new TextBox();
             Button btn = new Button();
+            var inputbox = new TextBox();
+            var binding = new Binding($"{nameof(vm.PayrecToSendSumma)}");
+            binding.Mode = BindingMode.TwoWay;
+            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            inputbox.SetBinding(TextBox.TextProperty, binding);
 
             SolidColorBrush brush = Application.Current.TryFindResource("PrimaryHueDarkBrush") as SolidColorBrush;
             btn.SetResourceReference(Button.ForegroundProperty, "MaterialDesignBody");
 
-            this.StackPanel1.Children.Add(txtbox);
+            this.StackPanel1.Children.Add(inputbox);
             this.StackPanel1.Children.Add(new TextBlock());
             this.StackPanel1.Children.Add(btn);
             count++;

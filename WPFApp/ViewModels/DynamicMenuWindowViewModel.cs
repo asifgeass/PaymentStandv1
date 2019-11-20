@@ -21,7 +21,7 @@ namespace WPFApp.ViewModels
     public class DynamicMenuWindowViewModel : ValidatableBindableBase /*ValidatableBindableBase*/ //, INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
-        private PayRecordValidator payValidator;        
+        private PayRecordValidator payValidator = new PayRecordValidator();
 
         #region ctor
         public DynamicMenuWindowViewModel()
@@ -81,14 +81,14 @@ namespace WPFApp.ViewModels
         }
         public string PayrecToSendSumma
         {
-            get => PayrecToSend.Summa;
+            get => PayrecToSend?.Summa;
             set
             {
                 Ex.Log($"mainVM: PayrecToSendSumma SETTER val={value};");
+                if (PayrecToSend == null) PayrecToSend = new PayRecord();
                 PayrecToSend.Summa = value;                
                 Ex.TryLog(() =>
                 {
-                    payValidator = new PayRecordValidator();
                     var valResult = payValidator.Validate(_payrecToSend);
                     var isValid = ValidateResult(valResult);
                 });
@@ -208,7 +208,6 @@ namespace WPFApp.ViewModels
             bool isValid = true;
             Ex.TryLog(() =>
             {
-                payValidator = new PayRecordValidator();
                 var valResult = payValidator.Validate(PayrecToSend);
                 isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));                
             });
