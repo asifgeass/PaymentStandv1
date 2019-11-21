@@ -11,6 +11,7 @@ using MaterialDesignThemes.Wpf;
 using System.Windows.Media;
 using WPFApp.Views;
 using System.Windows.Media.Imaging;
+using ExceptionManager;
 
 namespace WPFApp
 {
@@ -106,14 +107,19 @@ namespace WPFApp
             bar.Margin = new Thickness(50);            
 
             var imgLeft = new Image();
-            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_ContactlessBlack.png"));
-            imgLeft.Stretch = Stretch.Uniform;
             var imgRight = new Image();
-            imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_chip1.png"));
-            imgRight.Stretch = Stretch.None;
             var imgRight2 = new Image();
-            imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_side.png"));
-            imgRight2.Stretch = Stretch.None;
+            Ex.TryLog("Не удалось загрузить изображение из ресурсов.", () =>
+            {
+                imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_ContactlessBlack.png"));
+                imgLeft.Stretch = Stretch.Uniform;
+
+                imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_chip1.png"));
+                imgRight.Stretch = Stretch.None;
+
+                imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_side.png"));
+                imgRight2.Stretch = Stretch.None;
+            });
 
             var center = new StackPanel();
             center.VerticalAlignment = VerticalAlignment.Center;
