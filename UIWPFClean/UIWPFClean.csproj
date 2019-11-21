@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -110,6 +111,27 @@
       <Project>{C42E41D0-948D-4104-AC39-942DC48D5A09}</Project>
       <Name>WPFApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_contactless.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_chip11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_chipColored.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_chip12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_chip3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_side.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_ContactlessBlack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

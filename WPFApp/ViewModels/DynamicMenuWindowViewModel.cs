@@ -21,6 +21,7 @@ namespace WPFApp.ViewModels
     public class DynamicMenuWindowViewModel : ValidatableBindableBase /*ValidatableBindableBase*/ //, INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
+        public event Action PaymentWaitingEvent = () => { };
         private PayRecordValidator payValidator = new PayRecordValidator();
 
         #region ctor
@@ -55,22 +56,29 @@ namespace WPFApp.ViewModels
         public PS_ERIP Responce 
         {
             get => _responce;
-            set 
-            {
-                this.IsHomeButtonActive = true;
-                SetProperty(ref _responce, value);                
-                Task.Run(async () =>
-                {
-                    var xml = await SerializationUtil.Serialize(value);
-                    Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
-                });
-                if (Responce?.ResponseReq?.PayRecord?.Count == 1)
-                { PayrecToSend = Responce?.ResponseReq?.PayRecord?.FirstOrDefault(); }
-                EripToSend = new PS_ERIP();
-                IsBackButtonActive = IsBackRequestPossible;
+            set
+            {                
+                SetProperty(ref _responce, value);
+                DoOnResponseCome();
                 NewResponseComeEvent();
             }
         }
+
+        private void DoOnResponseCome()
+        {
+            IsCustomLoadingScreen = false;
+            Task.Run(async () =>
+            {
+                var xml = await SerializationUtil.Serialize(Responce);
+                Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
+            });
+            if (Responce?.ResponseReq?.PayRecord?.Count == 1)
+            { PayrecToSend = Responce?.ResponseReq?.PayRecord?.FirstOrDefault(); }
+            EripToSend = new PS_ERIP();
+            this.IsHomeButtonActive = true;
+            IsBackButtonActive = IsBackRequestPossible;
+        }
+
         public PayRecord PayrecToSend
         {
             get => _payrecToSend;
@@ -125,6 +133,7 @@ namespace WPFApp.ViewModels
             get => _isLoadingMenu;
             set => SetProperty(ref _isLoadingMenu, value);
         }
+        public bool IsCustomLoadingScreen { get; set; }
         public bool IsHomeButtonActive
         {
             get => _isHomeButtonActive;
@@ -189,7 +198,7 @@ namespace WPFApp.ViewModels
             {
                 this.IsHomeButtonActive = false;
                 this.IsBackButtonActive = false;
-                IsLoadingMenu = !IsLoadingMenu;
+                if (!IsCustomLoadingScreen) IsLoadingMenu = !IsLoadingMenu;
                 Ex.Log($"VM => Logic NextPage() param={param};");
                 FillWithLookupsVM();
                 FillWithAttrInputVM();
@@ -211,8 +220,12 @@ namespace WPFApp.ViewModels
                 var valResult = payValidator.Validate(PayrecToSend);
                 isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));                
             });
-            if (isValid) { await NextPage(param); }
-
+            if (isValid)
+            {
+                IsCustomLoadingScreen = true;
+                PaymentWaitingEvent();
+                await NextPage(param);
+            }
         }
 
         private async void BackPage()

@@ -40,20 +40,65 @@ namespace UIWPFClean
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = new Button();
-            var inputbox = new TextBox();
-            var binding = new Binding($"{nameof(vm.PayrecToSendSumma)}");
-            binding.Mode = BindingMode.TwoWay;
-            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            inputbox.SetBinding(TextBox.TextProperty, binding);
+            var columnGrid = new Grid();
+            ColumnDefinition gridCol1 = new ColumnDefinition();
+            ColumnDefinition gridCol2 = new ColumnDefinition();
+            ColumnDefinition gridCol3 = new ColumnDefinition();
+            gridCol1.Width = new GridLength(30, GridUnitType.Star);
+            gridCol2.Width = new GridLength(50, GridUnitType.Star);
+            gridCol3.Width = new GridLength(250);
+            columnGrid.ColumnDefinitions.Add(gridCol1);
+            columnGrid.ColumnDefinitions.Add(gridCol2);
+            columnGrid.ColumnDefinitions.Add(gridCol3);
 
-            SolidColorBrush brush = Application.Current.TryFindResource("PrimaryHueDarkBrush") as SolidColorBrush;
-            btn.SetResourceReference(Button.ForegroundProperty, "MaterialDesignBody");
+            var bar = new ProgressBar();
+            bar.IsIndeterminate = true;
+            bar.Margin = new Thickness(50);
 
-            this.StackPanel1.Children.Add(inputbox);
-            this.StackPanel1.Children.Add(new TextBlock());
-            this.StackPanel1.Children.Add(btn);
-            count++;
+            var imgLeft = new Image();
+            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_ContactlessBlack.png"));
+            imgLeft.Stretch = Stretch.Uniform;
+            var imgRight = new Image();
+            imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
+            imgRight.Stretch = Stretch.None;
+            var imgRight2 = new Image();
+            imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_side.png"));
+            imgRight2.Stretch = Stretch.None;
+
+            var centerGrid = new Grid();
+            ColumnDefinition Col1 = new ColumnDefinition();
+            ColumnDefinition Col2 = new ColumnDefinition();
+            ColumnDefinition Col3 = new ColumnDefinition();
+            gridCol1.Width = new GridLength(20, GridUnitType.Star);
+            gridCol2.Width = new GridLength(50, GridUnitType.Star);
+            gridCol3.Width = new GridLength(20, GridUnitType.Star);
+            centerGrid.Children.Add(bar);
+            Grid.SetColumn(bar, 1);
+
+            var center = new StackPanel();
+            center.VerticalAlignment = VerticalAlignment.Center;
+            center.Children.Add(new TextBlock()
+            {
+                Text = "Пожалуйста, поднесите карту к POS-терминалу и совершите оплату любым способом."
+                ,
+                TextWrapping = TextWrapping.Wrap,
+                TextAlignment = TextAlignment.Center
+            });
+            center.Children.Add(centerGrid);
+
+            var doublePic = new StackPanel();
+            doublePic.VerticalAlignment = VerticalAlignment.Center;
+            doublePic.Children.Add(imgRight);
+            doublePic.Children.Add(imgRight2);
+
+            columnGrid.Children.Add(imgLeft);
+            columnGrid.Children.Add(center);
+            columnGrid.Children.Add(doublePic);
+            Grid.SetColumn(imgLeft, 0);
+            Grid.SetColumn(center, 1);
+            Grid.SetColumn(doublePic, 2);
+
+            this.Content = columnGrid;
         }
     }
 }

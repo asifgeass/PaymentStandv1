@@ -10,6 +10,7 @@ using System.Windows;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Media;
 using WPFApp.Views;
+using System.Windows.Media.Imaging;
 
 namespace WPFApp
 {
@@ -85,6 +86,59 @@ namespace WPFApp
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
             if (nameArg != null) textBox.Text = nameArg;            
             return textBox;
+        }
+
+        public static Grid PayScreen()
+        {
+            var columnGrid = new Grid();
+            ColumnDefinition gridCol1 = new ColumnDefinition();
+            ColumnDefinition gridCol2 = new ColumnDefinition();
+            ColumnDefinition gridCol3 = new ColumnDefinition();
+            gridCol1.Width = new GridLength(30, GridUnitType.Star);
+            gridCol2.Width = new GridLength(50, GridUnitType.Star);
+            gridCol3.Width = new GridLength(250);
+            columnGrid.ColumnDefinitions.Add(gridCol1);
+            columnGrid.ColumnDefinitions.Add(gridCol2);
+            columnGrid.ColumnDefinitions.Add(gridCol3);
+
+            var bar = new ProgressBar();
+            bar.IsIndeterminate = true;
+            bar.Margin = new Thickness(50);            
+
+            var imgLeft = new Image();
+            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_ContactlessBlack.png"));
+            imgLeft.Stretch = Stretch.Uniform;
+            var imgRight = new Image();
+            imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_chip1.png"));
+            imgRight.Stretch = Stretch.None;
+            var imgRight2 = new Image();
+            imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_side.png"));
+            imgRight2.Stretch = Stretch.None;
+
+            var center = new StackPanel();
+            center.VerticalAlignment = VerticalAlignment.Center;
+            center.Children.Add(new TextBlock()
+            {
+                Text = "Пожалуйста, поднесите карту к POS-терминалу и совершите оплату любым способом."
+                ,
+                TextWrapping = TextWrapping.Wrap,
+                TextAlignment = TextAlignment.Center
+            });
+            center.Children.Add(bar);
+
+            var doublePic = new StackPanel();
+            doublePic.VerticalAlignment = VerticalAlignment.Center;
+            doublePic.Children.Add(imgRight);
+            doublePic.Children.Add(imgRight2);
+
+            columnGrid.Children.Add(imgLeft);
+            columnGrid.Children.Add(center);
+            columnGrid.Children.Add(doublePic);
+            Grid.SetColumn(imgLeft, 0);
+            Grid.SetColumn(center, 1);
+            Grid.SetColumn(doublePic, 2);
+
+            return columnGrid;
         }
     }
 }

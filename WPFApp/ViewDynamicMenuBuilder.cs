@@ -41,12 +41,19 @@ namespace WPFApp
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += BuildMenuOnReponse;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
+                vmodel.PaymentWaitingEvent += OnWaitingPayment; ;
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
             }
             catch (Exception ex)
             {
                 ex.Show();
             }
+        }
+
+        private void OnWaitingPayment()
+        {
+            var screen = Controls.PayScreen();
+            this.SetWindow(screen);
         }
         #endregion
         public bool IsPageAvaiable => views.IsNextAvaible;
