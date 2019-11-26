@@ -87,7 +87,7 @@ namespace WPFApp.ViewModels
                 SetProperty(ref _payrecToSend, value);
             }
         }
-        public string PayrecToSendSumma
+        public string SummaPayrecToSend
         {
             get => PayrecToSend?.Summa;
             set
@@ -225,6 +225,11 @@ namespace WPFApp.ViewModels
                 IsCustomLoadingScreen = true;
                 PaymentWaitingEvent();
                 await NextPage(param);
+            }
+            else
+            {
+                SummaPayrecToSend = SummaPayrecToSend;
+                //OnPropertyChanged(nameof(SummaPayrecToSend));
             }
         }
 

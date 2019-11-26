@@ -16,6 +16,7 @@ using XmlStructureComplat;
 using XmlStructureComplat.Validators;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
+using System.Windows.Input;
 
 namespace WPFApp
 {
@@ -159,15 +160,15 @@ namespace WPFApp
         }
         private void BuildFinalButton(PayRecord payrec)
         {
-            if (payrec.Summa == "0.00" && payrec.GetPayListType == "0")
+            if ((payrec.Summa == "0.00" || payrec.Summa == string.Empty) && payrec.GetPayListType == "0")
             {
                 views.AddControl(new TextBlock()); //отступ
                 var inputbox = Controls.TextBoxHint("Сумма оплаты");
-                var binding = new Binding($"{nameof(vmodel.PayrecToSendSumma)}");
+                var binding = new Binding($"{nameof(vmodel.SummaPayrecToSend)}");
                 binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 inputbox.SetBinding(TextBox.TextProperty, binding);
-
+                
                 views.AddControl(inputbox);
             }
 
@@ -192,6 +193,21 @@ namespace WPFApp
                     string hint = attr.Name;
                     if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
                     var inputbox = Controls.TextBoxHint(hint);
+                    if (!string.IsNullOrEmpty(attr.MaxLength))
+                    {
+                        int maxLength;
+                        if(int.TryParse(attr.MaxLength, out maxLength))
+                        {
+                            inputbox.MaxLength = maxLength;
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(attr.Type) && (attr.Type=="I" || attr.Type=="R"))
+                    {
+                        inputbox.InputScope = new InputScope()
+                        {
+                            Names = { new InputScopeName(InputScopeNameValue.Number) }
+                        };
+                    }
 
                     var vmAttr = vmodel.GetNewAttrVM(attr);
                     inputbox.DataContext = vmAttr;
@@ -235,17 +251,17 @@ namespace WPFApp
             }
             #region display PAYRecord Parameters
             
-            if (payrec.Summa != "0.00")
+            if (!string.IsNullOrEmpty(payrec.Summa) && payrec.Summa != "0.00")
             {
                 var payLabel = Controls.LabelInfo($"Сумма оплаты = {payrec.Summa}");
                 views.AddControl(payLabel);
             }
-            if (payrec.Commission != "0.00")
+            if (!string.IsNullOrEmpty(payrec.Commission) && payrec.Commission != "0.00")
             {
                 var payLabel = Controls.LabelInfo($"Коммиссия = {payrec.Commission}");
                 views.AddControl(payLabel);
             }
-            if (payrec.Fine != "0.00")
+            if (!string.IsNullOrEmpty(payrec.Fine) && payrec.Fine != "0.00")
             {
                 var payLabel = Controls.LabelInfo($"Пеня = {payrec.Fine}");
                 views.AddControl(payLabel);
