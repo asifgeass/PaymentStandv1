@@ -35,6 +35,16 @@ namespace UIXmlPostTerminal
         {
             InitializeComponent();
             PostGetHTTP.WriteTextBox += WriteToTextbox;
+            try
+            {
+                StaticMain.LoadSettings();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         private void WriteToTextbox(string arg)
@@ -63,9 +73,11 @@ namespace UIXmlPostTerminal
 
         private void ButtonXMLCustom_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
-                PostGetHTTP.PostStringGetString(textboxXMLCustom.Text);
+                string url = StaticMain.Settings.ERIP.url;
+                PostGetHTTP.PostStringGetString(url, textboxXMLCustom.Text);
             }
             catch (Exception ex)
             {
@@ -177,7 +189,7 @@ namespace UIXmlPostTerminal
 
         private void buttonTerminalPost_Click(object sender, RoutedEventArgs e)
         {
-            string url = @"http://public.softclub.by:8010/mdom_pos/online.request";
+            string url = StaticMain.Settings.Terminal_MdomPOS.url;
             string request = $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{textboxXMLCustom.Text}";
             try
             {
