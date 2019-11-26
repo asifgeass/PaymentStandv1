@@ -16,6 +16,7 @@ using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes;
 using MaterialDesignColors;
 using WPFApp.ViewModels;
+using TermControls;
 
 namespace UIWPFClean
 {
@@ -118,6 +119,7 @@ namespace UIWPFClean
                 Names = { new InputScopeName(InputScopeNameValue.NumberFullWidth) }
             };
             StackPanel1.Children.Add(textbox);
+
         }
     }
 }
