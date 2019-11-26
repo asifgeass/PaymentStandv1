@@ -38,7 +38,7 @@ namespace UIWPFClean
 
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void buttonPayScreen_Click(object sender, RoutedEventArgs e)
         {
             var columnGrid = new Grid();
             ColumnDefinition gridCol1 = new ColumnDefinition();
@@ -99,6 +99,25 @@ namespace UIWPFClean
             Grid.SetColumn(doublePic, 2);
 
             this.Content = columnGrid;
+        }
+
+        private void ButtonKeyboard_Click(object sender, RoutedEventArgs e)
+        {
+            var textbox = new TextBox();
+            HintAssist.SetHint(textbox, "Number");
+            textbox.InputScope = new InputScope()
+            {
+                Names = { new InputScopeName(InputScopeNameValue.Number) }
+            };
+            StackPanel1.Children.Add(textbox);
+
+            textbox = new TextBox();
+            HintAssist.SetHint(textbox, "NumberFullWidth");
+            textbox.InputScope = new InputScope()
+            {
+                Names = { new InputScopeName(InputScopeNameValue.NumberFullWidth) }
+            };
+            StackPanel1.Children.Add(textbox);
         }
     }
 }
