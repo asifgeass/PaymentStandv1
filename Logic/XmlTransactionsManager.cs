@@ -214,6 +214,9 @@ namespace Logic
                     this.lastPCID = null;
                     this.lastKioskReceipt = null;
                     list.Current.SetBackToHome();
+                    var CheckRunOpResp = new StringBuilder();
+                    responArg.ResponseReq.PayRecord.FirstOrDefault().Check.CheckHeader.CheckLine.ForEach(x => CheckRunOpResp.AppendLine(x.Value));
+                    Print(CheckRunOpResp.ToString());
                     Print(lastPOSTransaction.Response.ResponseReq.Receipt);
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
