@@ -189,36 +189,49 @@ namespace WPFApp
             {
                 if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                 {
-                    Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
-                    string hint = attr.Name;
-                    if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
-                    var inputbox = Controls.TextBoxHint(hint);
-                    if (!string.IsNullOrEmpty(attr.MaxLength))
+                    if (!string.IsNullOrEmpty(attr.Type))
                     {
-                        int maxLength;
-                        if(int.TryParse(attr.MaxLength, out maxLength))
+                        if (attr.Type?.ToUpper() == "L")
                         {
-                            inputbox.MaxLength = maxLength;
+                            var checkbox = new CheckBox();
+                            checkbox.Content = attr.Name;
+                            views.AddControl(checkbox);
                         }
-                    }
-                    if (!string.IsNullOrEmpty(attr.Type) && (attr.Type=="I" || attr.Type=="R"))
-                    {
-                        inputbox.InputScope = new InputScope()
+                        if (attr.Type?.ToUpper() != "L")
                         {
-                            Names = { new InputScopeName(InputScopeNameValue.Number) }
-                        };
-                    }
+                            Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
+                            string hint = attr.Name;
+                            if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
+                            var inputbox = Controls.TextBoxHint(hint);
+                            inputbox.CharacterCasing = CharacterCasing.Upper;
+                            if (!string.IsNullOrEmpty(attr.MaxLength))
+                            {
+                                int maxLength;
+                                if (int.TryParse(attr.MaxLength, out maxLength))
+                                {
+                                    inputbox.MaxLength = maxLength;
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(attr.Type) && (attr.Type == "I" || attr.Type == "R"))
+                            {
+                                inputbox.InputScope = new InputScope()
+                                {
+                                    Names = { new InputScopeName(InputScopeNameValue.Number) }
+                                };
+                            }
 
-                    var vmAttr = vmodel.GetNewAttrVM(attr);
-                    inputbox.DataContext = vmAttr;
+                            AttrValidationVM vmAttr = vmodel.GetNewAttrVM(attr);
+                            inputbox.DataContext = vmAttr;
 
-                    //int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                    var binding = new Binding($"{nameof(vmAttr.ValueAttrRecord)}");
-                    binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    binding.Mode = BindingMode.TwoWay;
-                    inputbox.SetBinding(TextBox.TextProperty, binding);
+                            //int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
+                            var binding = new Binding($"{nameof(vmAttr.ValueAttrRecord)}");
+                            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                            binding.Mode = BindingMode.TwoWay;
+                            inputbox.SetBinding(TextBox.TextProperty, binding);
 
-                    views.AddControl(inputbox);
+                            views.AddControl(inputbox);
+                        }
+                    }                 
                 }
             }
         }
