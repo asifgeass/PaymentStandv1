@@ -18,7 +18,7 @@ namespace WPFApp
     public static class Controls
     {
         private const double Margin = 50;
-        private const double MarginBetween = 27;
+        private const double MarginBetween = 15;
         public static Label CentralLabelBorder(string arg = "", SolidColorBrush brushArg=null)
         {
             var lbl = new Label();
@@ -50,7 +50,7 @@ namespace WPFApp
             var cardButton = new CardButton();
             if(argName!=null) cardButton.Text = argName; 
             //button.Style = Application.Current.TryFindResource("CardButton") as Style;            
-            cardButton.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);       
+            cardButton.Margin = new Thickness(MarginBetween);       
             return cardButton;
         }
 
@@ -58,7 +58,7 @@ namespace WPFApp
         {
             var button = new ButtonTextblock();
             if (argName != null) button.Text = argName;
-            button.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);
+            button.Margin = new Thickness(MarginBetween);
             return button;
         }
 
@@ -76,14 +76,14 @@ namespace WPFApp
             var label = new Label();
             if (argName != null) label.Content = argName;
             label.HorizontalContentAlignment = HorizontalAlignment.Center;
-            label.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);
+            label.Margin = new Thickness(MarginBetween);
             return label;
         }
 
         public static TextBox TextBoxHint(string hintArg, string nameArg = null)
         {
             var textBox = new TextBox();
-            textBox.Margin = new Thickness(0, MarginBetween, 0, MarginBetween);
+            textBox.Margin = new Thickness(MarginBetween);
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
             if (nameArg != null) textBox.Text = nameArg;            
             return textBox;

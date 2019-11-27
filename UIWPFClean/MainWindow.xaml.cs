@@ -17,6 +17,8 @@ using MaterialDesignThemes;
 using MaterialDesignColors;
 using WPFApp.ViewModels;
 using TermControls;
+using WPFApp.Views;
+using WPFApp;
 
 namespace UIWPFClean
 {
@@ -108,9 +110,12 @@ namespace UIWPFClean
             HintAssist.SetHint(textbox, "Number");
             textbox.InputScope = new InputScope()
             {
-                Names = { new InputScopeName(InputScopeNameValue.Number) }
+                Names = { new InputScopeName(InputScopeNameValue.Number) }                
             };
+            textbox.CharacterCasing = CharacterCasing.Upper;
             StackPanel1.Children.Add(textbox);
+
+            var hz = new WrapPanelItemsCount();
 
             textbox = new TextBox();
             HintAssist.SetHint(textbox, "NumberFullWidth");
@@ -120,6 +125,19 @@ namespace UIWPFClean
             };
             StackPanel1.Children.Add(textbox);
 
+        }
+
+        private void ButtonAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            StackPanel1.Children.Add(new Button() { Content = count++ }); ;
+            SetWindow(StackPanel1);
+        }
+
+        private void SetWindow(UIElement argElement)
+        {
+            var around = new FormAround();
+            around.SetContent(argElement);
+            this.Content = around;
         }
     }
 }

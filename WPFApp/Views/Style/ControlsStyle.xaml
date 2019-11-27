@@ -24,8 +24,7 @@
            TargetType="Button" 
            BasedOn="{StaticResource MaterialDesignRaisedButton}"
            >
-        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2" />
-        <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="None" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
         <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Bottom,Left" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="Background" Value="{DynamicResource MaterialDesignCardBackground}" />
