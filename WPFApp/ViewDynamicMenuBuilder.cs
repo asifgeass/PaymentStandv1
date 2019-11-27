@@ -189,8 +189,12 @@ namespace WPFApp
             {
                 if (attr.Edit == 1 && attr.View == 1 && string.IsNullOrEmpty(attr.Lookup))
                 {
-                    if (!string.IsNullOrEmpty(attr.Type))
+                    if (string.IsNullOrEmpty(attr.Type))
                     {
+                        BuildStringAttr(attr);
+                    }
+                    else
+                    {                        
                         if (attr.Type?.ToUpper() == "L")
                         {
                             var checkbox = new CheckBox();
@@ -199,42 +203,48 @@ namespace WPFApp
                         }
                         if (attr.Type?.ToUpper() != "L")
                         {
-                            Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
-                            string hint = attr.Name;
-                            if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
-                            var inputbox = Controls.TextBoxHint(hint);
-                            inputbox.CharacterCasing = CharacterCasing.Upper;
-                            if (!string.IsNullOrEmpty(attr.MaxLength))
-                            {
-                                int maxLength;
-                                if (int.TryParse(attr.MaxLength, out maxLength))
-                                {
-                                    inputbox.MaxLength = maxLength;
-                                }
-                            }
-                            if (!string.IsNullOrEmpty(attr.Type) && (attr.Type == "I" || attr.Type == "R"))
-                            {
-                                inputbox.InputScope = new InputScope()
-                                {
-                                    Names = { new InputScopeName(InputScopeNameValue.Number) }
-                                };
-                            }
-
-                            AttrValidationVM vmAttr = vmodel.GetNewAttrVM(attr);
-                            inputbox.DataContext = vmAttr;
-
-                            //int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                            var binding = new Binding($"{nameof(vmAttr.ValueAttrRecord)}");
-                            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                            binding.Mode = BindingMode.TwoWay;
-                            inputbox.SetBinding(TextBox.TextProperty, binding);
-
-                            views.AddControl(inputbox);
+                            BuildStringAttr(attr);
                         }
-                    }                 
+                    }
                 }
             }
         }
+
+        private void BuildStringAttr(AttrRecord attr)
+        {
+            Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
+            string hint = attr.Name;
+            if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
+            var inputbox = Controls.TextBoxHint(hint);
+            inputbox.CharacterCasing = CharacterCasing.Upper;
+            if (!string.IsNullOrEmpty(attr.MaxLength))
+            {
+                int maxLength;
+                if (int.TryParse(attr.MaxLength, out maxLength))
+                {
+                    inputbox.MaxLength = maxLength;
+                }
+            }
+            if (!string.IsNullOrEmpty(attr.Type) && (attr.Type == "I" || attr.Type == "R"))
+            {
+                inputbox.InputScope = new InputScope()
+                {
+                    Names = { new InputScopeName(InputScopeNameValue.Number) }
+                };
+            }
+
+            AttrValidationVM vmAttr = vmodel.GetNewAttrVM(attr);
+            inputbox.DataContext = vmAttr;
+
+            //int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
+            var binding = new Binding($"{nameof(vmAttr.ValueAttrRecord)}");
+            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            binding.Mode = BindingMode.TwoWay;
+            inputbox.SetBinding(TextBox.TextProperty, binding);
+
+            views.AddControl(inputbox);
+        }
+
         private void BuildSelectPayrecord(List<PayRecord> paylist)
         {
             if (paylist.Count > 1)
