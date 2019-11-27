@@ -19,21 +19,19 @@
 
     <ScrollViewer Grid.Column="1" Grid.Row="1" 
                   VerticalScrollBarVisibility="Auto" 
-                  VerticalContentAlignment="Center"
-                  Name="scroller">
+                  VerticalContentAlignment="Center">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="15*"/>
                 <ColumnDefinition Width="100*"/>
                 <ColumnDefinition Width="15*"/>
             </Grid.ColumnDefinitions>
-            <local:WrapPanelItemsCount x:Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center" MaxItemsCount="1" Orientation="Vertical">
+            <StackPanel Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center">
                 <Button Content="Payment Screen" Click="buttonPayScreen_Click"/>
                 <Button Content="Keyboard" Click="ButtonKeyboard_Click"/>
-                <Button Content="AddItem" Click="ButtonAddItem_Click"/>
-            </local:WrapPanelItemsCount>
+            </StackPanel>
         </Grid>
             
-    </ScrollViewer>        
+        </ScrollViewer>        
 
 </Window>

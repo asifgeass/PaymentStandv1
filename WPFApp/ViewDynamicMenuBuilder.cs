@@ -17,7 +17,6 @@ using XmlStructureComplat.Validators;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
-using WPFApp.Views;
 
 namespace WPFApp
 {
@@ -169,16 +168,7 @@ namespace WPFApp
                 binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
                 inputbox.SetBinding(TextBox.TextProperty, binding);
-                inputbox.InputScope = new InputScope()
-                {
-                    Names = { new InputScopeName(InputScopeNameValue.Number) }
-                };
-                inputbox.TouchDown += (s,e) => 
-                {
-                    if (inputbox?.SelectedText != null && inputbox.SelectedText.Length < 2)
-                    { inputbox.SelectAll(); }
-                };                
-
+                
                 views.AddControl(inputbox);
             }
 
@@ -219,6 +209,7 @@ namespace WPFApp
                 }
             }
         }
+
         private void BuildStringAttr(AttrRecord attr)
         {
             Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
@@ -253,6 +244,7 @@ namespace WPFApp
 
             views.AddControl(inputbox);
         }
+
         private void BuildSelectPayrecord(List<PayRecord> paylist)
         {
             if (paylist.Count > 1)
@@ -377,23 +369,7 @@ namespace WPFApp
         {
             var around = new FormAround();
             around.BackButton.Click += (s, e) => PrevPage();
-            if(argElement is WrapPanelItemsCount)
-            {
-                var wrap = argElement as WrapPanelItemsCount;
-                var binding = new Binding($"{nameof(vmodel.ColumnsNumber)}");
-                vmodel.ColumnsNumber = 1;
-                wrap.SetBinding(WrapPanelItemsCount.MaxItemsCountProperty, binding);
-                around.ScrollerLoadedEvent += (s, e) => 
-                { 
-                    if(around.ScrollerBarVisibility == Visibility.Visible)
-                    {
-                        Debug.WriteLine("scroller_Loaded SCROLLING BAR IS VISIBLE!!!");
-                        if (vmodel.ColumnsNumber == 1) vmodel.ColumnsNumber = 2;
-                    }
-                };
-                around.SetContent(wrap);
-            }
-            else { around.SetContent(argElement); }            
+            around.ContentControls = argElement;
             window.Content = around;
         }
         private void DisplayErrorPage(Exception ex)

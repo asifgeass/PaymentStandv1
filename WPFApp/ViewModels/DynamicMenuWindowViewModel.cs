@@ -50,7 +50,6 @@ namespace WPFApp.ViewModels
         private Exception _exception;
         private bool _isHomeButtonActive = true;
         private bool _isBackButtonActive;
-        private int _columnsNumber=1;
         #endregion
 
         #region Properties
@@ -64,6 +63,7 @@ namespace WPFApp.ViewModels
                 NewResponseComeEvent();
             }
         }
+
         private void DoOnResponseCome()
         {
             IsCustomLoadingScreen = false;
@@ -78,6 +78,7 @@ namespace WPFApp.ViewModels
             this.IsHomeButtonActive = true;
             IsBackButtonActive = IsBackRequestPossible;
         }
+
         public PayRecord PayrecToSend
         {
             get => _payrecToSend;
@@ -101,11 +102,6 @@ namespace WPFApp.ViewModels
                 });
                 RaisePropertyChanged();
             }
-        }
-        public int ColumnsNumber
-        {
-            get => _columnsNumber;
-            set => SetProperty(ref _columnsNumber, value);
         }
         public PS_ERIP EripToSend
         {
@@ -258,7 +254,7 @@ namespace WPFApp.ViewModels
             {
                 this.IsHomeButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
-                Ex.Log($"VM => Logic HomePage()");
+                Ex.Log($"VM => Logic BackPage()");
                 Responce = await StaticMain.HomePage();
             }
             catch (Exception ex)
