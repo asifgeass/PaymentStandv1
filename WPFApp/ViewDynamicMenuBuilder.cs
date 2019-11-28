@@ -460,7 +460,12 @@ namespace WPFApp
             }
             else
             {
-                if (vmodel.BackUserCommand.CanExecute())
+                var gplt = vmodel.Responce?.ResponseReq?.PayRecord?.FirstOrDefault()?.GetPayListType;
+                if (gplt != null && gplt=="0")
+                {
+                    vmodel.HomePageCommand.Execute();
+                }
+                else if (vmodel.BackUserCommand.CanExecute())
                 {
                     vmodel.BackUserCommand.Execute();
                 }

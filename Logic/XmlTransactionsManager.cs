@@ -228,7 +228,6 @@ namespace Logic
             }
             return Task.CompletedTask;
         }
-
         private void Print(string textArg)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
@@ -250,7 +249,6 @@ namespace Logic
             printDocument.PrintPage += (s,e)=> e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
             printDocument.Print();
         }
-
         private async Task HandleResponseWithoutUI(PS_ERIP response)
         {
             await CheckRunOperationResponse(response);
