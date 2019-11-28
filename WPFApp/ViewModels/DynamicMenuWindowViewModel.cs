@@ -254,7 +254,7 @@ namespace WPFApp.ViewModels
             {
                 this.IsHomeButtonActive = false;
                 IsLoadingMenu = !IsLoadingMenu;
-                Ex.Log($"VM => Logic BackPage()");
+                Ex.Log($"VM => Logic HomePage()");
                 Responce = await StaticMain.HomePage();
             }
             catch (Exception ex)
