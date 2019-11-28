@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -29,13 +30,16 @@ namespace WPFApp
 
         public object ContentControls
         {
-            get => this.panelStk.Content;
-            set => this.panelStk.Content = value;
+            get => this.scroller.Content;
+            set => this.scroller.Content = value;            
         }
 
         private void MainGrid_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
+            var uniform = new UniformGrid();
+            uniform.Columns = 2;
+            var hz = new ScrollViewer();
         }
     }
 }
