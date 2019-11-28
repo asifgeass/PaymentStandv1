@@ -33,7 +33,8 @@ namespace WPFApp.ViewModels
             SetParentGroupHeaderCommand = new DelegateCommand<string>(x => LabelParentGroup = x);
             SendParamCommand = new DelegateCommand<object>(async x=>await NextPage(x));
             NextPageCommand = new DelegateCommand(async() => await NextPage(null));
-            NextPageTestValidate = new DelegateCommand(async() => await NextPageValidate(null));
+            NextPagePayValidateCommand = new DelegateCommand(async() => await NextPagePayValidate(null));
+            NextPageAttrValidateCommand = new DelegateCommand(async () => await NextPageAttrValidate(null));
             //NewResponseComeEvent += ClearLookup;
         }
 
@@ -63,22 +64,6 @@ namespace WPFApp.ViewModels
                 NewResponseComeEvent();
             }
         }
-
-        private void DoOnResponseCome()
-        {
-            IsCustomLoadingScreen = false;
-            Task.Run(async () =>
-            {
-                var xml = await SerializationUtil.Serialize(Responce);
-                Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
-            });
-            if (Responce?.ResponseReq?.PayRecord?.Count == 1)
-            { PayrecToSend = Responce?.ResponseReq?.PayRecord?.FirstOrDefault(); }
-            EripToSend = new PS_ERIP();
-            this.IsHomeButtonActive = true;
-            IsBackButtonActive = IsBackRequestPossible;
-        }
-
         public PayRecord PayrecToSend
         {
             get => _payrecToSend;
@@ -188,7 +173,8 @@ namespace WPFApp.ViewModels
         public DelegateCommand<object> SendParamCommand { get; }
         public DelegateCommand<LookupItem> LookupCommand { get; }
         public DelegateCommand NextPageCommand { get; }
-        public DelegateCommand NextPageTestValidate { get; }
+        public DelegateCommand NextPagePayValidateCommand { get; }
+        public DelegateCommand NextPageAttrValidateCommand { get; }
         #endregion
 
         #region Pages
@@ -211,9 +197,27 @@ namespace WPFApp.ViewModels
                 Exception = ex;
             }
         }
-        private async Task NextPageValidate(object param = null)
+        private async Task NextPageAttrValidate(object param = null)
         {
-            Ex.Log($"VM: {nameof(NextPageValidate)}(): validate sum={PayrecToSend.Summa};");
+            Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
+            bool isValid = true;
+            AttrVMList.ForEach(vm =>
+            {
+                vm.ValueAttrRecord = vm.ValueAttrRecord;
+                isValid = vm.HasErrors ? false : isValid;
+            });
+            if (isValid)
+            {
+                await NextPage(param);
+            }
+            //else
+            //{
+            //    SummaPayrecToSend = SummaPayrecToSend;
+            //}
+        }
+        private async Task NextPagePayValidate(object param = null)
+        {
+            Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
             bool isValid = true;
             Ex.TryLog(() =>
             {
@@ -229,10 +233,8 @@ namespace WPFApp.ViewModels
             else
             {
                 SummaPayrecToSend = SummaPayrecToSend;
-                //OnPropertyChanged(nameof(SummaPayrecToSend));
             }
         }
-
         private async void BackPage()
         {
             try
@@ -247,7 +249,6 @@ namespace WPFApp.ViewModels
                 Exception = ex;
             }
         }
-
         private async void HomePage()
         {
             try
@@ -265,6 +266,20 @@ namespace WPFApp.ViewModels
         #endregion
 
         #region Private Methods
+        private void DoOnResponseCome()
+        {
+            IsCustomLoadingScreen = false;
+            Task.Run(async () =>
+            {
+                var xml = await SerializationUtil.Serialize(Responce);
+                Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
+            });
+            if (Responce?.ResponseReq?.PayRecord?.Count == 1)
+            { PayrecToSend = Responce?.ResponseReq?.PayRecord?.FirstOrDefault(); }
+            EripToSend = new PS_ERIP();
+            this.IsHomeButtonActive = true;
+            IsBackButtonActive = IsBackRequestPossible;
+        }
         private void FillWithLookupsVM()
         {
             Ex.Log($"{nameof(FillWithLookupsVM)}(): childVM count={LookupVMList.Count}");

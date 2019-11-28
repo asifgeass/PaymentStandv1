@@ -174,11 +174,11 @@ namespace WPFApp
 
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
-            button.ButtonControl.Command = vmodel.NextPageCommand;
+            button.ButtonControl.Command = vmodel.NextPageAttrValidateCommand;
             if (payrec.GetPayListType == "0")
             {
                 button.Text = "Оплатить";
-                button.ButtonControl.Command = vmodel.NextPageTestValidate;
+                button.ButtonControl.Command = vmodel.NextPagePayValidateCommand;
                 Ex.Log("========== ОПЛАТИТЬ КНОПКА ПОСТРОЕНА =============");
             }
             views.AddControl(button);
@@ -212,7 +212,7 @@ namespace WPFApp
 
         private void BuildStringAttr(AttrRecord attr)
         {
-            Ex.Log($"{nameof(BuildInputFields)}(): ATTR input: attr={attr.Name}");
+            Ex.Log($"{nameof(BuildStringAttr)}(): ATTR input: attr={attr.Name}");
             string hint = attr.Name;
             if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
             var inputbox = Controls.TextBoxHint(hint);

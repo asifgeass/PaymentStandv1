@@ -28,13 +28,6 @@ namespace XmlStructureComplat.Validators
                     ;
             });
 
-            When(attr => attr.Format != null, () =>
-            {
-                RuleFor(attr => attr.Value)
-                    .Matches(attr=> attr.Format).WithMessage("Значение не соответствует формату.")
-                    ;
-            });
-
             When(x => x.MinLength != null && int.TryParse(x.MinLength, out temp) && !string.IsNullOrEmpty(x.Value), () =>
             {
                 RuleFor(attr => attr.Value.Length)
@@ -47,17 +40,12 @@ namespace XmlStructureComplat.Validators
                     .LessThanOrEqualTo(attr => int.Parse(attr.MaxLength)).WithName("Длина");
             });
 
-            //RuleFor(attr => attr.Value)
-            //    .MinimumLength(x=>x.).WithName("Значение2")
-            //    .When(attr => !string.IsNullOrEmpty(attr.MinLength) 
-            //    && int.Parse(attr.MinLength)
-            //    && attr.Value != null);
-
-            //RuleFor(attr => attr.Value)
-            //    .MaximumLength(int.Parse(attr.MaxLength) ).WithName("Значени3")
-            //    .When(attr => !string.IsNullOrEmpty(attr.MaxLength) 
-            //    && int.Parse(attr.MaxLength)
-            //    && attr.Value != null);
+            When(attr => attr.Format != null, () =>
+            {
+                RuleFor(attr => attr.Value)
+                    .Matches(attr => attr.Format).WithMessage("Значение не соответствует формату.")
+                    ;
+            });
 
         }
     }
