@@ -113,6 +113,9 @@
     <Compile Include="Views\DynamicMenuWindow.xaml.cs">
       <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Elements\UniTilePanel.xaml.cs">
+      <DependentUpon>UniTilePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Elements\CardButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\UniTilePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
