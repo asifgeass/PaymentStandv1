@@ -94,5 +94,9 @@
                 </UniformGrid.Style>
             </UniformGrid>
         </ScrollViewer>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     </Grid>
 </UserControl>
