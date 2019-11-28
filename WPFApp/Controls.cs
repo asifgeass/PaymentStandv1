@@ -98,9 +98,9 @@ namespace WPFApp
             gridCol1.Width = new GridLength(30, GridUnitType.Star);
             gridCol2.Width = new GridLength(50, GridUnitType.Star);
             gridCol3.Width = new GridLength(250);
-            columnGrid.ColumnDefinitions.Add(gridCol1);
-            columnGrid.ColumnDefinitions.Add(gridCol2);
             columnGrid.ColumnDefinitions.Add(gridCol3);
+            columnGrid.ColumnDefinitions.Add(gridCol2);
+            columnGrid.ColumnDefinitions.Add(gridCol1);
 
             var bar = new ProgressBar();
             bar.IsIndeterminate = true;
@@ -140,9 +140,9 @@ namespace WPFApp
             columnGrid.Children.Add(imgLeft);
             columnGrid.Children.Add(center);
             columnGrid.Children.Add(doublePic);
-            Grid.SetColumn(imgLeft, 0);
+            Grid.SetColumn(imgLeft, 2);
             Grid.SetColumn(center, 1);
-            Grid.SetColumn(doublePic, 2);
+            Grid.SetColumn(doublePic, 0);
 
             return columnGrid;
         }
