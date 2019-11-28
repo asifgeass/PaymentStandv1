@@ -22,6 +22,8 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
+        const int idleTimedefault = 20;
+        const int idleTimeAfterPayment = 8;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -31,6 +33,7 @@ namespace WPFApp
         private Style loadingBarStyle;
         private Task CheckHomeButtonDisabled = Task.CompletedTask;
         private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        private IdleDetector idleDetector;
         #endregion
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
@@ -43,6 +46,8 @@ namespace WPFApp
                 vmodel.NewResponseComeEvent += BuildMenuOnReponse;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment; ;
+                idleDetector = new IdleDetector(window, idleTimedefault);
+                idleDetector.IsIdle += async (s,e) => { vmodel.HomePageCommand.Execute(); await Task.Delay(100); vmodel.IsBackButtonActive = false; };                
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
             }
             catch (Exception ex)
@@ -150,6 +155,7 @@ namespace WPFApp
                     var pic = Controls.IconBig(PackIconKind.CheckboxMarkedCircle, Brushes.Green);
                     views.AddControl(pic);
                     views.AddControl(control);
+                    idleDetector.ChangeIdleTime(idleTimeAfterPayment);
                 }
                 if (resp.ErrorCode != 0)
                 {
@@ -329,6 +335,7 @@ namespace WPFApp
             {
                 ClearViewPagesOnResponse();
                 BuildsPages();
+                idleDetector.ChangeIdleTime(idleTimedefault);
             }
             catch (Exception ex)
             {
@@ -397,6 +404,7 @@ namespace WPFApp
             panel.Children.Add(Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red));
             panel.Children.Add(Controls.CentralLabelBorder(msgError, Brushes.DarkRed));
             SetWindow(panel);
+            idleDetector.ChangeIdleTime(idleTimeAfterPayment);
         }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {
