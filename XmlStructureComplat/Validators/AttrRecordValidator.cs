@@ -20,6 +20,21 @@ namespace XmlStructureComplat.Validators
                     ;
             });
 
+            When(attr => attr.Type != null, () =>
+            {
+                RuleFor(attr => attr.Value)
+                    .Matches(@"^\d+[\.]?\d*$").When(attr=>attr.Type=="R").WithMessage("Не является числовым значением.")
+                    .Matches(@"^\d+$").When(attr => attr.Type == "I").WithMessage("Не является целочисленным числом.")
+                    ;
+            });
+
+            When(attr => attr.Format != null, () =>
+            {
+                RuleFor(attr => attr.Value)
+                    .Matches(attr=> attr.Format).WithMessage("Значение не соответствует формату.")
+                    ;
+            });
+
             When(x => x.MinLength != null && int.TryParse(x.MinLength, out temp) && !string.IsNullOrEmpty(x.Value), () =>
             {
                 RuleFor(attr => attr.Value.Length)
