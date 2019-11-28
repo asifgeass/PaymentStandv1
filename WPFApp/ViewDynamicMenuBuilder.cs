@@ -174,6 +174,7 @@ namespace WPFApp
 
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
+            views.SetHeader($"{payrec.GroupRecord?.Name} / {payrec.Name}");//????
             button.ButtonControl.Command = vmodel.NextPageAttrValidateCommand;
             if (payrec.GetPayListType == "0")
             {
@@ -209,7 +210,6 @@ namespace WPFApp
                 }
             }
         }
-
         private void BuildStringAttr(AttrRecord attr)
         {
             Ex.Log($"{nameof(BuildStringAttr)}(): ATTR input: attr={attr.Name}");
@@ -244,7 +244,6 @@ namespace WPFApp
 
             views.AddControl(inputbox);
         }
-
         private void BuildSelectPayrecord(List<PayRecord> paylist)
         {
             if (paylist.Count > 1)
@@ -309,8 +308,8 @@ namespace WPFApp
                     LookupVM childVM = vmodel.GetNewLookupVM();
                     childVM.Lookup = selectedLookup;
                     views.AddDataContext(childVM);
-                    views.AddControl(Controls.LabelHeader(selectedLookup.Name));
-                    //model.LabelCurrent = $"{selectedLookup.Name} ({payrec.Name})";
+                    //views.AddControl(Controls.LabelHeader(selectedLookup.Name));
+                    views.SetHeader(selectedLookup.Name);
                     var lookItems = selectedLookup.Item;
                     lookItems.ForEach(arg =>
                     {
@@ -320,7 +319,6 @@ namespace WPFApp
                         btn.ButtonControl.Click += (sender, evArg) => NextPage();
                         views.AddControl(btn);
                     });
-                    //LookupButtons(selectedLookup);
                     views.NewPage();
                 }
             }
@@ -357,14 +355,12 @@ namespace WPFApp
                 DisplayErrorPage(str);
             }
         }
-
         private void ResetBeforeHandle()
         {
             this.views = new ViewPagesManager();
             vmodel.LookupVMList.Clear();
             vmodel.AttrVMList.Clear();
         }
-
         private void SetWindow(UIElement argElement)
         {
             var around = new FormAround();
@@ -446,6 +442,7 @@ namespace WPFApp
             Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if(views.IsNextAvaible)
             {
+                vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;
                 SetWindow(views.NextPage());
             }
             else
@@ -458,6 +455,7 @@ namespace WPFApp
             Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if (views.IsPrevAvaible)
             {
+                vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
                 SetWindow(views.PrevPage());
             }
             else

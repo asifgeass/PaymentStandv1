@@ -18,6 +18,7 @@ namespace WPFApp
         Grid grid = new Grid();
         private StackPanel tempPnl = new StackPanel();
         private const int column = 1;
+        private Dictionary<int, string> headers = new Dictionary<int, string>();
         #endregion
         #region Public Methods
         public Panel NextPage()
@@ -52,7 +53,8 @@ namespace WPFApp
         {
             if (tempPnl.Children.Count > 0)
             {
-                InitializeContainer();
+                grid.Name = tempPnl?.Name ?? grid.Name;
+                BuildWrapper();
                 pages.Add(grid);
             }
             CheckEmpty();
@@ -72,6 +74,13 @@ namespace WPFApp
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }
+
+        public ViewPagesManager SetHeader(string arg)
+        {
+            Ex.Try(false, () => headers[pages.Count - 1] = arg);            
+            return this;
+        }
+
 
         private void CheckEmpty()
         {
@@ -100,6 +109,24 @@ namespace WPFApp
         public bool IsPrevAvaible => 0 < currentPageIndex;
         public int Count  => (tempPnl.Children.Count<=0) ? pages.Count-1 : pages.Count;
         public int CurrIndex => currentPageIndex;
+        public string NextHeader
+        { 
+            get 
+            {
+                string _return = null;
+                Ex.Try(false, () => _return = headers[currentPageIndex + 1]);                
+                return _return;
+            } 
+        }
+        public string PrevHeader
+        {
+            get
+            {
+                string _return = null;
+                Ex.Try(false, () => _return = headers[currentPageIndex-1]);
+                return _return;
+            }
+        }
         public Panel Page
             => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count==0)
             ? null : pages[currentPageIndex];
@@ -109,7 +136,7 @@ namespace WPFApp
             ? null : pages[currentPageIndex - 1];
         #endregion
         #region Private Methods
-        private Grid InitializeContainer()
+        private Grid BuildWrapper()
         {
             grid = new Grid();
             grid.VerticalAlignment = VerticalAlignment.Center;
@@ -118,14 +145,14 @@ namespace WPFApp
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
             tempPnl = new StackPanel();
             Grid.SetColumn(tempPnl, column);
-            grid.Children.Add(tempPnl);
+            grid.Children.Add(tempPnl);            
             return grid;
         }
 
         #endregion
         public ViewPagesManager()
         {
-            InitializeContainer();
+            BuildWrapper();
         }
     }
 }
