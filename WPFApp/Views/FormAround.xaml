@@ -78,6 +78,7 @@
                       VerticalScrollBarVisibility="Auto"
                       VerticalContentAlignment="Top"
                       PanningMode="VerticalOnly"
+                      CanContentScroll="True"
                       />
     </Grid>
 </UserControl>
