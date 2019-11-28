@@ -30,7 +30,7 @@ namespace Logic
         public EripRequest HomePage()
         {
             if (list.Count <= 0) return null;
-            if (currentIndex > 0)
+            if (currentIndex >= 0)
             {
                 list[0].SetPrevIndex(currentIndex);
                 currentIndex = 0;
