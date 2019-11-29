@@ -15,9 +15,10 @@ namespace XmlStructureComplat.Validators
         {
             RuleFor(payrec => payrec.Summa)               
                   .NotNull().WithName("Сумма")
-                  .NotEmpty().WithName("Сумма")                  
+                  .NotEmpty().WithName("Сумма")
+                  .Matches(@"^\d+[\.,]?\d*$").WithMessage("Должно быть число.")
                   .Matches(@"^\s*\d+[\.,]?\d{0,2}\s*$")
-                  .WithMessage("Должно быть число, с дробной частью не более 2 цифры")
+                  .WithMessage("Должно быть число, с дробной частью не более 2 цифры.")
                   ;
             When(payrec=> decimal.TryParse(payrec.Summa.Replace(',', '.'), NumberStyles.Currency, CultureInfo.InvariantCulture, out temp), () =>
             {
