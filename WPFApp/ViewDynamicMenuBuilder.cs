@@ -23,7 +23,7 @@ namespace WPFApp
     public class ViewDynamicMenuBuilder
     {
         const int idleTimedefault = 30;
-        const int idleTimeAfterPayment = 7;
+        const int idleTimeAfterPayment = 9;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -127,7 +127,7 @@ namespace WPFApp
                 var control = Controls.CentralLabelBorder(str);
                 control.Foreground = Brushes.DarkRed;
                 var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
-                idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
+                idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment*2);
                 views.AddControl(pic);
                 views.AddControl(control);
                 var button = Controls.ButtonAccept("Вернуться");
@@ -423,7 +423,7 @@ namespace WPFApp
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel);
-            idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
+            idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment*2);
         }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {
