@@ -23,8 +23,13 @@ namespace XmlStructureComplat.Validators
             When(attr => attr.Type != null, () =>
             {
                 RuleFor(attr => attr.Value)
-                    .Matches(@"^\d+[\.]?\d*$").When(attr=>attr.Type=="R").WithMessage("Не является числовым значением.")
-                    .Matches(@"^\d+$").When(attr => attr.Type == "I").WithMessage("Не является целочисленным числом.")
+                    .Matches(@"^\d+[\.]?\d*$").WithMessage("Не является числом.")
+                    .When(attr => attr.Type == "R")
+                    ;
+                RuleFor(attr => attr.Value)
+                    .Matches(@"^\d+[\.]?\d*$").WithMessage("Не является числом.")
+                    .Matches(@"^\d+$").WithMessage("Не является целочисленным числом.")
+                    .When(attr => attr.Type == "I")
                     ;
             });
 
