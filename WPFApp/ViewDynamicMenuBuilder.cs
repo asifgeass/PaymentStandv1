@@ -132,6 +132,7 @@ namespace WPFApp
                 views.AddControl(control);
                 var button = Controls.ButtonAccept("Вернуться");
                 button.ButtonControl.Command = vmodel.HomePageCommand;
+                views.AddControl(new TextBlock());
                 views.AddControl(button);
                 return;
             }
@@ -419,6 +420,7 @@ namespace WPFApp
             var button = Controls.ButtonAccept("Вернуться");
             button.ButtonControl.Command = vmodel.HomePageCommand;
             views.AddControl(button);
+            panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel);
             idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
