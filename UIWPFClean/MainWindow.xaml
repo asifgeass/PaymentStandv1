@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:local="clr-namespace:UIWPFClean"
+        xmlns:kbd="clr-namespace:VisualKeyboard.Control;assembly=VisualKeyboard.Control"
         mc:Ignorable="d"
         TextElement.FontWeight="Regular"
         TextOptions.TextFormattingMode="Ideal" 
@@ -29,6 +30,8 @@
             <StackPanel Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center">
                 <Button Content="Payment Screen" Click="buttonPayScreen_Click"/>
                 <Button Content="Keyboard" Click="ButtonKeyboard_Click"/>
+                <Button Grid.Row="0" Grid.Column="2" Content="q" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkQ"/>
+                <TextBox/>
             </StackPanel>
         </Grid>
             
