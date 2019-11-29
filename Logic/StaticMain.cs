@@ -14,7 +14,8 @@ namespace Logic
     {
         //private static Lazy<PagesManager> manager = new Lazy<PagesManager>();
         private static XmlTransactionsManager manager = new XmlTransactionsManager();      
-        private static string settingsPath = $@"{Environment.CurrentDirectory}\settings.xml";
+        private static string settingsPath1 = $@"{Environment.CurrentDirectory}\settings.xml";
+        private static string settingsPath = $@"{AppDomain.CurrentDomain.BaseDirectory}\settings.xml";
 
         public static Settings Settings { get; private set; } = new Settings();
         public static async Task<PS_ERIP> NextPage(object select)
@@ -49,6 +50,7 @@ namespace Logic
 
         public static async Task LoadSettings()
         {
+            Ex.Log($"StaticMain.LoadSettings() path={settingsPath}");
             if (File.Exists(settingsPath))
             {
                 try
