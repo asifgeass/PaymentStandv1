@@ -22,8 +22,8 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 8;
-        const int idleTimeAfterPayment = 8;
+        const int idleTimedefault = 30;
+        const int idleTimeAfterPayment = 7;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -42,13 +42,13 @@ namespace WPFApp
             try
             {
                 //token = cancelTokenSource.Token;
+                Ex.Log($"ViewDynamicMenuBuilder ctor()");
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += BuildMenuOnReponse;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment; ;
-                idleDetector = new IdleDetector(window, idleTimedefault);
-                Ex.Log("IS THAT SHIT WORKS TWICE????");
-                idleDetector.IsIdle += async (s,e) => { vmodel.HomePageCommand.Execute(); await Task.Delay(100); vmodel.IsBackButtonActive = false; };                
+                idleDetector = new IdleDetector(window, idleTimedefault);                
+                idleDetector.IsIdle += async (s,e) => { vmodel.HomePageCommand.Execute(); for (short i = 0; i < 3; i++) { await Task.Delay(70); vmodel.IsBackButtonActive = false; } };                
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
             }
             catch (Exception ex)
@@ -123,10 +123,11 @@ namespace WPFApp
                 { str = $"Оплата не была произведена.\nУ терминала истекло время ожидания карты.(Код 128)\n\nПопробуйте еще раз."; }
                 if (resp.ErrorCode == 16) //canceled by user
                 { str = $"Оплата не была произведена.\nОтменено пользователем.(Код 16)"; }
-                Ex.Info($"View: Error from response={rootResponse.EnumType} displayed to user:\n{str}");
+                Ex.Info($"View Error Page building: response={rootResponse.EnumType} displayed to user:\n{str}");
                 var control = Controls.CentralLabelBorder(str);
                 control.Foreground = Brushes.DarkRed;
                 var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
+                idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
                 views.AddControl(pic);
                 views.AddControl(control);
                 return;
@@ -156,7 +157,7 @@ namespace WPFApp
                     var pic = Controls.IconBig(PackIconKind.CheckboxMarkedCircle, Brushes.Green);
                     views.AddControl(pic);
                     views.AddControl(control);
-                    idleDetector.ChangeIdleTime(idleTimeAfterPayment);
+                    idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
                 }
                 if (resp.ErrorCode != 0)
                 {
@@ -334,9 +335,9 @@ namespace WPFApp
         {
             try
             {
+                idleDetector.ChangeRestartIdleTime(idleTimedefault);
                 ClearViewPagesOnResponse();
-                BuildsPages();
-                idleDetector.ChangeIdleTime(idleTimedefault);
+                BuildsPages();                
             }
             catch (Exception ex)
             {
@@ -405,7 +406,7 @@ namespace WPFApp
             panel.Children.Add(Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red));
             panel.Children.Add(Controls.CentralLabelBorder(msgError, Brushes.DarkRed));
             SetWindow(panel);
-            idleDetector.ChangeIdleTime(idleTimeAfterPayment);
+            idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
         }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {

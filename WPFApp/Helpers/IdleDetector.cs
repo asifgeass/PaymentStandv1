@@ -31,12 +31,17 @@ namespace WPFApp
 
         public void ChangeIdleTime(int newIdleTime)
         {
-            _idleTime = newIdleTime;
-
-            bool wasEnabled = _activityTimer.IsEnabled;
-            //_activityTimer.Stop();            
+            Debug.WriteLine($"Idle Time CHANGED={newIdleTime}");
+            _idleTime = newIdleTime; 
             _activityTimer.Interval = TimeSpan.FromSeconds(newIdleTime);
-            //_activityTimer.Start();
+        }
+
+        public void ChangeRestartIdleTime(int newIdleTime)
+        {
+            _idleTime = newIdleTime;
+            _activityTimer.Stop();
+            ChangeIdleTime(newIdleTime);
+            _activityTimer.Start();
         }
 
         void OnInactivity(object sender, EventArgs e)
