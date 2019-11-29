@@ -85,7 +85,8 @@ namespace WPFApp
             var textBox = new TextBox();
             textBox.Margin = new Thickness(MarginBetween);
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
-            if (nameArg != null) textBox.Text = nameArg;            
+            if (nameArg != null) textBox.Text = nameArg;
+            textBox.GotFocus += async (s, e) =>{for (int i = 0; i < 3; i++){ await Task.Delay(50); textBox.SelectAll(); } };
             return textBox;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace WPFApp
 
         private IInputElement _inputElement;
         private int _idleTime = 30;
+        private bool isTest=false;
 
         public event EventHandler IsIdle;
 
@@ -39,8 +41,10 @@ namespace WPFApp
 
         void OnInactivity(object sender, EventArgs e)
         {
-            _inactiveMousePosition = Mouse.GetPosition(_inputElement);
-            _activityTimer.Stop();
+            Debug.WriteLine($"OnInactivity!!!!!!!!!!!!!!!!!!!!");
+            isTest = false;
+            _inactiveMousePosition = Mouse.GetPosition(_inputElement);            
+            _activityTimer.Stop();            
             IsIdle?.Invoke(this, new EventArgs());
             _activityTimer.Stop();
         }
@@ -50,12 +54,13 @@ namespace WPFApp
             InputEventArgs inputEventArgs = e.StagingItem.Input;
 
             if (inputEventArgs is MouseEventArgs || inputEventArgs is KeyboardEventArgs)
-            {
+            {                
                 if (e.StagingItem.Input is MouseEventArgs)
                 {
                     MouseEventArgs mouseEventArgs = (MouseEventArgs)e.StagingItem.Input;
 
                     // no button is pressed and the position is still the same as the application became inactive
+                    if(isTest) Trace.WriteLine($"Mouse Position={_inactiveMousePosition == mouseEventArgs.GetPosition(_inputElement)}");
                     if (mouseEventArgs.LeftButton == MouseButtonState.Released &&
                         mouseEventArgs.RightButton == MouseButtonState.Released &&
                         mouseEventArgs.MiddleButton == MouseButtonState.Released &&
@@ -64,7 +69,7 @@ namespace WPFApp
                         _inactiveMousePosition == mouseEventArgs.GetPosition(_inputElement))
                         return;
                 }
-
+                if (isTest) Trace.WriteLine($"Idle reset={inputEventArgs.GetType()}");
                 _activityTimer.Stop();
                 _activityTimer.Start();
             }

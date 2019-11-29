@@ -33,7 +33,13 @@ namespace WPFApp.Views
             //this.WindowState = WindowState.Maximized;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
+
+        private void Window_Initialized(object sender, EventArgs e)
         {
             var builder = new ViewDynamicMenuBuilder(this);
             var paletteHelper = new PaletteHelper();
@@ -41,11 +47,6 @@ namespace WPFApp.Views
             //theme.SetBaseTheme(new MatDesDarkerLightTheme());
             theme.SetBaseTheme(new MatDesDarkerLightTheme());
             paletteHelper.SetTheme(theme);
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
         }
     }
 }
