@@ -172,6 +172,10 @@ namespace WPFApp
             {
                 views.AddControl(new TextBlock()); //отступ
                 var inputbox = Controls.TextBoxHint("Сумма оплаты");
+                inputbox.InputScope = new InputScope()
+                {
+                    Names = { new InputScopeName(InputScopeNameValue.Number) }
+                };
                 var binding = new Binding($"{nameof(vmodel.SummaPayrecToSend)}");
                 binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
