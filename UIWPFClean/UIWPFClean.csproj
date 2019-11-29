@@ -145,5 +145,8 @@
   <ItemGroup>
     <Resource Include="Resources\POS_ContactlessBlack.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\true_png.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

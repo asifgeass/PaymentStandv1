@@ -112,7 +112,7 @@ namespace WPFApp
             var imgRight2 = new Image();
             Ex.TryLog("Не удалось загрузить изображение из ресурсов.", () =>
             {
-                imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_ContactlessBlack.png"));
+                imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/true_png.png"));
                 imgLeft.Stretch = Stretch.Uniform;
 
                 imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_chip1.png"));

@@ -130,6 +130,9 @@ namespace WPFApp
                 idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
                 views.AddControl(pic);
                 views.AddControl(control);
+                var button = Controls.ButtonAccept("Вернуться");
+                button.ButtonControl.Command = vmodel.HomePageCommand;
+                views.AddControl(button);
                 return;
             }
             if (rootResponse.EnumType == EripQAType.GetPayListResponse)
@@ -157,6 +160,10 @@ namespace WPFApp
                     var pic = Controls.IconBig(PackIconKind.CheckboxMarkedCircle, Brushes.Green);
                     views.AddControl(pic);
                     views.AddControl(control);
+                    var button = Controls.ButtonAccept("Вернуться");
+                    button.ButtonControl.Command = vmodel.HomePageCommand;
+                    views.AddControl(new TextBlock());
+                    views.AddControl(button);
                     idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
                 }
                 if (resp.ErrorCode != 0)
@@ -409,6 +416,10 @@ namespace WPFApp
             panel.VerticalAlignment = VerticalAlignment.Center;
             panel.Children.Add(Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red));
             panel.Children.Add(Controls.CentralLabelBorder(msgError, Brushes.DarkRed));
+            var button = Controls.ButtonAccept("Вернуться");
+            button.ButtonControl.Command = vmodel.HomePageCommand;
+            views.AddControl(button);
+            panel.Children.Add(button);
             SetWindow(panel);
             idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
         }
@@ -514,7 +525,6 @@ namespace WPFApp
             views = new ViewPagesManager();
             fakeCount = 0;
         }
-
         private void ChangeThemePalette()
         {
             var paletteHelper = new PaletteHelper();

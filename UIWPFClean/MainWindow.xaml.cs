@@ -57,7 +57,7 @@ namespace UIWPFClean
             bar.Margin = new Thickness(50);
 
             var imgLeft = new Image();
-            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_ContactlessBlack.png"));
+            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
             imgLeft.Stretch = Stretch.Uniform;
             var imgRight = new Image();
             imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
