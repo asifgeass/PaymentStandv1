@@ -18,23 +18,8 @@
         <ResourceDictionary Source="Styles/ControlsStyle.xaml"/>
     </Window.Resources>
 
-    <ScrollViewer Grid.Column="1" Grid.Row="1" 
-                  VerticalScrollBarVisibility="Auto" 
-                  VerticalContentAlignment="Center">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15*"/>
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="15*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Name="StackPanel1" Grid.Column="1" VerticalAlignment="Center">
-                <Button Content="Payment Screen" Click="buttonPayScreen_Click"/>
-                <Button Content="Keyboard" Click="ButtonKeyboard_Click"/>
-                <Button Grid.Row="0" Grid.Column="2" Content="q" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkQ"/>
-                <TextBox/>
-            </StackPanel>
-        </Grid>
-            
-        </ScrollViewer>        
+    <!--<local:SnackbarPanel/>-->
+    <!--<local:Drawer/>-->
+    <local:DefaultWindowContent/>
 
 </Window>

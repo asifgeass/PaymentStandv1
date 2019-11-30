@@ -12,32 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MaterialDesignThemes.Wpf;
-using MaterialDesignThemes;
-using MaterialDesignColors;
-using WPFApp.ViewModels;
-using TermControls;
 
 namespace UIWPFClean
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SnackbarPanel.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SnackbarPanel : UserControl
     {
-        private int count = 0;
-        private DynamicMenuWindowViewModel vm;
-        public MainWindow()
+        public SnackbarPanel()
         {
             InitializeComponent();
-            this.vm = new DynamicMenuWindowViewModel();
-            this.DataContext = this.vm;
         }
 
-        private void Card_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
+        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        {            
+            popup1.IsActive = !popup1.IsActive;
         }
-
     }
 }

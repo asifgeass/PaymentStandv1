@@ -102,6 +102,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Snackbar1.xaml.cs">
+      <DependentUpon>Snackbar1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SnackbarPanel.xaml.cs">
+      <DependentUpon>SnackbarPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnigridColumns.xaml.cs">
+      <DependentUpon>UnigridColumns.xaml</DependentUpon>
+    </Compile>
+    <Page Include="DefaultWindowContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Drawer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Keyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,11 +131,32 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DefaultWindowContent.xaml.cs">
+      <DependentUpon>DefaultWindowContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Drawer.xaml.cs">
+      <DependentUpon>Drawer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Keyboard.xaml.cs">
+      <DependentUpon>Keyboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Snackbar1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SnackbarPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\ControlsStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnigridColumns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
