@@ -119,7 +119,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Keyboard.xaml">
+    <Page Include="myKeyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,8 +137,8 @@
     <Compile Include="Drawer.xaml.cs">
       <DependentUpon>Drawer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Keyboard.xaml.cs">
-      <DependentUpon>Keyboard.xaml</DependentUpon>
+    <Compile Include="myKeyboard.xaml.cs">
+      <DependentUpon>myKeyboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

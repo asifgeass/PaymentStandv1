@@ -46,7 +46,7 @@
             </materialDesign:DrawerHost.LeftDrawerContent>
             
             <materialDesign:DrawerHost.TopDrawerContent>
-                <local:Keyboard/>
+                <local:myKeyboard/>
             </materialDesign:DrawerHost.TopDrawerContent>
             
             <materialDesign:DrawerHost.RightDrawerContent>
@@ -76,7 +76,7 @@
             </materialDesign:DrawerHost.RightDrawerContent>
             
             <materialDesign:DrawerHost.BottomDrawerContent>
-                <local:Keyboard/>
+                <local:myKeyboard/>
             </materialDesign:DrawerHost.BottomDrawerContent>
             
             <Grid Height="auto" Width="auto"

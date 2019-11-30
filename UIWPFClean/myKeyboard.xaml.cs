@@ -18,9 +18,9 @@ namespace UIWPFClean
     /// <summary>
     /// Interaction logic for Keyboard.xaml
     /// </summary>
-    public partial class Keyboard : UserControl
+    public partial class myKeyboard : UserControl
     {
-        public Keyboard()
+        public myKeyboard()
         {
             InitializeComponent();
         }

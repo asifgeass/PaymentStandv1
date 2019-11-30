@@ -116,8 +116,10 @@ namespace UIWPFClean
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var kb = new VisualKeyboard.Control.Keyboard();
-            
+            var win = new Window();
+            win.WindowStyle = WindowStyle.None;
+            win.Content = new myKeyboard();
+            win.Show();
         }
     }
 }
