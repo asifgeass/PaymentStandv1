@@ -12,32 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MaterialDesignThemes.Wpf;
-using MaterialDesignThemes;
-using MaterialDesignColors;
-using WPFApp.ViewModels;
-using TermControls;
 
 namespace UIWPFClean
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for KeyboardSnackbar.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class KeyboardSnackbar : UserControl
     {
-        private int count = 0;
-        private MainWindowViewModel vm;
-        public MainWindow()
+        public KeyboardSnackbar()
         {
             InitializeComponent();
-            this.vm = new MainWindowViewModel();
-            this.DataContext = this.vm;
         }
 
-        private void Card_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public bool IsActive
         {
-
+            get => SnackbarFive.IsActive;
+            set => SnackbarFive.IsActive = value;
         }
-
     }
 }

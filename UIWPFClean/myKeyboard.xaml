@@ -29,16 +29,16 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1"   Content="q" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkQ"/>
-            <Button Grid.Column="2"  Content="w" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkW"/>
-            <Button Grid.Column="3"  Content="e" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkE"/>
-            <Button Grid.Column="4"   Content="r" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkR"/>
-            <Button Grid.Column="5"  Content="t" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkT"/>
-            <Button Grid.Column="6"  Content="y" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkY"/>
-            <Button Grid.Column="7"  Content="u" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkU"/>
-            <Button Grid.Column="8"  Content="i" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkI"/>
-            <Button Grid.Column="9"  Content="o" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkO"/>
-            <Button Grid.Column="10"  Content="p" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkP"/>
+            <Button Grid.Column="1" Style="{DynamicResource KeyButton}" Content="q" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkQ"/>
+            <Button Grid.Column="2" Style="{DynamicResource KeyButton}" Content="w" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkW"/>
+            <Button Grid.Column="3" Style="{DynamicResource KeyButton}" Content="e" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkE"/>
+            <Button Grid.Column="4" Style="{DynamicResource KeyButton}" Content="r" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkR"/>
+            <Button Grid.Column="5" Style="{DynamicResource KeyButton}" Content="t" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkT"/>
+            <Button Grid.Column="6" Style="{DynamicResource KeyButton}" Content="y" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkY"/>
+            <Button Grid.Column="7" Style="{DynamicResource KeyButton}" Content="u" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkU"/>
+            <Button Grid.Column="8" Style="{DynamicResource KeyButton}" Content="i" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkI"/>
+            <Button Grid.Column="9" Style="{DynamicResource KeyButton}" Content="o" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkO"/>
+            <Button Grid.Column="10" Style="{DynamicResource KeyButton}" Content="p" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkP"/>
         </Grid>
         <Grid x:Name="SecondTextRowEng" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -55,15 +55,15 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1"   Content="a" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkA"/>
-            <Button Grid.Column="2"  Content="s" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkS"/>
-            <Button Grid.Column="3"  Content="d" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkD"/>
-            <Button Grid.Column="4"   Content="f" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkF"/>
-            <Button Grid.Column="5"  Content="g" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkG"/>
-            <Button Grid.Column="6"  Content="h" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkH"/>
-            <Button Grid.Column="7"  Content="j" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkJ"/>
-            <Button Grid.Column="8"  Content="k" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkK"/>
-            <Button Grid.Column="9"  Content="l" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkL"/>
+            <Button Grid.Column="1" Style="{DynamicResource KeyButton}" Content="a" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkA"/>
+            <Button Grid.Column="2" Style="{DynamicResource KeyButton}" Content="s" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkS"/>
+            <Button Grid.Column="3" Style="{DynamicResource KeyButton}" Content="d" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkD"/>
+            <Button Grid.Column="4" Style="{DynamicResource KeyButton}" Content="f" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkF"/>
+            <Button Grid.Column="5" Style="{DynamicResource KeyButton}" Content="g" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkG"/>
+            <Button Grid.Column="6" Style="{DynamicResource KeyButton}" Content="h" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkH"/>
+            <Button Grid.Column="7" Style="{DynamicResource KeyButton}" Content="j" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkJ"/>
+            <Button Grid.Column="8" Style="{DynamicResource KeyButton}" Content="k" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkK"/>
+            <Button Grid.Column="9" Style="{DynamicResource KeyButton}" Content="l" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkL"/>
         </Grid>
         <Grid x:Name="ThirdTextRowEng" Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -80,15 +80,15 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1"  Content="SHIFT" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkZ"/>
-            <Button Grid.Column="2"  Content="z" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkZ"/>
-            <Button Grid.Column="3"  Content="x" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkX"/>
-            <Button Grid.Column="4"   Content="c" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkC"/>
-            <Button Grid.Column="5"  Content="v" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkV"/>
-            <Button Grid.Column="6"  Content="b" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkB"/>
-            <Button Grid.Column="7"  Content="n" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkN"/>
-            <Button Grid.Column="8"  Content="m" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkM"/>
-            <Button Grid.Column="9"  Content="del" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Delete"/>
+            <Button Grid.Column="1" Style="{DynamicResource KeyButton}" Content="SHIFT" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkZ"/>
+            <Button Grid.Column="2" Style="{DynamicResource KeyButton}" Content="z" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkZ"/>
+            <Button Grid.Column="3" Style="{DynamicResource KeyButton}" Content="x" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkX"/>
+            <Button Grid.Column="4" Style="{DynamicResource KeyButton}" Content="c" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkC"/>
+            <Button Grid.Column="5" Style="{DynamicResource KeyButton}" Content="v" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkV"/>
+            <Button Grid.Column="6" Style="{DynamicResource KeyButton}" Content="b" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkB"/>
+            <Button Grid.Column="7" Style="{DynamicResource KeyButton}" Content="n" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkN"/>
+            <Button Grid.Column="8" Style="{DynamicResource KeyButton}" Content="m" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkM"/>
+            <Button Grid.Column="9" Style="{DynamicResource KeyButton}" Content="del" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Delete"/>
         </Grid>
         <Grid x:Name="ControlRow" Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -105,16 +105,16 @@
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1"   Content="Ру / En" kbd:Keyboard.KeyBehaviour="VirtualKey"  kbd:Keyboard.KeyCode="None"/>
-            <Button Grid.Column="2"  Content="w" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkW"/>
-            <Button Grid.Column="3"  Content="e" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkE"/>
-            <Button Grid.Column="4"   Content="r" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkR"/>
-            <Button Grid.Column="5"  Content="space" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Space"/>
-            <Button Grid.Column="6"  Content="left" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Left"/>
-            <Button Grid.Column="7"  Content="right" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Right"/>
-            <Button Grid.Column="8"  Content="i" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkI"/>
-            <Button Grid.Column="9"  Content="o" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkO"/>
-            <Button Grid.Column="10"  Content="Enter" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Tab"/>
+            <Button Grid.Column="1" Style="{DynamicResource KeyButton}" Content="Ру / En" kbd:Keyboard.KeyBehaviour="VirtualKey"  kbd:Keyboard.KeyCode="None"/>
+            <Button Grid.Column="2" Style="{DynamicResource KeyButton}" Content="w" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkW"/>
+            <Button Grid.Column="3" Style="{DynamicResource KeyButton}" Content="e" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkE"/>
+            <Button Grid.Column="4" Style="{DynamicResource KeyButton}" Content="r" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkR"/>
+            <Button Grid.Column="5" Style="{DynamicResource KeyButton}" Content="space" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Space"/>
+            <Button Grid.Column="6" Style="{DynamicResource KeyButton}" Content="left" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Left"/>
+            <Button Grid.Column="7" Style="{DynamicResource KeyButton}" Content="right" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Right"/>
+            <Button Grid.Column="8" Style="{DynamicResource KeyButton}" Content="i" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkI"/>
+            <Button Grid.Column="9" Style="{DynamicResource KeyButton}" Content="o" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkO"/>
+            <Button Grid.Column="10" Style="{DynamicResource KeyButton}" Content="Enter" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Tab"/>
         </Grid>
     </Grid>
 </UserControl>

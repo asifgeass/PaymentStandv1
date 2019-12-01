@@ -21,7 +21,7 @@
                                       Margin="0 8 0 0" />
         </StackPanel>
 
-        <local:Snackbar1 x:Name="popup1"/>
+        <local:KeyboardSnackbar x:Name="popup1"/>
 
     </StackPanel>
     

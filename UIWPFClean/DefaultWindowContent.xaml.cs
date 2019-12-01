@@ -120,6 +120,9 @@ namespace UIWPFClean
             win.WindowStyle = WindowStyle.None;
             win.Content = new myKeyboard();
             win.Show();
+            var sn = new Snackbar();
+            var snm = new SnackbarMessage();
+            var hz = new MaterialDesignThemes.Wpf.Converters.DrawerOffsetConverter();
         }
     }
 }

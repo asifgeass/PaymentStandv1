@@ -37,9 +37,6 @@ namespace WPFApp
         private void MainGrid_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
-            var uniform = new UniformGrid();
-            uniform.Columns = 2;
-            var hz = new ScrollViewer();
         }
     }
 }

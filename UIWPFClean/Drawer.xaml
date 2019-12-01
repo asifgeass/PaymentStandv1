@@ -9,62 +9,18 @@
              d:DesignHeight="450" d:DesignWidth="800">
     
     <Grid>
-        
+
         <materialDesign:DrawerHost
-              Margin="15"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center"
-              BorderThickness="2"
-            Height="1000"
-            Width="1850"
-              BorderBrush="{DynamicResource MaterialDesignDivider}">
-            
-            <materialDesign:DrawerHost.LeftDrawerContent>
-                <StackPanel
-      Margin="16">
-                    <TextBlock
-        Margin="4"
-        HorizontalAlignment="Center">
-      LEFT FIELD
-                    </TextBlock>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        CommandParameter="{x:Static Dock.Left}"
-        Margin="4"
-        HorizontalAlignment="Center"
-        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE THIS
-                    </Button>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        Margin="4"
-        HorizontalAlignment="Center"
-        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE ALL
-                    </Button>
-                </StackPanel>
-            </materialDesign:DrawerHost.LeftDrawerContent>
-            
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"               
+            >
+            <!--BorderBrush="{DynamicResource MaterialDesignDivider}"-->
             <materialDesign:DrawerHost.TopDrawerContent>
                 <local:myKeyboard/>
             </materialDesign:DrawerHost.TopDrawerContent>
-            
+
             <materialDesign:DrawerHost.RightDrawerContent>
-                <StackPanel
-      Margin="16">
-                    <TextBlock
-        Margin="4"
-        HorizontalAlignment="Center">
-      THE RIGHT STUFF
-                    </TextBlock>
-                    <Button
-        Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-        CommandParameter="{x:Static Dock.Right}"
-        Margin="4"
-        HorizontalAlignment="Center"
-        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE THIS
-                    </Button>
+                <StackPanel>
                     <Button
         Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
         Margin="4"
@@ -74,33 +30,15 @@
                     </Button>
                 </StackPanel>
             </materialDesign:DrawerHost.RightDrawerContent>
-            
+
             <materialDesign:DrawerHost.BottomDrawerContent>
                 <local:myKeyboard/>
             </materialDesign:DrawerHost.BottomDrawerContent>
-            
-            <Grid Height="auto" Width="auto"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Button
-                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                    CommandParameter="{x:Static Dock.Left}"
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Margin="4">
-                    <materialDesign:PackIcon
-        Kind="ArrowLeft" />
-                </Button>
+
+            <StackPanel Orientation="Horizontal" 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        >
                 <Button
                     Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                     CommandParameter="{x:Static Dock.Top}"
@@ -132,15 +70,15 @@
                     Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="4"
                     Style="{DynamicResource MaterialDesignRaisedAccentButton}">
                     <materialDesign:PackIcon
         Kind="ArrowAll" />
                 </Button>
-            </Grid>
+
+            </StackPanel>
 
         </materialDesign:DrawerHost>
-        
+
     </Grid>
     
 </UserControl>
