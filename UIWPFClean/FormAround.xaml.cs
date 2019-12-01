@@ -47,9 +47,8 @@ namespace UIWPFClean
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var box = new TextBox();
-            
-            stackPanel1.Children.Add(box);
+            var keybox = new TextBoxDrawer();
+            stackPanel1.Children.Add(keybox);
         }
 
         void SetTrigger(ContentControl contentControl)

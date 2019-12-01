@@ -45,15 +45,6 @@
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="Epsiloner.Core, Version=1.0.7.0, Culture=neutral, PublicKeyToken=9da3ace43b578b82, processorArchitecture=MSIL">
-      <HintPath>..\packages\Epsiloner.Core.1.0.7\lib\net461\Epsiloner.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Epsiloner.Wpf.Core, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9da3ace43b578b82, processorArchitecture=MSIL">
-      <HintPath>..\packages\Epsiloner.Wpf.Core.1.0.4\lib\net47\Epsiloner.Wpf.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Epsiloner.Wpf.Keyboard, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9da3ace43b578b82, processorArchitecture=MSIL">
-      <HintPath>..\packages\Epsiloner.Wpf.Keyboard.1.0.4\lib\net47\Epsiloner.Wpf.Keyboard.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -63,20 +54,15 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
-    <Reference Include="MindFusion.Keyboard.Wpf, Version=4.5.0.401, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL">
-      <HintPath>..\packages\MindFusion.Keyboard.Wpf.4.5.0\lib\net40\MindFusion.Keyboard.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="MindFusion.Licensing, Version=1.0.4.38034, Culture=neutral, PublicKeyToken=9d02e21d957ddaef, processorArchitecture=MSIL">
-      <HintPath>..\packages\MindFusion.Keyboard.Wpf.4.5.0\lib\net40\MindFusion.Licensing.dll</HintPath>
-    </Reference>
-    <Reference Include="MindFusion.Themes.Wpf, Version=1.1.3.400, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL">
-      <HintPath>..\packages\MindFusion.Keyboard.Wpf.4.5.0\lib\net40\MindFusion.Themes.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
     </Reference>
     <Reference Include="Prism.Wpf, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.2.0.1422\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Rife.Keyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPFKeyboardChrisEvans\Rife.Keyboard.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -97,9 +83,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TermControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFTouchKeyboard.1.0.1\lib\TermControls.dll</HintPath>
-    </Reference>
     <Reference Include="VisualKeyboard.Control, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\VisualKeyboard.Control.1.0.1\lib\net461\VisualKeyboard.Control.dll</HintPath>
     </Reference>
@@ -107,7 +90,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsInput, Version=1.0.6.0, Culture=neutral, PublicKeyToken=de2685b4776e9c2e, processorArchitecture=MSIL">
-      <HintPath>..\packages\InputSimulatorPlus.1.0.7\lib\net20\WindowsInput.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPFKeyboardChrisEvans\WindowsInput.dll</HintPath>
     </Reference>
     <Reference Include="WPFTouchscreenKeyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFTouchscreenKeyboard.1.0.0\lib\net46\WPFTouchscreenKeyboard.dll</HintPath>
@@ -266,6 +250,9 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.3\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.3\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.3\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Rife.Keyboard.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

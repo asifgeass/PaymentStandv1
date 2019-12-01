@@ -99,31 +99,8 @@
                       CanContentScroll="True"
                       >
                 <StackPanel VerticalAlignment="Center" Name="stackPanel1">
+                    
                     <Button Content="Add Textbox with Keyboard" Click="Button_Click"/>
-                    <TextBox>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="GotFocus">
-                                <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                                                           CommandParameter="{x:Static Dock.Bottom}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="LostFocus">
-                                <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                                                           CommandParameter="{x:Static Dock.Bottom}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="GotFocus">
-                                <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                                                           CommandParameter="{x:Static Dock.Bottom}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="LostFocus">
-                                <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                                                           CommandParameter="{x:Static Dock.Bottom}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
                     <TextBox>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">

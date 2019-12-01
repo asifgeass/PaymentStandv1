@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:UIWPFClean"
              mc:Ignorable="d" 
              xmlns:kbd="clr-namespace:VisualKeyboard.Control;assembly=VisualKeyboard.Control"
+             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -93,8 +94,8 @@
         <Grid x:Name="ControlRow" Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0*"/>
+                <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition Width="3*"/>
@@ -106,7 +107,7 @@
                 <ColumnDefinition Width="0*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="1" Style="{DynamicResource KeyButton}" Content="Ру / En" kbd:Keyboard.KeyBehaviour="VirtualKey"  kbd:Keyboard.KeyCode="None"/>
-            <Button Grid.Column="2" Style="{DynamicResource KeyButton}" Content="w" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkW"/>
+            <kbrd:UnicodeKeyboardKey Grid.Column="2" UnshiftedContent="5" UnshiftedText="5"/>
             <Button Grid.Column="3" Style="{DynamicResource KeyButton}" Content="e" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkE"/>
             <Button Grid.Column="4" Style="{DynamicResource KeyButton}" Content="r" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkR"/>
             <Button Grid.Column="5" Style="{DynamicResource KeyButton}" Content="space" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="Space"/>

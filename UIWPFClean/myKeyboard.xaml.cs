@@ -24,5 +24,10 @@ namespace UIWPFClean
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //SendKeys.Send("{ESC}");
+        }
     }
 }

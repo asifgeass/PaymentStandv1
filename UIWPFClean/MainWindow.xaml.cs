@@ -16,7 +16,6 @@ using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes;
 using MaterialDesignColors;
 using WPFApp.ViewModels;
-using TermControls;
 
 namespace UIWPFClean
 {
