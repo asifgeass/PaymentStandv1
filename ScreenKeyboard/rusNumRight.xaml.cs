@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UIWPFClean
+namespace ScreenKeyboard
 {
     /// <summary>
-    /// Interaction logic for TextBoxDrawer.xaml
+    /// Interaction logic for rusNumRight.xaml
     /// </summary>
-    public partial class TextBoxDrawer : UserControl
+    public partial class rusNumRight : UserControl
     {
-        public TextBoxDrawer()
+        public rusNumRight()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

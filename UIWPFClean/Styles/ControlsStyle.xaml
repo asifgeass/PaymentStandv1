@@ -47,7 +47,7 @@
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
         <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="All" />
         <Setter Property="Margin" Value="3" />
-        <Setter Property="Height" Value="70" />
+        <Setter Property="Height" Value="80" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12 12 12 12" />
         <!--<Setter Property="Template">

@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UIWPFClean
+namespace ScreenKeyboard.KeyboardRows
 {
     /// <summary>
-    /// Interaction logic for TextBoxDrawer.xaml
+    /// Interaction logic for NumPadEnterDel.xaml
     /// </summary>
-    public partial class TextBoxDrawer : UserControl
+    public partial class NumPadEnterDel : UserControl
     {
-        public TextBoxDrawer()
+        public NumPadEnterDel()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

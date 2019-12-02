@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ScreenKeyboard.KeyboardRows
 {
     /// <summary>
-    /// Interaction logic for KeyControlRow.xaml
+    /// Interaction logic for NumPad.xaml
     /// </summary>
-    public partial class KeyControlRow : UserControl
+    public partial class NumPad : UserControl
     {
-        public KeyControlRow()
+        public NumPad()
         {
             InitializeComponent();
         }

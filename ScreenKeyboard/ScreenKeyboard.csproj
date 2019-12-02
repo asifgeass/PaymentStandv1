@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Rife.Keyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>WPFKeyboardChrisEvans\Rife.Keyboard.dll</HintPath>
@@ -56,11 +62,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KeyboardRows\NumPad.xaml.cs">
+      <DependentUpon>NumPad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardRows\NumPadEnterDel.xaml.cs">
+      <DependentUpon>NumPadEnterDel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardRows\NumRow.xaml.cs">
+      <DependentUpon>NumRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardRows\ThirdTextRowRusDel.xaml.cs">
+      <DependentUpon>ThirdTextRowRusDel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="rusKeyboard.xaml.cs">
+      <DependentUpon>rusKeyboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="rusNumRight.xaml.cs">
+      <DependentUpon>rusNumRight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="rusNumTop.xaml.cs">
+      <DependentUpon>rusNumTop.xaml</DependentUpon>
+    </Compile>
     <Page Include="KeyboardRows\FirstTextRowEng.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="KeyboardRows\KeyControlRow.xaml">
+    <Page Include="KeyboardRows\FirstTextRowRus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\ControlKeyRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\NumPad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\NumPadEnterDel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\NumRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -68,7 +111,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="KeyboardRows\SecondTextRowRus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="KeyboardRows\ThirdTextRowEng.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\ThirdTextRowRus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\ThirdTextRowRusDel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,19 +134,40 @@
     <Compile Include="KeyboardRows\FirstTextRowEng.xaml.cs">
       <DependentUpon>FirstTextRowEng.xaml</DependentUpon>
     </Compile>
-    <Compile Include="KeyboardRows\KeyControlRow.xaml.cs">
-      <DependentUpon>KeyControlRow.xaml</DependentUpon>
+    <Compile Include="KeyboardRows\FirstTextRowRus.xaml.cs">
+      <DependentUpon>FirstTextRowRus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardRows\ControlKeyRow.xaml.cs">
+      <DependentUpon>ControlKeyRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="KeyboardRows\SecondTextRowEng.xaml.cs">
       <DependentUpon>SecondTextRowEng.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KeyboardRows\SecondTextRowRus.xaml.cs">
+      <DependentUpon>SecondTextRowRus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KeyboardRows\ThirdTextRowEng.xaml.cs">
       <DependentUpon>ThirdTextRowEng.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardRows\ThirdTextRowRus.xaml.cs">
+      <DependentUpon>ThirdTextRowRus.xaml</DependentUpon>
     </Compile>
     <Compile Include="myKeyboard.xaml.cs">
       <DependentUpon>myKeyboard.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="rusKeyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="rusNumRight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="rusNumTop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

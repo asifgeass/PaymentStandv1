@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="ScreenKeyboard.KeyboardRows.SecondTextRowRus"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
+             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ф" UnshiftedText="Ф" Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ы" UnshiftedText="Ы" Grid.Column="2"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="В" UnshiftedText="В" Grid.Column="3"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="А" UnshiftedText="А" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="П" UnshiftedText="П" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Р" UnshiftedText="Р" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="О" UnshiftedText="О" Grid.Column="7"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Л" UnshiftedText="Л" Grid.Column="8"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Д" UnshiftedText="Д" Grid.Column="9"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ж" UnshiftedText="Ж" Grid.Column="10"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Э" UnshiftedText="Э" Grid.Column="11"/>
+    </Grid>
+</UserControl>

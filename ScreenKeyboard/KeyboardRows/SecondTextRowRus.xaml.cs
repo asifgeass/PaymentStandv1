@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UIWPFClean
+namespace ScreenKeyboard.KeyboardRows
 {
     /// <summary>
-    /// Interaction logic for TextBoxDrawer.xaml
+    /// Interaction logic for SecondTextRowRus.xaml
     /// </summary>
-    public partial class TextBoxDrawer : UserControl
+    public partial class SecondTextRowRus : UserControl
     {
-        public TextBoxDrawer()
+        public SecondTextRowRus()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
