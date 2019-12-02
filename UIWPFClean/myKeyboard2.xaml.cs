@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UIWPFClean.test
+namespace UIWPFClean
 {
     /// <summary>
-    /// Interaction logic for Keyboard.xaml
+    /// Interaction logic for myKeyboard2.xaml
     /// </summary>
-    public partial class myKeyboard : UserControl
+    public partial class myKeyboard2 : UserControl
     {
-        public myKeyboard()
+        public myKeyboard2()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //SendKeys.Send("{ESC}");
         }
     }
 }

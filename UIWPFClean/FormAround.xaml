@@ -21,11 +21,11 @@
         <!--BorderBrush="{DynamicResource MaterialDesignDivider}"-->
 
         <materialDesign:DrawerHost.TopDrawerContent>
-            <local:myKeyboard/>
+            <local:myKeyboard2/>
         </materialDesign:DrawerHost.TopDrawerContent>
 
         <materialDesign:DrawerHost.BottomDrawerContent>
-            <local:myKeyboard/>
+            <local:myKeyboard2/>
         </materialDesign:DrawerHost.BottomDrawerContent>
 
         <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
