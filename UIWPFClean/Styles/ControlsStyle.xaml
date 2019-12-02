@@ -47,17 +47,22 @@
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
         <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="All" />
         <Setter Property="Margin" Value="3" />
-        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Height" Value="70" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12 12 12 12" />
+        <!--<Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <TextBlock Text="{TemplateBinding Content}" TextWrapping="NoWrap" Margin="5 20 5 20"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>-->
     </Style>
 
-    <Style x:Key="StandardKeyboardKeyStyle" TargetType="{x:Type kbrd:KeyboardKey}" BasedOn="{StaticResource KeyButton}" />
-    <Style x:Key="ShiftKeyboardKeyStyle" TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
-    <Style TargetType="{x:Type kbrd:UnicodeKeyboardKey}" BasedOn="{StaticResource StandardKeyboardKeyStyle}"/>
-    <Style TargetType="{x:Type kbrd:VirtualKeyKeyboardKey}" BasedOn="{StaticResource StandardKeyboardKeyStyle}"/>
-    <Style TargetType="{x:Type kbrd:CapsKeyboardKey}" BasedOn="{StaticResource CapsKeyboardKeyStyle}" />
-    <Style TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource ShiftKeyboardKeyStyle}" />
+    <Style TargetType="{x:Type kbrd:UnicodeKeyboardKey}" BasedOn="{StaticResource KeyButton}"/>
+    <Style TargetType="{x:Type kbrd:VirtualKeyKeyboardKey}" BasedOn="{StaticResource KeyButton}"/>
+    <Style TargetType="{x:Type kbrd:CapsKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
+    <Style TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
 
     <Style x:Key="wrapButton" TargetType="Button">
         <Setter Property="Template">
