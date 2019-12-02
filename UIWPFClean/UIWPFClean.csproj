@@ -199,6 +199,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ScreenKeyboard\ScreenKeyboard.csproj">
+      <Project>{bb79a539-debb-4fa3-b337-2bcf16a24719}</Project>
+      <Name>ScreenKeyboard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFApp\WPFApp.csproj">
       <Project>{C42E41D0-948D-4104-AC39-942DC48D5A09}</Project>
       <Name>WPFApp</Name>

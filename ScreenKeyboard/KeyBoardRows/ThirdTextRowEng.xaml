@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ScreenKeyboard.KeyboardRows.ThirdTextRowEng"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
+             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="Z" UnshiftedText="Z" Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="X" UnshiftedText="X" Grid.Column="2"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="C" UnshiftedText="C" Grid.Column="3"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="V" UnshiftedText="V" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="B" UnshiftedText="B" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="N" UnshiftedText="N" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="M" UnshiftedText="M" Grid.Column="7"/>
+    </Grid>
+</UserControl>
