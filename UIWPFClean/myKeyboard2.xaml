@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <kbrd:UnicodeKeyboardKey Grid.Column="1" UnshiftedContent="5" UnshiftedText="5"/>
         <kbrd:VirtualKeyKeyboardKey Grid.Column="2" VirtualKey="LEFT" UnshiftedContent="left"/>
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="SPACE" UnshiftedContent="Space" Grid.Column="5" />
+        <kbrd:VirtualKeyKeyboardKey Grid.Column="5" VirtualKey="SPACE" UnshiftedContent="Space"/>
         <kbrd:UnicodeKeyboardKey UnshiftedContent="u" ShiftedContent="U" UnshiftedText="u" ShiftedUnicodeText="U" Grid.Column="6"/>
     </Grid>
 </UserControl>

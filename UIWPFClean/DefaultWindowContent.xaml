@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              xmlns:local="clr-namespace:UIWPFClean"
-             xmlns:kbd="clr-namespace:VisualKeyboard.Control;assembly=VisualKeyboard.Control"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -22,7 +21,6 @@
                     <Button Content="Payment Screen" Click="buttonPayScreen_Click"/>
                     <Button Content="Keyboard" Click="ButtonKeyboard_Click"/>
                     <Button Content="Show My keyboard" Click="Button_Click"/>
-                    <Button Grid.Row="0" Grid.Column="2" Content="q" kbd:Keyboard.KeyBehaviour="VirtualKey" kbd:Keyboard.KeyCode="VkQ"/>
                     <TextBox GotFocus="TextBox_GotFocus" />
                 </StackPanel>
             </Grid>            
