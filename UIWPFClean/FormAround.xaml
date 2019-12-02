@@ -18,16 +18,22 @@
     <materialDesign:DrawerHost
               HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
+        Name="drawer1"
         Style="{DynamicResource KeyboardDrawerHost}"
             >
         <!--BorderBrush="{DynamicResource MaterialDesignDivider}"-->
 
         <materialDesign:DrawerHost.TopDrawerContent>
-            <key:rusKeyboard/>
+            <materialDesign:ColorZone Mode="Dark">
+                <keyPart:NumPadSolo/>                
+            </materialDesign:ColorZone>
+            
         </materialDesign:DrawerHost.TopDrawerContent>
 
         <materialDesign:DrawerHost.BottomDrawerContent>
-            <key:rusNumTop/>
+            <materialDesign:ColorZone Mode="Dark" >
+                <key:rusNumTop/>
+            </materialDesign:ColorZone>
         </materialDesign:DrawerHost.BottomDrawerContent>
 
         <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
@@ -103,7 +109,7 @@
                 <StackPanel VerticalAlignment="Center" Name="stackPanel1">
                     
                     <Button Content="Add Textbox with Keyboard" Click="Button_Click"/>
-                    <TextBox>
+                    <!--<TextBox>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="GotFocus">
                                 <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
@@ -114,7 +120,7 @@
                                                            CommandParameter="{x:Static Dock.Bottom}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </TextBox>-->
 
                 </StackPanel>
 

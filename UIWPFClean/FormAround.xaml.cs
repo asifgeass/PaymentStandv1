@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,7 +49,23 @@ namespace UIWPFClean
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var keybox = new TextBoxDrawer();
-            stackPanel1.Children.Add(keybox);
+            var textbox = new TextBox();
+            textbox.GotFocus += (s, arg) =>
+            {
+                Dock dockArg = Dock.Bottom;
+                var screenHeight = SystemParameters.PrimaryScreenHeight;
+                var midleScreen = screenHeight / 2;
+                var control = s as TextBox;
+                var location = control.PointToScreen(new Point(0,0));
+                dockArg = (location.Y > midleScreen + 40) ? Dock.Top : Dock.Bottom;
+                DrawerHost.OpenDrawerCommand.Execute(dockArg, drawer1);
+            };
+            textbox.LostFocus += (s, arg) =>
+            {
+                DrawerHost.CloseDrawerCommand.Execute(null, drawer1);
+            };
+            //stackPanel1.Children.Add(keybox);
+            stackPanel1.Children.Add(textbox);
         }
 
         void SetTrigger(ContentControl contentControl)

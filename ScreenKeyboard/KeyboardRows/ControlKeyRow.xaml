@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
              xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -38,18 +39,15 @@
                 <materialDesign:PackIcon Kind="ArrowRight" Height="auto" Width="auto"/>
             </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
         </kbrd:VirtualKeyKeyboardKey>
-        
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="SPACE" Grid.Column="4">
-            <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                <materialDesign:PackIcon Height="auto" Width="auto"/>
-            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-        </kbrd:VirtualKeyKeyboardKey>
+
+        <kbrd:VirtualKeyKeyboardKey VirtualKey="SPACE" Grid.Column="4"/>
+
 
         <kbrd:UnicodeKeyboardKey UnshiftedText="-" UnshiftedContent="-" Grid.Column="5"/>
         <kbrd:UnicodeKeyboardKey UnshiftedText="/" UnshiftedContent="/" Grid.Column="6"/>
         <kbrd:UnicodeKeyboardKey UnshiftedText="*" UnshiftedContent="*" Grid.Column="7"/>
         <kbrd:UnicodeKeyboardKey UnshiftedText="=" UnshiftedContent="=" Grid.Column="8"/>
-        
+
         <kbrd:VirtualKeyKeyboardKey VirtualKey="TAB" Grid.Column="9">
             <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                 <materialDesign:PackIcon Kind="CheckBold" Height="auto" Width="auto"/>

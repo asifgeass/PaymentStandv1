@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ScreenKeyboard.KeyboardRows.NumPadEnterDel"
+﻿<UserControl x:Class="ScreenKeyboard.KeyboardRows.NumPadSolo"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -20,8 +20,9 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            
+
             <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Row="0" Height="auto">
                 <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                     <materialDesign:PackIcon Kind="BackspaceOutline" 
@@ -30,13 +31,33 @@
                 </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
             </kbrd:VirtualKeyKeyboardKey>
 
-            <kbrd:VirtualKeyKeyboardKey VirtualKey="TAB" Grid.Row="1" Height="auto">
+            <kbrd:VirtualKeyKeyboardKey VirtualKey="TAB" Grid.Row="2" Height="auto">
                 <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                     <materialDesign:PackIcon Kind="CheckBold" 
                                              Height="auto" Width="auto" 
                                              MaxHeight="60"/>
                 </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
             </kbrd:VirtualKeyKeyboardKey>
+            
+            <Grid Grid.Row="1" Height="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <kbrd:VirtualKeyKeyboardKey VirtualKey="LEFT" Grid.Column="0" Height="auto">
+                    <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                        <materialDesign:PackIcon Kind="ArrowLeft" Height="auto" Width="auto" MaxHeight="60"/>
+                    </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                </kbrd:VirtualKeyKeyboardKey>
+
+                <kbrd:VirtualKeyKeyboardKey VirtualKey="RIGHT" Grid.Column="1" Height="auto" >
+                    <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                        <materialDesign:PackIcon Kind="ArrowRight" Height="auto" Width="auto" MaxHeight="60"/>
+                    </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                </kbrd:VirtualKeyKeyboardKey>
+                
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
