@@ -15,9 +15,9 @@
               VerticalAlignment="Stretch"               
             >
             <!--BorderBrush="{DynamicResource MaterialDesignDivider}"-->
-            <materialDesign:DrawerHost.TopDrawerContent>
+            <!--<materialDesign:DrawerHost.TopDrawerContent>
                 <local:myKeyboard2/>
-            </materialDesign:DrawerHost.TopDrawerContent>
+            </materialDesign:DrawerHost.TopDrawerContent>-->
 
             <materialDesign:DrawerHost.RightDrawerContent>
                 <StackPanel>
@@ -31,9 +31,9 @@
                 </StackPanel>
             </materialDesign:DrawerHost.RightDrawerContent>
 
-            <materialDesign:DrawerHost.BottomDrawerContent>
+            <!--<materialDesign:DrawerHost.BottomDrawerContent>
                 <local:myKeyboard2/>
-            </materialDesign:DrawerHost.BottomDrawerContent>
+            </materialDesign:DrawerHost.BottomDrawerContent>-->
 
             <StackPanel Orientation="Horizontal" 
                         VerticalAlignment="Center"

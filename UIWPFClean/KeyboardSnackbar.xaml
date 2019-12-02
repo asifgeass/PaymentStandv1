@@ -13,8 +13,6 @@
                              Height="auto"
                              >
         <materialDesign:SnackbarMessage Height="200">
-            <local:myKeyboard2 Height="auto" Width="752" Margin="0,-83,0,-81"
-                              />
         </materialDesign:SnackbarMessage>
     </materialDesign:Snackbar>
     
