@@ -3,6 +3,7 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:UIWPFClean"
+                    xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
                     >
 
     <sys:Double x:Key="globalFontSize">35</sys:Double>
@@ -50,6 +51,13 @@
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12 12 12 12" />
     </Style>
+
+    <Style x:Key="StandardKeyboardKeyStyle" TargetType="{x:Type kbrd:KeyboardKey}" BasedOn="{StaticResource KeyButton}" />
+    <Style x:Key="ShiftKeyboardKeyStyle" TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
+    <Style TargetType="{x:Type kbrd:UnicodeKeyboardKey}" BasedOn="{StaticResource StandardKeyboardKeyStyle}"/>
+    <Style TargetType="{x:Type kbrd:VirtualKeyKeyboardKey}" BasedOn="{StaticResource StandardKeyboardKeyStyle}"/>
+    <Style TargetType="{x:Type kbrd:CapsKeyboardKey}" BasedOn="{StaticResource CapsKeyboardKeyStyle}" />
+    <Style TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource ShiftKeyboardKeyStyle}" />
 
     <Style x:Key="wrapButton" TargetType="Button">
         <Setter Property="Template">

@@ -55,8 +55,7 @@
     <Reference Include="Prism.Wpf, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.2.0.1422\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Rife.Keyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Rife.Keyboard">
       <HintPath>..\ScreenKeyboard\WPFKeyboardChrisEvans\Rife.Keyboard.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -81,8 +80,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsInput, Version=1.0.4.0, Culture=neutral, PublicKeyToken=9b287f7dc5073cad, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="WindowsInput">
       <HintPath>..\ScreenKeyboard\WPFKeyboardChrisEvans\WindowsInput.dll</HintPath>
     </Reference>
   </ItemGroup>
