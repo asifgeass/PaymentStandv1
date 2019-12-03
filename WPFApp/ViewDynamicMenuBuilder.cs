@@ -212,7 +212,7 @@ namespace WPFApp
                 {
                     if (string.IsNullOrEmpty(attr.Type))
                     {
-                        BuildStringAttr(attr);
+                        BuildInputAttr(attr);
                     }
                     else
                     {                        
@@ -224,15 +224,15 @@ namespace WPFApp
                         }
                         if (attr.Type?.ToUpper() != "L")
                         {
-                            BuildStringAttr(attr);
+                            BuildInputAttr(attr);
                         }
                     }
                 }
             }
         }
-        private void BuildStringAttr(AttrRecord attr)
+        private void BuildInputAttr(AttrRecord attr)
         {
-            Ex.Log($"{nameof(BuildStringAttr)}(): ATTR input: attr={attr.Name}");
+            Ex.Log($"{nameof(BuildInputAttr)}(): ATTR input: attr={attr.Name}");
             string hint = attr.Name;
             if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
             var inputbox = Controls.TextBoxHint(hint);

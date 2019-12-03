@@ -122,6 +122,7 @@ namespace UIWPFClean
             var sn = new Snackbar();
             var snm = new SnackbarMessage();
             var hz = new MaterialDesignThemes.Wpf.Converters.DrawerOffsetConverter();
+            var sdf = new Border();
         }
     }
 }

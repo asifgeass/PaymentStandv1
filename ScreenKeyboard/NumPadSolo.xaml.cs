@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScreenKeyboard.KeyboardRows
+namespace ScreenKeyboard
 {
     /// <summary>
     /// Interaction logic for NumPadSolo.xaml

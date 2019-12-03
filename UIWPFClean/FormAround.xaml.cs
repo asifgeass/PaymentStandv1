@@ -1,4 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
+using ScreenKeyboard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace UIWPFClean
     /// </summary>
     public partial class FormAround : UserControl
     {
+        private bool istest;
         public FormAround()
         {
             InitializeComponent();
@@ -50,21 +52,69 @@ namespace UIWPFClean
         {
             var keybox = new TextBoxDrawer();
             var textbox = new TextBox();
+            textbox.InputScope = new InputScope()
+            {
+                Names = { istest ? new InputScopeName(InputScopeNameValue.Number) : new InputScopeName(InputScopeNameValue.Default) }
+            };
+            istest = !istest;
             textbox.GotFocus += (s, arg) =>
             {
                 Dock dockArg = Dock.Bottom;
                 var screenHeight = SystemParameters.PrimaryScreenHeight;
                 var midleScreen = screenHeight / 2;
+                var strokeHeight = midleScreen / 5;
                 var control = s as TextBox;
-                var location = control.PointToScreen(new Point(0,0));
-                dockArg = (location.Y > midleScreen + 40) ? Dock.Top : Dock.Bottom;
+                var location = control.PointToScreen(new Point(0, 0));
+                dockArg = (location.Y > midleScreen + strokeHeight/8) ? Dock.Top : Dock.Bottom;
+
+                var inputScope = control.InputScope;
+                InputScopeNameValue nameInput = InputScopeNameValue.Default;
+                try
+                {
+                    nameInput = ((InputScopeName)inputScope.Names[0]).NameValue;
+                } catch { }
+
+                if (dockArg == Dock.Top)
+                {
+                    if (nameInput != InputScopeNameValue.Number)
+                    {
+                        if (TopDrawerColorZone.Content == null || TopDrawerColorZone.Content is NumPadSolo)
+                        {
+                            TopDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
+                        }                        
+                    }
+                    if (nameInput == InputScopeNameValue.Number)
+                    {
+                        if (TopDrawerColorZone.Content ==null || TopDrawerColorZone.Content is rusNumTop)
+                        {
+                            TopDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
+                        }
+                    }
+                }
+                else
+                {
+                    if (nameInput != InputScopeNameValue.Number)
+                    {
+                        if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is NumPadSolo)
+                        {
+                            BotDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
+                        }
+                    }
+                    if (nameInput == InputScopeNameValue.Number)
+                    {
+                        if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is rusNumTop)
+                        {
+                            BotDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
+                        }
+                    }
+                }
+
                 DrawerHost.OpenDrawerCommand.Execute(dockArg, drawer1);
             };
             textbox.LostFocus += (s, arg) =>
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, drawer1);
             };
-            //stackPanel1.Children.Add(keybox);
             stackPanel1.Children.Add(textbox);
         }
 

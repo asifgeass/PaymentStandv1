@@ -9,7 +9,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:si="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:key="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
-             xmlns:keyPart="clr-namespace:ScreenKeyboard.KeyboardRows;assembly=ScreenKeyboard"
+             xmlns:row="clr-namespace:ScreenKeyboard.KeyboardRows;assembly=ScreenKeyboard"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              FontFamily="{DynamicResource MaterialDesignFont}"
@@ -24,15 +24,14 @@
         <!--BorderBrush="{DynamicResource MaterialDesignDivider}"-->
 
         <materialDesign:DrawerHost.TopDrawerContent>
-            <materialDesign:ColorZone Mode="Dark">
-                <keyPart:NumPadSolo/>                
-            </materialDesign:ColorZone>
-            
+            <materialDesign:ColorZone Mode="Standard" Name="TopDrawerColorZone"  >
+                <!--<key:NumPadSolo  Height="460" />-->                
+            </materialDesign:ColorZone>            
         </materialDesign:DrawerHost.TopDrawerContent>
 
         <materialDesign:DrawerHost.BottomDrawerContent>
-            <materialDesign:ColorZone Mode="Dark" >
-                <key:rusNumTop/>
+            <materialDesign:ColorZone Mode="Standard" Name="BotDrawerColorZone" >
+                <!--<key:rusNumTop Height="460"/>-->
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.BottomDrawerContent>
 
