@@ -232,8 +232,8 @@ namespace Logic
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
             PrintDocument printDocument = new PrintDocument();
-            Font font = new Font("Courier", 9);
-            string path = $@"{Environment.CurrentDirectory}\Resources\Courier.ttf";
+            Font font = new Font("Courier", 8f);
+            string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
             Ex.TryLog(() =>
             {
                 bool isFile = File.Exists(path);
@@ -242,10 +242,11 @@ namespace Logic
                     PrivateFontCollection privateFontCollection = new PrivateFontCollection();
                     privateFontCollection.AddFontFile(path);
                     var fontFam = privateFontCollection.Families.FirstOrDefault();
-                    font = new Font(fontFam, 9f);
-                    Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}(): Printing local file font");
+                    font = new Font(fontFam, 8f);
                 }
+                else Ex.Log($"Font file not found={path}");
             });
+            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}(): font={font}");
             printDocument.PrintPage += (s,e)=> e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
             printDocument.Print();
         }
