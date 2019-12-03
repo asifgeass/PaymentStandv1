@@ -40,6 +40,7 @@ namespace WPFApp
         public ViewDynamicMenuBuilder(Window incWindow)
         {
             window = incWindow;
+            window.Topmost = true;
             try
             {
                 //token = cancelTokenSource.Token;
