@@ -25,12 +25,14 @@
 
         <materialDesign:DrawerHost.TopDrawerContent>
             <materialDesign:ColorZone Mode="Standard" Name="TopDrawerColorZone"  >
+                <key:FullKeyboard Name="TopFullKeyboard"/>
                 <!--<key:NumPadSolo  Height="460" />-->                
             </materialDesign:ColorZone>            
         </materialDesign:DrawerHost.TopDrawerContent>
 
         <materialDesign:DrawerHost.BottomDrawerContent>
             <materialDesign:ColorZone Mode="Standard" Name="BotDrawerColorZone" >
+                <key:FullKeyboard Name="BotFullKeyboard"/>
                 <!--<key:rusNumTop Height="460"/>-->
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.BottomDrawerContent>

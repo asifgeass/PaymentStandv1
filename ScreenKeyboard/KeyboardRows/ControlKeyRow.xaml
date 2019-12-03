@@ -26,7 +26,7 @@
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
 
-        <kbrd:VirtualKeyKeyboardKey UnshiftedContent="РУ-EN" Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="РУ-EN" Grid.Column="1" Name="LangKey" Click="LangKey_Click"/>
         
         <kbrd:VirtualKeyKeyboardKey VirtualKey="LEFT" Grid.Column="2">
             <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>

@@ -23,18 +23,47 @@ namespace ScreenKeyboard
         public FullKeyboard()
         {
             InitializeComponent();
+            RusKBControl.LanguageKeyClicked += () => ChangeLanguage();
+            EngKBControl.LanguageKeyClicked += () => ChangeLanguage();
         }
-        #region Dependency Property Registration
-        public static readonly DependencyProperty IsShiftLockingProperty = DependencyProperty.RegisterAttached(nameof(IsNumeric), typeof(object), typeof(FullKeyboard),
-        new PropertyMetadata(false));
 
-        static FullKeyboard()
-        { DefaultStyleKeyProperty.OverrideMetadata(typeof(FullKeyboard), new FrameworkPropertyMetadata(typeof(FullKeyboard))); }
+        #region Dependency Property Registration
+        //public static readonly DependencyProperty IsShiftLockingProperty = DependencyProperty.RegisterAttached(nameof(IsNumeric), typeof(object), typeof(FullKeyboard),
+        //new PropertyMetadata(false));
+
+        //static FullKeyboard()
+        //{ DefaultStyleKeyProperty.OverrideMetadata(typeof(FullKeyboard), new FrameworkPropertyMetadata(typeof(FullKeyboard))); }
+
+        //public bool IsNumeric
+        //{
+        //    get { return (bool)GetValue(IsShiftLockingProperty); }
+        //    set { SetValue(IsShiftLockingProperty, value); }
+        //}
         #endregion
-        public bool IsNumeric
+
+        public bool isRusLang { get; set; }
+
+        public FullKeyboard ChangeLanguage()
         {
-            get { return (bool)GetValue(IsShiftLockingProperty); }
-            set { SetValue(IsShiftLockingProperty, value); }
+            isRusLang = !isRusLang;
+            double rusSize = isRusLang ? 1 : 0;
+            double engSize = isRusLang ? 0 : 1;
+            EngKBRow.Height = new GridLength(engSize, GridUnitType.Star);
+            RusKBRow.Height = new GridLength(rusSize, GridUnitType.Star);
+            return this;
+        }
+        public FullKeyboard SetNumericType()
+        {
+            NumericKBColumn.Width= new GridLength(1, GridUnitType.Star);
+            TextKBColumn.Width = new GridLength(0, GridUnitType.Star);
+            return this;
+        }
+
+        public FullKeyboard SetTextType()
+        {
+            NumericKBColumn.Width = new GridLength(0, GridUnitType.Star);
+            TextKBColumn.Width = new GridLength(1, GridUnitType.Star);
+            return this;
         }
     }
 }

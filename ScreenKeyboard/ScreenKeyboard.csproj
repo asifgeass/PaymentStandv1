@@ -86,6 +86,9 @@
     <Compile Include="KeyboardRows\NumPadEnterDel.xaml.cs">
       <DependentUpon>NumPadEnterDel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KeyboardRows\ThirdTextRowEngDel.xaml.cs">
+      <DependentUpon>ThirdTextRowEngDel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NumPadSolo.xaml.cs">
       <DependentUpon>NumPadSolo.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="KeyboardRows\NumPadEnterDel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\ThirdTextRowEngDel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -15,17 +15,14 @@ using System.Windows.Shapes;
 
 namespace ScreenKeyboard.KeyboardRows
 {
-    public partial class ControlKeyRow : UserControl
+    /// <summary>
+    /// Interaction logic for ThirdTextRowEngDel.xaml
+    /// </summary>
+    public partial class ThirdTextRowEngDel : UserControl
     {
-        public event Action LanguageKeyClicked = () => { };
-        public ControlKeyRow()
+        public ThirdTextRowEngDel()
         {
             InitializeComponent();
-        }
-
-        private void LangKey_Click(object sender, RoutedEventArgs e)
-        {
-            LanguageKeyClicked();
         }
     }
 }

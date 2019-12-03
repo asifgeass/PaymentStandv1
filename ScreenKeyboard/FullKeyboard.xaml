@@ -4,9 +4,58 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard"
+             xmlns:row="clr-namespace:ScreenKeyboard.KeyboardRows"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" Name="TextKBColumn"/>
+            <ColumnDefinition Width="0*" Name="NumericKBColumn"/>
+        </Grid.ColumnDefinitions>
+
+        <local:NumPadSolo Grid.Column="1"/>
+        
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" Name="EngKBRow"/>
+                <RowDefinition Height="0*" Name="RusKBRow"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" Name="RowNumberEng"/>
+                    <RowDefinition Height="1*" Name="RowEng1"/>
+                    <RowDefinition Height="1*" Name="RowEng2"/>
+                    <RowDefinition Height="1*" Name="RowEng3"/>
+                    <RowDefinition Height="1*" Name="RowControlsEng"/>
+                </Grid.RowDefinitions>
+                
+                <row:NumRow Grid.Row="0"/>
+                <row:FirstTextRowEng Grid.Row="1"/>
+                <row:SecondTextRowEng Grid.Row="2"/>
+                <row:ThirdTextRowEngDel Grid.Row="3"/>
+                <row:ControlKeyRow Grid.Row="4" x:Name="EngKBControl"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" Name="RowNumberRus"/>
+                    <RowDefinition Height="1*" Name="RowRus1"/>
+                    <RowDefinition Height="1*" Name="RowRus2"/>
+                    <RowDefinition Height="1*" Name="RowRus3"/>
+                    <RowDefinition Height="1*" Name="RowControlsRus"/>
+                </Grid.RowDefinitions>
+                
+                <row:NumRow Grid.Row="0"/>
+                <row:FirstTextRowRus Grid.Row="1"/>
+                <row:SecondTextRowRus Grid.Row="2"/>
+                <row:ThirdTextRowRusDel Grid.Row="3"/>
+                <row:ControlKeyRow Grid.Row="4" x:Name="RusKBControl"/>
+            </Grid>
+        </Grid>
+    </Grid>
+
     <!--<UserControl.Style>
         <Style TargetType="UserControl">
             <Setter Property="IsNumeric" Value="false"/>

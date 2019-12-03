@@ -63,51 +63,35 @@ namespace UIWPFClean
                 var screenHeight = SystemParameters.PrimaryScreenHeight;
                 var midleScreen = screenHeight / 2;
                 var strokeHeight = midleScreen / 5;
+                var kbHeight = midleScreen - strokeHeight;
                 var control = s as TextBox;
                 var location = control.PointToScreen(new Point(0, 0));
-                dockArg = (location.Y > midleScreen + strokeHeight/8) ? Dock.Top : Dock.Bottom;
+                dockArg = (location.Y > midleScreen + strokeHeight / 8) ? Dock.Top : Dock.Bottom;
+
+                TopFullKeyboard.Height = kbHeight;
+                BotFullKeyboard.Height = kbHeight;
 
                 var inputScope = control.InputScope;
-                InputScopeNameValue nameInput = InputScopeNameValue.Default;
+                InputScopeNameValue inputType = InputScopeNameValue.Default;
                 try
                 {
-                    nameInput = ((InputScopeName)inputScope.Names[0]).NameValue;
-                } catch { }
+                    inputType = ((InputScopeName)inputScope.Names[0]).NameValue;
+                }
+                catch { }
 
-                if (dockArg == Dock.Top)
+                if (inputType == InputScopeNameValue.Number || inputType == InputScopeNameValue.NumberFullWidth)
                 {
-                    if (nameInput != InputScopeNameValue.Number)
-                    {
-                        if (TopDrawerColorZone.Content == null || TopDrawerColorZone.Content is NumPadSolo)
-                        {
-                            TopDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
-                        }                        
-                    }
-                    if (nameInput == InputScopeNameValue.Number)
-                    {
-                        if (TopDrawerColorZone.Content ==null || TopDrawerColorZone.Content is rusNumTop)
-                        {
-                            TopDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
-                        }
-                    }
+                    TopFullKeyboard.SetNumericType();
+                    BotFullKeyboard.SetNumericType();
                 }
-                else
+                else //inputType != InputScopeNameValue.Number
                 {
-                    if (nameInput != InputScopeNameValue.Number)
-                    {
-                        if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is NumPadSolo)
-                        {
-                            BotDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
-                        }
-                    }
-                    if (nameInput == InputScopeNameValue.Number)
-                    {
-                        if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is rusNumTop)
-                        {
-                            BotDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
-                        }
-                    }
+                    TopFullKeyboard.SetTextType();
+                    BotFullKeyboard.SetTextType();
                 }
+                #region without full keyboard
+                //TestWithoutFullKB(dockArg, midleScreen, strokeHeight, inputType);
+                #endregion
 
                 DrawerHost.OpenDrawerCommand.Execute(dockArg, drawer1);
             };
@@ -116,6 +100,44 @@ namespace UIWPFClean
                 DrawerHost.CloseDrawerCommand.Execute(null, drawer1);
             };
             stackPanel1.Children.Add(textbox);
+        }
+
+        private void TestWithoutFullKB(Dock dockArg, double midleScreen, double strokeHeight, InputScopeNameValue inputType)
+        {
+            if (dockArg == Dock.Top)
+            {
+                if (inputType != InputScopeNameValue.Number)
+                {
+                    if (TopDrawerColorZone.Content == null || TopDrawerColorZone.Content is NumPadSolo)
+                    {
+                        TopDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
+                    }
+                }
+                if (inputType == InputScopeNameValue.Number)
+                {
+                    if (TopDrawerColorZone.Content == null || TopDrawerColorZone.Content is rusNumTop)
+                    {
+                        TopDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
+                    }
+                }
+            }
+            else
+            {
+                if (inputType != InputScopeNameValue.Number)
+                {
+                    if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is NumPadSolo)
+                    {
+                        BotDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
+                    }
+                }
+                if (inputType == InputScopeNameValue.Number)
+                {
+                    if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is rusNumTop)
+                    {
+                        BotDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
+                    }
+                }
+            }
         }
 
         void SetTrigger(ContentControl contentControl)
