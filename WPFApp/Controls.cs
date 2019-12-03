@@ -12,6 +12,7 @@ using System.Windows.Media;
 using WPFApp.Views;
 using System.Windows.Media.Imaging;
 using ExceptionManager;
+using System.Windows.Input;
 
 namespace WPFApp
 {
@@ -80,13 +81,56 @@ namespace WPFApp
             return label;
         }
 
-        public static TextBox TextBoxHint(string hintArg, string nameArg = null)
+        public static TextBox TextBoxHint(string hintArg, FormAround around, string nameArg = null)
         {
+            if (around == null) throw new NullReferenceException($"Controls.TextBoxHint() FormAround around=null");
             var textBox = new TextBox();
             textBox.Margin = new Thickness(MarginBetween);
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
             if (nameArg != null) textBox.Text = nameArg;
-            textBox.GotFocus += async (s, e) =>{for (int i = 0; i < 3; i++){ await Task.Delay(50); textBox.SelectAll(); } };
+            textBox.GotFocus += async (s, e) =>{for (int i = 0; i < 3; i++){ await Task.Delay(50); textBox.SelectAll(); } };            
+            textBox.GotFocus += (s, arg) =>
+            {
+                Dock dockArg = Dock.Bottom;
+                var screenHeight = SystemParameters.PrimaryScreenHeight;
+                var midleScreen = screenHeight / 2;
+                var strokeHeight = midleScreen / 5;
+                var kbHeight = midleScreen - strokeHeight;
+                var control = s as TextBox;
+                var location = control.PointToScreen(new Point(0, 0));
+                dockArg = (location.Y > midleScreen) ? Dock.Top : Dock.Bottom;
+
+                around.TopFullKeyboard.Height = kbHeight;
+                around.BotFullKeyboard.Height = kbHeight;
+
+                var inputScope = control.InputScope;
+                InputScopeNameValue inputType = InputScopeNameValue.Default;
+                try
+                {
+                    inputType = ((InputScopeName)inputScope.Names[0]).NameValue;
+                }
+                catch { }
+
+                if (inputType == InputScopeNameValue.Number || inputType == InputScopeNameValue.NumberFullWidth)
+                {
+                    around.TopFullKeyboard.SetNumericType();
+                    around.BotFullKeyboard.SetNumericType();
+                }
+                else //inputType != InputScopeNameValue.Number
+                {
+                    around.TopFullKeyboard.SetTextType();
+                    around.BotFullKeyboard.SetTextType();
+                }
+                #region without full keyboard
+                //TestWithoutFullKB(dockArg, midleScreen, strokeHeight, inputType);
+                #endregion
+
+                DrawerHost.OpenDrawerCommand.Execute(dockArg, around.drawer1);
+            };
+            textBox.LostFocus += (s, arg) =>
+            {
+                DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);
+            };
             return textBox;
         }
 

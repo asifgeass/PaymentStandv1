@@ -34,6 +34,7 @@ namespace WPFApp
         private Task CheckHomeButtonDisabled = Task.CompletedTask;
         private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
         private IdleDetector idleDetector;
+        FormAround around;
         #endregion
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
@@ -44,7 +45,9 @@ namespace WPFApp
                 //token = cancelTokenSource.Token;
                 Ex.Log($"ViewDynamicMenuBuilder ctor()");
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
-                vmodel.NewResponseComeEvent += BuildMenuOnReponse;
+                around = new FormAround();
+                window.Content = around;
+                vmodel.NewResponseComeEvent += OnReponse;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment; ;
                 idleDetector = new IdleDetector(window, idleTimedefault);                
@@ -56,13 +59,12 @@ namespace WPFApp
                 ex.Show();
             }
         }
-
+        #endregion
         private void OnWaitingPayment()
         {
             var screen = Controls.PayScreen();
             this.SetWindow(screen);
         }
-        #endregion
         public bool IsPageAvaiable => views.IsNextAvaible;
         private async void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -179,7 +181,7 @@ namespace WPFApp
             if ((payrec.Summa == "0.00" || payrec.Summa == string.Empty) && payrec.GetPayListType == "0")
             {
                 views.AddControl(new TextBlock()); //отступ
-                var inputbox = Controls.TextBoxHint("Сумма оплаты");
+                var inputbox = Controls.TextBoxHint("Сумма оплаты", around);
                 inputbox.InputScope = new InputScope()
                 {
                     Names = { new InputScopeName(InputScopeNameValue.Number) }
@@ -235,7 +237,7 @@ namespace WPFApp
             Ex.Log($"{nameof(BuildInputAttr)}(): ATTR input: attr={attr.Name}");
             string hint = attr.Name;
             if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
-            var inputbox = Controls.TextBoxHint(hint);
+            var inputbox = Controls.TextBoxHint(hint, around);
             inputbox.CharacterCasing = CharacterCasing.Upper;
             if (!string.IsNullOrEmpty(attr.MaxLength))
             {
@@ -343,7 +345,7 @@ namespace WPFApp
                 }
             }
         }
-        private void BuildMenuOnReponse()
+        private void OnReponse()
         {
             try
             {
@@ -383,8 +385,7 @@ namespace WPFApp
             vmodel.AttrVMList.Clear();
         }
         private void SetWindow(UIElement argElement)
-        {
-            var around = new FormAround();
+        {            
             around.BackButton.Click += (s, e) => PrevPage();
             around.ContentControls = argElement;
             window.Content = around;

@@ -24,7 +24,7 @@
         <!--BorderBrush="{DynamicResource MaterialDesignDivider}"-->
 
         <materialDesign:DrawerHost.TopDrawerContent>
-            <materialDesign:ColorZone Mode="Standard" Name="TopDrawerColorZone"  >
+            <materialDesign:ColorZone Mode="PrimaryDark" Name="TopDrawerColorZone"  >
                 <key:FullKeyboard x:Name="TopFullKeyboard"/>
                 <!--<key:NumPadSolo  Height="460" />-->                
             </materialDesign:ColorZone>            

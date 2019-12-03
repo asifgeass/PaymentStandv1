@@ -66,6 +66,9 @@
     <Reference Include="Prism.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Rife.Keyboard">
+      <HintPath>..\ScreenKeyboard\WPFKeyboardChrisEvans\Rife.Keyboard.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.6.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -191,6 +194,10 @@
     <ProjectReference Include="..\Logic\Logic.csproj">
       <Project>{f0636a56-60b2-4633-9343-565c8e1e16b4}</Project>
       <Name>Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScreenKeyboard\ScreenKeyboard.csproj">
+      <Project>{bb79a539-debb-4fa3-b337-2bcf16a24719}</Project>
+      <Name>ScreenKeyboard</Name>
     </ProjectReference>
     <ProjectReference Include="..\XmlStructureComplat\XmlStructureComplat.csproj">
       <Project>{60fd15bd-f34a-4cfe-a2e3-af6243e61f97}</Project>

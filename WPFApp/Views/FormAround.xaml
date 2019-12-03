@@ -5,43 +5,62 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFApp"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:key="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="900" d:DesignWidth="1600">
 
-    <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*" MinHeight="70"/>
-            <RowDefinition Height="100*"/>
-            <RowDefinition Height="0"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*" MinWidth="80"/>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="0"/>
-        </Grid.ColumnDefinitions>
+    <materialDesign:DrawerHost Name="drawer1"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch" >
 
-        <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
+        <materialDesign:DrawerHost.TopDrawerContent>
+            <materialDesign:ColorZone Mode="PrimaryDark" Name="TopDrawerColorZone"  >
+                <key:FullKeyboard x:Name="TopFullKeyboard"/>
+                <!--<key:NumPadSolo  Height="460" />-->
+            </materialDesign:ColorZone>
+        </materialDesign:DrawerHost.TopDrawerContent>
 
-            <Label Name="currentLabel" 
+        <materialDesign:DrawerHost.BottomDrawerContent>
+            <materialDesign:ColorZone Mode="Standard" Name="BotDrawerColorZone" >
+                <key:FullKeyboard x:Name="BotFullKeyboard"/>
+                <!--<key:rusNumTop Height="460"/>-->
+            </materialDesign:ColorZone>
+        </materialDesign:DrawerHost.BottomDrawerContent>
+
+        <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" MinHeight="70"/>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*" MinWidth="80"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
+
+                <Label Name="currentLabel" 
                    HorizontalContentAlignment="Center"    
                    Foreground="{DynamicResource MaterialDesignBody}"
                    >
-                <Label.Content>
-                    <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold"/>
-                </Label.Content>
-            </Label>
+                    <Label.Content>
+                        <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold"/>
+                    </Label.Content>
+                </Label>
 
-        </Grid>
+            </Grid>
 
-        <Grid x:Name="ButtonsLeftGrid" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="75*"/>
-            </Grid.RowDefinitions>
+            <Grid x:Name="ButtonsLeftGrid" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="75*"/>
+                </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" 
+                <Button Grid.Row="0" 
                     Name="HomeButton" 
                     Height="Auto"
                     Command="{Binding HomePageCommand}"
@@ -49,14 +68,14 @@
                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
                     Margin="2 2 0 2"
                     >
-                <materialDesign:PackIcon
+                    <materialDesign:PackIcon
                     Kind="Home"
                     Height="48"
                     Width="48" 
                     />
-            </Button>
+                </Button>
 
-            <Button Grid.Row="1" 
+                <Button Grid.Row="1" 
                     Name="BackButton" 
                     IsEnabled="{Binding IsBackButtonActive}"
                     Height="Auto"
@@ -64,15 +83,15 @@
                     materialDesign:ShadowAssist.ShadowDepth="Depth3"
                     Margin="2 2 0 2"
                     >
-                <materialDesign:PackIcon
+                    <materialDesign:PackIcon
                     Kind="ArrowBack"
                     Height="48"
                     Width="48"
                     />
-            </Button> 
-        </Grid>
+                </Button>
+            </Grid>
 
-        <ScrollViewer Name="scroller"
+            <ScrollViewer Name="scroller"
                       Grid.Row="1" 
                       Grid.Column="1" 
                       VerticalScrollBarVisibility="Auto"
@@ -80,19 +99,22 @@
                       PanningMode="VerticalOnly"
                       CanContentScroll="True"
                       >
-            <UniformGrid Name="uniGrid1">
-                <UniformGrid.Style>
-                    <Style TargetType="UniformGrid">
-                        <Setter Property="Columns" Value="1"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
+                <UniformGrid Name="uniGrid1">
+                    <UniformGrid.Style>
+                        <Style TargetType="UniformGrid">
+                            <Setter Property="Columns" Value="1"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
                                ElementName=scroller}" Value="Visible">
-                                <Setter Property="Columns" Value="2"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </UniformGrid.Style>
-            </UniformGrid>
-        </ScrollViewer>
-    </Grid>
+                                    <Setter Property="Columns" Value="2"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </UniformGrid.Style>
+                </UniformGrid>
+            </ScrollViewer>
+        </Grid>
+
+    </materialDesign:DrawerHost>
+
 </UserControl>
