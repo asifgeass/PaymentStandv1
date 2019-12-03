@@ -52,6 +52,15 @@ namespace ScreenKeyboard
             RusKBRow.Height = new GridLength(rusSize, GridUnitType.Star);
             return this;
         }
+        public FullKeyboard SetEngLang(bool isEng=true)
+        {
+            isRusLang = !isEng;
+            double rusSize = isRusLang ? 1 : 0;
+            double engSize = isRusLang ? 0 : 1;
+            EngKBRow.Height = new GridLength(engSize, GridUnitType.Star);
+            RusKBRow.Height = new GridLength(rusSize, GridUnitType.Star);
+            return this;
+        }
         public FullKeyboard SetNumericType()
         {
             NumericKBColumn.Width= new GridLength(1, GridUnitType.Star);

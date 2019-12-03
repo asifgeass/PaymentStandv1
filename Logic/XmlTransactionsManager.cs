@@ -42,7 +42,7 @@ namespace Logic
             if (payrecArg.GetPayListType == "0")
             {
                 Ex.Log($"GetPayListType=0; SessionID={payrecArg.SessionId}");
-                Ex.Try(()=> payrecArg.Summa = payrecArg.Summa.Replace(",","."));
+                Ex.Try(false, ()=> payrecArg.Summa = payrecArg.Summa.Replace(",","."));
                 lastPOSTransaction.CreatePayPosRequest(payrecArg);
                 string request = await Serialize(lastPOSTransaction.Request);
                 MDOM_POS PosRespon = await GetPosResponse(request);
@@ -97,7 +97,7 @@ namespace Logic
                     responCopy.ResponseReq.SessionId = payrecArg.SessionId;
                     var payrec = responCopy.ResponseReq.PayRecord.First();
                     payrec.SessionId = payrecArg.SessionId;
-                    Ex.Try(() => payrec.Summa = payrec.Summa.Replace(",", "."));
+                    Ex.Try(false, () => payrec.Summa = payrec.Summa.Replace(",", "."));
                     responCopy.ClearAttrRecords();
                     return responCopy;
                 }

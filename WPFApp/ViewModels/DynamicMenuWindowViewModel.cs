@@ -188,7 +188,7 @@ namespace WPFApp.ViewModels
                 Ex.Log($"VM => Logic NextPage() param={param};");
                 FillWithLookupsVM();
                 FillWithAttrInputVM();
-                Ex.Try(() => PayrecToSend.Summa = PayrecToSend.Summa.Replace(",","."));
+                Ex.Try(false, () => PayrecToSend.Summa = PayrecToSend.Summa.Replace(",","."));
                 EripToSend.ResponseReq.PayRecord = new List<PayRecord>() { PayrecToSend };
                 Responce = await StaticMain.NextPage(param ?? EripToSend);
             }

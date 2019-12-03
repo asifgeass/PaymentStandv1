@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFApp"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:key="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
+             xmlns:keyb="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              FontFamily="{DynamicResource MaterialDesignFont}"
@@ -16,16 +16,14 @@
               VerticalAlignment="Stretch" >
 
         <materialDesign:DrawerHost.TopDrawerContent>
-            <materialDesign:ColorZone Mode="PrimaryDark" Name="TopDrawerColorZone"  >
-                <key:FullKeyboard x:Name="TopFullKeyboard"/>
-                <!--<key:NumPadSolo  Height="460" />-->
+            <materialDesign:ColorZone Mode="PrimaryDark"  >
+                <keyb:FullKeyboard x:Name="TopFullKeyboard"/>
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.TopDrawerContent>
 
         <materialDesign:DrawerHost.BottomDrawerContent>
-            <materialDesign:ColorZone Mode="Standard" Name="BotDrawerColorZone" >
-                <key:FullKeyboard x:Name="BotFullKeyboard"/>
-                <!--<key:rusNumTop Height="460"/>-->
+            <materialDesign:ColorZone Mode="PrimaryDark" >
+                <keyb:FullKeyboard x:Name="BotFullKeyboard"/>
             </materialDesign:ColorZone>
         </materialDesign:DrawerHost.BottomDrawerContent>
 

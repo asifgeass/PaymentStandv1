@@ -22,8 +22,8 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 30;
-        const int idleTimeAfterPayment = 9;
+        const int idleTimedefault = 10;
+        const int idleTimeAfterPayment = 3;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -34,7 +34,7 @@ namespace WPFApp
         private Task CheckHomeButtonDisabled = Task.CompletedTask;
         private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
         private IdleDetector idleDetector;
-        FormAround around;
+        FormAround around = new FormAround();
         #endregion
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
@@ -45,8 +45,6 @@ namespace WPFApp
                 //token = cancelTokenSource.Token;
                 Ex.Log($"ViewDynamicMenuBuilder ctor()");
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
-                around = new FormAround();
-                window.Content = around;
                 vmodel.NewResponseComeEvent += OnReponse;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment; ;
@@ -129,7 +127,7 @@ namespace WPFApp
                 var control = Controls.CentralLabelBorder(str);
                 control.Foreground = Brushes.DarkRed;
                 var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
-                idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment*2);
+                idleDetector.ChangeIdleTime(idleTimeAfterPayment*2);
                 views.AddControl(pic);
                 views.AddControl(control);
                 var button = Controls.ButtonAccept("Вернуться");
@@ -167,7 +165,7 @@ namespace WPFApp
                     button.ButtonControl.Command = vmodel.HomePageCommand;
                     views.AddControl(new TextBlock());
                     views.AddControl(button);
-                    idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment);
+                    idleDetector.ChangeIdleTime(idleTimeAfterPayment);
                 }
                 if (resp.ErrorCode != 0)
                 {
@@ -189,8 +187,7 @@ namespace WPFApp
                 var binding = new Binding($"{nameof(vmodel.SummaPayrecToSend)}");
                 binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                inputbox.SetBinding(TextBox.TextProperty, binding);
-                
+                inputbox.SetBinding(TextBox.TextProperty, binding);                
                 views.AddControl(inputbox);
             }
 
@@ -349,7 +346,7 @@ namespace WPFApp
         {
             try
             {
-                idleDetector.ChangeRestartIdleTime(idleTimedefault);
+                idleDetector.ChangeIdleTime(idleTimedefault);
                 ClearViewPagesOnResponse();
                 BuildsPages();                
             }
@@ -424,7 +421,7 @@ namespace WPFApp
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel);
-            idleDetector.ChangeRestartIdleTime(idleTimeAfterPayment*2);
+            idleDetector.ChangeIdleTime(idleTimeAfterPayment*2);
         }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {

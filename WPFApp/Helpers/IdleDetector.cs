@@ -34,14 +34,7 @@ namespace WPFApp
             Debug.WriteLine($"Idle Time CHANGED={newIdleTime}");
             _idleTime = newIdleTime; 
             _activityTimer.Interval = TimeSpan.FromSeconds(newIdleTime);
-        }
 
-        public void ChangeRestartIdleTime(int newIdleTime)
-        {
-            _idleTime = newIdleTime;
-            _activityTimer.Stop();
-            ChangeIdleTime(newIdleTime);
-            _activityTimer.Start();
         }
 
         void OnInactivity(object sender, EventArgs e)

@@ -94,14 +94,14 @@ namespace WPFApp
                 Dock dockArg = Dock.Bottom;
                 var screenHeight = SystemParameters.PrimaryScreenHeight;
                 var midleScreen = screenHeight / 2;
-                var strokeHeight = midleScreen / 5;
+                var strokeHeight = midleScreen / 4.5;
                 var kbHeight = midleScreen - strokeHeight;
                 var control = s as TextBox;
                 var location = control.PointToScreen(new Point(0, 0));
-                dockArg = (location.Y > midleScreen) ? Dock.Top : Dock.Bottom;
+                dockArg = (location.Y > midleScreen - strokeHeight/6) ? Dock.Top : Dock.Bottom;
 
-                around.TopFullKeyboard.Height = kbHeight;
-                around.BotFullKeyboard.Height = kbHeight;
+                around.TopFullKeyboard.SetEngLang().Height = kbHeight;
+                around.BotFullKeyboard.SetEngLang().Height = kbHeight;
 
                 var inputScope = control.InputScope;
                 InputScopeNameValue inputType = InputScopeNameValue.Default;
@@ -127,6 +127,7 @@ namespace WPFApp
 
                 DrawerHost.OpenDrawerCommand.Execute(dockArg, around.drawer1);
             };
+
             textBox.LostFocus += (s, arg) =>
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);

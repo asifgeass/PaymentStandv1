@@ -59,7 +59,7 @@ namespace WPFApp
             }
             CheckEmpty();
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
-            Ex.Try(() =>
+            Ex.Try(false, () =>
             {
                 Ex.Log($"page[0]={(pages[0].Children[0] as ContentControl).Content};");
                 Ex.Log($"page[1]={(pages[1].Children[0] as ContentControl).Content};");
