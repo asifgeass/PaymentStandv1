@@ -22,8 +22,8 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 10;
-        const int idleTimeAfterPayment = 3;
+        const int idleTimedefault = 40;
+        const int idleTimeAfterPayment = 9;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
