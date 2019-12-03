@@ -25,6 +25,7 @@ namespace UIWPFClean
     public partial class FormAround : UserControl
     {
         private bool istest;
+        private bool isPrevLangRus;
         public FormAround()
         {
             InitializeComponent();
