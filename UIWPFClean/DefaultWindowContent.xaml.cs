@@ -35,30 +35,59 @@ namespace UIWPFClean
                     , new ColumnDefinition() { Width = new GridLength(250) }
                 }
             };
+            columnGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            columnGrid.Background = Brushes.LightBlue;
 
-            var imgLeft = new Image();
-            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
-            imgLeft.Stretch = Stretch.Uniform;
-            var imgRight = new Image();
-            imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
-            imgRight.Stretch = Stretch.Uniform;
-            var imgRight2 = new Image();
-            imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_side.png"));
-            imgRight2.Stretch = Stretch.Uniform;
+            var img1 = new Image();
+            img1.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
+            img1.Stretch = Stretch.Uniform;
+            var img2 = new Image();
+            img2.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
+            img2.Stretch = Stretch.Uniform;
+            var img3 = new Image();
+            img3.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_side.png"));
+            img3.Stretch = Stretch.Uniform;
+
+            columnGrid.Children.Add(img1);
+            columnGrid.Children.Add(img2);
+            columnGrid.Children.Add(img3);
+            Grid.SetColumn(img1, 0);
+            Grid.SetColumn(img2, 1);
+            Grid.SetColumn(img3, 2);
 
             var rowGrid = new Grid() { RowDefinitions = 
-                { 
-                    new RowDefinition() { Height = new GridLength(250) }
-                    , new RowDefinition() { Height = new GridLength(50, GridUnitType.Star) }
-                    , new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) }
-                } };
+            { 
+                new RowDefinition() { Height = new GridLength(250) }
+                , new RowDefinition() { Height = new GridLength(10, GridUnitType.Auto) }
+                , new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) }
+            } };
+            rowGrid.VerticalAlignment = VerticalAlignment.Center;
+
+            var bar = new ProgressBar();
+            bar.IsIndeterminate = true;
+            bar.Margin = new Thickness(50);
+            var text = new TextBlock()
+            {
+                Text = "Пожалуйста, поднесите карту к POS-терминалу и совершите оплату любым способом."
+                , TextWrapping = TextWrapping.Wrap
+                , TextAlignment = TextAlignment.Center
+            };
+
+            var panel = new StackPanel();
+            panel.Children.Add(bar);
+            panel.Children.Add(text);
+
+            rowGrid.Children.Add(columnGrid);
+            rowGrid.Children.Add(panel);
+            Grid.SetRow(columnGrid, 0);
+            Grid.SetRow(panel, 1);
 
             return rowGrid;
         }
 
         private void buttonPayScreen_Click(object sender, RoutedEventArgs e)
         {
-            //this.Content = PaymentScreen();
+            //this.Content = PaymentScreen(); //PaymentScreenV2
             this.Content = PaymentScreenV2();
         }
 
