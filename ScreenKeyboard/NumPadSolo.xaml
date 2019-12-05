@@ -9,7 +9,7 @@
              xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid MaxWidth="1000" MaxHeight="460">
+    <Grid MaxWidth="800" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="3*"/>

@@ -121,11 +121,8 @@ namespace WPFApp
                 else //inputType != InputScopeNameValue.Number
                 {
                     around.TopFullKeyboard.SetTextType();
-                    ////around.BotFullKeyboard.SetTextType();
+                    around.BotFullKeyboard.SetTextType();
                 }
-                #region without full keyboard
-                //TestWithoutFullKB(dockArg, midleScreen, strokeHeight, inputType);
-                #endregion
 
                 DrawerHost.OpenDrawerCommand.Execute(dockArg, around.drawer1);
             };
