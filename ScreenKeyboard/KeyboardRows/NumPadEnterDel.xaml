@@ -12,15 +12,15 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <local:NumPad Grid.Column="1"/>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.75*"/>
+                <RowDefinition Height="1.25*"/>
             </Grid.RowDefinitions>
 
             <button:BackspaceKB Grid.Row="0" />

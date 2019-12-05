@@ -19,13 +19,14 @@
 
         <!--Text keyboard-->
         <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" Name="EngKBRow"/>
-                <RowDefinition Height="0*" Name="RusKBRow"/>
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" Name="EngKBColumn"/>
+                <ColumnDefinition Width="0*" Name="RusKBColumn"/>
+                <ColumnDefinition Width="4*" Name="NumColumn"/>
+            </Grid.ColumnDefinitions>
 
             <!--Eng keyboard-->
-            <Grid Grid.Row="0">
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0*" Name="RowNumberEng"/>
                     <RowDefinition Height="1*" Name="RowEng1"/>
@@ -36,7 +37,7 @@
                 
                 <row:FirstTextRowEng Grid.Row="1"/>
                 <row:SecondTextRowEng Grid.Row="2"/>
-                <row:ThirdTextRowEngDel Grid.Row="3"/>
+                <row:ThirdTextRowEng Grid.Row="3"/>
 
                 <!--Control Row (eng kb)-->
                 <Grid Grid.Row="4">
@@ -45,12 +46,12 @@
                         <ColumnDefinition Width="8*" />
                     </Grid.ColumnDefinitions>
                     <button:LangRuEnKB x:Name="LangEngKB" Grid.Column="0"/>
-                    <row:ControlKeyRow Grid.Column="1"/>
+                    <row:ControlRowNoAccept Grid.Column="1"/>
                 </Grid>
             </Grid>
             
             <!--Rus keyboard-->
-            <Grid Grid.Row="1">                
+            <Grid Grid.Column="1">                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0*" Name="RowNumberRus"/>
                     <RowDefinition Height="1*" Name="RowRus1"/>
@@ -61,7 +62,7 @@
                 
                 <row:FirstTextRowRus Grid.Row="1"/>
                 <row:SecondTextRowRus Grid.Row="2"/>
-                <row:ThirdTextRowRusDel Grid.Row="3"/>
+                <row:ThirdTextRowRus Grid.Row="3"/>
                 
                 <!--Control Row (rus kb)-->
                 <Grid Grid.Row="4">
@@ -70,10 +71,12 @@
                         <ColumnDefinition Width="8*" />
                     </Grid.ColumnDefinitions>
                     <button:LangRuEnKB x:Name="LangRusKB" Grid.Column="0"/>
-                    <row:ControlKeyRow Grid.Column="1"/>
+                    <row:ControlRowNoAccept Grid.Column="1"/>
                 </Grid>
 
             </Grid>
+
+            <row:NumPadEnterDel Grid.Column="2" />
         </Grid>
     </Grid>
 

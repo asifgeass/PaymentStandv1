@@ -48,8 +48,8 @@ namespace ScreenKeyboard
             isRusLang = !isRusLang;
             double rusSize = isRusLang ? 1 : 0;
             double engSize = isRusLang ? 0 : 1;
-            EngKBRow.Height = new GridLength(engSize, GridUnitType.Star);
-            RusKBRow.Height = new GridLength(rusSize, GridUnitType.Star);
+            EngKBColumn.Width = new GridLength(engSize*10, GridUnitType.Star);
+            RusKBColumn.Width = new GridLength(rusSize*10, GridUnitType.Star);
             return this;
         }
         public FullKeyboard SetEngLang(bool isEng=true)
@@ -57,8 +57,8 @@ namespace ScreenKeyboard
             isRusLang = !isEng;
             double rusSize = isRusLang ? 1 : 0;
             double engSize = isRusLang ? 0 : 1;
-            EngKBRow.Height = new GridLength(engSize, GridUnitType.Star);
-            RusKBRow.Height = new GridLength(rusSize, GridUnitType.Star);
+            EngKBColumn.Width = new GridLength(engSize*10, GridUnitType.Star);
+            RusKBColumn.Width = new GridLength(rusSize*10, GridUnitType.Star);
             return this;
         }
         public FullKeyboard SetNumericType()
