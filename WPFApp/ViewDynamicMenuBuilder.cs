@@ -169,7 +169,17 @@ namespace WPFApp
                 var binding = new Binding($"{nameof(vmodel.SummaPayrecToSend)}");
                 binding.Mode = BindingMode.TwoWay;
                 binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                inputbox.SetBinding(TextBox.TextProperty, binding);                
+                inputbox.SetBinding(TextBox.TextProperty, binding);
+                inputbox.TextChanged += (s, e) => 
+                {
+                    char fraction = '.';
+                    if (inputbox.Text.Contains(fraction))
+                    {
+                        var index = inputbox.Text.IndexOf(fraction);
+                        inputbox.MaxLength = index + 3;
+                    }
+                    else inputbox.MaxLength = 0;
+                };
                 views.AddControl(inputbox);
             }
 
