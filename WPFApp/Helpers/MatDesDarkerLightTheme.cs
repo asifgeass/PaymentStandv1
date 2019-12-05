@@ -12,7 +12,7 @@ namespace WPFApp
     {
         public Color ValidationErrorColor { get; } = (Color)ColorConverter.ConvertFromString("#f44336");
         public Color MaterialDesignBackground { get; } = (Color)ColorConverter.ConvertFromString("#FFFFFFFF");
-        public Color MaterialDesignPaper { get; } = (Color)ColorConverter.ConvertFromString("#FFfafafa"); //FFfafafa //#f7f6f2 - beige //f5f5f5 smoke
+        public Color MaterialDesignPaper { get; } = (Color)ColorConverter.ConvertFromString("#FFf5f5f5"); //FFfafafa //#f7f6f2 - beige //f5f5f5 smoke
         public Color MaterialDesignCardBackground { get; } = (Color)ColorConverter.ConvertFromString("#FFFFFFFF");
         public Color MaterialDesignToolBarBackground { get; } = (Color)ColorConverter.ConvertFromString("#FFF5F5F5");
         public Color MaterialDesignBody { get; } = (Color)ColorConverter.ConvertFromString("#DD000000");
