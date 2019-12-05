@@ -103,44 +103,6 @@ namespace UIWPFClean
             stackPanel1.Children.Add(textbox);
         }
 
-        private void TestWithoutFullKB(Dock dockArg, double midleScreen, double strokeHeight, InputScopeNameValue inputType)
-        {
-            if (dockArg == Dock.Top)
-            {
-                if (inputType != InputScopeNameValue.Number)
-                {
-                    if (TopDrawerColorZone.Content == null || TopDrawerColorZone.Content is NumPadSolo)
-                    {
-                        TopDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
-                    }
-                }
-                if (inputType == InputScopeNameValue.Number)
-                {
-                    if (TopDrawerColorZone.Content == null || TopDrawerColorZone.Content is rusNumTop)
-                    {
-                        TopDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
-                    }
-                }
-            }
-            else
-            {
-                if (inputType != InputScopeNameValue.Number)
-                {
-                    if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is NumPadSolo)
-                    {
-                        BotDrawerColorZone.Content = new rusNumTop() { Height = midleScreen - strokeHeight };
-                    }
-                }
-                if (inputType == InputScopeNameValue.Number)
-                {
-                    if (BotDrawerColorZone.Content == null || BotDrawerColorZone.Content is rusNumTop)
-                    {
-                        BotDrawerColorZone.Content = new NumPadSolo() { Height = midleScreen - strokeHeight };
-                    }
-                }
-            }
-        }
-
         void SetTrigger(ContentControl contentControl)
         {
             // create the command action and bind the command to it

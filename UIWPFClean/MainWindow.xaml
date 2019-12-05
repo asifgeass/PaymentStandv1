@@ -18,8 +18,8 @@
 
     <!--<local:SnackbarPanel/>-->
     <!--<local:Drawer/>-->
-    <!--<local:DefaultWindowContent/>-->
-    <local:FormAround/>
+    <local:DefaultWindowContent/>
+    <!--<local:FormAround/>-->
     <!--<screenkeyboard:FullKeyboard/>-->
 
 </Window>

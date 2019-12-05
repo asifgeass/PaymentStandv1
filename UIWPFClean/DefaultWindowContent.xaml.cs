@@ -26,7 +26,43 @@ namespace UIWPFClean
             InitializeComponent();
         }
 
+        private FrameworkElement PaymentScreenV2()
+        {
+            var columnGrid = new Grid() { ColumnDefinitions =
+                {
+                    new ColumnDefinition() { Width = new GridLength(250) }
+                    , new ColumnDefinition() { Width = new GridLength(250) }
+                    , new ColumnDefinition() { Width = new GridLength(250) }
+                }
+            };
+
+            var imgLeft = new Image();
+            imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
+            imgLeft.Stretch = Stretch.Uniform;
+            var imgRight = new Image();
+            imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
+            imgRight.Stretch = Stretch.Uniform;
+            var imgRight2 = new Image();
+            imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_side.png"));
+            imgRight2.Stretch = Stretch.Uniform;
+
+            var rowGrid = new Grid() { RowDefinitions = 
+                { 
+                    new RowDefinition() { Height = new GridLength(250) }
+                    , new RowDefinition() { Height = new GridLength(50, GridUnitType.Star) }
+                    , new RowDefinition() { Height = new GridLength(1, GridUnitType.Auto) }
+                } };
+
+            return rowGrid;
+        }
+
         private void buttonPayScreen_Click(object sender, RoutedEventArgs e)
+        {
+            //this.Content = PaymentScreen();
+            this.Content = PaymentScreenV2();
+        }
+
+        private static FrameworkElement PaymentScreen()
         {
             var columnGrid = new Grid();
             ColumnDefinition gridCol1 = new ColumnDefinition();
@@ -85,8 +121,7 @@ namespace UIWPFClean
             Grid.SetColumn(imgLeft, 0);
             Grid.SetColumn(center, 1);
             Grid.SetColumn(doublePic, 2);
-
-            this.Content = columnGrid;
+            return columnGrid;
         }
 
         private void ButtonKeyboard_Click(object sender, RoutedEventArgs e)
