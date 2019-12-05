@@ -34,6 +34,7 @@ namespace WPFApp
         private Task CheckHomeButtonDisabled = Task.CompletedTask;
         private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
         private IdleDetector idleDetector;
+        private bool isLastPrevPage = false;
         FormAround around = new FormAround();
         #endregion
         #region ctor
@@ -46,7 +47,7 @@ namespace WPFApp
                 Ex.Log($"ViewDynamicMenuBuilder ctor()");
                 around.BackButton.Click += (s, e) => PrevPage();
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
-                vmodel.NewResponseComeEvent += OnReponse;
+                vmodel.NewResponseComeEvent += OnReponseCome;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment;                
                 idleDetector = new IdleDetector(window, idleTimedefault);                
@@ -323,7 +324,7 @@ namespace WPFApp
                 }
             }
         }
-        private void OnReponse()
+        private void OnReponseCome()
         {
             try
             {
@@ -498,6 +499,7 @@ namespace WPFApp
                 }
                 else if (vmodel.BackUserCommand.CanExecute())
                 {
+                    isLastPrevPage = true;
                     vmodel.BackUserCommand.Execute();
                 }
             }

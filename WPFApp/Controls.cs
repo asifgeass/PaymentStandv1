@@ -94,11 +94,12 @@ namespace WPFApp
                 Dock dockArg = Dock.Bottom;
                 var screenHeight = SystemParameters.PrimaryScreenHeight;
                 var midleScreen = screenHeight / 2;
-                var strokeHeight = midleScreen / 4.5;
+                var strokeHeight = midleScreen / 3;
                 var kbHeight = midleScreen - strokeHeight;
                 var control = s as TextBox;
-                var location = control.PointToScreen(new Point(0, 0));
-                dockArg = (location.Y > midleScreen - strokeHeight/6) ? Dock.Top : Dock.Bottom;
+                var locationSys = control.PointToScreen(new Point(0, 0));
+                var yLocationControl = screenHeight - locationSys.Y;
+                dockArg = (yLocationControl > kbHeight + control.ActualHeight * 1.25) ? Dock.Bottom : Dock.Top;
 
                 around.TopFullKeyboard.SetEngLang().Height = kbHeight;
                 around.BotFullKeyboard.SetEngLang().Height = kbHeight;
@@ -119,7 +120,7 @@ namespace WPFApp
                 else //inputType != InputScopeNameValue.Number
                 {
                     around.TopFullKeyboard.SetTextType();
-                    around.BotFullKeyboard.SetTextType();
+                    ////around.BotFullKeyboard.SetTextType();
                 }
                 #region without full keyboard
                 //TestWithoutFullKB(dockArg, midleScreen, strokeHeight, inputType);

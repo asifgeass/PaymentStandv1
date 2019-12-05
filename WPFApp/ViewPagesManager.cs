@@ -41,12 +41,10 @@ namespace WPFApp
             return GetPage();
         }
 
-        private Panel GetPage()
+        public ViewPagesManager SetToLast()
         {
-            //var scrollView = new ScrollViewer() { Content = pages[currentPageIndex] };
-            //scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            //return scrollView;
-            return pages[currentPageIndex];
+            currentPageIndex = pages.Count - 1;
+            return this;
         }
 
         public ViewPagesManager NewPage()
@@ -74,22 +72,11 @@ namespace WPFApp
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }
-
         public ViewPagesManager SetHeader(string arg)
         {
             Ex.Try(false, () => headers[pages.Count - 1] = arg);            
             return this;
         }
-
-
-        private void CheckEmpty()
-        {
-            if (pages.Count <= 0)
-            {
-                pages.Add(grid);
-            }
-        }
-
         public ViewPagesManager AddDataContext(object arg)
         {
             Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddDataContext)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
@@ -106,7 +93,7 @@ namespace WPFApp
         #region Properties
         public Panel this[int index] => pages[index];
         public bool IsNextAvaible => pages.Count-1 > currentPageIndex;
-        public bool IsPrevAvaible => 0 < currentPageIndex;
+        public bool IsPrevAvaible => currentPageIndex > 0;
         public int Count  => (tempPnl.Children.Count<=0) ? pages.Count-1 : pages.Count;
         public int CurrIndex => currentPageIndex;
         public string NextHeader
@@ -136,6 +123,20 @@ namespace WPFApp
             ? null : pages[currentPageIndex - 1];
         #endregion
         #region Private Methods
+        private Panel GetPage()
+        {
+            //var scrollView = new ScrollViewer() { Content = pages[currentPageIndex] };
+            //scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            //return scrollView;
+            return pages[currentPageIndex];
+        }
+        private void CheckEmpty()
+        {
+            if (pages.Count <= 0)
+            {
+                pages.Add(grid);
+            }
+        }
         private Grid BuildWrapper()
         {
             grid = new Grid();
@@ -148,7 +149,6 @@ namespace WPFApp
             grid.Children.Add(tempPnl);            
             return grid;
         }
-
         #endregion
         public ViewPagesManager()
         {
