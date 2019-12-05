@@ -113,28 +113,7 @@ namespace WPFApp
             var resp = rootResponse.ResponseReq;
             if (resp != null && resp?.ErrorCode != 0)
             {
-                string str = $"Ошибка {resp.ErrorCode}: {resp.ErrorText}";
-                if(rootResponse.EnumType == EripQAType.POSPayResponse)
-                { 
-                    str = $"Оплата не была произведена.\n\nОшибка {resp.ErrorCode}: {resp.ErrorText};";
-                    if(resp.ErrorCode != 128 && resp.ErrorCode != 16)
-                    { Ex.Error($"Unknown POS Error:\nОшибка {resp.ErrorCode}: {resp.ErrorText};"); }
-                }
-                if(resp.ErrorCode == 128) //timeout 30s
-                { str = $"Оплата не была произведена.\nУ терминала истекло время ожидания карты.(Код 128)\n\nПопробуйте еще раз."; }
-                if (resp.ErrorCode == 16) //canceled by user
-                { str = $"Оплата не была произведена.\nОтменено пользователем.(Код 16)"; }
-                Ex.Info($"View Error Page building: response={rootResponse.EnumType} displayed to user:\n{str}");
-                var control = Controls.CentralLabelBorder(str);
-                control.Foreground = Brushes.DarkRed;
-                var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
-                idleDetector.ChangeIdleTime(idleTimeAfterPayment*2);
-                views.AddControl(pic);
-                views.AddControl(control);
-                var button = Controls.ButtonAccept("Вернуться");
-                button.ButtonControl.Command = vmodel.HomePageCommand;
-                views.AddControl(new TextBlock());
-                views.AddControl(button);
+                BuildErrorPage(rootResponse);
                 return;
             }
             if (rootResponse.EnumType == EripQAType.GetPayListResponse)
@@ -423,6 +402,32 @@ namespace WPFApp
             panel.Children.Add(button);
             SetWindow(panel);
             idleDetector.ChangeIdleTime(idleTimeAfterPayment*2);
+        }
+        private void BuildErrorPage(PS_ERIP rootResponse)
+        {
+            var resp = rootResponse.ResponseReq;
+            string str = $"{resp.ErrorText}";
+            if (rootResponse.EnumType == EripQAType.POSPayResponse)
+            {
+                str = $"Оплата не была произведена.\n\nОшибка {resp.ErrorCode}: {resp.ErrorText};";
+                if (resp.ErrorCode != 128 && resp.ErrorCode != 16)
+                { Ex.Error($"Unknown POS Error:\nОшибка {resp.ErrorCode}: {resp.ErrorText};"); }
+            }
+            if (resp.ErrorCode == 128) //timeout 30s
+            { str = $"Истекло время ожидания карты.(Код 128)\nОплата не была произведена.\n\nПопробуйте еще раз."; }
+            if (resp.ErrorCode == 16) //canceled by user
+            { str = $"Отменено пользователем.(Код 16)\nОплата не была произведена."; }
+            Ex.Info($"View Error Page building: response={rootResponse.EnumType} displayed to user:\n{str}");
+            var control = Controls.CentralLabelBorder(str);
+            control.Foreground = Brushes.DarkRed;
+            var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
+            idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
+            views.AddControl(pic);
+            views.AddControl(control);
+            var button = Controls.ButtonAccept("Вернуться");
+            button.ButtonControl.Command = vmodel.HomePageCommand;
+            views.AddControl(new TextBlock());
+            views.AddControl(button);
         }
         private void CheckButtonCommand(Button button, bool isLastPage)
         {
