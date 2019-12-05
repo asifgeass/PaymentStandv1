@@ -44,13 +44,15 @@ namespace WPFApp
             {
                 //token = cancelTokenSource.Token;
                 Ex.Log($"ViewDynamicMenuBuilder ctor()");
+                around.BackButton.Click += (s, e) => PrevPage();
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += OnReponse;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
-                vmodel.PaymentWaitingEvent += OnWaitingPayment; ;
+                vmodel.PaymentWaitingEvent += OnWaitingPayment;                
                 idleDetector = new IdleDetector(window, idleTimedefault);                
                 idleDetector.IsIdle += async (s,e) => { vmodel.HomePageCommand.Execute(); for (short i = 0; i < 3; i++) { await Task.Delay(70); vmodel.IsBackButtonActive = false; } };                
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
+                Ex.Log($"ViewDynamicMenuBuilder ctor() end success");
             }
             catch (Exception ex)
             {
@@ -362,7 +364,6 @@ namespace WPFApp
         }
         private void SetWindow(UIElement argElement)
         {            
-            around.BackButton.Click += (s, e) => PrevPage();
             around.ContentControls = argElement;
             window.Content = around;
         }
