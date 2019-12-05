@@ -23,8 +23,8 @@ namespace ScreenKeyboard
         public FullKeyboard()
         {
             InitializeComponent();
-            RusKBControl.LanguageKeyClicked += () => ChangeLanguage();
-            EngKBControl.LanguageKeyClicked += () => ChangeLanguage();
+            LangRusKB.LanguageKeyClicked += () => ChangeLanguage();
+            LangEngKB.LanguageKeyClicked += () => ChangeLanguage();
         }
 
         #region Dependency Property Registration

@@ -119,10 +119,6 @@ namespace UIWPFClean
             var win = new Window();
             win.WindowStyle = WindowStyle.None;
             win.Show();
-            var sn = new Snackbar();
-            var snm = new SnackbarMessage();
-            var hz = new MaterialDesignThemes.Wpf.Converters.DrawerOffsetConverter();
-            var sdf = new Border();
         }
     }
 }

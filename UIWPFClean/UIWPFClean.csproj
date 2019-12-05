@@ -89,7 +89,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DrawerOffsetConverter.cs" />
     <Compile Include="FormAround.xaml.cs">
       <DependentUpon>FormAround.xaml</DependentUpon>
     </Compile>

@@ -77,8 +77,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonsKB\BackspaceKB.xaml.cs">
+      <DependentUpon>BackspaceKB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ButtonsKB\EnterKB.xaml.cs">
+      <DependentUpon>EnterKB.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ButtonsKB\LangRuEnKB.xaml.cs">
+      <DependentUpon>LangRuEnKB.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FullKeyboard.xaml.cs">
       <DependentUpon>FullKeyboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="KeyboardRows\ControlRowNoAccept.xaml.cs">
+      <DependentUpon>ControlRowNoAccept.xaml</DependentUpon>
     </Compile>
     <Compile Include="KeyboardRows\NumPad.xaml.cs">
       <DependentUpon>NumPad.xaml</DependentUpon>
@@ -98,16 +110,23 @@
     <Compile Include="KeyboardRows\ThirdTextRowRusDel.xaml.cs">
       <DependentUpon>ThirdTextRowRusDel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="rusKeyboard.xaml.cs">
-      <DependentUpon>rusKeyboard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="rusNumRight.xaml.cs">
-      <DependentUpon>rusNumRight.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="rusNumTop.xaml.cs">
-      <DependentUpon>rusNumTop.xaml</DependentUpon>
-    </Compile>
+    <Page Include="ButtonsKB\BackspaceKB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ButtonsKB\EnterKB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ButtonsKB\LangRuEnKB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FullKeyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardRows\ControlRowNoAccept.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,10 +182,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="myKeyboard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="KeyboardRows\FirstTextRowEng.xaml.cs">
       <DependentUpon>FirstTextRowEng.xaml</DependentUpon>
     </Compile>
@@ -188,22 +203,6 @@
     <Compile Include="KeyboardRows\ThirdTextRowRus.xaml.cs">
       <DependentUpon>ThirdTextRowRus.xaml</DependentUpon>
     </Compile>
-    <Compile Include="myKeyboard.xaml.cs">
-      <DependentUpon>myKeyboard.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="rusKeyboard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="rusNumRight.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="rusNumTop.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -230,5 +229,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

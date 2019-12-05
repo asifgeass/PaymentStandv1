@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard"
              xmlns:row="clr-namespace:ScreenKeyboard.KeyboardRows"
+             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -15,56 +16,65 @@
         </Grid.ColumnDefinitions>
 
         <local:NumPadSolo Grid.Column="1"/>
-        
+
+        <!--Text keyboard-->
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" Name="EngKBRow"/>
                 <RowDefinition Height="0*" Name="RusKBRow"/>
             </Grid.RowDefinitions>
 
+            <!--Eng keyboard-->
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" Name="RowNumberEng"/>
+                    <RowDefinition Height="0*" Name="RowNumberEng"/>
                     <RowDefinition Height="1*" Name="RowEng1"/>
                     <RowDefinition Height="1*" Name="RowEng2"/>
                     <RowDefinition Height="1*" Name="RowEng3"/>
                     <RowDefinition Height="1*" Name="RowControlsEng"/>
                 </Grid.RowDefinitions>
                 
-                <row:NumRow Grid.Row="0"/>
                 <row:FirstTextRowEng Grid.Row="1"/>
                 <row:SecondTextRowEng Grid.Row="2"/>
                 <row:ThirdTextRowEngDel Grid.Row="3"/>
-                <row:ControlKeyRow Grid.Row="4" x:Name="EngKBControl"/>
-            </Grid>
 
-            <Grid Grid.Row="1">
+                <!--Control Row (eng kb)-->
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+                    <button:LangRuEnKB x:Name="LangEngKB" Grid.Column="0"/>
+                    <row:ControlKeyRow Grid.Column="1"/>
+                </Grid>
+            </Grid>
+            
+            <!--Rus keyboard-->
+            <Grid Grid.Row="1">                
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" Name="RowNumberRus"/>
+                    <RowDefinition Height="0*" Name="RowNumberRus"/>
                     <RowDefinition Height="1*" Name="RowRus1"/>
                     <RowDefinition Height="1*" Name="RowRus2"/>
                     <RowDefinition Height="1*" Name="RowRus3"/>
                     <RowDefinition Height="1*" Name="RowControlsRus"/>
                 </Grid.RowDefinitions>
                 
-                <row:NumRow Grid.Row="0"/>
                 <row:FirstTextRowRus Grid.Row="1"/>
                 <row:SecondTextRowRus Grid.Row="2"/>
                 <row:ThirdTextRowRusDel Grid.Row="3"/>
-                <row:ControlKeyRow Grid.Row="4" x:Name="RusKBControl"/>
+                
+                <!--Control Row (rus kb)-->
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="8*" />
+                    </Grid.ColumnDefinitions>
+                    <button:LangRuEnKB x:Name="LangRusKB" Grid.Column="0"/>
+                    <row:ControlKeyRow Grid.Column="1"/>
+                </Grid>
+
             </Grid>
         </Grid>
     </Grid>
 
-    <!--<UserControl.Style>
-        <Style TargetType="UserControl">
-            <Setter Property="IsNumeric" Value="false"/>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
-                            ElementName=scroller}" Value="Visible">
-                    <Setter Property="Columns" Value="2"/>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Style>-->
 </UserControl>

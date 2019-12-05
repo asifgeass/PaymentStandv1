@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
              xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"             
+             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -13,46 +14,13 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="1.3*"/>            
-            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
 
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="РУ-EN" Grid.Column="1" Name="LangKey" Click="LangKey_Click"/>
-        
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="LEFT" Grid.Column="2">
-            <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                <materialDesign:PackIcon Kind="ArrowLeft" Height="auto" Width="auto"/>
-            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-        </kbrd:VirtualKeyKeyboardKey>
-        
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="RIGHT" Grid.Column="3">
-            <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                <materialDesign:PackIcon Kind="ArrowRight" Height="auto" Width="auto"/>
-            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-        </kbrd:VirtualKeyKeyboardKey>
-
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="SPACE" Grid.Column="4"/>
-
-
-        <kbrd:UnicodeKeyboardKey UnshiftedText="-" UnshiftedContent="-" Grid.Column="5"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedText="/" UnshiftedContent="/" Grid.Column="6"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedText="*" UnshiftedContent="*" Grid.Column="7"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedText="=" UnshiftedContent="=" Grid.Column="8"/>
-
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="TAB" Grid.Column="9">
-            <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                <materialDesign:PackIcon Kind="CheckBold" Height="auto" Width="auto"/>
-            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-        </kbrd:VirtualKeyKeyboardKey>
+        <local:ControlRowNoAccept Grid.Column="1" />
+        <button:EnterKB Grid.Column="2" />
 
     </Grid>
     

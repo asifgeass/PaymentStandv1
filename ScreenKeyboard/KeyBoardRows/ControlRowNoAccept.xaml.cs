@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScreenKeyboard
+namespace ScreenKeyboard.KeyboardRows
 {
     /// <summary>
-    /// Interaction logic for rusNumRight.xaml
+    /// Interaction logic for ControlRowNoAccept.xaml
     /// </summary>
-    public partial class rusNumRight : UserControl
+    public partial class ControlRowNoAccept : UserControl
     {
-        public rusNumRight()
+        public ControlRowNoAccept()
         {
             InitializeComponent();
         }

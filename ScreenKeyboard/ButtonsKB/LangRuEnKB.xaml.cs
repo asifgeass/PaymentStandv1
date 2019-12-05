@@ -13,16 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScreenKeyboard
+namespace ScreenKeyboard.ButtonsKB
 {
     /// <summary>
-    /// Interaction logic for rusNumTop.xaml
+    /// Interaction logic for LangRuEnKB.xaml
     /// </summary>
-    public partial class rusNumTop : UserControl
+    public partial class LangRuEnKB : UserControl
     {
-        public rusNumTop()
+        public LangRuEnKB()
         {
             InitializeComponent();
+        }
+        public event Action LanguageKeyClicked = () => { };
+        private void LangKey_Click(object sender, RoutedEventArgs e)
+        {
+            LanguageKeyClicked();
         }
     }
 }

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
+             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
              mc:Ignorable="d" 
@@ -19,11 +20,12 @@
         </Grid.ColumnDefinitions>
 
         <local:ThirdTextRowEng Grid.Column="1"/>
-
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Column="2">
+        <button:BackspaceKB Grid.Column="2"/>
+        
+        <!--<kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Column="2">
             <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                 <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto"/>
             </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-        </kbrd:VirtualKeyKeyboardKey>
+        </kbrd:VirtualKeyKeyboardKey>-->
     </Grid>
 </UserControl>

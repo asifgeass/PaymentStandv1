@@ -13,11 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScreenKeyboard.KeyboardRows
+namespace ScreenKeyboard.ButtonsKB
 {
-    public partial class ControlKeyRow
-    {        
-        public ControlKeyRow()
+    /// <summary>
+    /// Interaction logic for EnterKB.xaml
+    /// </summary>
+    public partial class EnterKB : UserControl
+    {
+        public EnterKB()
         {
             InitializeComponent();
         }

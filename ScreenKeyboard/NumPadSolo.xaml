@@ -6,6 +6,7 @@
              xmlns:row="clr-namespace:ScreenKeyboard.KeyboardRows"
              xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid MaxWidth="1000" MaxHeight="460">
@@ -23,21 +24,9 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
-            <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" Grid.Row="0" Height="auto">
-                <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                    <materialDesign:PackIcon Kind="BackspaceOutline" 
-                                             Height="auto" Width="auto" 
-                                             MaxHeight="100"/>
-                </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-            </kbrd:VirtualKeyKeyboardKey>
+            <button:BackspaceKB Grid.Row="0" />
 
-            <kbrd:VirtualKeyKeyboardKey VirtualKey="TAB" Grid.Row="2" Height="auto">
-                <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-                    <materialDesign:PackIcon Kind="CheckBold" 
-                                             Height="auto" Width="auto" 
-                                             MaxHeight="100"/>
-                </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
-            </kbrd:VirtualKeyKeyboardKey>
+            <button:EnterKB Grid.Row="2" />
             
             <Grid Grid.Row="1" Height="auto">
                 <Grid.ColumnDefinitions>

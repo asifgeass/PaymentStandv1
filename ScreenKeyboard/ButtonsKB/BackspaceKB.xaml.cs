@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScreenKeyboard
+namespace ScreenKeyboard.ButtonsKB
 {
     /// <summary>
-    /// Interaction logic for rusKeyboard.xaml
+    /// Interaction logic for BackspaceKB.xaml
     /// </summary>
-    public partial class rusKeyboard : UserControl
+    public partial class BackspaceKB : UserControl
     {
-        public rusKeyboard()
+        public BackspaceKB()
         {
             InitializeComponent();
         }
+
+        public PackIcon Icon => this.IconControl;        
     }
 }
