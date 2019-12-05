@@ -26,9 +26,11 @@ namespace WPFApp.Views
             InitializeComponent();
 #if DEBUG
             this.WindowState = WindowState.Normal;
+            this.Topmost = false;
 #else
             this.WindowState = WindowState.Maximized;
             this.WindowStyle = WindowStyle.None;
+            this.Topmost = true;
 #endif
             //this.WindowState = WindowState.Maximized;
         }

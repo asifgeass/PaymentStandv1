@@ -39,8 +39,7 @@ namespace WPFApp
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
         {
-            window = incWindow;
-            window.Topmost = true;
+            window = incWindow;            
             try
             {
                 //token = cancelTokenSource.Token;
