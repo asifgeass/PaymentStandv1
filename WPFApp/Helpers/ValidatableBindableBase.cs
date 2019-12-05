@@ -13,10 +13,10 @@ namespace WPFApp
 {
     public class ValidatableBindableBase : BindableBase, INotifyDataErrorInfo
     {
-        public void Validate()
-        {
+        //public void Validate()
+        //{
 
-        }
+        //}
         public bool ValidateResult(ValidationResult valResult, [CallerMemberName] string propName = null)
         {
             if (valResult == null) return true;
@@ -38,11 +38,31 @@ namespace WPFApp
                 /* Raise event to tell WPF to execute the GetErrors method */
                 RaiseErrorsChanged(propName);
             }
-            Ex.Log($"ValidatableBindableBase.ValidateResult({valResult}, {propName})");
+            //Ex.Log($"ValidatableBindableBase.ValidateResult({valResult}, {propName})");
             return valResult.IsValid;
         }
         #region INotifyDataErrorInfo members 2013 Magnus Montin
-
+        private readonly Dictionary<string, IList<string>> _validationErrors = new Dictionary<string, IList<string>>();
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = (s, e) => { };
+        private void RaiseErrorsChanged(string propertyName)
+        {
+            //Ex.Log($"INotifyDataErrorInfo.RaiseErrorsChanged({propertyName})");
+            ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            //Ex.Log($"INotifyDataErrorInfo: GetErrors({propertyName})");
+            if (string.IsNullOrEmpty(propertyName) || !_validationErrors.ContainsKey(propertyName))
+            {
+                return null;
+            }
+            //Ex.Log($"INotifyDataErrorInfo: GetErrors({propertyName})={_validationErrors[propertyName][0]}");
+            return _validationErrors[propertyName];
+        }
+        public bool HasErrors
+        {
+            get { return _validationErrors.Count > 0; }
+        }
         //private async void ValidatePropertyExample(string username)
         //{
         //    const string propertyKey = "Username";
@@ -70,28 +90,6 @@ namespace WPFApp
         //        RaiseErrorsChanged(propertyKey);
         //    }
         //}
-
-        private readonly Dictionary<string, IList<string>> _validationErrors = new Dictionary<string, IList<string>>();
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged = (s, e) => { };
-        private void RaiseErrorsChanged(string propertyName)
-        {
-            Ex.Log($"INotifyDataErrorInfo.RaiseErrorsChanged({propertyName})");
-            ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-        public System.Collections.IEnumerable GetErrors(string propertyName)
-        {
-            Ex.Log($"INotifyDataErrorInfo: GetErrors({propertyName})");
-            if (string.IsNullOrEmpty(propertyName) || !_validationErrors.ContainsKey(propertyName))
-            {
-                return null;
-            }
-            Ex.Log($"INotifyDataErrorInfo: GetErrors({propertyName})={_validationErrors[propertyName][0]}");
-            return _validationErrors[propertyName];
-        }
-        public bool HasErrors
-        {
-            get { /*Ex.Log($"INotifyDataErrorInfo: bool HasErrors count={_validationErrors.Count}");*/ return _validationErrors.Count > 0; }
-        }
         #endregion
     }
 }
