@@ -237,7 +237,8 @@ namespace Logic
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
             PrintDocument printDocument = new PrintDocument();
-            Font font = new Font("Courier", 8f);
+            //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
+            Font font = new Font(FontFamily.GenericMonospace, 8.25f);
             string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
             Ex.TryLog(() =>
             {
@@ -247,7 +248,7 @@ namespace Logic
                     PrivateFontCollection privateFontCollection = new PrivateFontCollection();
                     privateFontCollection.AddFontFile(path);
                     var fontFam = privateFontCollection.Families.FirstOrDefault();
-                    font = new Font(fontFam, 8f);
+                    font = new Font(fontFam, 8.25f);
                 }
                 else Ex.Log($"Font file not found={path}");
             });
