@@ -120,6 +120,9 @@
     <Compile Include="Views\Elements\HeaderPath.xaml.cs">
       <DependentUpon>HeaderPath.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Elements\LeftPanelButtons.xaml.cs">
+      <DependentUpon>LeftPanelButtons.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Elements\UniTilePanel.xaml.cs">
       <DependentUpon>UniTilePanel.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Elements\HeaderPath.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\LeftPanelButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

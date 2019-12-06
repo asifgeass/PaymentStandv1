@@ -63,6 +63,14 @@
     <Style TargetType="{x:Type kbrd:CapsKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
     <Style TargetType="{x:Type kbrd:ShiftKeyboardKey}" BasedOn="{StaticResource KeyButton}" />
 
+    <Style x:Key="{x:Type ScrollBar}" 
+               TargetType="ScrollBar" 
+               BasedOn="{StaticResource MaterialDesignScrollBar}"           
+               >
+        <Setter Property="materialDesign:ScrollBarAssist.ThumbCornerRadius" Value="15" />
+        <Setter Property="materialDesign:ScrollBarAssist.ButtonsVisibility" Value="Collapsed" />
+    </Style>
+
     <Style x:Key="{x:Type TextBox}" 
                TargetType="TextBox" 
                BasedOn="{StaticResource MaterialDesignFilledTextFieldTextBox}"
@@ -70,13 +78,26 @@
         <Setter Property="AcceptsReturn" Value="true" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="20" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.5" />
         <Setter Property="materialDesign:ValidationAssist.FontSize" Value="25" />
         <Setter Property="materialDesign:TextFieldAssist.TextFieldCornerRadius" Value="25 25 0 0" />
         <Setter Property="materialDesign:TextFieldAssist.TextBoxViewMargin" Value="0 6 0 0" />
-    </Style>
-
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="materialDesign:TextFieldAssist.HasOutlinedTextField" Value="True"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="false">
+                <Setter Property="materialDesign:TextFieldAssist.HasOutlinedTextField" Value="False"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>    
+    <!--<Setter Property="BorderThickness" Value="5"/>
+    <Setter Property="BorderBrush" Value="Red"/>
+    <Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="Blue"/>
+    <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Visible"/>-->
+    
     <Style x:Key="{x:Type TextBlock}" 
                TargetType="TextBlock" 
                BasedOn="{StaticResource MaterialDesignCaptionTextBlock}"

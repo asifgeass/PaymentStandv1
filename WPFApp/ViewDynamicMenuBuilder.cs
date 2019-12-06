@@ -22,7 +22,7 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 40;
+        const int idleTimedefault = 90;
         const int idleTimeAfterPayment = 9;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
@@ -52,13 +52,13 @@ namespace WPFApp
                 vmodel.PaymentWaitingEvent += OnWaitingPayment;                
                 idleDetector = new IdleDetector(window, idleTimedefault);                
                 idleDetector.IsIdle += async (s,e) => 
-                {
-                    MessageBox.Show("Are u ready?", "", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    vmodel.HomePageCommand.Execute(); 
-                    for (short i = 0; i < 3; i++) 
-                    { 
-                        await Task.Delay(70); vmodel.IsBackButtonActive = false; 
-                    } 
+                {                    
+                    var hz = await DialogHost.Show("are u ready?");
+                    //vmodel.HomePageCommand.Execute(); 
+                    //for (short i = 0; i < 3; i++) 
+                    //{ 
+                    //    await Task.Delay(70); vmodel.IsBackButtonActive = false; 
+                    //} 
                 };                
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
                 Ex.Log($"ViewDynamicMenuBuilder ctor() end success");

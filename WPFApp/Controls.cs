@@ -19,7 +19,8 @@ namespace WPFApp
     public static class Controls
     {
         private const double Margin = 50;
-        private const double MarginBetween = 12;
+        private const double MarginBetweenButtons = 12;
+        private const double MarginBetweenInputs = 25;
         public static Label CentralLabelBorder(string arg = "", SolidColorBrush brushArg=null)
         {
             var lbl = new Label();
@@ -51,7 +52,7 @@ namespace WPFApp
             var cardButton = new CardButton();
             if(argName!=null) cardButton.Text = argName; 
             //button.Style = Application.Current.TryFindResource("CardButton") as Style;            
-            cardButton.Margin = new Thickness(MarginBetween);       
+            cardButton.Margin = new Thickness(MarginBetweenButtons);       
             return cardButton;
         }
 
@@ -59,7 +60,7 @@ namespace WPFApp
         {
             var button = new ButtonTextblock();
             if (argName != null) button.Text = argName;
-            button.Margin = new Thickness(MarginBetween);
+            button.Margin = new Thickness(MarginBetweenButtons);
             return button;
         }
 
@@ -77,7 +78,7 @@ namespace WPFApp
             var label = new Label();
             if (argName != null) label.Content = argName;
             label.HorizontalContentAlignment = HorizontalAlignment.Center;
-            label.Margin = new Thickness(MarginBetween);
+            label.Margin = new Thickness(MarginBetweenButtons);
             return label;
         }
 
@@ -85,7 +86,8 @@ namespace WPFApp
         {
             if (around == null) throw new NullReferenceException($"Controls.TextBoxHint() FormAround around=null");
             var textBox = new TextBox();
-            textBox.Margin = new Thickness(MarginBetween);
+            textBox.Margin = new Thickness(MarginBetweenButtons
+                , MarginBetweenInputs, MarginBetweenButtons, MarginBetweenInputs);
             if (hintArg != null) HintAssist.SetHint(textBox, hintArg);
             if (nameArg != null) textBox.Text = nameArg;
             textBox.GotFocus += async (s, e) =>{for (int i = 0; i < 3; i++){ await Task.Delay(50); textBox.SelectAll(); } };            
@@ -131,11 +133,12 @@ namespace WPFApp
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);
             };
-            //textBox.Triggers.Add(GetBorderTextTrigger());
+            
+            //textBox.Style = GetBorderStyleTrigger();
             return textBox;
         }
 
-        private static Trigger GetBorderTextTrigger()
+        private static Style GetBorderStyleTrigger()
         {
             var setBrush = new Setter()
             {
@@ -155,10 +158,11 @@ namespace WPFApp
                 Value = true,
                 Setters = { setBrush, setBorderThick },
             };
-            var ev = new EventTrigger();
-            var hzCol = ev.Actions;
-            var it = hzCol[0];
-            return trigger;
+
+            var style = new Style()
+            { Triggers = { trigger } };
+
+            return style;
         }
 
         public static Grid PayScreen()
