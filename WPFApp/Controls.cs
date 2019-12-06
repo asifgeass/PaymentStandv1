@@ -124,14 +124,41 @@ namespace WPFApp
                     around.BotFullKeyboard.SetTextType();
                 }
 
-                DrawerHost.OpenDrawerCommand.Execute(dockArg, around.drawer1);
+                DrawerHost.OpenDrawerCommand.Execute(dockArg, /*around.drawer1*/ control);
             };
-
+            //textBox.text
             textBox.LostFocus += (s, arg) =>
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);
             };
+            //textBox.Triggers.Add(GetBorderTextTrigger());
             return textBox;
+        }
+
+        private static Trigger GetBorderTextTrigger()
+        {
+            var setBrush = new Setter()
+            {
+                Property = TextBox.BorderBrushProperty,
+                Value = Brushes.Red,
+            };
+
+            var setBorderThick = new Setter()
+            {
+                Property = TextBox.BorderThicknessProperty,
+                Value = new Thickness(5),
+            };
+
+            var trigger = new Trigger()
+            {
+                Property = Validation.HasErrorProperty,
+                Value = true,
+                Setters = { setBrush, setBorderThick },
+            };
+            var ev = new EventTrigger();
+            var hzCol = ev.Actions;
+            var it = hzCol[0];
+            return trigger;
         }
 
         public static Grid PayScreen()

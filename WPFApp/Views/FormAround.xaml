@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:WPFApp"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:keyb="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
+             xmlns:el="clr-namespace:WPFApp.Views.Elements"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              FontFamily="{DynamicResource MaterialDesignFont}"
@@ -39,6 +40,7 @@
                 <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
 
+            <!--<el:HeaderPath x:Name="HeaderPath" Grid.Row="0" Grid.Column="1" />-->
             <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
 
                 <Label Name="currentLabel" 
@@ -49,7 +51,6 @@
                         <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold"/>
                     </Label.Content>
                 </Label>
-
             </Grid>
 
             <Grid x:Name="ButtonsLeftGrid" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">

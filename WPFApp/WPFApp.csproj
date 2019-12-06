@@ -117,8 +117,14 @@
     <Compile Include="Views\DynamicMenuWindow.xaml.cs">
       <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Elements\HeaderPath.xaml.cs">
+      <DependentUpon>HeaderPath.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Elements\UniTilePanel.xaml.cs">
       <DependentUpon>UniTilePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IdleWindow.xaml.cs">
+      <DependentUpon>IdleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
@@ -137,7 +143,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Elements\HeaderPath.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Elements\UniTilePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IdleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,6 +167,10 @@
       <DependentUpon>FormAround.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DynamicMenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\ValidationErrorTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
