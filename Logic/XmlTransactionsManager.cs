@@ -164,14 +164,19 @@ namespace Logic
             { return eripBody; }
             return await Transaction();
         }
-        public Task<PS_ERIP> PrevRequest(object arg = null)
+        public async Task<PS_ERIP> PrevRequest(object arg = null)
         {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(PrevRequest)}()");
+            Ex.Log($"XmlTransactionsManager.{nameof(PrevRequest)}()");
             Ex.Log($"XmlTransactionsManager.{nameof(isBackToCurrent)}={isBackToCurrent}");
             
             EripRequest transaction  = (isBackToCurrent) ? list.Current : list.Previos();
             isBackToCurrent = false;
-            return Task.FromResult(transaction.Response);
+            var respon = transaction.Response;
+            if (!string.IsNullOrEmpty(respon.ResponseReq.PayRecord?.FirstOrDefault()?.SessionId))
+            {
+                respon = await Transaction(transaction.Request);
+            }
+            return respon;
         }
         public bool IsPrevRequestPossible()
         {

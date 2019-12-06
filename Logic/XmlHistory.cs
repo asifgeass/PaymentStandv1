@@ -21,7 +21,6 @@ namespace Logic
         public EripRequest Current
             => (currentIndex < 0 || currentIndex >= list.Count)
             ? null : list[currentIndex];
-
         public EripRequest PrevTransaction
             => (1 > currentIndex || currentIndex >= list.Count)
             ? null : list[currentIndex - 1];
@@ -38,7 +37,6 @@ namespace Logic
             Ex.Log($"{nameof(XmlHistory)}.{nameof(HomePage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             return list[0];
         }
-
         public void CreateNextPage(PS_ERIP item)
         {
             var page = new RequestNavigation();
@@ -56,7 +54,6 @@ namespace Logic
             Ex.Log($"{nameof(XmlHistory)}.{nameof(CreateNextPage)}(): curr={currentIndex} prev={list[currentIndex].PrevIndex};");
             Ex.Log($"{nameof(XmlHistory)}.{nameof(CreateNextPage)}(): currReq={Current?.Request?.EnumType} prevReq={PrevTransaction?.Request?.EnumType};");
         }
-
         public EripRequest Previos()
         {
             Ex.Log($"{nameof(XmlHistory)}.{nameof(Previos)}() before: curr={currentIndex} prev={list[currentIndex].PrevIndex};");
@@ -75,6 +72,16 @@ namespace Logic
             this.Current.SetResponse(argResponse);
             return this;
         }
+        public void Search()
+        {
+            for(int i=list.Count; i>=0; i--)
+            {
+                if(list[i].Request.ResponseReq.SessionId != null)
+                {
+
+                }
+            }
+        }
         #endregion
         #region Private Methods
         private void Add(RequestNavigation item)
@@ -88,6 +95,5 @@ namespace Logic
             list.Add(item);
         }
         #endregion
-
     }
 }
