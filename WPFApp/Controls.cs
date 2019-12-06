@@ -99,7 +99,7 @@ namespace WPFApp
                 var control = s as TextBox;
                 var locationSys = control.PointToScreen(new Point(0, 0));
                 var yLocationControl = screenHeight - locationSys.Y;
-                var kbviewspace = kbHeight + control.ActualHeight * 1.33;
+                var kbviewspace = kbHeight + control.ActualHeight * 1.29;
                 dockArg = (yLocationControl > kbviewspace) ? Dock.Bottom : Dock.Top;
 
                 around.TopFullKeyboard.SetEngLang().Height = kbHeight;
