@@ -243,6 +243,10 @@ namespace WPFApp
                     Names = { new InputScopeName(InputScopeNameValue.Number) }
                 };
             }
+            if (!string.IsNullOrEmpty(attr.Hint))
+            {
+                //HintAssist.Helperte
+            }
 
             AttrValidationVM vmAttr = vmodel.GetNewAttrVM(attr);
             inputbox.DataContext = vmAttr;
@@ -408,7 +412,6 @@ namespace WPFApp
             panel.Children.Add(Controls.CentralLabelBorder(msgError, Brushes.DarkRed));
             var button = Controls.ButtonAccept("Вернуться");
             button.ButtonControl.Command = vmodel.HomePageCommand;
-            views.AddControl(button);
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel);
