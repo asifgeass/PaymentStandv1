@@ -20,7 +20,7 @@
         <!--Text keyboard-->
         <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10*" Name="EngKBColumn"/>
+                <ColumnDefinition Width="11*" Name="EngKBColumn"/>
                 <ColumnDefinition Width="0*" Name="RusKBColumn"/>
                 <ColumnDefinition Width="4*" Name="NumColumn"/>
             </Grid.ColumnDefinitions>
