@@ -30,7 +30,6 @@ namespace WPFApp.ViewModels
             HomePageCommand = new DelegateCommand(HomePage).ObservesCanExecute(() => IsHomeButtonActive);
             BackUserCommand = new DelegateCommand(BackPage).ObservesCanExecute(() => IsBackButtonActive);
             SetCurrMenuHeaderCommand = new DelegateCommand<string>(x => LabelCurrent = x);
-            SetParentGroupHeaderCommand = new DelegateCommand<string>(x => LabelParentGroup = x);
             SendParamCommand = new DelegateCommand<object>(async x=>await NextPage(x));
             NextPageCommand = new DelegateCommand(async() => await NextPage(null));
             NextPagePayValidateCommand = new DelegateCommand(async() => await NextPagePayValidate(null));
@@ -42,7 +41,6 @@ namespace WPFApp.ViewModels
 
         #region fields
         private object _selectedXmlArg;
-        private string _labelGroup;
         private string _labelCurrent;
         private bool _isLoadingMenu;
         private PS_ERIP _responce;
@@ -102,11 +100,6 @@ namespace WPFApp.ViewModels
         {
             get => _selectedXmlArg;
             set => SetProperty(ref _selectedXmlArg, value);
-        }
-        public string LabelParentGroup
-        {
-            get => _labelGroup;
-            set => SetProperty(ref _labelGroup, value);
         }
         public string LabelCurrent
         {
@@ -273,7 +266,7 @@ namespace WPFApp.ViewModels
             Task.Run(async () =>
             {
                 var xml = await SerializationUtil.Serialize(Responce);
-                Ex.Log($"Response came to VIEW\n{xml.ToString()}\nResponse came to VIEW\n");
+                Ex.Log($"Response to VIEW\n{xml.ToString()}\nResponse to VIEW\n");
             });
             if (Responce?.ResponseReq?.PayRecord?.Count == 1)
             { PayrecToSend = Responce?.ResponseReq?.PayRecord?.FirstOrDefault(); }
