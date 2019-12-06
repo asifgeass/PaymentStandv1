@@ -270,7 +270,6 @@ namespace WPFApp
                     cardButton.ButtonControl.Command = vmodel.SendParamCommand;
                     cardButton.ButtonControl.CommandParameter = payrec;
                     vmodel.LabelCurrent = payrec?.GroupRecord?.Name;//????
-                                                                   //CheckButtonCommand(button.Button, paylist.Last() == payrec);
                     views.AddControl(cardButton);
                 }
             }
@@ -413,6 +412,7 @@ namespace WPFApp
             var button = Controls.ButtonAccept("Вернуться");
             button.ButtonControl.Command = vmodel.HomePageCommand;
             panel.Children.Add(new TextBlock());
+            panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel);
             idleDetector.ChangeIdleTime(idleTimeAfterPayment*2);
@@ -440,6 +440,7 @@ namespace WPFApp
             views.AddControl(control);
             var button = Controls.ButtonAccept("Вернуться");
             button.ButtonControl.Command = vmodel.HomePageCommand;
+            views.AddControl(new TextBlock());
             views.AddControl(new TextBlock());
             views.AddControl(button);
         }
@@ -508,9 +509,9 @@ namespace WPFApp
                 var gplt = vmodel.Responce?.ResponseReq?.PayRecord?.FirstOrDefault()?.GetPayListType;
                 if (gplt != null && gplt=="0")
                 {
-                    vmodel.HomePageCommand.Execute();
+                    //vmodel.HomePageCommand.Execute();
                 }
-                else if (vmodel.BackUserCommand.CanExecute())
+                /*else*/ if (vmodel.BackUserCommand.CanExecute())
                 {
                     isLastPrevPage = true;
                     vmodel.BackUserCommand.Execute();
