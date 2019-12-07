@@ -49,13 +49,6 @@
         <Setter Property="Foreground" Value="{StaticResource MaterialDesignCardBackground}" />
         <Setter Property="FontSize" Value="{StaticResource keyboardFontSize}" />
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12 12 12 12" />
-        <!--<Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <TextBlock Text="{TemplateBinding Content}" TextWrapping="NoWrap" Margin="5 20 5 20"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>-->
     </Style>
 
     <Style TargetType="{x:Type kbrd:UnicodeKeyboardKey}" BasedOn="{StaticResource KeyButton}"/>
@@ -82,7 +75,7 @@
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.5" />
         <Setter Property="materialDesign:ValidationAssist.FontSize" Value="25" />
-        <Setter Property="materialDesign:TextFieldAssist.TextFieldCornerRadius" Value="25 25 0 0" />
+        <Setter Property="materialDesign:TextFieldAssist.TextFieldCornerRadius" Value="20 20 0 0" />
         <Setter Property="materialDesign:TextFieldAssist.TextBoxViewMargin" Value="0 6 0 0" />
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="true">

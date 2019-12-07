@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes;
 using MaterialDesignColors;
-using WPFApp.ViewModels;
 
 namespace UIWPFClean
 {

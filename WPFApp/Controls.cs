@@ -20,7 +20,7 @@ namespace WPFApp
     {
         private const double Margin = 50;
         private const double MarginBetweenButtons = 12;
-        private const double MarginBetweenInputs = 25;
+        private const double MarginBetweenInputs = 20;
         public static Label CentralLabelBorder(string arg = "", SolidColorBrush brushArg=null)
         {
             var lbl = new Label();
@@ -133,8 +133,7 @@ namespace WPFApp
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);
             };
-            
-            //textBox.Style = GetBorderStyleTrigger();
+            //TextFieldAssist.SetHasClearButton(textBox, true);
             return textBox;
         }
 

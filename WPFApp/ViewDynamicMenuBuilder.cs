@@ -22,7 +22,7 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = int.MaxValue;
+        const int idleTimedefault = 10000;
         const int idleTimeAfterPayment = 9;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
@@ -253,9 +253,8 @@ namespace WPFApp
             }
             if (!string.IsNullOrEmpty(attr.Hint))
             {
-                //HintAssist.Helperte
-            }
-
+                //HintAssist.SetHelperText(inputbox, attr.Hint);
+            }            
             AttrValidationVM vmAttr = vmodel.GetNewAttrVM(attr);
             inputbox.DataContext = vmAttr;
 

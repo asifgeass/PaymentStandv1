@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        
         <!--<kbrd:VirtualKeyKeyboardKey.Style>
             <Style>
                 <Setter Property="Template" >
@@ -39,5 +40,41 @@
                                          Foreground="Yellow" Name="IconControl"/>
             </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
         </kbrd:VirtualKeyKeyboardKey>-->
+
+        <!--<TextBox>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                                                CommandParameter="{x:Static Dock.Bottom}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="LostFocus">
+                    <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                                                CommandParameter="{x:Static Dock.Bottom}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>-->
+
+        <!--<Style x:Key="KeyButton"
+           TargetType="Button" 
+           BasedOn="{StaticResource MaterialDesignRaisedButton}"
+           >
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
+            <Setter Property="materialDesign:ShadowAssist.ShadowEdges" Value="Left, Bottom" />
+            <Setter Property="Margin" Value="3" />
+            --><!--<Setter Property="Height" Value="78" />--><!--
+            <Setter Property="Height" Value="auto" />
+            <Setter Property="Foreground" Value="{StaticResource MaterialDesignCardBackground}" />
+            <Setter Property="FontSize" Value="{StaticResource keyboardFontSize}" />
+            <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12 12 12 12" />
+            <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <TextBlock Text="{TemplateBinding Content}" TextWrapping="NoWrap" Margin="5 20 5 20"/>
+                </ControlTemplate>
+            </Setter.Value>
+            </Setter>
+        </Style>-->
+
     </Grid>
 </UserControl>
