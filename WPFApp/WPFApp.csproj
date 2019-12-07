@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls.cs" />
+    <Compile Include="Helpers\ExamplesCodeBehind.cs" />
     <Compile Include="Helpers\ExamplesCommented.xaml.cs">
       <DependentUpon>ExamplesCommented.xaml</DependentUpon>
     </Compile>
@@ -122,6 +123,9 @@
     </Compile>
     <Compile Include="Views\Elements\HeaderPath.xaml.cs">
       <DependentUpon>HeaderPath.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\HelperTextbox.xaml.cs">
+      <DependentUpon>HelperTextbox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Elements\LeftPanelButtons.xaml.cs">
       <DependentUpon>LeftPanelButtons.xaml</DependentUpon>
@@ -154,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Elements\HeaderPath.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\HelperTextbox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
