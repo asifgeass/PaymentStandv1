@@ -221,7 +221,7 @@ namespace UIXmlPostTerminal
 
             PrivateFontCollection privateFontCollection = new PrivateFontCollection();
             privateFontCollection.AddFontFile(path);
-            var fontFam = privateFontCollection.Families.First();
+            var fontFam = privateFontCollection.Families.FirstOrDefault();
 
             Font font;
 

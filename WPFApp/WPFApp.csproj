@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Helpers\IdleDetector.cs" />
     <Compile Include="Helpers\MatDesDarkerLightTheme.cs" />
+    <Compile Include="Helpers\ScrollAssist.cs" />
     <Compile Include="Helpers\ValidatableBindableBase.cs" />
     <Compile Include="ViewDynamicMenuBuilder.cs" />
     <Compile Include="Interfaces\iControls.cs" />

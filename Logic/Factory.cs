@@ -97,7 +97,7 @@ namespace Logic
                 eripArg.ResponseReq.PAN = arg?.ResponseReq?.PAN;
                 eripArg.ResponseReq.TypePAN = arg?.ResponseReq?.TypePAN;
                 eripArg.ResponseReq.KioskReceipt = arg?.ResponseReq?.KioskReceipt;
-                var payrec = eripArg.ResponseReq?.PayRecord?.First();
+                var payrec = eripArg.ResponseReq?.PayRecord?.FirstOrDefault();
                 payrec.PC_ID = arg.ResponseReq?.PC_ID;
             }
             catch (Exception ex) { ex.Log(); }

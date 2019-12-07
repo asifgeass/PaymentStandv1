@@ -48,8 +48,7 @@
 
                 <ScrollViewer Name="scroller"
                       Grid.Row="1" 
-                      Grid.Column="1" 
-                      VerticalContentAlignment="Top"
+                      Grid.Column="1"                       
                       PanningMode="VerticalOnly"
                       CanContentScroll="True"
                       >
@@ -75,3 +74,4 @@
 
 </UserControl>
 <!--VerticalScrollBarVisibility="Auto"-->
+<!--VerticalContentAlignment="Top"-->

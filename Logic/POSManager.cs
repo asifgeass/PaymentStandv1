@@ -25,7 +25,7 @@ namespace Logic
         public MDOM_POS GetCancelVOIRequest(PS_ERIP reqArg)
         {
             string KioskReceipt = reqArg.ResponseReq.KioskReceipt;
-            string PC_ID = reqArg.ResponseReq.PayRecord?.First()?.PC_ID;
+            string PC_ID = reqArg.ResponseReq.PayRecord?.FirstOrDefault()?.PC_ID;
             return GetCancelVOIRequest(PC_ID, KioskReceipt);
         }
         public MDOM_POS GetCancelVOIRequest(string argPCID, string argKioskReceipt)

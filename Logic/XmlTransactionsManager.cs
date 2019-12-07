@@ -95,7 +95,7 @@ namespace Logic
                     responCopy.Accept(requestCopy);
                     responCopy.Accept(PosRespon).RunOpRequestClear(); ;
                     responCopy.ResponseReq.SessionId = payrecArg.SessionId;
-                    var payrec = responCopy.ResponseReq.PayRecord.First();
+                    var payrec = responCopy.ResponseReq.PayRecord.FirstOrDefault();
                     payrec.SessionId = payrecArg.SessionId;
                     Ex.Try(false, () => payrec.Summa = payrec.Summa.Replace(",", "."));
                     responCopy.ClearAttrRecords();
@@ -138,7 +138,7 @@ namespace Logic
                         //    requestCopy = list.Current.Request.Copy();
                         //    requestCopy.ResponseReq.PaySumma = eripArg.ResponseReq.PaySumma;
                         //}
-                        PayRecord payrecArg = eripArg.ResponseReq.PayRecord.First();
+                        PayRecord payrecArg = eripArg.ResponseReq.PayRecord.FirstOrDefault();
                         return await HandlePayRecordParam(payrecArg, requestCopy);
                     }
                     if (param is PayRecord)
