@@ -24,5 +24,7 @@ namespace WPFApp.Views.Elements
         {
             InitializeComponent();
         }
+
+        public ScrollViewer Scroller => this.headerScroller;
     }
 }

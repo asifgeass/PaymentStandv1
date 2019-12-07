@@ -20,7 +20,7 @@ namespace WPFApp.Helpers
             if (scrollViewer != null && (bool)args.NewValue)
             {
                 scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
-                scrollViewer.ScrollToEnd();
+                scrollViewer.ScrollToRightEnd();
             }
             else
             {
@@ -34,7 +34,7 @@ namespace WPFApp.Helpers
             if (e.ExtentHeightChange != 0)
             {
                 var scrollViewer = sender as ScrollViewer;
-                scrollViewer?.ScrollToBottom();
+                scrollViewer?.ScrollToRightEnd();
             }
         }
 

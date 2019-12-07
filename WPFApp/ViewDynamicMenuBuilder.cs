@@ -134,7 +134,7 @@ namespace WPFApp
                 {
                     var payrec = paylist.FirstOrDefault();
                     var attrRecords = payrec.AttrRecord;
-                    vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
+                    vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";                    
                     this.BuildLookups(paylist);
                     this.BuildDisplayInfo(payrec);
                     this.BuildInputFields(attrRecords);
@@ -496,8 +496,9 @@ namespace WPFApp
             Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if(views.IsNextAvaible)
             {
-                vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;
+                vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;                
                 SetWindow(views.NextPage());
+                //around.HeaderScroller.ScrollToRightEnd();
             }
             else
             {

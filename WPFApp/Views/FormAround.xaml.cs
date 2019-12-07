@@ -37,6 +37,8 @@ namespace WPFApp
         public Button BackButton => this.LeftPanelButtons.BackButton;
         public Button HomeButton => this.LeftPanelButtons.HomeButton;
 
+        public ScrollViewer HeaderScroller => this.HeaderPath.Scroller;
+
         private void MainGrid_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
