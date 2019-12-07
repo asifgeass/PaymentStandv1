@@ -133,7 +133,7 @@ namespace WPFApp
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);
             };
-            //TextFieldAssist.SetHasClearButton(textBox, true);
+            //TextFieldAssist.SetHasClearButton(textBox, true);          
             return textBox;
         }
 

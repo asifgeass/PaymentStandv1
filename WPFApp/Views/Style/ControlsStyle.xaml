@@ -74,15 +74,21 @@
         <Setter Property="Margin" Value="20" />
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
         <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.5" />
-        <Setter Property="materialDesign:ValidationAssist.FontSize" Value="25" />
+        <Setter Property="materialDesign:ValidationAssist.FontSize" Value="24" />
         <Setter Property="materialDesign:TextFieldAssist.TextFieldCornerRadius" Value="20 20 0 0" />
         <Setter Property="materialDesign:TextFieldAssist.TextBoxViewMargin" Value="0 6 0 0" />
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="true">
                 <Setter Property="materialDesign:TextFieldAssist.HasOutlinedTextField" Value="True"/>
+                <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Visible"/>
+                <!--<Setter Property="BorderThickness" Value="5"/>
+                <Setter Property="BorderBrush" Value="Red"/>-->
             </Trigger>
             <Trigger Property="Validation.HasError" Value="false">
                 <Setter Property="materialDesign:TextFieldAssist.HasOutlinedTextField" Value="False"/>
+                <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Hidden"/>
+                <!--<Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="{x:Null}"/>-->
             </Trigger>
         </Style.Triggers>
     </Style>    
