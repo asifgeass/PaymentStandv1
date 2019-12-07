@@ -21,7 +21,10 @@
                     <Button Content="Payment Screen" Click="buttonPayScreen_Click"/>
                     <Button Content="Keyboard" Click="ButtonKeyboard_Click"/>
                     <Button Content="Show My keyboard" Click="Button_Click"/>
-                    <TextBox GotFocus="TextBox_GotFocus" />
+                    <TextBox GotFocus="TextBox_GotFocus" 
+                             materialDesign:TextFieldAssist.HasOutlinedTextField="True"
+                             materialDesign:TextFieldAssist.HasFilledTextField="True"                             
+                             />
                 </StackPanel>
             </Grid>            
 

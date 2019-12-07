@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="WPFApp.Helpers.ExamplesCommented"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFApp.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <!--<kbrd:VirtualKeyKeyboardKey.Style>
+            <Style>
+                <Setter Property="Template" >
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type kbrd:VirtualKeyKeyboardKey}">
+                            <Path Fill="{TemplateBinding Background}"
+                            Data="M 0,0 A 100,100 90 0 0 100,100 L 100,100 100,0" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </kbrd:VirtualKeyKeyboardKey.Style>-->
+
+        <!--<kbrd:VirtualKeyKeyboardKey VirtualKey="BACK">
+            <kbrd:VirtualKeyKeyboardKey.Template>
+                <ControlTemplate TargetType="{x:Type kbrd:VirtualKeyKeyboardKey}">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <Viewbox Stretch="Fill">
+                            <Path Fill="{TemplateBinding Background}" Height="auto" Stretch="Fill"
+                            Data="M200,0 L0,250 L200,500 H1000 V0 L100,0 Z" />
+                        </Viewbox>
+                        <ContentPresenter Name="Content" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </kbrd:VirtualKeyKeyboardKey.Template>
+
+            <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
+                                         Foreground="Yellow" Name="IconControl"/>
+            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+        </kbrd:VirtualKeyKeyboardKey>-->
+    </Grid>
+</UserControl>

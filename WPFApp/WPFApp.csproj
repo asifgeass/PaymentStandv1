@@ -100,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls.cs" />
+    <Compile Include="Helpers\ExamplesCommented.xaml.cs">
+      <DependentUpon>ExamplesCommented.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\IdleDetector.cs" />
     <Compile Include="Helpers\MatDesDarkerLightTheme.cs" />
     <Compile Include="Helpers\ValidatableBindableBase.cs" />
@@ -135,6 +138,10 @@
     <Compile Include="ViewModels\DynamicMenuWindowViewModel.cs" />
     <Compile Include="ViewModels\TestWindowViewModel.cs" />
     <Page Include="AssemblyStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\ExamplesCommented.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
