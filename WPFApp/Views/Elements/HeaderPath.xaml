@@ -7,13 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Name="currentLabel" 
+        <ScrollViewer PanningMode="HorizontalOnly"
+                      CanContentScroll="True"
+                      VerticalScrollBarVisibility="Disabled"
+                      HorizontalScrollBarVisibility="Disabled"
+                      >
+            <Label Name="currentLabel" 
                    HorizontalContentAlignment="Center"    
-                   Foreground="{DynamicResource MaterialDesignBody}"
+                   Foreground="{DynamicResource MaterialDesignBody}"                   
                    >
-            <Label.Content>
-                <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold"/>
-            </Label.Content>
-        </Label>
+                <Label.Content>
+                    <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold" TextWrapping="NoWrap"/>
+                </Label.Content>
+            </Label>
+        </ScrollViewer>
     </Grid>
 </UserControl>
