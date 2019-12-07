@@ -234,12 +234,11 @@ namespace Logic
                 if (responArg.ResponseReq.ErrorCode == 0)// УСПЕХ RunOper
                 {
                     confirmArg = "1";
+                    list.Current.SetBackToHome();
+                    string CheckRunOpResp = AssembleRunOpResponCheck(responArg);
                     this.lastPCID = null;
                     this.lastKioskReceipt = null;
-                    list.Current.SetBackToHome();
-                    var CheckRunOpResp = new StringBuilder();
-                    responArg.ResponseReq.PayRecord.FirstOrDefault().Check.CheckHeader.CheckLine.ForEach(x => CheckRunOpResp.AppendLine(x.Value));
-                    Print(CheckRunOpResp.ToString());
+                    Print(CheckRunOpResp);
                     Print(lastPOSTransaction.Response.ResponseReq.Receipt);
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
@@ -251,6 +250,29 @@ namespace Logic
             }
             return Task.CompletedTask;
         }
+
+        private string AssembleRunOpResponCheck(PS_ERIP responArg)
+        {
+            var CheckRunOpResp = new StringBuilder();
+            responArg.ResponseReq.PayRecord.FirstOrDefault()?.Check?.CheckHeader?.CheckLine?.ForEach(x =>
+            {
+                CheckRunOpResp.AppendLine(x.Value);
+                if (x.Value.Contains("Дата платежа"))
+                {
+                    var mustLength = x.Value.Length;
+                    var str = "Код платежной операции:";
+                    var emptyLength = mustLength - str.Length - lastKioskReceipt.Length;
+                    if (emptyLength >= 0)
+                    {
+                        var emptyStr = "                                                                           "
+                            .trySubstring(0, emptyLength);
+                        CheckRunOpResp.AppendLine($"{str}{emptyStr}{lastKioskReceipt}");
+                    }
+                }
+            });
+            return CheckRunOpResp.ToString();
+        }
+
         private void Print(string textArg)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
