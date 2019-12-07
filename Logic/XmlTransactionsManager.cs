@@ -168,14 +168,32 @@ namespace Logic
         {
             Ex.Log($"XmlTransactionsManager.{nameof(PrevRequest)}()");
             Ex.Log($"XmlTransactionsManager.{nameof(isBackToCurrent)}={isBackToCurrent}");
-            
+            bool isTransactionClosed = list?.Current?.Response?.ResponseReq?.PayRecord?.FirstOrDefault()?.GetPayListType == "0";
             EripRequest transaction  = (isBackToCurrent) ? list.Current : list.Previos();
             isBackToCurrent = false;
             var respon = transaction.Response;
-            if (!string.IsNullOrEmpty(respon.ResponseReq.PayRecord?.FirstOrDefault()?.SessionId))
-            {
-                respon = await Transaction(transaction.Request);
+
+            if (isTransactionClosed)
+            { //GetPayListType==0
+                string sessionID = respon.ResponseReq.PayRecord?.FirstOrDefault()?.SessionId;
+                bool isRespon = true; //start checking with Response
+                short countChecks = 1; // checked req + resp=2
+                while (!string.IsNullOrEmpty(sessionID))
+                { //on first come check request  
+                    if (countChecks >= 2)
+                    {
+                        transaction = list.Previos();
+                        countChecks = 0;
+                    }
+                    isRespon = !isRespon; 
+                    sessionID = (isRespon) //on first come: isRespon=false
+                        ? transaction.Response.ResponseReq.PayRecord?.FirstOrDefault()?.SessionId 
+                        : transaction.Request.ResponseReq.SessionId;
+                    countChecks++;
+                }//on exit sessionID==null
+                respon = isRespon ? transaction.Response : await Transaction(transaction.Request);
             }
+            
             return respon;
         }
         public bool IsPrevRequestPossible()
