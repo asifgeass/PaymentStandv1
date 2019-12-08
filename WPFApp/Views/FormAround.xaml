@@ -12,7 +12,7 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="900" d:DesignWidth="1600">
 
-    <materialDesign:DialogHost Name="dialogHostTop">
+    <materialDesign:DialogHost Name="dialogHostTop" CloseOnClickAway="True">
         
         <materialDesign:DrawerHost Name="drawer1"
               HorizontalAlignment="Stretch"

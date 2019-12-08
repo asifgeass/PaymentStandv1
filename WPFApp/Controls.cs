@@ -128,7 +128,6 @@ namespace WPFApp
 
                 DrawerHost.OpenDrawerCommand.Execute(dockArg, /*around.drawer1*/ control);
             };
-            //textBox.text
             textBox.LostFocus += (s, arg) =>
             {
                 DrawerHost.CloseDrawerCommand.Execute(null, around.drawer1);
@@ -221,5 +220,6 @@ namespace WPFApp
 
             return columnGrid;
         }
+
     }
 }

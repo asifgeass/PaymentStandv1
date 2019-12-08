@@ -40,7 +40,7 @@
             <ItemsControl x:Name="itemsControl1" Grid.Row="1" Grid.Column="1" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Name="uniGrid1">
+                        <UniformGrid Name="uniGrid1" >
                             <UniformGrid.Style>
                                 <Style TargetType="{x:Type UniformGrid}">
                                     <Setter Property="Columns" Value="1"/>

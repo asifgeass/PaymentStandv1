@@ -18,12 +18,13 @@ using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
 using WPFApp.Views.Elements;
+using WPFApp.Views;
 
 namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 10000;
+        const int idleTimedefault = 10;
         const int idleTimeAfterPayment = 9;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
@@ -51,15 +52,18 @@ namespace WPFApp
                 vmodel.NewResponseComeEvent += OnReponseCome;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment;                
-                idleDetector = new IdleDetector(window, idleTimedefault);                
-                idleDetector.IsIdle += async (s,e) => 
-                {                    
-                    var hz = await DialogHost.Show("are u ready?");
-                    //vmodel.HomePageCommand.Execute(); 
-                    //for (short i = 0; i < 3; i++) 
-                    //{ 
-                    //    await Task.Delay(70); vmodel.IsBackButtonActive = false; 
-                    //} 
+                idleDetector = new IdleDetector(window, idleTimedefault);
+                idleDetector.IsIdle += async (s,e) =>
+                {
+                    if (idleDetector.TimerCurrent < idleTimedefault) HomeIdle().RunAsync();
+                    try
+                    {
+                        await DialogHost.Show(new IdleUserControl(), (object sender, DialogClosingEventArgs arg) =>
+                        {
+                            if (arg.IsCancelled) HomeIdle();
+                        });
+                    }
+                    catch (Exception){}                    
                 };                
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
                 Ex.Log($"ViewDynamicMenuBuilder ctor() end success");
@@ -67,6 +71,15 @@ namespace WPFApp
             catch (Exception ex)
             {
                 ex.Show();
+            }
+        }
+
+        private async Task HomeIdle()
+        {
+            vmodel.HomePageCommand.Execute();
+            for (short i = 0; i < 3; i++)
+            {
+                await Task.Delay(70); vmodel.IsBackButtonActive = false;
             }
         }
         #endregion
