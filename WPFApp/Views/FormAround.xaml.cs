@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,11 @@ namespace WPFApp
         private void MainGrid_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void DialogHostTop_DialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {
+            DialogContent.OnDialogOpened(sender, eventArgs);
         }
     }
 }

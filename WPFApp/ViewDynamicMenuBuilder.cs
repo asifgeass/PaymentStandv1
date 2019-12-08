@@ -18,14 +18,13 @@ using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
 using WPFApp.Views.Elements;
-using WPFApp.Views;
 
 namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 10;
-        const int idleTimeAfterPayment = 9;
+        const int idleTimedefault = 9;
+        const int idleTimeAfterPayment = 5;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -51,21 +50,28 @@ namespace WPFApp
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += OnReponseCome;
                 vmodel.PropertyChanged += IsLoadingMenuChanged;
-                vmodel.PaymentWaitingEvent += OnWaitingPayment;                
-                idleDetector = new IdleDetector(window, idleTimedefault);
-                idleDetector.IsIdle += async (s,e) =>
-                {
-                    if (idleDetector.TimerCurrent < idleTimedefault) HomeIdle().RunAsync();
-                    try
-                    {
-                        await DialogHost.Show(new IdleUserControl(), (object sender, DialogClosingEventArgs arg) =>
-                        {
-                            if (arg.IsCancelled) HomeIdle();
-                        });
-                    }
-                    catch (Exception){}                    
-                };                
+                vmodel.PaymentWaitingEvent += OnWaitingPayment;                            
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
+                idleDetector = new IdleDetector(window, idleTimedefault);
+                idleDetector.IsIdle += async (s, e) =>
+                {
+                    if (idleDetector.TimerCurrent < idleTimedefault)
+                        HomeIdle().RunAsync();
+                    else
+                    {
+                        Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
+                        if (!around.dialogHostTop.IsOpen)
+                        {
+                            var result = await around.dialogHostTop.ShowDialog(around.dialogHostTop.DialogContent);
+                            if (result != null && result is bool)
+                            {
+                                bool boolResult = (bool)result;
+                                Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
+                                if (!boolResult) HomeIdle().RunAsync();
+                            }
+                        }
+                    }
+                };
                 Ex.Log($"ViewDynamicMenuBuilder ctor() end success");
             }
             catch (Exception ex)
@@ -76,6 +82,7 @@ namespace WPFApp
 
         private async Task HomeIdle()
         {
+            Trace.WriteLine($"ViewDynamicMenuBuilder.HomeIdle()");
             vmodel.HomePageCommand.Execute();
             for (short i = 0; i < 3; i++)
             {

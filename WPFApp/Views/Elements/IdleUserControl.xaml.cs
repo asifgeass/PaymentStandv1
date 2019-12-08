@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,28 +15,35 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFApp.Views
+namespace WPFApp.Views.Elements
 {
     /// <summary>
     /// Interaction logic for IdleUserControl.xaml
     /// </summary>
     public partial class IdleUserControl : UserControl
     {
-        private int timer = 11;
         public IdleUserControl()
         {
-            InitializeComponent();
-            StartTimer();
+            InitializeComponent();            
         }
-        private async Task StartTimer()
+        private async Task StartTimer(DialogSession sessionArg=null)
         {
-            while(timer>=0)
+            int timer = 10;            
+            Trace.WriteLine($"=======IDLE COUNTDOWN STARTS==========timer={timer}");
+            while(timer>=0 && !sessionArg.IsEnded)
             {
                 textBlock1.Text = $"Вам еще нужно время? ({timer})";
+                Trace.WriteLine($"=======IDLE WHILE==timer={timer}");
                 await Task.Delay(1000);
                 timer--;
             }
-            timer = 10;
+            Trace.WriteLine("=======IDLE COUNTDOWN close dialog timeout==========");
+            DialogHost.CloseDialogCommand.Execute(false, this);
+        }
+
+        public void OnDialogOpened(object sender, DialogOpenedEventArgs eventArgs)
+        {            
+            StartTimer(eventArgs.Session);
         }
     }
 }

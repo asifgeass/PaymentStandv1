@@ -139,7 +139,7 @@
     <Compile Include="Views\Elements\UniTilePanel.xaml.cs">
       <DependentUpon>UniTilePanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\IdleUserControl.xaml.cs">
+    <Compile Include="Views\Elements\IdleUserControl.xaml.cs">
       <DependentUpon>IdleUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TestWindow.xaml.cs">
@@ -183,7 +183,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\IdleUserControl.xaml">
+    <Page Include="Views\Elements\IdleUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
