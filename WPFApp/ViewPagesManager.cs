@@ -22,6 +22,37 @@ namespace WPFApp
         private Dictionary<int, string> headers = new Dictionary<int, string>();
         private FrameworkElement finalWrapper;
         #endregion
+        #region Properties
+        public FrameworkElement this[int index] => pages[index];
+        public bool IsNextAvaible => this.Count - 1 > currentPageIndex;
+        public bool IsPrevAvaible => currentPageIndex > 0;
+        public int Count => (tempUICollection.Count > 0) ? pages.Count + 1 : pages.Count;
+        public int CurrIndex => currentPageIndex;
+        public string NextHeader
+        {
+            get
+            {
+                string _return = null;
+                Ex.Try(false, () => _return = headers[currentPageIndex + 1]);
+                return _return;
+            }
+        }
+        public string PrevHeader
+        {
+            get
+            {
+                string _return = null;
+                Ex.Try(false, () => _return = headers[currentPageIndex - 1]);
+                return _return;
+            }
+        }
+        public FrameworkElement Page
+            => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count == 0)
+            ? null : pages[currentPageIndex];
+        public FrameworkElement PreviosPage
+            => (currentPageIndex < 1 || currentPageIndex >= pages.Count || pages.Count == 0)
+            ? null : pages[currentPageIndex - 1];
+        #endregion
         #region Public Methods
         public FrameworkElement NextPage()
         {
@@ -48,10 +79,10 @@ namespace WPFApp
             return this;
         }
         public ViewPagesManager NewPage(FrameworkElement containerArg=null)
-        {
-            if(finalWrapper==null) finalWrapper = containerArg ?? _stackPanel;
+        {            
             if (tempUICollection.Count > 0)
             {
+                if (finalWrapper == null) finalWrapper = containerArg ?? _stackPanel;
                 pages.Add(AssemblePage());
                 _stackPanel = new StackPanel();
                 tempUICollection = new List<UIElement>();
@@ -68,7 +99,6 @@ namespace WPFApp
             });
             return this;
         }
-
         public ViewPagesManager AddControl(FrameworkElement arg)
         {
             CheckEmpty();
@@ -89,37 +119,7 @@ namespace WPFApp
             return this;
         }
         #endregion
-        #region Properties
-        public FrameworkElement this[int index] => pages[index];
-        public bool IsNextAvaible => this.Count-1 > currentPageIndex;
-        public bool IsPrevAvaible => currentPageIndex > 0;
-        public int Count  => (tempUICollection.Count>0) ? pages.Count+1 : pages.Count;
-        public int CurrIndex => currentPageIndex;
-        public string NextHeader
-        { 
-            get 
-            {
-                string _return = null;
-                Ex.Try(false, () => _return = headers[currentPageIndex + 1]);                
-                return _return;
-            } 
-        }
-        public string PrevHeader
-        {
-            get
-            {
-                string _return = null;
-                Ex.Try(false, () => _return = headers[currentPageIndex-1]);
-                return _return;
-            }
-        }
-        public FrameworkElement Page
-            => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count==0)
-            ? null : pages[currentPageIndex];
-        public FrameworkElement PreviosPage
-            => (currentPageIndex < 1 || currentPageIndex >= pages.Count || pages.Count == 0)
-            ? null : pages[currentPageIndex - 1];
-        #endregion
+        
         #region Private Methods
         private FrameworkElement GetPage()
         {
@@ -136,10 +136,20 @@ namespace WPFApp
         {
             if (finalWrapper is UniTilePanel)
             {
-                var tilePanel = finalWrapper as UniTilePanel;
-                tilePanel.ItemsSource = tempUICollection;
-                tilePanel.DataContext = finalWrapper.DataContext;
-                return tilePanel;
+                if(tempUICollection.Count>4)
+                {
+                    var tilePanel = finalWrapper as UniTilePanel;
+                    tilePanel.ItemsSource = tempUICollection;
+                    tilePanel.DataContext = finalWrapper.DataContext;
+                    return tilePanel;
+                }
+                else
+                {
+                    _stackPanel.DataContext = finalWrapper.DataContext;
+                    tempUICollection.ForEach(x => _stackPanel.Children.Add(x));
+                    var returnWrap = WrapIntoDefaultGridScroller(_stackPanel);
+                    return returnWrap;
+                }
             }
             else if (finalWrapper is Panel)
             {
@@ -150,7 +160,6 @@ namespace WPFApp
             }
             else return null;
         }
-
         private FrameworkElement WrapIntoDefaultGridScroller(Panel panel)
         {
             var grid = new Grid();
