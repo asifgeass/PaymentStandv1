@@ -124,6 +124,9 @@
     <Compile Include="Views\DynamicMenuWindow.xaml.cs">
       <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Elements\ColumnDivider.xaml.cs">
+      <DependentUpon>ColumnDivider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Elements\HeaderPath.xaml.cs">
       <DependentUpon>HeaderPath.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Elements\CardButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\ColumnDivider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

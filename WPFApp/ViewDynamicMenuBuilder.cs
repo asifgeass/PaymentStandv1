@@ -17,6 +17,7 @@ using XmlStructureComplat.Validators;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
+using WPFApp.Views.Elements;
 
 namespace WPFApp
 {
@@ -139,6 +140,7 @@ namespace WPFApp
                     this.BuildDisplayInfo(payrec);
                     this.BuildInputFields(attrRecords);
                     this.BuildFinalButton(payrec);
+                    views.NewPage();
                 }
             }
             if (rootResponse.EnumType == EripQAType.RunOperationResponse)
@@ -168,7 +170,7 @@ namespace WPFApp
         {
             if (paylist.Count > 1)
             {
-                views.NewPage();
+                views.NewPage(/*new UniTilePanel()*/);
                 foreach (var payrec in paylist)
                 {
                     var cardButton = Controls.ButtonCard(payrec.Name);
@@ -194,7 +196,7 @@ namespace WPFApp
                     Lookup selectedLookup = list?.FirstOrDefault();
                     if (selectedLookup == null) { continue; }
                     int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                    views.NewPage();
+                    views.NewPage(/*new UniTilePanel()*/);
                     LookupVM childVM = vmodel.GetNewLookupVM();
                     childVM.Lookup = selectedLookup;
                     views.AddDataContext(childVM);
@@ -485,10 +487,10 @@ namespace WPFApp
             for (int i = 0; i < views.Count - 1; i++)
             {
                 var page = views[i];
-                foreach (UIElement item in page.Children)
-                {
-                    RecurseRemoveButtonCommands(item);
-                }
+                //foreach (UIElement item in page.Children)
+                //{
+                //    RecurseRemoveButtonCommands(item);
+                //}
             }
         }
         private void NextPage(object param=null)

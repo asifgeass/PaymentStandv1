@@ -46,26 +46,36 @@
 
                 <el:LeftPanelButtons Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="LeftPanelButtons" />
 
-                <ScrollViewer Name="scroller"
+                <UserControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />
+                <!--<el:ColumnDivider x:Name="ContentContainer"/>-->
+                
+                <!--<ScrollViewer Name="scroller"
                       Grid.Row="1" 
                       Grid.Column="1"                       
                       PanningMode="VerticalOnly"
                       CanContentScroll="True"
                       >
-                    <UniformGrid Name="uniGrid1">
-                        <UniformGrid.Style>
-                            <Style TargetType="UniformGrid">
-                                <Setter Property="Columns" Value="1"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="20*" x:Name="ContentColumn"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <UniformGrid Name="uniGrid1">
+                            <UniformGrid.Style>
+                                <Style TargetType="UniformGrid">
+                                    <Setter Property="Columns" Value="1"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
                                ElementName=scroller}" Value="Visible">
-                                        <Setter Property="Columns" Value="2"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </UniformGrid.Style>
-                    </UniformGrid>
-                </ScrollViewer>
+                                            <Setter Property="Columns" Value="2"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </UniformGrid.Style>
+                        </UniformGrid>
+                    </Grid>
+                </ScrollViewer>-->
             </Grid>
 
         </materialDesign:DrawerHost>

@@ -7,31 +7,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WPFApp.Views.Elements;
 
 namespace WPFApp
 {
     public class ViewPagesManager
     {
         #region fields
-        private List<Panel> pages = new List<Panel>();
+        private List<FrameworkElement> pages = new List<FrameworkElement>();
         private int currentPageIndex = -1;
-        Grid grid = new Grid();
-        private StackPanel tempPnl = new StackPanel();
+        private List<UIElement> tempUICollection = new List<UIElement>();
+        private StackPanel _stackPanel = new StackPanel();
         private const int column = 1;
         private Dictionary<int, string> headers = new Dictionary<int, string>();
+        private FrameworkElement finalWrapper = new FrameworkElement();
         #endregion
         #region Public Methods
-        public Panel NextPage()
+        public FrameworkElement NextPage()
         {
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NextPage)}(): index={currentPageIndex}; count={pages.Count};");
+            NewPage();
             if (IsNextAvaible)
             {
                 currentPageIndex++;
             }
             return GetPage();
-        }
-        
-        public Panel PrevPage()
+        }        
+        public FrameworkElement PrevPage()
         {
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(PrevPage)}(): index={currentPageIndex}; count={pages.Count};");
             if (IsPrevAvaible)
@@ -40,34 +42,34 @@ namespace WPFApp
             }
             return GetPage();
         }
-
         public ViewPagesManager SetToLast()
         {
             currentPageIndex = pages.Count - 1;
             return this;
         }
-
-        public ViewPagesManager NewPage()
+        public ViewPagesManager NewPage(FrameworkElement containerArg=null)
         {
-            if (tempPnl.Children.Count > 0)
+            if (tempUICollection.Count > 0)
             {
-                grid.Name = tempPnl?.Name ?? grid.Name;
-                BuildWrapper();
-                pages.Add(grid);
+                pages.Add(AssemblePage());
+                tempUICollection = new List<UIElement>();
             }
+            finalWrapper = containerArg ?? BuildNewWrapper();
             CheckEmpty();
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
             Ex.Try(false, () =>
             {
-                Ex.Log($"page[0]={(pages[0].Children[0] as ContentControl).Content};");
-                Ex.Log($"page[1]={(pages[1].Children[0] as ContentControl).Content};");
+                int ind = pages.Count - 1;
+                //Ex.Log($"ViewPagesManager.NewPage(): page[{ind}]={(pages[ind].Children[0] as ContentControl).Content};");
+                //Ex.Log($"ViewPagesManager.NewPage(): page[{ind-1}]={(pages[ind-1].Children[0] as ContentControl).Content};");
             });
             return this;
         }
+
         public ViewPagesManager AddControl(FrameworkElement arg)
         {
             CheckEmpty();
-            tempPnl.Children.Add(arg);
+            tempUICollection.Add(arg);
             
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
@@ -79,22 +81,16 @@ namespace WPFApp
         }
         public ViewPagesManager AddDataContext(object arg)
         {
-            Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddDataContext)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
-            grid.DataContext = arg;
-            return this;
-        }
-        public ViewPagesManager AddPage(Panel arg)
-        {
-            pages.Add(arg);
-            Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
+            Ex.Log($"ViewPagesManager.AddDataContext(): pages={pages.Count}; tempPanel.Children={tempUICollection?.Count}");
+            finalWrapper.DataContext = arg;
             return this;
         }
         #endregion
         #region Properties
-        public Panel this[int index] => pages[index];
-        public bool IsNextAvaible => pages.Count-1 > currentPageIndex;
+        public FrameworkElement this[int index] => pages[index];
+        public bool IsNextAvaible => this.Count-1 > currentPageIndex;
         public bool IsPrevAvaible => currentPageIndex > 0;
-        public int Count  => (tempPnl.Children.Count<=0) ? pages.Count-1 : pages.Count;
+        public int Count  => (tempUICollection.Count>0) ? pages.Count+1 : pages.Count;
         public int CurrIndex => currentPageIndex;
         public string NextHeader
         { 
@@ -114,45 +110,57 @@ namespace WPFApp
                 return _return;
             }
         }
-        public Panel Page
+        public FrameworkElement Page
             => (currentPageIndex < 0 || currentPageIndex >= pages.Count || pages.Count==0)
             ? null : pages[currentPageIndex];
-
-        public Panel PreviosPage
+        public FrameworkElement PreviosPage
             => (currentPageIndex < 1 || currentPageIndex >= pages.Count || pages.Count == 0)
             ? null : pages[currentPageIndex - 1];
         #endregion
         #region Private Methods
-        private Panel GetPage()
+        private FrameworkElement GetPage()
         {
-            //var scrollView = new ScrollViewer() { Content = pages[currentPageIndex] };
-            //scrollView.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            //return scrollView;
             return pages[currentPageIndex];
         }
         private void CheckEmpty()
         {
             if (pages.Count <= 0)
             {
-                pages.Add(grid);
+                //pages.Add(grid);
             }
         }
-        private Grid BuildWrapper()
+        private FrameworkElement AssemblePage()
         {
-            grid = new Grid();
-            grid.VerticalAlignment = VerticalAlignment.Center;
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(80, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10, GridUnitType.Star) });
-            tempPnl = new StackPanel();
-            Grid.SetColumn(tempPnl, column);
-            grid.Children.Add(tempPnl);            
-            return grid;
+            if (finalWrapper is UniTilePanel)
+            {
+                var tilePanel = finalWrapper as UniTilePanel;
+                tilePanel.ItemsSource = tempUICollection;
+                tilePanel.DataContext = finalWrapper.DataContext;
+                return tilePanel;
+            }
+            else if (finalWrapper is Panel)
+            {
+                var panel = finalWrapper as Panel;
+                tempUICollection.ForEach(x => panel.Children.Add(x));
+                return panel;
+            }
+            else return null;
+        }
+        private FrameworkElement BuildNewWrapper()
+        {           
+
+                var grid = new Grid();
+                grid.VerticalAlignment = VerticalAlignment.Center;
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+                _stackPanel = new StackPanel();
+                Grid.SetColumn(_stackPanel, column);
+                grid.Children.Add(_stackPanel);
+                finalWrapper = grid;
+
+            return finalWrapper;
         }
         #endregion
-        public ViewPagesManager()
-        {
-            BuildWrapper();
-        }
     }
 }

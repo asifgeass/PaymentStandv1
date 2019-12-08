@@ -30,8 +30,8 @@ namespace WPFApp
 
         public object ContentControls
         {
-            get => this.scroller.Content;
-            set => this.scroller.Content = value;            
+            get => this.ContentContainer.Content;
+            set => this.ContentContainer.Content = value;            
         }
 
         public Button BackButton => this.LeftPanelButtons.BackButton;
