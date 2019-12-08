@@ -45,5 +45,10 @@ namespace WPFApp.Views.Elements
         {            
             StartTimer(eventArgs.Session);
         }
+
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DialogHost.CloseDialogCommand.Execute(true, this);
+        }
     }
 }

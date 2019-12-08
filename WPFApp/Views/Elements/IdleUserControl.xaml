@@ -8,23 +8,28 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
 
-        <StackPanel>
-            
-            <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="TimerSand" Height="24"/>
-                <TextBlock x:Name="textBlock1"/>
+        <StackPanel VerticalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:PackIcon Kind="TimerSand" Width="auto" Height="auto"/>
+                <TextBlock x:Name="textBlock1" FontSize="56"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Да" 
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"                        
-                        >
-                    <Button.CommandParameter>
-                        <sys:Boolean>True</sys:Boolean>
-                    </Button.CommandParameter>
-                </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <materialDesign:Badged
+                      Badge="Коснитесь где угодно"
+                      BadgeColorZoneMode="PrimaryLight"
+                    FontSize="30"
+                      >
+                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                        Да
+                        <Button.CommandParameter>
+                            <sys:Boolean>True</sys:Boolean>
+                        </Button.CommandParameter>
+                    </Button>
+                </materialDesign:Badged>
                 <Button Content="Нет" 
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                     <Button.CommandParameter>
