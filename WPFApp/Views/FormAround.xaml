@@ -46,7 +46,7 @@
 
                 <el:LeftPanelButtons Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="LeftPanelButtons" />
 
-                <UserControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />
+                <ContentControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />
                 <!--<el:ColumnDivider x:Name="ContentContainer"/>-->
                 
                 <!--<ScrollViewer Name="scroller"

@@ -20,7 +20,7 @@ namespace WPFApp
         private StackPanel _stackPanel = new StackPanel();
         private const int column = 1;
         private Dictionary<int, string> headers = new Dictionary<int, string>();
-        private FrameworkElement finalWrapper = new FrameworkElement();
+        private FrameworkElement finalWrapper;
         #endregion
         #region Public Methods
         public FrameworkElement NextPage()
@@ -49,12 +49,15 @@ namespace WPFApp
         }
         public ViewPagesManager NewPage(FrameworkElement containerArg=null)
         {
+            if(finalWrapper==null) finalWrapper = containerArg ?? _stackPanel;
             if (tempUICollection.Count > 0)
             {
                 pages.Add(AssemblePage());
+                _stackPanel = new StackPanel();
                 tempUICollection = new List<UIElement>();
+                finalWrapper = null;
             }
-            finalWrapper = containerArg ?? BuildNewWrapper();
+            finalWrapper = containerArg ?? _stackPanel;
             CheckEmpty();
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(NewPage)}(): pages={pages.Count}; tempPanel.Children={tempPnl.Children.Count}");
             Ex.Try(false, () =>
@@ -76,7 +79,7 @@ namespace WPFApp
         }
         public ViewPagesManager SetHeader(string arg)
         {
-            Ex.Try(false, () => headers[pages.Count - 1] = arg);            
+            Ex.Try(false, () => headers[this.Count] = arg);            
             return this;
         }
         public ViewPagesManager AddDataContext(object arg)
@@ -142,24 +145,28 @@ namespace WPFApp
             {
                 var panel = finalWrapper as Panel;
                 tempUICollection.ForEach(x => panel.Children.Add(x));
-                return panel;
+                var returnWrap = WrapIntoDefaultGridScroller(panel);                
+                return returnWrap;
             }
             else return null;
         }
-        private FrameworkElement BuildNewWrapper()
-        {           
 
-                var grid = new Grid();
-                grid.VerticalAlignment = VerticalAlignment.Center;
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-                _stackPanel = new StackPanel();
-                Grid.SetColumn(_stackPanel, column);
-                grid.Children.Add(_stackPanel);
-                finalWrapper = grid;
-
-            return finalWrapper;
+        private FrameworkElement WrapIntoDefaultGridScroller(Panel panel)
+        {
+            var grid = new Grid();
+            grid.VerticalAlignment = VerticalAlignment.Center;
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            Grid.SetColumn(_stackPanel, column);
+            grid.Children.Add(_stackPanel);
+            var scroller = new ScrollViewer()
+            { 
+                PanningMode = PanningMode.VerticalOnly
+                , CanContentScroll=true
+            };
+            scroller.Content = grid;
+            return scroller;
         }
         #endregion
     }
