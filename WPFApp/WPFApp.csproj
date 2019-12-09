@@ -255,15 +255,21 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\credit-card-pos-terminal-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\POS_chip1.png" />
     <Resource Include="Resources\POS_ContactlessBlack.png" />
     <Resource Include="Resources\POS_side.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\true_png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_bottom2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_side2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_contactless3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
