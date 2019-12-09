@@ -24,7 +24,7 @@ namespace WPFApp
     public class ViewDynamicMenuBuilder
     {
         const int idleTimedefault = 40;
-        const int idleTimeAfterPayment = 10;
+        const int idleTimeAfterPayment = 9;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -55,7 +55,7 @@ namespace WPFApp
                 idleDetector = new IdleDetector(window, idleTimedefault);
                 idleDetector.IsIdle += async (s, e) =>
                 {
-                    if (idleDetector.TimerCurrent < idleTimedefault)
+                    if (idleDetector.TimerCurrent < idleTimedefault || vmodel?.Responce?.ResponseReq?.PayRecord?.Count > 1)
                         HomeIdle().RunAsync();
                     else
                     {
