@@ -23,8 +23,8 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
-        const int idleTimedefault = 5;
-        const int idleTimeAfterPayment = 3;
+        const int idleTimedefault = 40;
+        const int idleTimeAfterPayment = 10;
         #region fields
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -59,14 +59,14 @@ namespace WPFApp
                         HomeIdle().RunAsync();
                     else
                     {
-                        Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
+                        //Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
                         if (!around.dialogHostTop.IsOpen)
                         {
                             var result = await around.dialogHostTop.ShowDialog(around.dialogHostTop.DialogContent);
                             if (result != null && result is bool)
                             {
                                 bool boolResult = (bool)result;
-                                Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
+                                //Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
                                 if (!boolResult) HomeIdle().RunAsync();
                             }
                         }

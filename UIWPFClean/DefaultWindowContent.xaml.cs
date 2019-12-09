@@ -41,12 +41,15 @@ namespace UIWPFClean
             var img1 = new Image();
             img1.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
             img1.Stretch = Stretch.Uniform;
+            img1.Opacity = 0.5;
             var img2 = new Image();
             img2.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
             img2.Stretch = Stretch.Uniform;
+            img2.Opacity = 0.5;
             var img3 = new Image();
             img3.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_side.png"));
             img3.Stretch = Stretch.Uniform;
+            img3.Opacity = 0.5;
 
             columnGrid.Children.Add(img1);
             columnGrid.Children.Add(img2);
@@ -88,7 +91,7 @@ namespace UIWPFClean
         private void buttonPayScreen_Click(object sender, RoutedEventArgs e)
         {
             //this.Content = PaymentScreen(); //PaymentScreenV2
-            this.Content = PaymentScreenV2();
+            this.Content = PaymentScreen();
         }
 
         private static FrameworkElement PaymentScreen()
@@ -111,12 +114,18 @@ namespace UIWPFClean
             var imgLeft = new Image();
             imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
             imgLeft.Stretch = Stretch.Uniform;
+            
             var imgRight = new Image();
             imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_chip3.png"));
             imgRight.Stretch = Stretch.None;
+            
             var imgRight2 = new Image();
             imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/POS_side.png"));
             imgRight2.Stretch = Stretch.None;
+
+            imgLeft.Opacity = 0.85;
+            imgRight.Opacity = 0.85;
+            imgRight2.Opacity = 0.85;
 
             var centerGrid = new Grid();
             ColumnDefinition Col1 = new ColumnDefinition();

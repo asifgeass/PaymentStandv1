@@ -29,15 +29,15 @@ namespace WPFApp.Views.Elements
         private async Task StartTimer(DialogSession sessionArg=null)
         {
             int timer = 10;            
-            Trace.WriteLine($"=======IDLE COUNTDOWN STARTS==========timer={timer}");
+            //Trace.WriteLine($"=======IDLE COUNTDOWN STARTS==========timer={timer}");
             while(timer>=0 && !sessionArg.IsEnded)
             {
                 textBlock1.Text = $"Вам еще нужно время? ({timer})";
-                Trace.WriteLine($"=======IDLE WHILE==timer={timer}");
+                //Trace.WriteLine($"=======IDLE WHILE==timer={timer}");
                 await Task.Delay(1000);
                 timer--;
             }
-            Trace.WriteLine("=======IDLE COUNTDOWN close dialog timeout==========");
+            //Trace.WriteLine("=======IDLE COUNTDOWN close dialog timeout==========");
             DialogHost.CloseDialogCommand.Execute(false, this);
         }
 
@@ -47,6 +47,11 @@ namespace WPFApp.Views.Elements
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DialogHost.CloseDialogCommand.Execute(true, this);
+        }
+
+        private void Grid_TouchDown(object sender, TouchEventArgs e)
         {
             DialogHost.CloseDialogCommand.Execute(true, this);
         }
