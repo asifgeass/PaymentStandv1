@@ -567,7 +567,7 @@ namespace WPFApp
             var paletteHelper = new PaletteHelper();
             ITheme theme = paletteHelper.GetTheme();
             theme.SetBaseTheme(new MatDesDarkerLightTheme());
-            paletteHelper.SetTheme(theme);
+            paletteHelper.SetTheme(theme);            
         }
         #endregion
     }
