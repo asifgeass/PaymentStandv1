@@ -23,9 +23,10 @@ namespace WPFApp
 {
     public class ViewDynamicMenuBuilder
     {
+        #region fields
         const int idleTimedefault = 40;
         const int idleTimeAfterPayment = 9;
-        #region fields
+        private List<string> headerHistory = new List<string>();
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
         private FormAround form = new FormAround();
@@ -38,6 +39,7 @@ namespace WPFApp
         private bool isLastPrevPage = false;
         FormAround around = new FormAround();
         #endregion
+
         #region ctor
         public ViewDynamicMenuBuilder(Window incWindow)
         {
@@ -49,7 +51,7 @@ namespace WPFApp
                 around.BackButton.Click += (s, e) => PrevPage();
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += OnReponseCome;
-                vmodel.PropertyChanged += IsLoadingMenuChanged;
+                vmodel.PropertyChanged += OnPropertyChanged;
                 vmodel.PaymentWaitingEvent += OnWaitingPayment;                            
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
                 idleDetector = new IdleDetector(window, idleTimedefault);
@@ -61,88 +63,54 @@ namespace WPFApp
                 ex.Show();
             }
         }
+        #endregion
 
-        private async void OnIdle (object sender, EventArgs arg)
+        #region Navigation Pages
+        private void NextPage(object param = null)
         {
-            try
+            Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            if (views.IsNextAvaible)
             {
-                if (idleDetector.TimerCurrent < idleTimedefault || vmodel?.Responce?.ResponseReq?.PayRecord?.Count > 1)
-                    HomeIdle().RunAsync();
-                else
+                vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;
+                SetWindow(views.NextPage());
+                //around.HeaderScroller.ScrollToRightEnd();
+            }
+            else
+            {
+                vmodel.SendParamCommand.Execute(param);
+            }
+        }
+        private void PrevPage()
+        {
+            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            if (views.IsPrevAvaible)
+            {
+                vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
+                SetWindow(views.PrevPage());
+            }
+            else
+            {
+                var gplt = vmodel.Responce?.ResponseReq?.PayRecord?.FirstOrDefault()?.GetPayListType;
+                if (gplt != null && gplt == "0")
                 {
-                    //Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
-                    if (!around.dialogHostTop.IsOpen)
-                    {
-                        var result = await around.dialogHostTop.ShowDialog(around.dialogHostTop.DialogContent);
-                        if (result != null && result is bool)
-                        {
-                            bool boolResult = (bool)result;
-                            //Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
-                            if (!boolResult) HomeIdle().RunAsync();
-                        }
-                    }
+                    //vmodel.HomePageCommand.Execute();
+                }
+                /*else*/
+                if (vmodel.BackUserCommand.CanExecute())
+                {
+                    isLastPrevPage = true;
+                    vmodel.BackUserCommand.Execute();
                 }
             }
-            catch (Exception ex)
-            {
-                ex.Log();
-            }
         }
-        private async Task HomeIdle()
+        private void SetWindow(UIElement argElement)
         {
-            Trace.WriteLine($"ViewDynamicMenuBuilder.HomeIdle()");
-            vmodel.HomePageCommand.Execute();
-            for (short i = 0; i < 3; i++)
-            {
-                await Task.Delay(70); vmodel.IsBackButtonActive = false;
-            }
+            around.ContentControls = argElement;
+            window.Content = around;
         }
         #endregion
-        private void OnWaitingPayment()
-        {
-            var screen = Controls.PayScreen();
-            this.SetWindow(screen);
-        }
-        public bool IsPageAvaiable => views.IsNextAvaible;
-        private async void IsLoadingMenuChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == nameof(vmodel.IsLoadingMenu))
-            {
-                var bar = new ProgressBar();
-                bar.IsIndeterminate = true;
-                bar.Value = 0;
-                bar.Style = loadingBarStyle;
-                bar.Height = 50;
-                bar.Width = 50;
-                SetWindow(bar);
-            }
-            if (e.PropertyName == nameof(vmodel.Exception))
-            {
-                DisplayErrorPage(vmodel.Exception);
-            }
-            if (e.PropertyName == nameof(vmodel.IsHomeButtonActive))
-            {
-                //try
-                //{
-                //    if (model.IsHomeButtonActive)
-                //    {
-                //        cancelTokenSource.Cancel();
-                //        if (!CheckHomeButtonDisabled.IsCanceled)
-                //        { await CheckHomeButtonDisabled; }
-                //    }
-                //    else
-                //    {
-                //        //await CheckHomeButtonDisabled;   
-                //        CheckHomeButtonDisabled = new Task(async ()=> await testsome(cancelTokenSource.Token));
-                //        await CheckHomeButtonDisabled;
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    DisplayErrorPage(ex);
-                //}
-            }
-        }
+
+        #region View Building
         private void HandleResponse()
         {
             Ex.Log($"{nameof(ViewDynamicMenuBuilder)}.{nameof(HandleResponse)}()");
@@ -163,7 +131,7 @@ namespace WPFApp
                 {
                     var payrec = paylist.FirstOrDefault();
                     var attrRecords = payrec.AttrRecord;
-                    vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";                    
+                    vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
                     this.BuildLookups(paylist);
                     this.BuildDisplayInfo(payrec);
                     this.BuildInputFields(attrRecords);
@@ -189,7 +157,7 @@ namespace WPFApp
                 }
                 if (resp.ErrorCode != 0)
                 {
-                    var control = Controls.CentralLabelBorder($"Ошибка оплаты {resp.ErrorCode}!\n{resp.ErrorText}");                    
+                    var control = Controls.CentralLabelBorder($"Ошибка оплаты {resp.ErrorCode}!\n{resp.ErrorText}");
                     views.AddControl(control);
                 }
             }
@@ -284,7 +252,7 @@ namespace WPFApp
                         BuildInputAttr(attr);
                     }
                     else
-                    {                        
+                    {
                         if (attr.Type?.ToUpper() == "L")
                         {
                             var checkbox = new CheckBox();
@@ -324,7 +292,7 @@ namespace WPFApp
             if (!string.IsNullOrEmpty(attr.Hint))
             {
                 //HintAssist.SetHelperText(inputbox, attr.Hint);
-            }            
+            }
             AttrValidationVM vmAttr = vmodel.GetNewAttrVM(attr);
             inputbox.DataContext = vmAttr;
 
@@ -335,7 +303,7 @@ namespace WPFApp
             inputbox.SetBinding(TextBox.TextProperty, binding);
 
             views.AddControl(inputbox);
-        }                
+        }
         private void BuildFinalButton(PayRecord payrec)
         {
             if ((payrec.Summa == "0.00" || payrec.Summa == string.Empty) && payrec.GetPayListType == "0")
@@ -375,13 +343,95 @@ namespace WPFApp
             }
             views.AddControl(button);
         }
+        #endregion
+
+        #region other stuff
+        private async void OnIdle(object sender, EventArgs arg)
+        {
+            try
+            {
+                if (idleDetector.TimerCurrent < idleTimedefault || vmodel?.Responce?.ResponseReq?.PayRecord?.Count > 1)
+                    HomeIdle().RunAsync();
+                else
+                {
+                    //Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
+                    if (!around.dialogHostTop.IsOpen)
+                    {
+                        var result = await around.dialogHostTop.ShowDialog(around.dialogHostTop.DialogContent);
+                        if (result != null && result is bool)
+                        {
+                            bool boolResult = (bool)result;
+                            //Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
+                            if (!boolResult) HomeIdle().RunAsync();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
+        }
+        private async Task HomeIdle()
+        {
+            Trace.WriteLine($"ViewDynamicMenuBuilder.HomeIdle()");
+            vmodel.HomePageCommand.Execute();
+            for (short i = 0; i < 3; i++)
+            {
+                await Task.Delay(70); vmodel.IsBackButtonActive = false;
+            }
+        }
+        private void OnWaitingPayment()
+        {
+            var screen = Controls.PayScreen();
+            this.SetWindow(screen);
+        }
+        private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(vmodel.IsLoadingMenu))
+            {
+                var bar = new ProgressBar();
+                bar.IsIndeterminate = true;
+                bar.Value = 0;
+                bar.Style = loadingBarStyle;
+                bar.Height = 50;
+                bar.Width = 50;
+                SetWindow(bar);
+            }
+            if (e.PropertyName == nameof(vmodel.Exception))
+            {
+                DisplayErrorPage(vmodel.Exception);
+            }
+            if (e.PropertyName == nameof(vmodel.IsHomeButtonActive))
+            {
+                //try
+                //{
+                //    if (model.IsHomeButtonActive)
+                //    {
+                //        cancelTokenSource.Cancel();
+                //        if (!CheckHomeButtonDisabled.IsCanceled)
+                //        { await CheckHomeButtonDisabled; }
+                //    }
+                //    else
+                //    {
+                //        //await CheckHomeButtonDisabled;   
+                //        CheckHomeButtonDisabled = new Task(async ()=> await testsome(cancelTokenSource.Token));
+                //        await CheckHomeButtonDisabled;
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+                //    DisplayErrorPage(ex);
+                //}
+            }
+        }
         private void OnReponseCome()
         {
             try
             {
                 idleDetector.ChangeIdleTime(idleTimedefault);
                 ClearViewPagesOnResponse();
-                BuildsPages();                
+                BuildsPages();
             }
             catch (Exception ex)
             {
@@ -397,7 +447,7 @@ namespace WPFApp
                 this.NextPage();
             }
             if (views.Count > 1)
-            {                
+            {
                 this.HandleResponse();
                 this.NextPage();
             }
@@ -413,11 +463,6 @@ namespace WPFApp
             this.views = new ViewPagesManager();
             vmodel.LookupVMList.Clear();
             vmodel.AttrVMList.Clear();
-        }
-        private void SetWindow(UIElement argElement)
-        {            
-            around.ContentControls = argElement;
-            window.Content = around;
         }
         private void DisplayErrorPage(Exception ex)
         {
@@ -453,7 +498,7 @@ namespace WPFApp
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel);
-            idleDetector.ChangeIdleTime(idleTimeAfterPayment*2);
+            idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
         }
         private void BuildErrorPage(PS_ERIP rootResponse)
         {
@@ -482,21 +527,11 @@ namespace WPFApp
             views.AddControl(new TextBlock());
             views.AddControl(button);
         }
-        private void CheckButtonCommand(Button button, bool isLastPage)
-        {
-            if (isLastPage) return;
-            if (fakeCount > 1)
-            {
-                button.Command = null;
-                button.CommandParameter = null;
-                button.Click += (s, arg) => NextPage();
-            }
-        }
         private void RecurseRemoveButtonCommands(UIElement arg)
         {
-            if(arg is Button)
+            if (arg is Button)
             {
-                Button button = arg as Button;                
+                Button button = arg as Button;
                 button.Command = null;
                 if (button.Command is Prism.Commands.DelegateCommand<object>)
                     button.CommandParameter = null;
@@ -509,65 +544,6 @@ namespace WPFApp
                     RecurseRemoveButtonCommands(item);
                 }
             }
-        }
-        private void ChangeCommandsFromVMToViewClick()
-        {
-            for (int i = 0; i < views.Count - 1; i++)
-            {
-                var page = views[i];
-                //foreach (UIElement item in page.Children)
-                //{
-                //    RecurseRemoveButtonCommands(item);
-                //}
-            }
-        }
-        private void NextPage(object param=null)
-        {
-            Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
-            if(views.IsNextAvaible)
-            {
-                vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;                
-                SetWindow(views.NextPage());
-                //around.HeaderScroller.ScrollToRightEnd();
-            }
-            else
-            {
-                vmodel.SendParamCommand.Execute(param);
-            }
-        }
-        private void PrevPage()
-        {
-            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible}; Current={views.CurrIndex} Count={views.Count}");
-            if (views.IsPrevAvaible)
-            {
-                vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
-                SetWindow(views.PrevPage());
-            }
-            else
-            {
-                var gplt = vmodel.Responce?.ResponseReq?.PayRecord?.FirstOrDefault()?.GetPayListType;
-                if (gplt != null && gplt=="0")
-                {
-                    //vmodel.HomePageCommand.Execute();
-                }
-                /*else*/ if (vmodel.BackUserCommand.CanExecute())
-                {
-                    isLastPrevPage = true;
-                    vmodel.BackUserCommand.Execute();
-                }
-            }
-        }
-        public void LookupButtons(Lookup selectedLookup)
-        {
-            views.AddControl(new Label() { Content = selectedLookup.Name });
-            var lookItems = selectedLookup.Item;
-            lookItems.ForEach(x =>
-            {
-                views.AddControl(new Button()
-                {
-                    Content = $"{x.Value}",
-                });
-            });
         }
         private async Task testsome(CancellationToken token)
         {
@@ -590,8 +566,9 @@ namespace WPFApp
         {
             var paletteHelper = new PaletteHelper();
             ITheme theme = paletteHelper.GetTheme();
-            theme.SetBaseTheme( new MatDesDarkerLightTheme() );
+            theme.SetBaseTheme(new MatDesDarkerLightTheme());
             paletteHelper.SetTheme(theme);
         }
+        #endregion
     }
 }
