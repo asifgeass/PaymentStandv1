@@ -16,10 +16,7 @@
         Title="MainWindow" Height="782" Width="800" >
 
 
-    <!--<local:SnackbarPanel/>-->
-    <!--<local:Drawer/>-->
-    <!--<local:DefaultWindowContent/>-->
-    <local:FormAround/>
-    <!--<screenkeyboard:FullKeyboard/>-->
+    <local:DefaultWindowContent/>
+    <!--<local:FormAround/>-->
 
 </Window>

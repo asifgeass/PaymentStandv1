@@ -36,7 +36,6 @@ namespace UIWPFClean
                 }
             };
             columnGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            columnGrid.Background = Brushes.LightBlue;
 
             var img1 = new Image();
             img1.Source = new BitmapImage(new Uri(@"pack://application:,,,/UIWPFClean;component/Resources/true_png.png"));
@@ -91,7 +90,7 @@ namespace UIWPFClean
         private void buttonPayScreen_Click(object sender, RoutedEventArgs e)
         {
             //this.Content = PaymentScreen(); //PaymentScreenV2
-            this.Content = PaymentScreen();
+            this.Content = PaymentScreenV2();
         }
 
         private static FrameworkElement PaymentScreen()
