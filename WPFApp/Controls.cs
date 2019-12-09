@@ -193,6 +193,10 @@ namespace WPFApp
 
                 imgRight2.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_side.png"));
                 imgRight2.Stretch = Stretch.None;
+
+                imgLeft.Opacity = 0.85;
+                imgRight.Opacity = 0.85;
+                imgRight2.Opacity = 0.85;
             });
 
             var center = new StackPanel();
