@@ -10,6 +10,7 @@
              xmlns:si="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:key="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
              xmlns:row="clr-namespace:ScreenKeyboard.KeyboardRows;assembly=ScreenKeyboard"
+             xmlns:help="clr-namespace:WPFApp.Helpers;assembly=WPFApp"
              mc:Ignorable="d" 
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              FontFamily="{DynamicResource MaterialDesignFont}"
@@ -48,16 +49,31 @@
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="HeaderGrid" Grid.Row="0" Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
 
-                <Label Name="currentLabel" 
-                   HorizontalContentAlignment="Center"    
-                   Foreground="{DynamicResource MaterialDesignBody}"
-                   >
-                    <Label.Content>
-                        <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold"/>
-                    </Label.Content>
-                </Label>
+                    <Button Content="Add Textbox with Keyboard" Click="Button_Click"/>
 
+                    <Button Click="ButtonClickScroll"
+                          Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                          HorizontalAlignment="Left"
+                          >
+                        <materialDesign:PackIcon
+                            Kind="ArrowDown"
+                            Height="24"
+                            Width="24" />
+                    </Button>
+
+                    <Button Click="ButtonClickFullDown"
+                          Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                          HorizontalAlignment="Left"
+                          >
+                        <materialDesign:PackIcon
+                            Kind="ArrowCollapseDown"
+                            Height="24"
+                            Width="24" />
+                    </Button>
+
+                </StackPanel>
             </Grid>
 
             <Grid x:Name="ButtonsLeftGrid" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3">
@@ -103,23 +119,11 @@
                       VerticalScrollBarVisibility="Auto"
                       VerticalContentAlignment="Top"
                       PanningMode="VerticalOnly"
-                      CanContentScroll="True"
+                      CanContentScroll="True"                      
                       >
                 <StackPanel VerticalAlignment="Center" Name="stackPanel1">
+
                     
-                    <Button Content="Add Textbox with Keyboard" Click="Button_Click"/>
-                    <!--<TextBox>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="GotFocus">
-                                <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                                                           CommandParameter="{x:Static Dock.Bottom}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="LostFocus">
-                                <i:InvokeCommandAction Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                                                           CommandParameter="{x:Static Dock.Bottom}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>-->
 
                 </StackPanel>
 

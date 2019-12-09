@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,13 @@ namespace WPFApp.Views.Elements
         {
             get => itemsControl1.ItemsSource;
             set => itemsControl1.ItemsSource = value;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Trace.WriteLine($"scroller.VertBarVisibility={scroller.ComputedVerticalScrollBarVisibility}");
+            Trace.WriteLine($"scroller.2VertBarVisibility={scroller.VerticalScrollBarVisibility}");
+            Trace.WriteLine($"scroller.3VertBarVisibility={scroller.Visibility}");
         }
     }
 }

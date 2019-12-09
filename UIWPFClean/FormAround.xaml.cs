@@ -2,6 +2,7 @@
 using ScreenKeyboard;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace UIWPFClean
     {
         private bool istest;
         private bool isPrevLangRus;
+        private int j = 0;
         public FormAround()
         {
             InitializeComponent();
@@ -53,6 +55,8 @@ namespace UIWPFClean
         {
             var keybox = new TextBoxDrawer();
             var textbox = new TextBox();
+            textbox.Text = j.ToString();
+            j++;
             textbox.InputScope = new InputScope()
             {
                 Names = { istest ? new InputScopeName(InputScopeNameValue.Number) : new InputScopeName(InputScopeNameValue.Default) }
@@ -117,6 +121,21 @@ namespace UIWPFClean
             // attach the trigger to the control
             var triggers = Interaction.GetTriggers(contentControl);
             triggers.Add(eventTrigger);
+        }
+
+        private void ButtonClickScroll(object sender, RoutedEventArgs e)
+        {
+            var before = scroller.ScrollableHeight;
+            scroller.LineDown();
+            var after = scroller.ScrollableHeight;
+            Trace.WriteLine($"scroll: before={before}; after={after};");
+        }
+
+        private void ButtonClickFullDown(object sender, RoutedEventArgs e)
+        {
+            var hz = scroller.HasAnimatedProperties;
+            scroller.BringIntoView();
+            
         }
     }
 }

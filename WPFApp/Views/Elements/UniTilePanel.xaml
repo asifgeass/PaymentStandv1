@@ -4,61 +4,136 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFApp.Views.Elements"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <ScrollViewer Name="scroller"
+    <Grid>
+        <ScrollViewer x:Name="scroller"
                       VerticalScrollBarVisibility="Auto"
                       VerticalContentAlignment="Top"
                       PanningMode="VerticalOnly"
                       CanContentScroll="True"
-                      >
+                  IsDeferredScrollingEnabled="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition>
+                        <ColumnDefinition.Style>
+                            <Style TargetType="{x:Type ColumnDefinition}">
+                                <Setter Property="Width" Value="15*"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Columns, ElementName=uniGrid1}" Value="2">
+                                        <Setter Property="Width" Value="25*"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ColumnDefinition.Style>
+                    </ColumnDefinition>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition>
-                    <ColumnDefinition.Style>
-                        <Style TargetType="{x:Type ColumnDefinition}">
-                            <Setter Property="Width" Value="15*"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Columns, ElementName=uniGrid1}" Value="2">
-                                    <Setter Property="Width" Value="25*"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ColumnDefinition.Style>
-                </ColumnDefinition>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
+                <ItemsControl x:Name="itemsControl1" Grid.Row="1" Grid.Column="1" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Name="uniGrid1" >
+                                <UniformGrid.Style>
+                                    <Style TargetType="{x:Type UniformGrid}">
+                                        <Setter Property="Columns" Value="1"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=scroller
+                                                , Path=ComputedVerticalScrollBarVisibility}" Value="Visible">
+                                                <Setter Property="Columns" Value="2"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </UniformGrid.Style>
+                            </UniformGrid>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
 
-            <ItemsControl x:Name="itemsControl1" Grid.Row="1" Grid.Column="1" >
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Name="uniGrid1" >
-                            <UniformGrid.Style>
-                                <Style TargetType="{x:Type UniformGrid}">
-                                    <Setter Property="Columns" Value="1"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
+            </Grid>
+
+        </ScrollViewer>
+
+        <!--<DockPanel LastChildFill="True" Margin="0 0 25 30" 
+                   Visibility="{Binding ElementName=scroller, Path=ComputedVerticalScrollBarVisibility}">
+            --><!--<DockPanel.Style>
+                <Style TargetType="{x:Type DockPanel}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
                                ElementName=scroller}" Value="Visible">
-                                            <Setter Property="Columns" Value="2"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </UniformGrid.Style>
-                        </UniformGrid>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
+                               ElementName=scroller}" Value="Hidden">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DockPanel.Style>--><!--
+            
+            <StackPanel DockPanel.Dock="Top" VerticalAlignment="Top"
+                            HorizontalAlignment="Right">
+                <Button Click="Button_Click"
+                          Style="{StaticResource MaterialDesignFloatingActionButton}"
+                          HorizontalAlignment="Right"
+                        Margin="10"
+                    Width="70" Height="70"
+                          >
+                    <materialDesign:PackIcon
+                            Kind="ArrowUp"
+                            Height="50"
+                            Width="50" />
+                </Button>
 
-        </Grid>
+                <Button 
+                          Style="{StaticResource MaterialDesignFloatingActionButton}"
+                          HorizontalAlignment="Right"
+                        Margin="10" 
+                    Width="70" Height="70"
+                          >
+                    <materialDesign:PackIcon
+                            Kind="ArrowCollapseUp"
+                            Height="50"
+                            Width="50" />
+                </Button>
+            </StackPanel>
 
-    </ScrollViewer>
-    
+            <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom"
+                            HorizontalAlignment="Right">
+                <Button 
+                          Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                          HorizontalAlignment="Right"
+                        Margin="10" 
+                    Width="70" Height="70"
+                          >
+                    <materialDesign:PackIcon
+                            Kind="ArrowCollapseDown"
+                            Height="50"
+                            Width="50" />
+                </Button>
+
+                <Button 
+                          Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                          HorizontalAlignment="Right"
+                        Margin="10" 
+                    Width="70" Height="70"
+                          >
+                    <materialDesign:PackIcon
+                            Kind="ArrowDown"
+                            Height="50"
+                            Width="50" />
+                </Button>
+            </StackPanel>
+        </DockPanel>-->
+        
+    </Grid>
+
 </UserControl>

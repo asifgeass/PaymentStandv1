@@ -202,6 +202,10 @@
       <Project>{bb79a539-debb-4fa3-b337-2bcf16a24719}</Project>
       <Name>ScreenKeyboard</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WPFApp\WPFApp.csproj">
+      <Project>{c42e41d0-948d-4104-ac39-942dc48d5a09}</Project>
+      <Name>WPFApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\POS_contactless.png" />
