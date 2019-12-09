@@ -53,25 +53,7 @@ namespace WPFApp
                 vmodel.PaymentWaitingEvent += OnWaitingPayment;                            
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
                 idleDetector = new IdleDetector(window, idleTimedefault);
-                idleDetector.IsIdle += async (s, e) =>
-                {
-                    if (idleDetector.TimerCurrent < idleTimedefault || vmodel?.Responce?.ResponseReq?.PayRecord?.Count > 1)
-                        HomeIdle().RunAsync();
-                    else
-                    {
-                        //Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
-                        if (!around.dialogHostTop.IsOpen)
-                        {
-                            var result = await around.dialogHostTop.ShowDialog(around.dialogHostTop.DialogContent);
-                            if (result != null && result is bool)
-                            {
-                                bool boolResult = (bool)result;
-                                //Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
-                                if (!boolResult) HomeIdle().RunAsync();
-                            }
-                        }
-                    }
-                };
+                idleDetector.IsIdle += OnIdle;
                 Ex.Log($"ViewDynamicMenuBuilder ctor() end success");
             }
             catch (Exception ex)
@@ -80,6 +62,32 @@ namespace WPFApp
             }
         }
 
+        private async void OnIdle (object sender, EventArgs arg)
+        {
+            try
+            {
+                if (idleDetector.TimerCurrent < idleTimedefault || vmodel?.Responce?.ResponseReq?.PayRecord?.Count > 1)
+                    HomeIdle().RunAsync();
+                else
+                {
+                    //Trace.WriteLine($"around.dialogHostTop.IsOpen={around.dialogHostTop.IsOpen}");
+                    if (!around.dialogHostTop.IsOpen)
+                    {
+                        var result = await around.dialogHostTop.ShowDialog(around.dialogHostTop.DialogContent);
+                        if (result != null && result is bool)
+                        {
+                            bool boolResult = (bool)result;
+                            //Trace.WriteLine($"ViewDynamicMenuBuilder.Idle: result is bool={boolResult}");
+                            if (!boolResult) HomeIdle().RunAsync();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
+        }
         private async Task HomeIdle()
         {
             Trace.WriteLine($"ViewDynamicMenuBuilder.HomeIdle()");
