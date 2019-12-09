@@ -254,22 +254,33 @@ namespace Logic
         private string AssembleRunOpResponCheck(PS_ERIP responArg)
         {
             var CheckRunOpResp = new StringBuilder();
-            responArg.ResponseReq.PayRecord.FirstOrDefault()?.Check?.CheckHeader?.CheckLine?.ForEach(x =>
-            {
-                CheckRunOpResp.AppendLine(x.Value);
-                if (x.Value.Contains("Дата платежа"))
+            try
+            {                
+                responArg.ResponseReq.PayRecord.FirstOrDefault()?.Check?.CheckHeader?.CheckLine?.ForEach(x =>
                 {
-                    var mustLength = x.Value.Length;
-                    var str = "Код платежной операции:";
-                    var emptyLength = mustLength - str.Length - lastKioskReceipt.Length;
-                    if (emptyLength >= 0)
+                    CheckRunOpResp.AppendLine(x?.Value ?? string.Empty);
+                    Ex.Try(x?.Value != null, () =>
                     {
-                        var emptyStr = "                                                                           "
-                            .trySubstring(0, emptyLength);
-                        CheckRunOpResp.AppendLine($"{str}{emptyStr}{lastKioskReceipt}");
-                    }
-                }
-            });
+                        if (x.Value.Contains("Дата платежа"))
+                        {
+                            var mustLength = x.Value.Length;
+                            var str = "Код платежной операции:";
+                            var emptyLength = mustLength - str.Length - lastKioskReceipt.Length;
+                            if (emptyLength >= 0)
+                            {
+                                var emptyStr = "                                                                           "
+                                    .trySubstring(0, emptyLength);
+                                CheckRunOpResp.AppendLine($"{str}{emptyStr}{lastKioskReceipt}");
+                            }
+                        }
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
+
             return CheckRunOpResp.ToString();
         }
 
