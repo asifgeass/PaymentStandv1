@@ -214,17 +214,6 @@ namespace Logic
             }
             return await Transaction(req);
         }
-        #endregion
-
-        #region Private Methods
-        private async Task<PS_ERIP> Transaction(PS_ERIP reqArg = null)
-        {
-            string request = await Serialize(reqArg ?? list.Current.Request);
-            var response = await GetEripResponse(request);
-            list.SetResponse(response);
-            await HandleResponseWithoutUI(response);
-            return response;
-        }
         private Task CheckRunOperationResponse(PS_ERIP responArg)
         {
             if (responArg.EnumType == EripQAType.RunOperationResponse)
@@ -238,24 +227,40 @@ namespace Logic
                     string CheckRunOpResp = AssembleRunOpResponCheck(responArg);
                     this.lastPCID = null;
                     this.lastKioskReceipt = null;
-                    Print(CheckRunOpResp);
-                    Print(lastPOSTransaction.Response.ResponseReq.Receipt);
+                    RunPrintingsAnotherThread(CheckRunOpResp);
                 }
                 if (responArg.ResponseReq.ErrorCode != 0) //ОШИБКА RunOper
                 {
                     confirmArg = "0";
-                    CancelPayPOS().RunAsync();                    
+                    CancelPayPOS().RunAsync();
                 }
                 ConfirmTransactionAsync(responArg, confirmArg).RunAsync();
             }
             return Task.CompletedTask;
         }
 
+        private async Task RunPrintingsAnotherThread(string CheckRunOpResp)
+        {
+            try
+            {
+                Font font = SetFont();
+                Print(CheckRunOpResp, font);
+                await Task.Delay(500);
+                Print(lastPOSTransaction.Response.ResponseReq.Receipt, font);
+            }
+            catch (Exception ex)
+            {
+                ex.Log();
+            }
+        }
+        #endregion
+
+        #region Printing
         private string AssembleRunOpResponCheck(PS_ERIP responArg)
         {
             var CheckRunOpResp = new StringBuilder();
             try
-            {                
+            {
                 responArg.ResponseReq.PayRecord.FirstOrDefault()?.Check?.CheckHeader?.CheckLine?.ForEach(x =>
                 {
                     CheckRunOpResp.AppendLine(x?.Value);
@@ -264,7 +269,7 @@ namespace Logic
                         if (x.Value.Contains("Дата платежа"))
                         {
                             var mustLength = x.Value.Length;
-                            var str = "Код платежной операции:";
+                            var str = "Код платежа:";
                             var emptyLength = mustLength - str.Length - lastKioskReceipt.Length;
                             if (emptyLength >= 0)
                             {
@@ -283,33 +288,48 @@ namespace Logic
 
             return CheckRunOpResp?.ToString();
         }
-
-        private void Print(string textArg)
+        private void Print(string textArg, Font font)
         {
             Ex.TryLog(() =>
             {
-                Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
-                PrintDocument printDocument = new PrintDocument();
-                //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
-                Font font = new Font(FontFamily.GenericMonospace, 8.25f);
-                string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
-                Ex.TryLog(() =>
-                {
-                    bool isFile = File.Exists(path);
-                    if (isFile)
-                    {
-                        PrivateFontCollection privateFontCollection = new PrivateFontCollection();
-                        privateFontCollection.AddFontFile(path);
-                        var fontFam = privateFontCollection.Families.FirstOrDefault();
-                        font = new Font(fontFam, 8.25f);
-                    }
-                    else Ex.Log($"Font file not found={path}");
-                });
-                Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}(): font={font}");
+                Ex.Log($"XmlTransactionsManager.Print() isNull={textArg == null}");
+                PrintDocument printDocument = new PrintDocument();                
                 printDocument.PrintPage += (s, e) => e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
                 printDocument.Print();
+                Ex.Log($"XmlTransactionsManager.Print() END DONE");
             });
         }
+        private static Font SetFont()
+        {
+            Font font = new Font(FontFamily.GenericMonospace, 8.25f);
+            //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
+            string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
+            Ex.TryLog(() =>
+            {
+                bool isFile = File.Exists(path);
+                if (isFile)
+                {
+                    PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+                    privateFontCollection.AddFontFile(path);
+                    var fontFam = privateFontCollection.Families.FirstOrDefault();
+                    font = new Font(fontFam, 8.25f);
+                }
+                else Ex.Log($"Font file not found={path}");
+            });
+            Ex.Log($"XmlTransactionsManager.SetFont(): {font}");
+            return font;
+        }
+        #endregion
+
+        #region Private Methods
+        private async Task<PS_ERIP> Transaction(PS_ERIP reqArg = null)
+        {
+            string request = await Serialize(reqArg ?? list.Current.Request);
+            var response = await GetEripResponse(request);
+            list.SetResponse(response);
+            await HandleResponseWithoutUI(response);
+            return response;
+        }        
         private async Task HandleResponseWithoutUI(PS_ERIP response)
         {
             await CheckRunOperationResponse(response);
