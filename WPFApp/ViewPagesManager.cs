@@ -109,7 +109,7 @@ namespace WPFApp
         }
         public ViewPagesManager SetHeader(string arg)
         {
-            Ex.Try(false, () => headers[this.Count] = arg);            
+            Ex.Try(false, () => headers[pages.Count] = arg);            
             return this;
         }
         public ViewPagesManager AddDataContext(object arg)

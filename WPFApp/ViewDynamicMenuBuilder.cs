@@ -24,8 +24,10 @@ namespace WPFApp
     public class ViewDynamicMenuBuilder
     {
         #region fields
-        const int idleTimedefault = 40;
-        const int idleTimeAfterPayment = 9;
+        //const int idleTimedefault = 40;
+        //const int idleTimeAfterPayment = 9;
+        const int idleTimedefault = 2000;
+        const int idleTimeAfterPayment = 2000;
         private List<string> headerHistory = new List<string>();
         private DynamicMenuWindowViewModel vmodel;
         private Window window;
@@ -71,7 +73,14 @@ namespace WPFApp
             Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if (views.IsNextAvaible)
             {
-                vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;
+                if (views.NextHeader != null)
+                {
+                    vmodel.HeaderHistory.Add(views.NextHeader);
+                    //vmodel.LabelCurrent += $" / {views.NextHeader}";
+                    vmodel.LabelCurrent = vmodel.HeaderHistory.CurrentHeader;
+                }                
+                //if (views.NextHeader != null) vmodel.HeaderHistory.Add(views.NextHeader);                
+                //vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;
                 SetWindow(views.NextPage());
                 //around.HeaderScroller.ScrollToRightEnd();
             }
@@ -85,7 +94,12 @@ namespace WPFApp
             Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible}; Current={views.CurrIndex} Count={views.Count}");
             if (views.IsPrevAvaible)
             {
-                vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
+                if(views.PrevHeader != null)
+                {
+                    vmodel.HeaderHistory.BackTo(views.PrevHeader);
+                    vmodel.LabelCurrent = vmodel.HeaderHistory.CurrentHeader;
+                }                
+                //vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
                 SetWindow(views.PrevPage());
             }
             else
@@ -131,7 +145,8 @@ namespace WPFApp
                 {
                     var payrec = paylist.FirstOrDefault();
                     var attrRecords = payrec.AttrRecord;
-                    vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
+                    vmodel.LabelCurrent = vmodel.HeaderHistory.Add(payrec?.Name).CurrentHeader;
+                    //vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
                     this.BuildLookups(paylist);
                     this.BuildDisplayInfo(payrec);
                     this.BuildInputFields(attrRecords);
@@ -171,10 +186,13 @@ namespace WPFApp
                 {
                     var cardButton = Controls.ButtonCard(payrec.Name);
                     cardButton.ButtonControl.Command = vmodel.SendParamCommand;
-                    cardButton.ButtonControl.CommandParameter = payrec;
-                    vmodel.LabelCurrent = payrec?.GroupRecord?.Name;//????
+                    cardButton.ButtonControl.CommandParameter = payrec;                                        
+                    //vmodel.LabelCurrent = payrec?.GroupRecord?.Name;//????
+                    //views.SetHeader(payrec?.GroupRecord?.Name);
                     views.AddControl(cardButton);
                 }
+                var header = paylist?.FirstOrDefault()?.GroupRecord?.Name;
+                vmodel.LabelCurrent = vmodel.HeaderHistory.Add(header).CurrentHeader;
             }
         }
         private void BuildLookups(List<PayRecord> paylist)
@@ -196,8 +214,8 @@ namespace WPFApp
                     LookupVM childVM = vmodel.GetNewLookupVM();
                     childVM.Lookup = selectedLookup;
                     views.AddDataContext(childVM);
-                    //views.AddControl(Controls.LabelHeader(selectedLookup.Name));
-                    views.SetHeader($"{preheader} / {attr.Lookup}");
+                    //views.SetHeader($"{preheader} / {attr.Lookup}");
+                    views.SetHeader($"{attr.Lookup}");
                     var lookItems = selectedLookup.Item;
                     lookItems.ForEach(arg =>
                     {
@@ -333,12 +351,14 @@ namespace WPFApp
 
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
-            views.SetHeader($"{payrec.GroupRecord?.Name} / {payrec.Name}");//????
+            //views.SetHeader($"{payrec.GroupRecord?.Name} / {payrec.Name}");
+            views.SetHeader($"Реквизиты");
             button.ButtonControl.Command = vmodel.NextPageAttrValidateCommand;
             if (payrec.GetPayListType == "0")
             {
                 button.Text = "Оплатить";
                 button.ButtonControl.Command = vmodel.NextPagePayValidateCommand;
+                views.SetHeader($"Подтверждение платежа");
                 Ex.Log("========== ОПЛАТИТЬ КНОПКА ПОСТРОЕНА =============");
             }
             views.AddControl(button);
@@ -448,6 +468,7 @@ namespace WPFApp
             }
             if (views.Count > 1)
             {
+                vmodel.HeaderHistory.RemoveLast();
                 this.HandleResponse();
                 this.NextPage();
             }

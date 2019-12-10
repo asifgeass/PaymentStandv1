@@ -15,14 +15,14 @@ using FluentValidation;
 using System.ComponentModel;
 using System.Collections;
 using FluentValidation.Results;
+using WPFApp.Helpers;
 
 namespace WPFApp.ViewModels
 {
     public class DynamicMenuWindowViewModel : ValidatableBindableBase /*ValidatableBindableBase*/ //, INotifyDataErrorInfo
     {
         public event Action NewResponseComeEvent = ()=>{ };
-        public event Action PaymentWaitingEvent = () => { };
-        private PayRecordValidator payValidator = new PayRecordValidator();
+        public event Action PaymentWaitingEvent = () => { };        
 
         #region ctor
         public DynamicMenuWindowViewModel()
@@ -49,9 +49,125 @@ namespace WPFApp.ViewModels
         private Exception _exception;
         private bool _isHomeButtonActive = true;
         private bool _isBackButtonActive;
+        private PayRecordValidator payValidator = new PayRecordValidator();
+        #endregion
+
+        #region Pages
+        private async void BackPage()
+        {
+            try
+            {
+                this.IsBackButtonActive = false;
+                IsLoadingMenu = !IsLoadingMenu;
+                Ex.Log($"VM => Logic BackPage()");
+                var temp = await StaticMain.BackPage();
+                SetBackHeader(temp);
+                Responce = temp;
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+        }
+
+        private void SetBackHeader(PS_ERIP temp)
+        {
+            var paylist = temp?.ResponseReq?.PayRecord;
+            string PrevHeader = null;
+            var payrec = paylist?.FirstOrDefault();
+            if (payrec == null) return;
+            if (paylist?.Count==1)
+            {
+                PrevHeader = payrec.Name;
+                
+            }
+            else
+            {
+                PrevHeader = payrec.GroupRecord?.Name;
+            }
+            HeaderHistory.BackTo(PrevHeader);
+            LabelCurrent = HeaderHistory.CurrentHeader;
+        }
+
+        private async void HomePage()
+        {
+            try
+            {
+                this.IsHomeButtonActive = false;
+                this.IsBackButtonActive = false;
+                IsLoadingMenu = !IsLoadingMenu;
+                Ex.Log($"VM => Logic HomePage()");
+                Responce = await StaticMain.HomePage();
+                string HomeHeader = Responce?.ResponseReq?.PayRecord?.FirstOrDefault()?.GroupRecord?.Name;
+                LabelCurrent = $"Оплата услуг: {HomeHeader}";
+                HeaderHistory.Home(HomeHeader);
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+        }
+        private async Task NextPage(object param = null)
+        {
+            try
+            {
+                this.IsHomeButtonActive = false;
+                this.IsBackButtonActive = false;
+                if (!IsCustomLoadingScreen) IsLoadingMenu = !IsLoadingMenu;
+                Ex.Log($"VM => Logic NextPage() param={param};");
+                FillWithLookupsVM();
+                FillWithAttrInputVM();
+                Ex.Try(false, () => PayrecToSend.Summa = PayrecToSend.Summa.Replace(",", "."));
+                EripToSend.ResponseReq.PayRecord = new List<PayRecord>() { PayrecToSend };
+                Responce = await StaticMain.NextPage(param ?? EripToSend);
+            }
+            catch (Exception ex)
+            {
+                Exception = ex;
+            }
+        }
+        private async Task NextPageAttrValidate(object param = null)
+        {
+            Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
+            bool isValid = true;
+            AttrVMList.ForEach(vm =>
+            {
+                vm.ValueAttrRecord = vm.ValueAttrRecord;
+                isValid = vm.HasErrors ? false : isValid;
+            });
+            if (isValid)
+            {
+                await NextPage(param);
+            }
+            //else
+            //{
+            //    SummaPayrecToSend = SummaPayrecToSend;
+            //}
+        }
+        private async Task NextPagePayValidate(object param = null)
+        {
+            Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
+            bool isValid = true;
+            Ex.TryLog(() =>
+            {
+                var valResult = payValidator.Validate(PayrecToSend);
+                isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));
+            });
+            if (isValid)
+            {
+                IsCustomLoadingScreen = true;
+                PaymentWaitingEvent();
+                await NextPage(param);
+            }
+            else
+            {
+                SummaPayrecToSend = SummaPayrecToSend;
+            }
+        }
         #endregion
 
         #region Properties
+        public HeaderHistory HeaderHistory { get; } = new HeaderHistory();
         public PS_ERIP Responce 
         {
             get => _responce;
@@ -168,96 +284,7 @@ namespace WPFApp.ViewModels
         public DelegateCommand NextPageCommand { get; }
         public DelegateCommand NextPagePayValidateCommand { get; }
         public DelegateCommand NextPageAttrValidateCommand { get; }
-        #endregion
-
-        #region Pages
-        private async Task NextPage(object param=null)
-        {
-            try
-            {
-                this.IsHomeButtonActive = false;
-                this.IsBackButtonActive = false;
-                if (!IsCustomLoadingScreen) IsLoadingMenu = !IsLoadingMenu;
-                Ex.Log($"VM => Logic NextPage() param={param};");
-                FillWithLookupsVM();
-                FillWithAttrInputVM();
-                Ex.Try(false, () => PayrecToSend.Summa = PayrecToSend.Summa.Replace(",","."));
-                EripToSend.ResponseReq.PayRecord = new List<PayRecord>() { PayrecToSend };
-                Responce = await StaticMain.NextPage(param ?? EripToSend);
-            }
-            catch (Exception ex)
-            {
-                Exception = ex;
-            }
-        }
-        private async Task NextPageAttrValidate(object param = null)
-        {
-            Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
-            bool isValid = true;
-            AttrVMList.ForEach(vm =>
-            {
-                vm.ValueAttrRecord = vm.ValueAttrRecord;
-                isValid = vm.HasErrors ? false : isValid;
-            });
-            if (isValid)
-            {
-                await NextPage(param);
-            }
-            //else
-            //{
-            //    SummaPayrecToSend = SummaPayrecToSend;
-            //}
-        }
-        private async Task NextPagePayValidate(object param = null)
-        {
-            Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
-            bool isValid = true;
-            Ex.TryLog(() =>
-            {
-                var valResult = payValidator.Validate(PayrecToSend);
-                isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));                
-            });
-            if (isValid)
-            {
-                IsCustomLoadingScreen = true;
-                PaymentWaitingEvent();
-                await NextPage(param);
-            }
-            else
-            {
-                SummaPayrecToSend = SummaPayrecToSend;
-            }
-        }
-        private async void BackPage()
-        {
-            try
-            {
-                this.IsBackButtonActive = false;
-                IsLoadingMenu = !IsLoadingMenu;
-                Ex.Log($"VM => Logic BackPage()");
-                Responce = await StaticMain.BackPage();
-            }
-            catch (Exception ex)
-            {
-                Exception = ex;
-            }
-        }
-        private async void HomePage()
-        {
-            try
-            {
-                this.IsHomeButtonActive = false;
-                this.IsBackButtonActive = false;
-                IsLoadingMenu = !IsLoadingMenu;
-                Ex.Log($"VM => Logic HomePage()");
-                Responce = await StaticMain.HomePage();
-            }
-            catch (Exception ex)
-            {
-                Exception = ex;
-            }
-        }
-        #endregion
+        #endregion        
 
         #region Private Methods
         private void DoOnResponseCome()
