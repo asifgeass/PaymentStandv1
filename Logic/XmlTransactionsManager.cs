@@ -238,7 +238,9 @@ namespace Logic
             }
             return Task.CompletedTask;
         }
+        #endregion
 
+        #region Printing
         private async Task RunPrintingsAnotherThread(string CheckRunOpResp)
         {
             try
@@ -252,10 +254,38 @@ namespace Logic
             {
                 ex.Log();
             }
+        }        
+        private void Print(string textArg, Font font)
+        {
+            Ex.TryLog(() =>
+            {
+                Ex.Log($"XmlTransactionsManager.Print() isNull={textArg == null}");
+                PrintDocument printDocument = new PrintDocument();                
+                printDocument.PrintPage += (s, e) => e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
+                printDocument.Print();
+                Ex.Log($"XmlTransactionsManager.Print() END DONE");
+            });
         }
-        #endregion
-
-        #region Printing
+        private static Font SetFont()
+        {
+            Font font = new Font(FontFamily.GenericMonospace, 8.25f);
+            //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
+            string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
+            Ex.TryLog(() =>
+            {
+                bool isFile = File.Exists(path);
+                if (isFile)
+                {
+                    PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+                    privateFontCollection.AddFontFile(path);
+                    var fontFam = privateFontCollection.Families.FirstOrDefault();
+                    font = new Font(fontFam, 8.25f);
+                }
+                else Ex.Log($"Font file not found={path}");
+            });
+            Ex.Log($"XmlTransactionsManager.SetFont(): {font}");
+            return font;
+        }
         private string AssembleRunOpResponCheck(PS_ERIP responArg)
         {
             var CheckRunOpResp = new StringBuilder();
@@ -287,37 +317,6 @@ namespace Logic
             }
 
             return CheckRunOpResp?.ToString();
-        }
-        private void Print(string textArg, Font font)
-        {
-            Ex.TryLog(() =>
-            {
-                Ex.Log($"XmlTransactionsManager.Print() isNull={textArg == null}");
-                PrintDocument printDocument = new PrintDocument();                
-                printDocument.PrintPage += (s, e) => e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
-                printDocument.Print();
-                Ex.Log($"XmlTransactionsManager.Print() END DONE");
-            });
-        }
-        private static Font SetFont()
-        {
-            Font font = new Font(FontFamily.GenericMonospace, 8.25f);
-            //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
-            string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
-            Ex.TryLog(() =>
-            {
-                bool isFile = File.Exists(path);
-                if (isFile)
-                {
-                    PrivateFontCollection privateFontCollection = new PrivateFontCollection();
-                    privateFontCollection.AddFontFile(path);
-                    var fontFam = privateFontCollection.Families.FirstOrDefault();
-                    font = new Font(fontFam, 8.25f);
-                }
-                else Ex.Log($"Font file not found={path}");
-            });
-            Ex.Log($"XmlTransactionsManager.SetFont(): {font}");
-            return font;
         }
         #endregion
 

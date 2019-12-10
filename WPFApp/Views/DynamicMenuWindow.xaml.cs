@@ -1,6 +1,8 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using ExceptionManager;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +51,15 @@ namespace WPFApp.Views
             //theme.SetBaseTheme(new MatDesDarkerLightTheme());
             theme.SetBaseTheme(new MatDesDarkerLightTheme());
             paletteHelper.SetTheme(theme);
+            Task.Run(async () =>
+            {
+                await Task.Delay(6000);
+                Ex.Log($"Printers:");
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    Ex.Log(printer);
+                }
+            });
         }
     }
 }
