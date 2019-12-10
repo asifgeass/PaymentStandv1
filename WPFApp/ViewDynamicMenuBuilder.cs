@@ -70,33 +70,55 @@ namespace WPFApp
         #region Navigation Pages
         private void NextPage(object param = null)
         {
-            Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible};");
             if (views.IsNextAvaible)
             {
                 if (views.NextHeader != null)
                 {
-                    vmodel.HeaderHistory.Add(views.NextHeader);
-                    //vmodel.LabelCurrent += $" / {views.NextHeader}";
-                    vmodel.LabelCurrent = vmodel.HeaderHistory.CurrentHeader;
-                }                
-                //if (views.NextHeader != null) vmodel.HeaderHistory.Add(views.NextHeader);                
-                //vmodel.LabelCurrent = views.NextHeader ?? vmodel.LabelCurrent;
+                    var header = vmodel.HeaderHistory.Add(views.NextHeader);
+                    vmodel.LabelCurrent = header.CurrentHeader;
+                }
                 SetWindow(views.NextPage());
-                //around.HeaderScroller.ScrollToRightEnd();
             }
             else
             {
                 vmodel.SendParamCommand.Execute(param);
             }
         }
+
+        private void SetHeader()
+        {
+            var paylist = vmodel?.Responce?.ResponseReq?.PayRecord;
+            if (paylist != null)
+            {
+                var payrec = paylist.FirstOrDefault();
+                if (payrec != null)
+                {
+                    //string header = string.Empty;
+                    //if (paylist.Count > 1)
+                    //{
+                    //    header = payrec.GroupRecord?.Name;
+                    //}
+                    //if (paylist.Count == 1)
+                    //{
+                    //    header = payrec.Name;
+                    //}
+                    //Ex.Log($"SetHeader() old={vmodel.HeaderHistory.CurrentHeader}");
+                    //var headerHistory = vmodel.HeaderHistory.Add(header);
+                    //Ex.Log($"SetHeader() new={headerHistory.CurrentHeader}");
+                    //vmodel.LabelCurrent = headerHistory.CurrentHeader;
+                }
+            }
+        }
+
         private void PrevPage()
         {
-            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible}; Current={views.CurrIndex} Count={views.Count}");
+            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible};");
             if (views.IsPrevAvaible)
             {
                 if(views.PrevHeader != null)
                 {
-                    vmodel.HeaderHistory.BackTo(views.PrevHeader);
+                    vmodel.HeaderHistory.BackTo(views.PrevHeader, true);
                     vmodel.LabelCurrent = vmodel.HeaderHistory.CurrentHeader;
                 }                
                 //vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
@@ -145,7 +167,8 @@ namespace WPFApp
                 {
                     var payrec = paylist.FirstOrDefault();
                     var attrRecords = payrec.AttrRecord;
-                    vmodel.LabelCurrent = vmodel.HeaderHistory.Add(payrec?.Name).CurrentHeader;
+                    //var header = vmodel.HeaderHistory.Add(payrec?.Name);
+                    //vmodel.LabelCurrent = header.CurrentHeader;
                     //vmodel.LabelCurrent = $"{payrec.GroupRecord?.Name} / {payrec.Name}";
                     this.BuildLookups(paylist);
                     this.BuildDisplayInfo(payrec);
@@ -186,13 +209,19 @@ namespace WPFApp
                 {
                     var cardButton = Controls.ButtonCard(payrec.Name);
                     cardButton.ButtonControl.Command = vmodel.SendParamCommand;
-                    cardButton.ButtonControl.CommandParameter = payrec;                                        
+                    cardButton.ButtonControl.CommandParameter = payrec;
+                    cardButton.ButtonControl.Click += (s,arg)=>
+                    {
+                        var headerHistory = vmodel.HeaderHistory.Add(payrec.Name);
+                        vmodel.LabelCurrent = headerHistory.CurrentHeader;
+                    };
                     //vmodel.LabelCurrent = payrec?.GroupRecord?.Name;//????
                     //views.SetHeader(payrec?.GroupRecord?.Name);
                     views.AddControl(cardButton);
                 }
-                var header = paylist?.FirstOrDefault()?.GroupRecord?.Name;
-                vmodel.LabelCurrent = vmodel.HeaderHistory.Add(header).CurrentHeader;
+                var headerName = paylist?.FirstOrDefault()?.GroupRecord?.Name;
+                //var header = vmodel.HeaderHistory.Add(headerName);
+                //vmodel.LabelCurrent = header.CurrentHeader;
             }
         }
         private void BuildLookups(List<PayRecord> paylist)
@@ -204,7 +233,7 @@ namespace WPFApp
             {
                 if (attr.Edit == 1 && attr.View == 1 && !string.IsNullOrEmpty(attr.Lookup))
                 {
-                    Ex.Log($"{nameof(HandleResponse)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
+                    //Ex.Log($"{nameof(HandleResponse)}(): LOOKUP display add: attr={attr.Name} Lookup={attr.Lookup}");
                     List<Lookup> lookups = paylist?.FirstOrDefault()?.Lookups;
                     var list = lookups?.Where(x => x.Name.ToLower() == attr.Lookup.ToLower());
                     Lookup selectedLookup = list?.FirstOrDefault();
@@ -235,7 +264,7 @@ namespace WPFApp
             {
                 if (attr.Edit != 1 && attr.View == 1)
                 {
-                    Ex.Log($"{nameof(HandleResponse)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
+                    //Ex.Log($"{nameof(HandleResponse)}(): ATTR filled info display: attr={attr.Name} value={attr.Value}");
                     var label = Controls.LabelInfo($"{attr.Name} = {attr.Value};");
                     views.AddControl(label);
                 }
@@ -287,7 +316,7 @@ namespace WPFApp
         }
         private void BuildInputAttr(AttrRecord attr)
         {
-            Ex.Log($"{nameof(BuildInputAttr)}(): ATTR input: attr={attr.Name}");
+            //Ex.Log($"{nameof(BuildInputAttr)}(): ATTR input: attr={attr.Name}");
             string hint = attr.Name;
             if (attr.Mandatory != null && attr.Mandatory == "1") hint += '*';
             var inputbox = Controls.TextBoxHint(hint, around);
@@ -362,6 +391,40 @@ namespace WPFApp
                 Ex.Log("========== ОПЛАТИТЬ КНОПКА ПОСТРОЕНА =============");
             }
             views.AddControl(button);
+        }
+        private void OnReponseCome()
+        {
+            try
+            {
+                idleDetector.ChangeIdleTime(idleTimedefault);
+                ClearViewPagesOnResponse();
+                BuildsPages();
+            }
+            catch (Exception ex)
+            {
+                DisplayErrorPage(ex);
+            }
+        }
+        private void BuildsPages()
+        {
+            this.HandleResponse();
+            this.fakeCount = views.Count;
+            SetHeader();
+            if (views.Count == 1)
+            {                
+                this.NextPage();
+            }
+            else if (views.Count > 1)
+            {
+                this.HandleResponse();                
+                this.NextPage();
+            }
+            else //if (views.Count <= 0)
+            {
+                var str = "Извините, мы не смогли построить никакой " +
+                    "страницы на ответ сервера.\n(pages.Count <= 0)";
+                DisplayErrorPage(str);
+            }
         }
         #endregion
 
@@ -443,40 +506,6 @@ namespace WPFApp
                 //{
                 //    DisplayErrorPage(ex);
                 //}
-            }
-        }
-        private void OnReponseCome()
-        {
-            try
-            {
-                idleDetector.ChangeIdleTime(idleTimedefault);
-                ClearViewPagesOnResponse();
-                BuildsPages();
-            }
-            catch (Exception ex)
-            {
-                DisplayErrorPage(ex);
-            }
-        }
-        private void BuildsPages()
-        {
-            this.HandleResponse();
-            this.fakeCount = views.Count;
-            if (views.Count == 1)
-            {
-                this.NextPage();
-            }
-            if (views.Count > 1)
-            {
-                vmodel.HeaderHistory.RemoveLast();
-                this.HandleResponse();
-                this.NextPage();
-            }
-            if (views.Count <= 0)
-            {
-                var str = "Извините, мы не смогли построить никакой " +
-                    "страницы на ответ сервера.\n(pages.Count <= 0)";
-                DisplayErrorPage(str);
             }
         }
         private void ResetBeforeHandle()

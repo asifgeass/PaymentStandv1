@@ -79,13 +79,13 @@ namespace WPFApp.ViewModels
             if (paylist?.Count==1)
             {
                 PrevHeader = payrec.Name;
-                
+                if (payrec.GetPayListType == "0") PrevHeader = null;
             }
             else
             {
                 PrevHeader = payrec.GroupRecord?.Name;
             }
-            HeaderHistory.BackTo(PrevHeader);
+            HeaderHistory.BackTo(PrevHeader, true);
             LabelCurrent = HeaderHistory.CurrentHeader;
         }
 

@@ -16,6 +16,7 @@ namespace WPFApp.Helpers
 
         public HeaderHistory Add(string argHeader)
         {
+            Ex.Log($"HeaderHistory.Add({argHeader}) old={this.CurrentHeader}");
             list.Add(argHeader);
             isHomeLast = false;
             return this;
@@ -23,6 +24,7 @@ namespace WPFApp.Helpers
 
         public HeaderHistory Home(string argHeader)
         {
+            Ex.Log($"HeaderHistory.Home() old={this.CurrentHeader}");
             isHomeLast = true;
             prevHeader = new List<string>();
             list.ForEach(x => prevHeader.Add(x));
@@ -38,34 +40,64 @@ namespace WPFApp.Helpers
             return this;
         }
 
-        public HeaderHistory BackTo(string argHeader, bool isRemoveAfter=false)
+        public HeaderHistory BackTo(string argHeader=null, bool isRemoveAfter=true)
         {
+            bool isHomeLocal = isHomeLast;
+            isHomeLast = false;
             try
             {
-                int index = list.LastIndexOf(argHeader);
-                if (index == -1)
+                Ex.Log($"HeaderHistory.BackTo({argHeader}) old={this.CurrentHeader}");
+                if (isHomeLocal)
                 {
-                    if (isHomeLast && prevHeader != null)
+                    if (prevHeader != null)
                     {
-                        var homeindex = prevHeader.LastIndexOf(argHeader);
-                        bool isPrev = RemoveAfterIndex(homeindex, prevHeader);
-                        if(isPrev)
+                        if(argHeader==null)
                         {
+                            prevHeader.RemoveRange(prevHeader.Count-1,1);
                             list.Clear();
                             prevHeader.ForEach(x => list.Add(x));
                         }
+                        else
+                        {
+                            var homeindex = prevHeader.LastIndexOf(argHeader);
+                            bool isPrev = RemoveAfterIndex(homeindex, prevHeader, isRemoveAfter);
+                            //if (isPrev)
+                            list.Clear();
+                            prevHeader.ForEach(x => list.Add(x));                            
+                        }
                     }
-                    else { return this; }
                 }
-                RemoveAfterIndex(index, list, isRemoveAfter);
+                else
+                {
+                    int index = list.LastIndexOf(argHeader);
+                    if (index == -1)
+                    {
+                        Ex.Log($"HeaderHistory.BackTo(): list.LastIndexOf({argHeader}) = -1 NOT FOUND;");
+                        return this;
+                        //if (prevHeader != null)
+                        //{
+                        //    var homeindex = prevHeader.LastIndexOf(argHeader);
+                        //    bool isPrev = RemoveAfterIndex(homeindex, prevHeader, isRemoveAfter);
+                        //    if (isPrev)
+                        //    {
+                        //        list.Clear();
+                        //        prevHeader.ForEach(x => list.Add(x));
+                        //        return this;
+                        //    }
+                        //}
+                        //else { return this; }
+                    }
+                    RemoveAfterIndex(index, list, isRemoveAfter);
+                }
             }
             catch (Exception ex)
             { ex.Log($"HeaderHistory.BackTo({argHeader})"); }
-            isHomeLast = false;
+            
+            Ex.Log($"HeaderHistory.BackTo({argHeader}) new={this.CurrentHeader}");
             return this;
         }
 
-        private bool RemoveAfterIndex(int index, List<string> list, bool isRemoveAfter = false)
+        private bool RemoveAfterIndex(int index, List<string> list, bool isRemoveAfter)
         {
             if (index >= 0)
             {
