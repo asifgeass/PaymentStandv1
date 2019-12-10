@@ -70,6 +70,7 @@ namespace WPFApp
             if (argName != null) txtBlock.Text = argName;
             txtBlock.TextWrapping = TextWrapping.Wrap;
             txtBlock.FontSize = 38;
+            txtBlock.Margin = new Thickness(MarginBetweenButtons,0, MarginBetweenButtons,0);
             return txtBlock;
         }
 
