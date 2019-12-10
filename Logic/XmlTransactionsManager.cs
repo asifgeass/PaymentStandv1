@@ -258,7 +258,7 @@ namespace Logic
             {                
                 responArg.ResponseReq.PayRecord.FirstOrDefault()?.Check?.CheckHeader?.CheckLine?.ForEach(x =>
                 {
-                    CheckRunOpResp.AppendLine(x?.Value ?? string.Empty);
+                    CheckRunOpResp.AppendLine(x?.Value);
                     Ex.Try(x?.Value != null, () =>
                     {
                         if (x.Value.Contains("Дата платежа"))
@@ -281,31 +281,34 @@ namespace Logic
                 ex.Log();
             }
 
-            return CheckRunOpResp.ToString();
+            return CheckRunOpResp?.ToString();
         }
 
         private void Print(string textArg)
         {
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
-            PrintDocument printDocument = new PrintDocument();
-            //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
-            Font font = new Font(FontFamily.GenericMonospace, 8.25f);
-            string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
             Ex.TryLog(() =>
             {
-                bool isFile = File.Exists(path);
-                if (isFile)
+                Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}()");
+                PrintDocument printDocument = new PrintDocument();
+                //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
+                Font font = new Font(FontFamily.GenericMonospace, 8.25f);
+                string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
+                Ex.TryLog(() =>
                 {
-                    PrivateFontCollection privateFontCollection = new PrivateFontCollection();
-                    privateFontCollection.AddFontFile(path);
-                    var fontFam = privateFontCollection.Families.FirstOrDefault();
-                    font = new Font(fontFam, 8.25f);
-                }
-                else Ex.Log($"Font file not found={path}");
+                    bool isFile = File.Exists(path);
+                    if (isFile)
+                    {
+                        PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+                        privateFontCollection.AddFontFile(path);
+                        var fontFam = privateFontCollection.Families.FirstOrDefault();
+                        font = new Font(fontFam, 8.25f);
+                    }
+                    else Ex.Log($"Font file not found={path}");
+                });
+                Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}(): font={font}");
+                printDocument.PrintPage += (s, e) => e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
+                printDocument.Print();
             });
-            Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(Print)}(): font={font}");
-            printDocument.PrintPage += (s,e)=> e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
-            printDocument.Print();
         }
         private async Task HandleResponseWithoutUI(PS_ERIP response)
         {
