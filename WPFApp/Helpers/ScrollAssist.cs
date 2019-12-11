@@ -21,7 +21,7 @@ namespace WPFApp.Helpers
             var scrollViewer = obj as ScrollViewer;
             if (scrollViewer != null && (bool)args.NewValue)
             {
-                scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;                
                 scrollViewer.ScrollToRightEnd();
             }
             else
@@ -33,7 +33,7 @@ namespace WPFApp.Helpers
         private static void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             // Only scroll to bottom when the extent changed. Otherwise you can't scroll up
-            if (e.ExtentHeightChange != 0)
+            if (e.ExtentWidthChange != 0 || e.ViewportWidthChange!=0)
             {
                 var scrollViewer = sender as ScrollViewer;
                 scrollViewer?.ScrollToRightEnd();
