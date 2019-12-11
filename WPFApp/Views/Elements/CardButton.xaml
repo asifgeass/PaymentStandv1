@@ -12,7 +12,7 @@
             Style="{DynamicResource CardButton}">
         <Button.Content>
             <TextBlock TextWrapping="Wrap" 
-                       Margin="10 27 10 27"
+                       Margin="10 25 10 25"
                        x:Name="Textblock"
                        TextAlignment="Center"
                        />

@@ -10,7 +10,7 @@
         <Button x:Name="ButtonXaml">
             <Button.Content>
                 <TextBlock TextWrapping="Wrap" 
-                       Margin="5 10 5 10"
+                       Margin="5 15 5 15"
                        x:Name="Textblock"
                        TextAlignment="Center"
                        />
