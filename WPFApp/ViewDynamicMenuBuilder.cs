@@ -204,7 +204,8 @@ namespace WPFApp
         {
             if (paylist.Count > 1)
             {
-                views.NewPage(new UniTilePanel());
+                //views.NewPage(new UniTilePanel());
+                views.NewPage(new TilePanelNoScroller());
                 foreach (var payrec in paylist)
                 {
                     var cardButton = Controls.ButtonCard(payrec.Name);
@@ -239,7 +240,8 @@ namespace WPFApp
                     Lookup selectedLookup = list?.FirstOrDefault();
                     if (selectedLookup == null) { continue; }
                     int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
-                    views.NewPage(new UniTilePanel());
+                    //views.NewPage(new UniTilePanel());
+                    views.NewPage(new TilePanelNoScroller());
                     LookupVM childVM = vmodel.GetNewLookupVM();
                     childVM.Lookup = selectedLookup;
                     views.AddDataContext(childVM);
