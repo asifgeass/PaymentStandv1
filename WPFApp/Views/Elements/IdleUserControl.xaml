@@ -18,7 +18,7 @@
         <StackPanel VerticalAlignment="Center" Grid.Row="0" Margin="5" TouchDown="Grid_TouchDown">
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <materialDesign:PackIcon Kind="TimerSand" Width="50" 
+                <materialDesign:PackIcon Kind="AccessTime" Width="50" 
                                          Height="50" Opacity="0.85" 
                                          VerticalAlignment="Center"/>
                 <TextBlock x:Name="textBlock1" FontSize="48" Text="Вам еще нужно время?"/>                
