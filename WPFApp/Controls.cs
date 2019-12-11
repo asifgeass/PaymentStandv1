@@ -13,6 +13,7 @@ using WPFApp.Views;
 using System.Windows.Media.Imaging;
 using ExceptionManager;
 using System.Windows.Input;
+using WPFApp.Views.Elements;
 
 namespace WPFApp
 {
@@ -164,7 +165,13 @@ namespace WPFApp
             return style;
         }
 
-        public static Grid PayScreen()
+        public static FrameworkElement PayScreen()
+        {
+            return new PaymentScreen();
+            //return CodeBehindPaymentScreen();
+        }
+
+        private static Grid CodeBehindPaymentScreen()
         {
             var columnGrid = new Grid();
             ColumnDefinition gridCol1 = new ColumnDefinition();
@@ -179,7 +186,7 @@ namespace WPFApp
 
             var bar = new ProgressBar();
             bar.IsIndeterminate = true;
-            bar.Margin = new Thickness(50);            
+            bar.Margin = new Thickness(50);
 
             var imgLeft = new Image();
             var imgRight = new Image();
@@ -188,7 +195,7 @@ namespace WPFApp
             {
                 imgLeft.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/true_png.png"));
                 imgLeft.Stretch = Stretch.Uniform;
-
+                //WpfTutorialSamples;component/Images/google.png
                 imgRight.Source = new BitmapImage(new Uri(@"pack://application:,,,/WPFApp;component/Resources/POS_chip1.png"));
                 imgRight.Stretch = Stretch.None;
 
@@ -225,6 +232,5 @@ namespace WPFApp
 
             return columnGrid;
         }
-
     }
 }

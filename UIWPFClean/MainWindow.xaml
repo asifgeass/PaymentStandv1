@@ -6,6 +6,7 @@
         xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:local="clr-namespace:UIWPFClean"
         xmlns:screenkeyboard="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
+        xmlns:main="clr-namespace:WPFApp.Views.Elements;assembly=WPFApp"
         mc:Ignorable="d"
         TextElement.FontWeight="Regular"
         TextOptions.TextFormattingMode="Ideal" 
@@ -16,7 +17,8 @@
         Title="MainWindow" Height="782" Width="800" >
 
 
-    <local:DefaultWindowContent/>
+    <!--<local:DefaultWindowContent/>-->
     <!--<local:FormAround/>-->
+    <main:PaymentScreen/>
 
 </Window>

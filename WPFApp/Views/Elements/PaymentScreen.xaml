@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="WPFApp.Views.Elements.PaymentScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFApp.Views.Elements"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="100*"/>
+                </Grid.RowDefinitions>
+
+                <Image Source="pack://application:,,,/WPFApp;component/Resources/POS_contactless3.png" 
+                       Stretch="Uniform" 
+                       Opacity="0.85"
+                       Grid.Row="0"
+                       />
+                <Image Source="pack://application:,,,/WPFApp;component/Resources/POS_side2.png" 
+                       Stretch="Uniform" 
+                       Opacity="0.85"
+                       Grid.Row="2"
+                       />
+            </Grid>
+
+            <StackPanel Grid.Column="1"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+                
+                <ProgressBar IsIndeterminate="true"/>
+                
+                <TextBlock Text="Поднесите карту к POS-терминалу&#10;и совершите оплату любым способом."
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           FontSize="48"
+                           Margin="0 50 0 50"/>
+                
+                <ProgressBar IsIndeterminate="true"/>
+                
+            </StackPanel>
+
+            <Image Grid.Column="2"
+                    Source="pack://application:,,,/WPFApp;component/Resources/POS_bottom2.png" 
+                       Stretch="Uniform" 
+                       Opacity="0.85"                       
+                       />
+        </Grid>
+            
+    </Grid>
+</UserControl>
