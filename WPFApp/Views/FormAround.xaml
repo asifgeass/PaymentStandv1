@@ -49,9 +49,10 @@
 
                 <el:LeftPanelButtons Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="LeftPanelButtons" />
 
-                <!--<ContentControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />-->
-
-                <ScrollViewer Name="scroller"
+                <ContentControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />
+                <!--<el:ColumnDivider x:Name="ContentContainer"/>-->
+                
+                <!--<ScrollViewer Name="scroller"
                       Grid.Row="1" 
                       Grid.Column="1"                       
                       PanningMode="VerticalOnly"
@@ -63,11 +64,21 @@
                             <ColumnDefinition Width="20*" x:Name="ContentColumn"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <ContentControl Grid.Column="1" Name="ContentContainer" />
-                        
+                        <UniformGrid Name="uniGrid1">
+                            <UniformGrid.Style>
+                                <Style TargetType="UniformGrid">
+                                    <Setter Property="Columns" Value="1"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
+                               ElementName=scroller}" Value="Visible">
+                                            <Setter Property="Columns" Value="2"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </UniformGrid.Style>
+                        </UniformGrid>
                     </Grid>
-                </ScrollViewer>
+                </ScrollViewer>-->
             </Grid>
 
         </materialDesign:DrawerHost>
