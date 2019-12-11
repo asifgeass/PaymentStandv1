@@ -17,16 +17,7 @@
                       HorizontalScrollBarVisibility="Hidden"
                       >
             <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold" TextAlignment="Center" TextWrapping="NoWrap"/>
-            
-            <!--<Label Name="currentLabel" 
-                   HorizontalContentAlignment="Center"    
-                   Foreground="{DynamicResource MaterialDesignBody}"                   
-                   >
-                <Label.Content>
-                    <TextBlock Text="{Binding LabelCurrent}" Margin="7" FontWeight="DemiBold" TextWrapping="NoWrap"/>
-                </Label.Content>
-            </Label>-->
-            
+
         </ScrollViewer>
         
     </Grid>

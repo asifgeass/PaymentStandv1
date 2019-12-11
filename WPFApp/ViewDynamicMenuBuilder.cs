@@ -24,10 +24,10 @@ namespace WPFApp
     public class ViewDynamicMenuBuilder
     {
         #region fields
-        //const int idleTimedefault = 40;
-        //const int idleTimeAfterPayment = 9;
-        const int idleTimedefault = 2000;
-        const int idleTimeAfterPayment = 2000;
+        const int idleTimedefault = 40;
+        const int idleTimeAfterPayment = 9;
+        //const int idleTimedefault = 2000;
+        //const int idleTimeAfterPayment = 2000;
         private List<string> headerHistory = new List<string>();
         private DynamicMenuWindowViewModel vmodel;
         private Window window;

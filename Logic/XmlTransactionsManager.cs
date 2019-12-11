@@ -246,25 +246,27 @@ namespace Logic
             try
             {
                 Font font = SetFont();
-                Print(CheckRunOpResp, font);
-                await Task.Delay(500);
-                Print(lastPOSTransaction.Response.ResponseReq.Receipt, font);
+                var posReceipt = lastPOSTransaction.Response.ResponseReq.Receipt;
+                Print(new string[] { CheckRunOpResp, posReceipt }, font);
             }
             catch (Exception ex)
             {
                 ex.Log();
             }
-        }        
-        private void Print(string textArg, Font font)
+        }
+        private void Print(string[] textArg, Font font)
         {
-            Ex.TryLog(() =>
+            Ex.Log($"XmlTransactionsManager.Print():\n{textArg}\n");
+            PrintDocument printDocument = new PrintDocument();
+            int i = 0;
+            printDocument.PrintPage += (s, e) =>
             {
-                Ex.Log($"XmlTransactionsManager.Print() isNull={textArg == null}");
-                PrintDocument printDocument = new PrintDocument();                
-                printDocument.PrintPage += (s, e) => e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
-                printDocument.Print();
-                Ex.Log($"XmlTransactionsManager.Print() END DONE");
-            });
+                e.HasMorePages = i<1;
+                e.Graphics.DrawString(textArg[i], font, Brushes.Black, 0, 0);
+                i++;
+            };            
+            printDocument.Print();
+            Ex.Log($"XmlTransactionsManager.Print() END DONE");
         }
         private static Font SetFont()
         {
