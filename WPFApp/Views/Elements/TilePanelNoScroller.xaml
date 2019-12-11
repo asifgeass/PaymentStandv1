@@ -27,8 +27,9 @@
                             <Style TargetType="{x:Type UniformGrid}">
                                 <Setter Property="Columns" Value="1"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=scroller
-                                                , Path=ComputedVerticalScrollBarVisibility}" Value="Visible">
+                                    <!--{Binding Path=Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}-->
+                                    <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ScrollViewer}}}" Value="Visible">
+                                    <!--<DataTrigger Binding="{Binding ElementName=scroller, Path=ComputedVerticalScrollBarVisibility}" Value="Visible">-->
                                         <Setter Property="Columns" Value="2"/>
                                     </DataTrigger>
                                 </Style.Triggers>

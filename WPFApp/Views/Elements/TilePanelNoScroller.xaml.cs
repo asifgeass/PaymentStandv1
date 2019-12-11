@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace WPFApp.Views.Elements
         public TilePanelNoScroller()
         {
             InitializeComponent();
+        }
+
+        public IEnumerable ItemsSource
+        {
+            get => itemsControl1.ItemsSource;
+            set => itemsControl1.ItemsSource = value;
         }
     }
 }

@@ -135,11 +135,11 @@ namespace WPFApp
         }
         private FrameworkElement AssemblePage()
         {
-            if (finalWrapper is UniTilePanel)
+            if (finalWrapper is TilePanelNoScroller)
             {
                 if(tempUICollection.Count>4)
                 {
-                    var tilePanel = finalWrapper as UniTilePanel;
+                    var tilePanel = finalWrapper as TilePanelNoScroller;
                     tilePanel.ItemsSource = tempUICollection;
                     tilePanel.DataContext = finalWrapper.DataContext;
                     return tilePanel;
