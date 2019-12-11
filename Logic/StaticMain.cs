@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using XmlStructureComplat;
 using ExceptionManager;
 using System.IO;
+using System.Runtime.ExceptionServices;
 
 namespace Logic
 {
@@ -16,6 +17,15 @@ namespace Logic
         private static XmlTransactionsManager manager = new XmlTransactionsManager();      
         private static string settingsPath1 = $@"{Environment.CurrentDirectory}\settings.xml";
         private static string settingsPath = $@"{AppDomain.CurrentDomain.BaseDirectory}\settings.xml";
+        static StaticMain()
+        {
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+        }
+        [HandleProcessCorruptedStateExceptions]
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            (e.ExceptionObject as Exception).Show("UnhandledException(AppDomain.CurrentDomain)");
+        }
 
         public static Settings Settings { get; private set; } = new Settings();
         public static async Task<PS_ERIP> NextPage(object select)
