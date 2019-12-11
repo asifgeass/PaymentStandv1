@@ -7,6 +7,7 @@ using System.Drawing.Printing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -254,19 +255,28 @@ namespace Logic
                 ex.Log();
             }
         }
+        [HandleProcessCorruptedStateExceptions]
         private void Print(string[] textArg, Font font)
         {
-            int i = 0;            
-            PrintDocument printDocument = new PrintDocument();            
-            printDocument.PrintPage += (s, e) =>
+            try
             {
-                Ex.Log($"XmlTransactionsManager.Print.PrintPage():\n{textArg[i]}\n");
-                e.HasMorePages = i<1;
-                e.Graphics.DrawString(textArg[i], font, Brushes.Black, 0, 0);
-                i++;
-                Ex.Log($"XmlTransactionsManager.Print.PrintPage() END DONE");
-            };            
-            printDocument.Print();            
+                int i = 0;
+                PrintDocument printDocument = new PrintDocument();
+                printDocument.PrintPage +=  (s, e) =>
+                {
+                    Ex.Log($"XmlTransactionsManager.Print.PrintPage():\n{textArg[i]}\n");
+                    e.HasMorePages = i < 1;
+                    e.Graphics.DrawString(textArg[i], font, Brushes.Black, 0, 0);
+                    i++;
+                    Ex.Log($"XmlTransactionsManager.Print.PrintPage() END DONE");
+                };
+                printDocument.Print();
+            }
+            catch (Exception ex)
+            {
+                ex.Show($"XmlTransactionsManager.Print()");
+            }
+         
         }
         private static Font SetFont()
         {
