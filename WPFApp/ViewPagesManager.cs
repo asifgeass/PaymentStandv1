@@ -22,6 +22,7 @@ namespace WPFApp
         private Dictionary<int, string> headers = new Dictionary<int, string>();
         private FrameworkElement finalWrapper;
         #endregion
+
         #region Properties
         public FrameworkElement this[int index] => pages[index];
         public bool IsNextAvaible => this.Count - 1 > currentPageIndex;
@@ -53,6 +54,7 @@ namespace WPFApp
             => (currentPageIndex < 1 || currentPageIndex >= pages.Count || pages.Count == 0)
             ? null : pages[currentPageIndex - 1];
         #endregion
+
         #region Public Methods
         public FrameworkElement NextPage()
         {
@@ -102,8 +104,7 @@ namespace WPFApp
         public ViewPagesManager AddControl(FrameworkElement arg)
         {
             CheckEmpty();
-            tempUICollection.Add(arg);
-            
+            tempUICollection.Add(arg);            
             //Ex.Log($"{nameof(ViewPagesManager)}.{nameof(AddControl)}(): pages={pages.Count}; tempPanel.Children={tempPnl?.Children?.Count}");
             return this;
         }

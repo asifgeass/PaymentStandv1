@@ -140,6 +140,9 @@
     <Compile Include="Views\Elements\PaymentScreen.xaml.cs">
       <DependentUpon>PaymentScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Elements\TilePanelNoScroller.xaml.cs">
+      <DependentUpon>TilePanelNoScroller.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Elements\UniTilePanel.xaml.cs">
       <DependentUpon>UniTilePanel.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Elements\PaymentScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\TilePanelNoScroller.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
