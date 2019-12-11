@@ -247,7 +247,7 @@ namespace Logic
             {
                 Font font = SetFont();
                 var posReceipt = lastPOSTransaction.Response.ResponseReq.Receipt;
-                Print(new string[] { CheckRunOpResp, posReceipt }, font);
+                Print(new string[] { posReceipt, CheckRunOpResp }, font);
             }
             catch (Exception ex)
             {
@@ -256,17 +256,17 @@ namespace Logic
         }
         private void Print(string[] textArg, Font font)
         {
-            Ex.Log($"XmlTransactionsManager.Print():\n{textArg}\n");
-            PrintDocument printDocument = new PrintDocument();
-            int i = 0;
+            int i = 0;            
+            PrintDocument printDocument = new PrintDocument();            
             printDocument.PrintPage += (s, e) =>
             {
+                Ex.Log($"XmlTransactionsManager.Print.PrintPage():\n{textArg[i]}\n");
                 e.HasMorePages = i<1;
                 e.Graphics.DrawString(textArg[i], font, Brushes.Black, 0, 0);
                 i++;
+                Ex.Log($"XmlTransactionsManager.Print.PrintPage() END DONE");
             };            
-            printDocument.Print();
-            Ex.Log($"XmlTransactionsManager.Print() END DONE");
+            printDocument.Print();            
         }
         private static Font SetFont()
         {
