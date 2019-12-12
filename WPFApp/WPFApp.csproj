@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\GitVersionTask.5.1.2\build\GitVersionTask.props" Condition="Exists('..\packages\GitVersionTask.5.1.2\build\GitVersionTask.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,6 +16,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,14 +42,57 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.5.1\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLMaterialDesign\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLMaterialDesign\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.2.0.1367\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Ninject.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Ninject.7.2.0.1367\lib\net45\Prism.Ninject.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Rife.Keyboard">
+      <HintPath>..\ScreenKeyboard\WPFKeyboardChrisEvans\Rife.Keyboard.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.6.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -55,14 +101,131 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Controls.cs" />
+    <Compile Include="Helpers\ExamplesCodeBehind.cs" />
+    <Compile Include="Helpers\ExamplesCommented.xaml.cs">
+      <DependentUpon>ExamplesCommented.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HeaderHistory.cs" />
+    <Compile Include="Helpers\IdleDetector.cs" />
+    <Compile Include="Helpers\iItemsSource.cs" />
+    <Compile Include="Helpers\MatDesDarkerLightTheme.cs" />
+    <Compile Include="Helpers\ScrollAssist.cs" />
+    <Compile Include="Helpers\ValidatableBindableBase.cs" />
+    <Compile Include="ViewDynamicMenuBuilder.cs" />
+    <Compile Include="Interfaces\iControls.cs" />
+    <Compile Include="ViewModels\AttrValidationVM.cs" />
+    <Compile Include="ViewPagesManager.cs" />
+    <Compile Include="ViewModels\LookupVM.cs" />
+    <Compile Include="Views\Elements\ButtonTextblock.xaml.cs">
+      <DependentUpon>ButtonTextblock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\CardButton.xaml.cs">
+      <DependentUpon>CardButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DynamicMenuWindow.xaml.cs">
+      <DependentUpon>DynamicMenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\ColumnDivider.xaml.cs">
+      <DependentUpon>ColumnDivider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\HeaderPath.xaml.cs">
+      <DependentUpon>HeaderPath.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\HelperTextbox.xaml.cs">
+      <DependentUpon>HelperTextbox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\LeftPanelButtons.xaml.cs">
+      <DependentUpon>LeftPanelButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\PaymentScreen.xaml.cs">
+      <DependentUpon>PaymentScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\TilePanelNoScroller.xaml.cs">
+      <DependentUpon>TilePanelNoScroller.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\UniTilePanel.xaml.cs">
+      <DependentUpon>UniTilePanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Elements\IdleUserControl.xaml.cs">
+      <DependentUpon>IdleUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\DynamicMenuWindowViewModel.cs" />
+    <Compile Include="ViewModels\TestWindowViewModel.cs" />
+    <Page Include="AssemblyStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\ExamplesCommented.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\ButtonTextblock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\CardButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\ColumnDivider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\HeaderPath.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\HelperTextbox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\LeftPanelButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\PaymentScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\TilePanelNoScroller.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\UniTilePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\IdleUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\ControlsStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FormAround.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\FormAround.xaml.cs">
+      <DependentUpon>FormAround.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\DynamicMenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Style\ValidationErrorTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -81,17 +244,57 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ExceptionManager\ExceptionManager\ExceptionManager.csproj">
+      <Project>{3ac1a6db-15c0-4a53-943c-947a5e020c81}</Project>
+      <Name>ExceptionManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logic\Logic.csproj">
-      <Project>{F0636A56-60B2-4633-9343-565C8E1E16B4}</Project>
+      <Project>{f0636a56-60b2-4633-9343-565c8e1e16b4}</Project>
       <Name>Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScreenKeyboard\ScreenKeyboard.csproj">
+      <Project>{bb79a539-debb-4fa3-b337-2bcf16a24719}</Project>
+      <Name>ScreenKeyboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XmlStructureComplat\XmlStructureComplat.csproj">
+      <Project>{60fd15bd-f34a-4cfe-a2e3-af6243e61f97}</Project>
+      <Name>XmlStructureComplat</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_chip1.png" />
+    <Resource Include="Resources\POS_ContactlessBlack.png" />
+    <Resource Include="Resources\POS_side.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\true_png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_bottom2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_side2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\POS_contactless3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\GitVersionTask.5.1.2\build\GitVersionTask.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.1.2\build\GitVersionTask.props'))" />
+    <Error Condition="!Exists('..\packages\GitVersionTask.5.1.2\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GitVersionTask.5.1.2\build\GitVersionTask.targets'))" />
+  </Target>
+  <Import Project="..\packages\GitVersionTask.5.1.2\build\GitVersionTask.targets" Condition="Exists('..\packages\GitVersionTask.5.1.2\build\GitVersionTask.targets')" />
 </Project>

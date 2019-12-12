@@ -1,3 +1,18 @@
+- RunOpREsp->ConfReq:
+PayRecord copy (delete attrecords and check)
+PayRecord.ConfirmCode=1
+(only need)
+PayRecord.PaymentID
+PayRecord.Date
+PayRecord.KioskReceipt
+PayRecord.
+
+
+Manager.NextPage()
+{
+	FillData();
+	Next();
+}
 атрибут с:
 edit=1 поле ввода
 edit=0 перебросить введеное ранее значение
@@ -6,7 +21,8 @@ view=0 не показывать атрибут
 view=1 показывать атрибут
 -------------------------------------
 1)
-if(GetPayListType=1)
+if(PayRecord.Count > 1)
+if(PayRecord.GetPayListType=1)
 if(PayRecord.View=1 || null)
 if(PayRecord.AttrRecord==null || (PayRecord.AttrRecord.View==0) )
 {

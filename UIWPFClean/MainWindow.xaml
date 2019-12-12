@@ -1,0 +1,30 @@
+﻿<Window x:Class="UIWPFClean.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        xmlns:local="clr-namespace:UIWPFClean"
+        xmlns:screenkeyboard="clr-namespace:ScreenKeyboard;assembly=ScreenKeyboard"
+        xmlns:main="clr-namespace:WPFApp.Views.Elements;assembly=WPFApp"
+        mc:Ignorable="d"
+        TextElement.FontWeight="Regular"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Title="MainWindow" Height="782" Width="800" >
+
+
+    <!--<local:DefaultWindowContent/>-->
+    <!--<local:FormAround/>-->
+    <ScrollViewer>
+        
+        <ContentControl>
+            <main:PaymentScreen/>
+        </ContentControl>
+        
+    </ScrollViewer>    
+
+</Window>

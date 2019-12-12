@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="UIWPFClean.UnigridColumns"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UIWPFClean"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <ScrollViewer Name="scroller"
+			  VerticalScrollBarVisibility="Auto"
+			  PanningMode="VerticalOnly"
+			  CanContentScroll="True"
+			  >
+        <ItemsControl x:Name="StreamsItemsControl" ItemsSource="{Binding UIControls}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Name="uniGrid1">
+                        <UniformGrid.Style>
+                            <Style TargetType="UniformGrid">
+                                <Setter Property="Columns" Value="1"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ComputedVerticalScrollBarVisibility,
+							ElementName=scroller}" Value="Visible">
+                                        <Setter Property="Columns" Value="2"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </UniformGrid.Style>
+                    </UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </ScrollViewer>
+    
+</UserControl>
