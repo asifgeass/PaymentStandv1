@@ -19,6 +19,12 @@
 
     <!--<local:DefaultWindowContent/>-->
     <!--<local:FormAround/>-->
-    <main:PaymentScreen/>
+    <ScrollViewer>
+        
+        <ContentControl>
+            <main:PaymentScreen/>
+        </ContentControl>
+        
+    </ScrollViewer>    
 
 </Window>

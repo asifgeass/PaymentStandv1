@@ -63,17 +63,14 @@
                             <RowDefinition Height="20*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*" x:Name="LeftColumn"/>
-                                <ColumnDefinition Width="100*" x:Name="ContentColumn"/>
-                                <ColumnDefinition Width="5*" x:Name="RightColumn"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*" x:Name="LeftColumn"/>
+                            <ColumnDefinition Width="100*" x:Name="ContentColumn"/>
+                            <ColumnDefinition Width="5*" x:Name="RightColumn"/>
+                        </Grid.ColumnDefinitions>
 
-                            <ContentControl Grid.Column="1" Name="ContentContainer" />
+                        <ContentControl Grid.Column="1" Grid.Row="1" Name="ContentContainer" />
 
-                        </Grid>
                     </Grid>
 
                 </ScrollViewer>
