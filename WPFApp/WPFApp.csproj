@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Helpers\HeaderHistory.cs" />
     <Compile Include="Helpers\IdleDetector.cs" />
+    <Compile Include="Helpers\iItemsSource.cs" />
     <Compile Include="Helpers\MatDesDarkerLightTheme.cs" />
     <Compile Include="Helpers\ScrollAssist.cs" />
     <Compile Include="Helpers\ValidatableBindableBase.cs" />

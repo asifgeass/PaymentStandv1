@@ -70,14 +70,14 @@ namespace WPFApp
         #region Navigation Pages
         private void NextPage(object param = null)
         {
-            Ex.Log($"DynamicMenuBuilder.{nameof(NextPage)}(): {views.IsNextAvaible};");
+            Ex.Log($"DynamicMenuBuilder.NextPage(): {views.IsNextAvaible};");
             if (views.IsNextAvaible)
             {
-                if (views.NextHeader != null)
-                {
-                    var header = vmodel.HeaderHistory.Add(views.NextHeader);
-                    vmodel.LabelCurrent = header.CurrentHeader;
-                }
+                //if (views.NextHeader != null)
+                //{
+                //    var header = vmodel.HeaderHistory.Add(views.NextHeader);
+                //    vmodel.LabelCurrent = header.CurrentHeader;
+                //}
                 SetWindow(views.NextPage());
             }
             else
@@ -113,25 +113,19 @@ namespace WPFApp
 
         private void PrevPage()
         {
-            Ex.Log($"DynamicMenuBuilder.{nameof(PrevPage)}(): {views.IsPrevAvaible};");
+            Ex.Log($"DynamicMenuBuilder.PrevPage(): {views.IsPrevAvaible};");
             if (views.IsPrevAvaible)
             {
-                if(views.PrevHeader != null)
-                {
-                    vmodel.HeaderHistory.BackTo(views.PrevHeader, true);
-                    vmodel.LabelCurrent = vmodel.HeaderHistory.CurrentHeader;
-                }                
+                //if(views.PrevHeader != null)
+                //{
+                //    vmodel.HeaderHistory.BackTo(views.PrevHeader, true);
+                //    vmodel.LabelCurrent = vmodel.HeaderHistory.CurrentHeader;
+                //}                
                 //vmodel.LabelCurrent = views.PrevHeader ?? vmodel.LabelCurrent;
                 SetWindow(views.PrevPage());
             }
             else
             {
-                var gplt = vmodel.Responce?.ResponseReq?.PayRecord?.FirstOrDefault()?.GetPayListType;
-                if (gplt != null && gplt == "0")
-                {
-                    //vmodel.HomePageCommand.Execute();
-                }
-                /*else*/
                 if (vmodel.BackUserCommand.CanExecute())
                 {
                     isLastPrevPage = true;
@@ -139,9 +133,12 @@ namespace WPFApp
                 }
             }
         }
-        private void SetWindow(UIElement argElement)
+        private void SetWindow(UIElement argElement, double marginArg=10)
         {
             around.ContentControls = argElement;
+            var margin = new GridLength(marginArg, GridUnitType.Star);
+            around.LeftColumn.Width = margin;
+            around.RightColumn.Width = margin;
             window.Content = around;
         }
         #endregion
@@ -205,7 +202,7 @@ namespace WPFApp
             if (paylist.Count > 1)
             {
                 //views.NewPage(new UniTilePanel());
-                views.NewPage(new TilePanelNoScroller());
+                views.NewPage().SetContainer(new TilePanelNoScroller());
                 foreach (var payrec in paylist)
                 {
                     var cardButton = Controls.ButtonCard(payrec.Name);
@@ -241,12 +238,14 @@ namespace WPFApp
                     if (selectedLookup == null) { continue; }
                     int index = vmodel.PayrecToSend.AttrRecord.FindIndex(x => x == attr);
                     //views.NewPage(new UniTilePanel());
-                    views.NewPage(new TilePanelNoScroller());
+                    views.NewPage();
+                    views.AddControl(Controls.LabelHeader(attr.Lookup));
+                    views.SetHeader($"{attr.Lookup}");
+                    //views.SetHeader($"{preheader} / {attr.Lookup}");
+                    views.SetContainer(new TilePanelNoScroller());
                     LookupVM childVM = vmodel.GetNewLookupVM();
                     childVM.Lookup = selectedLookup;
                     views.AddDataContext(childVM);
-                    //views.SetHeader($"{preheader} / {attr.Lookup}");
-                    views.SetHeader($"{attr.Lookup}");
                     var lookItems = selectedLookup.Item;
                     lookItems.ForEach(arg =>
                     {
@@ -383,13 +382,13 @@ namespace WPFApp
             views.AddControl(new TextBlock()); //отступ
             var button = Controls.ButtonAccept("Продолжить");
             //views.SetHeader($"{payrec.GroupRecord?.Name} / {payrec.Name}");
-            views.SetHeader($"Реквизиты");
+            //views.SetHeader($"Реквизиты");
             button.ButtonControl.Command = vmodel.NextPageAttrValidateCommand;
             if (payrec.GetPayListType == "0")
             {
                 button.Text = "Оплатить";
                 button.ButtonControl.Command = vmodel.NextPagePayValidateCommand;
-                views.SetHeader($"Подтверждение платежа");
+                //views.SetHeader($"Подтверждение платежа");
                 Ex.Log("========== ОПЛАТИТЬ КНОПКА ПОСТРОЕНА =============");
             }
             views.AddControl(button);
@@ -469,7 +468,7 @@ namespace WPFApp
         private void OnWaitingPayment()
         {
             var screen = Controls.PayScreen();
-            this.SetWindow(screen);
+            this.SetWindow(screen, 3);
         }
         private void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -479,8 +478,9 @@ namespace WPFApp
                 bar.IsIndeterminate = true;
                 bar.Value = 0;
                 bar.Style = loadingBarStyle;
-                bar.Height = 50;
-                bar.Width = 50;
+                bar.Height = 100;
+                bar.Width = 100;
+                bar.BorderThickness = new Thickness(10);
                 SetWindow(bar);
             }
             if (e.PropertyName == nameof(vmodel.Exception))
@@ -549,7 +549,7 @@ namespace WPFApp
             panel.Children.Add(new TextBlock());
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
-            SetWindow(panel);
+            SetWindow(panel, 15);
             idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
         }
         private void BuildErrorPage(PS_ERIP rootResponse)
