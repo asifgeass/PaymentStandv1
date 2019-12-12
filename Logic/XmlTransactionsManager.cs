@@ -430,7 +430,6 @@ namespace Logic
         private async Task<PS_ERIP> GetEripResponse(string request)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetEripResponse)}()");
-            //request = $"<?xml version=\"1.0\" encoding=\"UTF - 8\"?>\n{request}";
             XDocument responseXml = await PostGetHTTP.PostStringGetXML(StaticMain.Settings.ERIP.url, request);
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
             return response;
@@ -438,7 +437,8 @@ namespace Logic
         private async Task<string> Serialize(MDOM_POS PosArg)
         {
             XDocument reqXml = await SerializationUtil.Serialize(PosArg);
-            string request = $"xml={reqXml?.ToString()}";
+            //string request = $"xml={reqXml?.ToString()}";
+            string request = reqXml?.ToString();
             return request;
         }
         private async Task<string> Serialize(PS_ERIP argReq)
