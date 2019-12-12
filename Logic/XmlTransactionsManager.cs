@@ -242,6 +242,7 @@ namespace Logic
         #endregion
 
         #region Printing
+        [HandleProcessCorruptedStateExceptions]
         private async Task RunPrintingsAnotherThread(string CheckRunOpResp)
         {
             try
@@ -252,7 +253,7 @@ namespace Logic
             }
             catch (Exception ex)
             {
-                ex.Log();
+                ex.Show("RunPrintingsAnotherThread");
             }
         }
         [HandleProcessCorruptedStateExceptions]
@@ -280,22 +281,22 @@ namespace Logic
         }
         private static Font SetFont()
         {
-            Font font = new Font(FontFamily.GenericMonospace, 8.25f);
+            Font font = new Font(FontFamily.GenericMonospace, 8f);
             //Font font = new Font("Courier", 8.25f, FontStyle.Bold);
-            string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
-            Ex.TryLog(() =>
-            {
-                bool isFile = File.Exists(path);
-                if (isFile)
-                {
-                    PrivateFontCollection privateFontCollection = new PrivateFontCollection();
-                    privateFontCollection.AddFontFile(path);
-                    var fontFam = privateFontCollection.Families.FirstOrDefault();
-                    font = new Font(fontFam, 8.25f);
-                }
-                else Ex.Log($"Font file not found={path}");
-            });
-            Ex.Log($"XmlTransactionsManager.SetFont(): {font}");
+            //string path = $@"{AppDomain.CurrentDomain.BaseDirectory}\Resources\Courier.ttf";
+            //Ex.TryLog(() =>
+            //{
+            //    bool isFile = File.Exists(path);
+            //    if (isFile)
+            //    {
+            //        PrivateFontCollection privateFontCollection = new PrivateFontCollection();
+            //        privateFontCollection.AddFontFile(path);
+            //        var fontFam = privateFontCollection.Families.FirstOrDefault();
+            //        font = new Font(fontFam, 8.25f);
+            //    }
+            //    else Ex.Log($"Font file not found={path}");
+            //});
+            //Ex.Log($"XmlTransactionsManager.SetFont(): {font}");
             return font;
         }
         private string AssembleRunOpResponCheck(PS_ERIP responArg)
@@ -429,6 +430,7 @@ namespace Logic
         private async Task<PS_ERIP> GetEripResponse(string request)
         {
             Ex.Log($"{nameof(XmlTransactionsManager)}.{nameof(GetEripResponse)}()");
+            //request = $"<?xml version=\"1.0\" encoding=\"UTF - 8\"?>\n{request}";
             XDocument responseXml = await PostGetHTTP.PostStringGetXML(StaticMain.Settings.ERIP.url, request);
             PS_ERIP response = await SerializationUtil.Deserialize<PS_ERIP>(responseXml);
             return response;
