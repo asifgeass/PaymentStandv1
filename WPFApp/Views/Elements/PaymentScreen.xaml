@@ -23,7 +23,7 @@
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100*"/>
-                    <RowDefinition Height="9*" MinHeight="30"/>
+                    <RowDefinition Height="8*" MinHeight="20"/>
                     <RowDefinition Height="100*"/>
                 </Grid.RowDefinitions>
 
@@ -58,7 +58,7 @@
             <Image Grid.Column="2"
                     Source="pack://application:,,,/WPFApp;component/Resources/POS_bottom2.png" 
                        Stretch="Uniform" 
-                   MaxHeight="950"
+                   MaxHeight="920"
                        Opacity="0.85"                       
                        />
         </Grid>
