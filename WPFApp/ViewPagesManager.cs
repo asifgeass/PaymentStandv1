@@ -247,7 +247,7 @@ namespace WPFApp
             var stack = new StackPanel();
             stack.VerticalAlignment = VerticalAlignment.Center;
             Ex.Log($"ViewPagesManager.WrapIntoStackPanel() DataContext={tempDataContext}");
-            stack.DataContext = tempDataContext;
+            if(tempDataContext != null) stack.DataContext = tempDataContext;
             tempUICollection.ForEach(x => stack.Children.Add(x));
             return stack;
         }
