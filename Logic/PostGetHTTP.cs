@@ -29,7 +29,7 @@ namespace Logic
             timings = new StringBuilder();
             try
             {
-                requestXml = $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\"\n{requestXml}";
+                requestXml = $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{requestXml}"; //standalone='yes'
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
                 byte[] bytes;
                 bytes = Encoding.UTF8.GetBytes(requestXml);
