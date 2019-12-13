@@ -27,15 +27,15 @@ namespace WPFApp.Views
         public DynamicMenuWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.WindowState = WindowState.Normal;
-            this.Topmost = false;
-#else
             this.WindowState = WindowState.Maximized;
             this.WindowStyle = WindowStyle.None;
             this.Topmost = true;
+            //this.Topmost = false;
+#if DEBUG
+            this.WindowState = WindowState.Normal;
+            this.WindowStyle = WindowStyle.SingleBorderWindow;
+            this.Topmost = false;
 #endif
-            //this.WindowState = WindowState.Maximized;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

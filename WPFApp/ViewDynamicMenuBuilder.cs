@@ -435,12 +435,26 @@ namespace WPFApp
         private async Task OnStartBackgroundWorker()
         {            
             PrinterChecking().RunAsync();
-            await Task.Delay(2000);
+            await Task.Delay(1000);
             try
             {
                 Process.Start("explorer");
+                Repeat(500, 10, () => window.Focus()).RunAsync();
+                //window.WindowState = WindowState.Maximized;
+                //window.Topmost = true;
+
+                Ex.Log("explorer launched");
             }
             catch (Exception ex){ ex.Log("at Process.Start(explorer)"); }
+        }
+
+        private static async Task Repeat(int interval, int count, Action  func)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                func();
+                await Task.Delay(interval);
+            }
         }
 
         private async Task PrinterChecking()
@@ -602,7 +616,7 @@ namespace WPFApp
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel, 15);
-            idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
+            idleDetector.ChangeIdleTimeRestart(idleTimeAfterPayment * 2);
         }
         private void BuildErrorPage(PS_ERIP rootResponse)
         {
@@ -622,7 +636,7 @@ namespace WPFApp
             var control = Controls.CentralLabelBorder(str);
             control.Foreground = Brushes.DarkRed;
             var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
-            idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
+            idleDetector.ChangeIdleTimeRestart(idleTimeAfterPayment * 2);
             views.AddControl(pic);
             views.AddControl(control);
             var button = Controls.ButtonAccept("Вернуться");
