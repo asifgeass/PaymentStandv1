@@ -111,9 +111,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FormAround.xaml.cs">
-      <DependentUpon>FormAround.xaml</DependentUpon>
-    </Compile>
     <Compile Include="KeyboardSnackbar.xaml.cs">
       <DependentUpon>KeyboardSnackbar.xaml</DependentUpon>
     </Compile>
@@ -140,10 +137,6 @@
     <Page Include="Drawer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FormAround.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="KeyboardSnackbar.xaml">
       <SubType>Designer</SubType>
