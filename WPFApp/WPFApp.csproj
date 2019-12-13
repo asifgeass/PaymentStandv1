@@ -82,6 +82,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -141,6 +142,9 @@
     <Compile Include="Views\Elements\PaymentScreen.xaml.cs">
       <DependentUpon>PaymentScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Elements\PrinterMessage.xaml.cs">
+      <DependentUpon>PrinterMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Elements\TilePanelNoScroller.xaml.cs">
       <DependentUpon>TilePanelNoScroller.xaml</DependentUpon>
     </Compile>
@@ -188,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Elements\PaymentScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Elements\PrinterMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

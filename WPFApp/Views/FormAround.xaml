@@ -12,72 +12,79 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="900" d:DesignWidth="1600">
 
-    <materialDesign:DialogHost Name="dialogHostTop" CloseOnClickAway="True" materialDesign:DialogHost.DialogOpened="DialogHostTop_DialogOpened">
+    <materialDesign:DialogHost Name="dialohHostPrinter">
         <materialDesign:DialogHost.DialogContent>
-            <el:IdleUserControl x:Name="DialogContent"/>
+            <el:PrinterMessage x:Name="printerMessage"/>
         </materialDesign:DialogHost.DialogContent>
+        
+        <materialDesign:DialogHost Name="dialogHostTop" CloseOnClickAway="True" 
+                                   materialDesign:DialogHost.DialogOpened="DialogHostTop_DialogOpened">
+            <materialDesign:DialogHost.DialogContent>
+                <el:IdleUserControl x:Name="DialogContent"/>
+            </materialDesign:DialogHost.DialogContent>
 
-        <materialDesign:DrawerHost Name="drawer1"
+            <materialDesign:DrawerHost Name="drawer1"
               HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch" >
 
-            <materialDesign:DrawerHost.TopDrawerContent>
-                <materialDesign:ColorZone Mode="PrimaryDark"  >
-                    <keyb:FullKeyboard x:Name="TopFullKeyboard"/>
-                </materialDesign:ColorZone>
-            </materialDesign:DrawerHost.TopDrawerContent>
+                <materialDesign:DrawerHost.TopDrawerContent>
+                    <materialDesign:ColorZone Mode="PrimaryDark"  >
+                        <keyb:FullKeyboard x:Name="TopFullKeyboard"/>
+                    </materialDesign:ColorZone>
+                </materialDesign:DrawerHost.TopDrawerContent>
 
-            <materialDesign:DrawerHost.BottomDrawerContent>
-                <materialDesign:ColorZone Mode="PrimaryDark" >
-                    <keyb:FullKeyboard x:Name="BotFullKeyboard"/>
-                </materialDesign:ColorZone>
-            </materialDesign:DrawerHost.BottomDrawerContent>
+                <materialDesign:DrawerHost.BottomDrawerContent>
+                    <materialDesign:ColorZone Mode="PrimaryDark" >
+                        <keyb:FullKeyboard x:Name="BotFullKeyboard"/>
+                    </materialDesign:ColorZone>
+                </materialDesign:DrawerHost.BottomDrawerContent>
 
-            <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="10*" MinHeight="70"/>
-                    <RowDefinition Height="100*"/>
-                    <RowDefinition Height="0"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" MinWidth="80"/>
-                    <ColumnDefinition Width="100*"/>
-                    <ColumnDefinition Width="0"/>
-                </Grid.ColumnDefinitions>
+                <Grid x:Name="MainGrid" ManipulationBoundaryFeedback="MainGrid_ManipulationBoundaryFeedback">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*" MinHeight="70"/>
+                        <RowDefinition Height="100*"/>
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*" MinWidth="80"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
 
-                <el:HeaderPath x:Name="HeaderPath" Grid.Row="0" Grid.Column="1" />
+                    <el:HeaderPath x:Name="HeaderPath" Grid.Row="0" Grid.Column="1" />
 
-                <el:LeftPanelButtons Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="LeftPanelButtons" />
+                    <el:LeftPanelButtons Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" x:Name="LeftPanelButtons" />
 
-                <!--<ContentControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />-->
+                    <!--<ContentControl Grid.Row="1" Grid.Column="1" Name="ContentContainer" />-->
 
-                <ScrollViewer Name="scroller"
+                    <ScrollViewer Name="scroller"
                       Grid.Row="1" 
                       Grid.Column="1"                       
                       PanningMode="VerticalOnly"
                       CanContentScroll="True"
                       >
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="20*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*" x:Name="LeftColumn"/>
-                            <ColumnDefinition Width="100*" x:Name="ContentColumn"/>
-                            <ColumnDefinition Width="5*" x:Name="RightColumn"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="20*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*" x:Name="LeftColumn"/>
+                                <ColumnDefinition Width="100*" x:Name="ContentColumn"/>
+                                <ColumnDefinition Width="5*" x:Name="RightColumn"/>
+                            </Grid.ColumnDefinitions>
 
-                        <ContentControl Grid.Column="1" Grid.Row="1" Name="ContentContainer" />
+                            <ContentControl Grid.Column="1" Grid.Row="1" Name="ContentContainer" />
 
-                    </Grid>
+                        </Grid>
 
-                </ScrollViewer>
-            </Grid>
+                    </ScrollViewer>
+                </Grid>
 
-        </materialDesign:DrawerHost>
+            </materialDesign:DrawerHost>
 
+        </materialDesign:DialogHost>
     </materialDesign:DialogHost>    
 
 </UserControl>

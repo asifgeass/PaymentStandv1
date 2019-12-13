@@ -18,6 +18,7 @@ using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
 using WPFApp.Views.Elements;
+using System.Printing;
 
 namespace WPFApp
 {
@@ -59,6 +60,7 @@ namespace WPFApp
                 idleDetector = new IdleDetector(window, idleTimedefault);
                 idleDetector.IsIdle += OnIdle;
                 Ex.Log($"ViewDynamicMenuBuilder ctor() end success");
+                this.OnStartBackgroundWorker().RunAsync();
             }
             catch (Exception ex)
             {
@@ -430,6 +432,56 @@ namespace WPFApp
         #endregion
 
         #region other stuff
+        private async Task OnStartBackgroundWorker()
+        {            
+            PrinterChecking().RunAsync();
+            await Task.Delay(2000);
+            try
+            {
+                Process.Start("explorer");
+            }
+            catch (Exception ex){ ex.Log("at Process.Start(explorer)"); }
+        }
+
+        private async Task PrinterChecking()
+        {
+            while (true)
+            {
+                //try
+                //{
+                var printServer = new LocalPrintServer();
+                PrintQueue queue = printServer.DefaultPrintQueue;
+                var status = queue.QueueStatus;
+                var mesBox = around.dialohHostPrinter;
+                //var notCritical = PrintQueueStatus.OutputBinFull || PrintQueueStatus.Printing;
+                bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
+                bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
+                if (isOK)
+                {
+                    if (mesBox.IsOpen) mesBox.IsOpen = false;
+                }
+                else //isFail
+                {
+                    SetMsg(queue, "Извините, возникли проблемы с принтером\nОплата не доступна.");
+                    if (status == PrintQueueStatus.None) SetMsg(queue, "Извините, ожидание принтера...\n Оплата не доступна.");
+                    if (status.HasFlag(PrintQueueStatus.PaperOut)) SetMsg(queue, "Извините, в принтере закончилась бумага.\nОплата не доступна.");
+                    if (!mesBox.IsOpen) mesBox.IsOpen = true;
+                }
+                await Task.Delay(3000);
+                //}
+                //catch (Exception ex){ ex.Log(); }
+            }
+        }
+
+        private void SetMsg(PrintQueue queue, string msg)
+        {
+            string stat = "Статус: ";
+            string name = "Имя принтера: ";
+            around.printerMessage.text1msg.Text = msg;
+            around.printerMessage.text2stat.Text = $"{stat}{queue.QueueStatus}";
+            around.printerMessage.text3name.Text = $"{name}{queue.FullName}";
+        }
+
         private async void OnIdle(object sender, EventArgs arg)
         {
             try
