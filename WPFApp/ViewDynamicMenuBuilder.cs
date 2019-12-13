@@ -447,29 +447,29 @@ namespace WPFApp
         {
             while (true)
             {
-                //try
-                //{
-                var printServer = new LocalPrintServer();
-                PrintQueue queue = printServer.DefaultPrintQueue;
-                var status = queue.QueueStatus;
-                var mesBox = around.dialohHostPrinter;
-                //var notCritical = PrintQueueStatus.OutputBinFull || PrintQueueStatus.Printing;
-                bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
-                bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
-                if (isOK)
+                try
                 {
-                    if (mesBox.IsOpen) mesBox.IsOpen = false;
+                    var printServer = new LocalPrintServer();
+                    PrintQueue queue = printServer.DefaultPrintQueue;
+                    var status = queue.QueueStatus;
+                    var mesBox = around.dialohHostPrinter;
+                    //var notCritical = PrintQueueStatus.OutputBinFull || PrintQueueStatus.Printing;
+                    bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
+                    bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
+                    if (isOK)
+                    {
+                        if (mesBox.IsOpen) mesBox.IsOpen = false;
+                    }
+                    else //isFail
+                    {
+                        SetMsg(queue, "Извините, возникли проблемы с принтером\nОплата не доступна.");
+                        if (status == PrintQueueStatus.None) SetMsg(queue, "Извините, ожидание принтера...\n Оплата не доступна.");
+                        if (status.HasFlag(PrintQueueStatus.PaperOut)) SetMsg(queue, "Извините, в принтере закончилась бумага.\nОплата не доступна.");
+                        if (!mesBox.IsOpen) mesBox.IsOpen = true;
+                    }
+                    await Task.Delay(3000);
                 }
-                else //isFail
-                {
-                    SetMsg(queue, "Извините, возникли проблемы с принтером\nОплата не доступна.");
-                    if (status == PrintQueueStatus.None) SetMsg(queue, "Извините, ожидание принтера...\n Оплата не доступна.");
-                    if (status.HasFlag(PrintQueueStatus.PaperOut)) SetMsg(queue, "Извините, в принтере закончилась бумага.\nОплата не доступна.");
-                    if (!mesBox.IsOpen) mesBox.IsOpen = true;
-                }
-                await Task.Delay(3000);
-                //}
-                //catch (Exception ex){ ex.Log(); }
+                catch (Exception ex) { ex.Log(); }
             }
         }
 

@@ -16,6 +16,8 @@ using System.ComponentModel;
 using System.Collections;
 using FluentValidation.Results;
 using WPFApp.Helpers;
+using System.Printing;
+using System.Runtime.ExceptionServices;
 
 namespace WPFApp.ViewModels
 {
@@ -139,10 +141,28 @@ namespace WPFApp.ViewModels
             {
                 await NextPage(param);
             }
-            //else
-            //{
-            //    SummaPayrecToSend = SummaPayrecToSend;
-            //}
+        }
+        [HandleProcessCorruptedStateExceptions]
+        private  bool PrinterCheck()
+        {
+            try
+            {
+                var printServer = new LocalPrintServer();
+                PrintQueue queue = printServer.DefaultPrintQueue;
+                var status = queue.QueueStatus;
+                bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
+                bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
+                if (isOK)
+                {
+                    return true;
+                }
+                else //isFail
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex) { ex.Log(); return false; }
         }
         private async Task NextPagePayValidate(object param = null)
         {
@@ -153,6 +173,8 @@ namespace WPFApp.ViewModels
                 var valResult = payValidator.Validate(PayrecToSend);
                 isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));
             });
+            var printerCheck = await Task.Run(() => PrinterCheck());
+            isValid = printerCheck ? isValid : false;
             if (isValid)
             {
                 IsCustomLoadingScreen = true;
