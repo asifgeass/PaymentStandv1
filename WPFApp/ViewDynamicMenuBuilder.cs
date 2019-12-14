@@ -435,26 +435,14 @@ namespace WPFApp
         private async Task OnStartBackgroundWorker()
         {            
             PrinterChecking().RunAsync();
-            await Task.Delay(1000);
-            try
-            {
-                Process.Start("explorer");
-                Repeat(500, 10, () => window.Focus()).RunAsync();
-                //window.WindowState = WindowState.Maximized;
-                //window.Topmost = true;
-
-                Ex.Log("explorer launched");
-            }
-            catch (Exception ex){ ex.Log("at Process.Start(explorer)"); }
-        }
-
-        private static async Task Repeat(int interval, int count, Action  func)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                func();
-                await Task.Delay(interval);
-            }
+            //await Task.Delay(500);
+            //try
+            //{
+            //    Process.Start("explorer");
+            //    Repeat(500, 3, () => window.Focus()).RunAsync();
+            //    Ex.Log("explorer launched");
+            //}
+            //catch (Exception ex) { ex.Log("at Process.Start(explorer)"); }
         }
 
         private async Task PrinterChecking()
@@ -463,23 +451,17 @@ namespace WPFApp
             {
                 try
                 {
-                    var printServer = new LocalPrintServer();
-                    PrintQueue queue = printServer.DefaultPrintQueue;
-                    var status = queue.QueueStatus;
+                    bool isPrintReady = await Printing.IsPrinterReady();
                     var mesBox = around.dialohHostPrinter;
-                    //var notCritical = PrintQueueStatus.OutputBinFull || PrintQueueStatus.Printing;
-                    bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
-                    bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
-                    if (isOK)
+                    if (isPrintReady)
                     {
                         if (mesBox.IsOpen) mesBox.IsOpen = false;
                     }
                     else //isFail
                     {
-                        SetMsg(queue, "Извините, возникли проблемы с принтером\nОплата не доступна.");
-                        if (status == PrintQueueStatus.None) SetMsg(queue, "Извините, ожидание принтера...\n Оплата не доступна.");
-                        if (status.HasFlag(PrintQueueStatus.PaperOut)) SetMsg(queue, "Извините, в принтере закончилась бумага.\nОплата не доступна.");
+                        SetMsg(Printing.PrinterQueue, Printing.Message);
                         if (!mesBox.IsOpen) mesBox.IsOpen = true;
+                        window.Focus();
                     }
                     await Task.Delay(3000);
                 }
@@ -487,6 +469,19 @@ namespace WPFApp
             }
         }
 
+        private async Task CheckAllPrinters()
+        {
+
+        }
+
+        private static async Task Repeat(int interval, int count, Action func)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                func();
+                await Task.Delay(interval);
+            }
+        }
         private void SetMsg(PrintQueue queue, string msg)
         {
             string stat = "Статус: ";

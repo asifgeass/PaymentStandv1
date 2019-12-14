@@ -133,6 +133,7 @@
     <Compile Include="Helpers\MatDesDarkerLightTheme.cs" />
     <Compile Include="Helpers\ScrollAssist.cs" />
     <Compile Include="Helpers\ValidatableBindableBase.cs" />
+    <Compile Include="Printing.cs" />
     <Compile Include="ViewDynamicMenuBuilder.cs" />
     <Compile Include="Interfaces\iControls.cs" />
     <Compile Include="ViewModels\AttrValidationVM.cs" />
