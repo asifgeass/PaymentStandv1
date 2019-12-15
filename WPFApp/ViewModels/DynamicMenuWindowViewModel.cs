@@ -142,28 +142,6 @@ namespace WPFApp.ViewModels
                 await NextPage(param);
             }
         }
-        [HandleProcessCorruptedStateExceptions]
-        private  bool PrinterCheck()
-        {
-            try
-            {
-                var printServer = new LocalPrintServer();
-                PrintQueue queue = printServer.DefaultPrintQueue;
-                var status = queue.QueueStatus;
-                bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
-                bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
-                if (isOK)
-                {
-                    return true;
-                }
-                else //isFail
-                {
-                    return false;
-                }
-
-            }
-            catch (Exception ex) { ex.Log(); return false; }
-        }
         private async Task NextPagePayValidate(object param = null)
         {
             Ex.Log($"VM: {nameof(NextPagePayValidate)}(): validate sum={PayrecToSend.Summa};");
@@ -173,8 +151,8 @@ namespace WPFApp.ViewModels
                 var valResult = payValidator.Validate(PayrecToSend);
                 isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));
             });
-            var printerCheck = await Task.Run(() => PrinterCheck());
-            isValid = printerCheck ? isValid : false;
+            bool isPrintReady = await Printing.IsPrinterReady();
+            isValid = isPrintReady ? isValid : false;
             if (isValid)
             {
                 IsCustomLoadingScreen = true;
