@@ -483,7 +483,7 @@ namespace WPFApp
             string stat = "Статус: ";
             string name = "Имя принтера: ";
             around.printerMessage.text1msg.Text = msg;
-            around.printerMessage.text2stat.Text = $"{stat}{queue?.QueueStatus}";
+            around.printerMessage.text2stat.Text = $"{stat}{queue?.QueueStatus}".Replace("TonerLow", "IsReady");
             around.printerMessage.text3name.Text = $"{name}{queue?.FullName}";
         }
 
