@@ -32,11 +32,12 @@ namespace WPFApp
                 var printServer = new LocalPrintServer();
                 PrintQueue queue = printServer.DefaultPrintQueue;
                 var status = queue.QueueStatus;
-                
+
+                bool isNameOK = queue.FullName.ToLower().Contains(PrinterName.ToLower());
                 //var notCritical = PrintQueueStatus.OutputBinFull || PrintQueueStatus.Printing;
                 bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
                 bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
-                isOK = isOK && queue.FullName.ToLower().Contains(PrinterName.ToLower());
+                isOK = isOK && isNameOK;
                 if (isOK)
                 {
                     return true;
