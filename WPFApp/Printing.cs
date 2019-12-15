@@ -23,6 +23,7 @@ namespace WPFApp
         private static readonly string PrinterName = "vkp80";
         public static string Message { get; set; } = "Ожидание статуса принтера...\n Извините, оплата не доступна.";
         public static PrintQueue PrinterQueue { get; set; }
+        public static int? CountPrinters { get; set; }
 
         [HandleProcessCorruptedStateExceptions]
         public static async Task<bool> IsPrinterReady()
@@ -75,10 +76,17 @@ namespace WPFApp
                     return;
                 }
 
-                Ex.Log($"Printing.CheckWhyNone(): VKP80 count={GetAllPrinters()?.Count}");
+                var all = GetAllPrinters();
+                CountPrinters = all?.Count;
+                Ex.Log($"Printing.CheckWhyNone(): VKP80 count={CountPrinters}");
                 PrintQueue one = GetOneFromAllPrinters();
                 if (one == null)
-                { Ex.Log($"Printing.CheckWhyNone(): All founded VKP80 has = State.None;"); return; }
+                {
+                    PrintQueue queuValue = all?.FirstOrDefault();
+                    Ex.Log($"Printing.CheckWhyNone(): All founded VKP80 has = State.None;");
+                    SetMsg(queuValue, $"Ожидание статуса принтера...\n(Количество={CountPrinters})\n\nИзвините, оплата не доступна.");
+                    return; 
+                }
                 Ex.Log($"Printing.CheckWhyNone(): SET DEFAULT PRINTER = {one.FullName}");
                 PrintersDll.SetDefaultPrinter(one.FullName);
             }
