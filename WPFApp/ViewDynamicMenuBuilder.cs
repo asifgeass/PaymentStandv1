@@ -483,8 +483,8 @@ namespace WPFApp
             string stat = "Статус: ";
             string name = "Имя принтера: ";
             around.printerMessage.text1msg.Text = msg;
-            around.printerMessage.text2stat.Text = $"{stat}{queue.QueueStatus}";
-            around.printerMessage.text3name.Text = $"{name}{queue.FullName}";
+            around.printerMessage.text2stat.Text = $"{stat}{queue?.QueueStatus}";
+            around.printerMessage.text3name.Text = $"{name}{queue?.FullName}";
         }
 
         private async void OnIdle(object sender, EventArgs arg)
