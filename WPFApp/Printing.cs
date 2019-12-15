@@ -36,6 +36,7 @@ namespace WPFApp
                 //var notCritical = PrintQueueStatus.OutputBinFull || PrintQueueStatus.Printing;
                 bool isFail = status == PrintQueueStatus.None || status.HasFlag(PrintQueueStatus.PaperOut);
                 bool isOK = status == PrintQueueStatus.TonerLow || (status.HasFlag(PrintQueueStatus.TonerLow) && !isFail);
+                isOK = isOK && queue.FullName.ToLower().Contains(PrinterName.ToLower());
                 if (isOK)
                 {
                     return true;
