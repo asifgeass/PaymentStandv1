@@ -55,12 +55,12 @@ namespace WPFApp
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += OnReponseCome;
                 vmodel.PropertyChanged += OnPropertyChanged;
-                vmodel.PaymentWaitingEvent += OnWaitingPayment;                            
+                vmodel.PaymentWaitingEvent += OnWaitingPayment;
+                this.OnStartBackgroundWorker().RunAsync();
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
                 idleDetector = new IdleDetector(window, idleTimedefault);
                 idleDetector.IsIdle += OnIdle;
                 Ex.Log($"ViewDynamicMenuBuilder ctor() end success");
-                this.OnStartBackgroundWorker().RunAsync();
             }
             catch (Exception ex)
             {
@@ -433,16 +433,12 @@ namespace WPFApp
 
         #region other stuff
         private async Task OnStartBackgroundWorker()
-        {            
+        {
+            SetMsg(Printing.PrinterQueue, Printing.Message);
+            if (!around.dialohHostPrinter.IsOpen) around.dialohHostPrinter.IsOpen = true;
+            Printing.LaunchMonitor();
+            await Task.Delay(500);
             PrinterChecking().RunAsync();
-            //await Task.Delay(500);
-            //try
-            //{
-            //    Process.Start("explorer");
-            //    Repeat(500, 3, () => window.Focus()).RunAsync();
-            //    Ex.Log("explorer launched");
-            //}
-            //catch (Exception ex) { ex.Log("at Process.Start(explorer)"); }
         }
 
         private async Task PrinterChecking()

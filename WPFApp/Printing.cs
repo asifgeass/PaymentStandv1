@@ -21,7 +21,7 @@ namespace WPFApp
     {
         private static readonly string MonitorName = "CePrnStatusMonitor";
         private static readonly string PrinterName = "vkp80";
-        public static string Message { get; set; }
+        public static string Message { get; set; } = "Ожидание статуса принтера...\n Извините, оплата не доступна.";
         public static PrintQueue PrinterQueue { get; set; }
 
         [HandleProcessCorruptedStateExceptions]
@@ -45,7 +45,7 @@ namespace WPFApp
                     SetMsg(queue, "Извините, возникли проблемы с принтером\nОплата не доступна.");
                     if (status == PrintQueueStatus.None)
                     {
-                        SetMsg(queue, "Ожидание принтера...\n Извините, оплата не доступна.");
+                        SetMsg(queue, "Ожидание статуса принтера...\n Извините, оплата не доступна.");
                         CheckWhyNone().RunAsync();
                     }
                     if (status.HasFlag(PrintQueueStatus.PaperOut)) SetMsg(queue, "Извините, в принтере закончилась бумага.\nОплата не доступна.");
@@ -84,9 +84,16 @@ namespace WPFApp
             { ex.Log(); }
         }
 
-        private static void LaunchMonitor()
+        public static void LaunchMonitor()
         {
-            Process.Start(MonitorName);
+            try
+            {
+                Process.Start(MonitorName);
+            }
+            catch (Exception ex)
+            {
+                ex.Log();                
+            }            
         }
 
         private static List<PrintQueue> GetAllPrinters()
