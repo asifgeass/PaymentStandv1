@@ -102,9 +102,25 @@ namespace Logic
                     responCopy.ClearAttrRecords();
                     return responCopy;
                 }
-                if (PosRespon.ResponseReq.ErrorCode != 0) //ОШИБКА POS
+                if ((PosRespon.ResponseReq.ErrorCode != null && PosRespon.ResponseReq.ErrorCode != 0) || PosRespon.ResponseReq.ErrorCode == null) //ОШИБКА POS
                 {
                     var eripResponPosError = Factory.PsEripCreate().SetPosError(PosRespon);
+                    if (PosRespon.ResponseReq.ErrorCode == 16)
+                    {
+                        Task.Run(() =>
+                        {
+                            try
+                            {
+                                Font font = SetFont();
+                                var posReceipt = PosRespon.ResponseReq.Receipt;
+                                Print(posReceipt, font);
+                            }
+                            catch (Exception ex)
+                            {
+                                ex.Show("Print if ErroCode=16");
+                            }
+                        }).RunAsync();
+                    }
                     return eripResponPosError;
                 }
             }
@@ -279,6 +295,26 @@ namespace Logic
             }
          
         }
+
+        [HandleProcessCorruptedStateExceptions]
+        private void Print(string textArg, Font font)
+        {
+            try
+            {
+                PrintDocument printDocument = new PrintDocument();
+                printDocument.PrintPage += (s, e) =>
+                {
+                    Ex.Log($"XmlTransactionsManager.Print.PrintPage():\n{textArg}\n");
+                    e.Graphics.DrawString(textArg, font, Brushes.Black, 0, 0);
+                    Ex.Log($"XmlTransactionsManager.Print.PrintPage() END DONE");
+                };
+                printDocument.Print();
+            }
+            catch (Exception ex)
+            {
+                ex.Show($"XmlTransactionsManager.Print(solo)");
+            }
+        }
         private static Font SetFont()
         {
             Font font = new Font(FontFamily.GenericMonospace, 8f);
@@ -379,7 +415,7 @@ namespace Logic
                 string str = $"Error: {nameof(HandleCancelPOSResponse)}(): MDOM_POS response = null";
                 Ex.Throw(str);
             }
-            if (arg?.ResponseReq?.ErrorCode != 0)
+            if (arg?.ResponseReq?.ErrorCode != null || arg?.ResponseReq?.ErrorCode != 0)
             {
                 string str = $"Error: {nameof(HandleCancelPOSResponse)}(): ErrorCode={arg.ResponseReq.ErrorCode}; ErrorText={arg.ResponseReq.ErrorText}";
                 Ex.Throw(str);

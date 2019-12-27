@@ -10,7 +10,7 @@ namespace XmlStructureComplat
     [XmlRoot]
     public class Root2QA
     {
-        public int ErrorCode { get; set; }
+        public int? ErrorCode { get; set; }
         public string ErrorText { get; set; }
         public string PayDate { get; set; }
         public string TerminalId { get; set; }
@@ -23,5 +23,7 @@ namespace XmlStructureComplat
         public string TypePAN { get; set; }
         public string Receipt { get; set; }
         public string Lang { get; set; }
+        public string ResponseCode { get; set; }
+        public string VisualHostResponse { get; set; }
     }
 }

@@ -622,7 +622,10 @@ namespace WPFApp
             if (resp.ErrorCode == 128) //timeout 30s
             { str = $"Истекло время ожидания карты.(Код 128)\nОплата не была произведена.\n\nПопробуйте еще раз."; }
             if (resp.ErrorCode == 16) //canceled by user
-            { str = $"Отменено пользователем.(Код 16)\nОплата не была произведена."; }
+            {
+                //string tempStr = $"Отменено пользователем.(Код 16)\nОплата не была произведена.";
+                str = $"Ошибка {resp.KioskError}: {resp.ErrorText}";
+            }
             Ex.Info($"View Error Page building: response={rootResponse.EnumType} displayed to user:\n{str}");
             var control = Controls.CentralLabelBorder(str);
             control.Foreground = Brushes.DarkRed;
