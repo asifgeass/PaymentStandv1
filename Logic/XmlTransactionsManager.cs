@@ -415,7 +415,7 @@ namespace Logic
                 string str = $"Error: {nameof(HandleCancelPOSResponse)}(): MDOM_POS response = null";
                 Ex.Throw(str);
             }
-            if (arg?.ResponseReq?.ErrorCode != null || arg?.ResponseReq?.ErrorCode != 0)
+            if (arg?.ResponseReq?.ErrorCode != null && arg?.ResponseReq?.ErrorCode != 0)
             {
                 string str = $"Error: {nameof(HandleCancelPOSResponse)}(): ErrorCode={arg.ResponseReq.ErrorCode}; ErrorText={arg.ResponseReq.ErrorText}";
                 Ex.Throw(str);
