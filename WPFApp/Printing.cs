@@ -52,6 +52,7 @@ namespace WPFApp
                         CheckWhyNone().RunAsync();
                     }
                     if (status.HasFlag(PrintQueueStatus.PaperOut)) SetMsg(queue, "Извините, в принтере закончилась бумага.\nОплата не доступна.");
+                    else if (status.HasFlag(PrintQueueStatus.PaperJam)) SetMsg(queue, "Извините, в принтере зажевало бумагу.\nОплата не доступна.");
                     return false;
                 }
             }
