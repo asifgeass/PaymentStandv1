@@ -151,7 +151,7 @@ namespace WPFApp.ViewModels
                 var valResult = payValidator.Validate(PayrecToSend);
                 isValid = ValidateResult(valResult, nameof(PayrecToSend.Summa));
             });
-            bool isPrintReady = await Printing.IsPrinterReady();
+            bool isPrintReady = IsPrintDisabledCheck || await Printing.IsPrinterReady();
             isValid = isPrintReady ? isValid : false;
             if (isValid)
             {
@@ -212,6 +212,7 @@ namespace WPFApp.ViewModels
         }
         public List<AttrValidationVM> AttrVMList { get; private set; } = new List<AttrValidationVM>();
         public List<LookupVM> LookupVMList { get; private set; } = new List<LookupVM>();
+        public bool IsPrintDisabledCheck => Logic.StaticMain.Settings.App.DisablePrintCheck == "1";
         public object SelectedXmlArg
         {
             get => _selectedXmlArg;

@@ -447,7 +447,7 @@ namespace WPFApp
             {
                 try
                 {
-                    bool isPrintReady = await Printing.IsPrinterReady();
+                    bool isPrintReady = vmodel.IsPrintDisabledCheck || await Printing.IsPrinterReady();                    
                     var mesBox = around.dialohHostPrinter;
                     if (isPrintReady)
                     {
