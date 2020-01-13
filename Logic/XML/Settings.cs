@@ -11,6 +11,7 @@ namespace Logic
     [XmlRoot]
     public class Settings
     {
+        public AppSettings App { get; set; } = new AppSettings();
         public EripComplatSettings ERIP { get; set; } = new EripComplatSettings();
         public TerminalSettings Terminal_MdomPOS { get; set; } = new TerminalSettings();
     }
