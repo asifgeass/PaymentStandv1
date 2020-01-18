@@ -449,17 +449,21 @@ namespace WPFApp
                 {
                     bool isPrintReady = vmodel.IsPrintDisabledCheck || await Printing.IsPrinterReady();                    
                     var mesBox = around.dialohHostPrinter;
+                    short delay = 0;
                     if (isPrintReady)
                     {
                         if (mesBox.IsOpen) mesBox.IsOpen = false;
+                        delay = 3000;
                     }
                     else //isFail
                     {
                         SetMsg(Printing.PrinterQueue, Printing.Message);
                         if (!mesBox.IsOpen) mesBox.IsOpen = true;
-                        window.Focus();
+                        //window.Focus();
+                        around.printerMessage.Focus();
+                        delay = 1300;
                     }
-                    await Task.Delay(3000);
+                    await Task.Delay(delay);
                 }
                 catch (Exception ex) { ex.Log(); }
             }
