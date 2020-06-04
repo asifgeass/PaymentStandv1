@@ -23,14 +23,19 @@ namespace Logic
 
         public static event Action<string> WriteTextBox = (x) => { };
         public static event Action<XDocument> XmlReceived = (x) => { };
+        private static bool isFirstTime = true;
+        
 
         public static async Task<XDocument> PostStringGetXML(string destinationUrl, string requestXml)
         {
+            //webClient.Proxy = WebRequest.GetSystemWebProxy();
             timings = new StringBuilder();
             try
             {
                 requestXml = $"xml=<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n{requestXml}"; //standalone='yes'
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(destinationUrl);
+                if(isFirstTime) request.Proxy = WebRequest.GetSystemWebProxy();
+                isFirstTime = false;
                 byte[] bytes;
                 bytes = Encoding.UTF8.GetBytes(requestXml);
                 request.ContentType = "text/xml; encoding='utf-8'";

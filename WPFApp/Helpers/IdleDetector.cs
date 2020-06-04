@@ -35,6 +35,14 @@ namespace WPFApp
             _idleTime = newIdleTime; 
             _activityTimer.Interval = TimeSpan.FromSeconds(newIdleTime);
         }
+        public void ChangeIdleTimeRestart(int newIdleTime)
+        {
+            Debug.WriteLine($"Idle Time CHANGED={newIdleTime}");
+            _activityTimer.Stop();
+            _idleTime = newIdleTime;
+            _activityTimer.Interval = TimeSpan.FromSeconds(newIdleTime);
+            _activityTimer.Start();
+        }
 
         public int TimerCurrent => _idleTime;
 

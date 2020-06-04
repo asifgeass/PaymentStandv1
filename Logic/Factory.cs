@@ -113,8 +113,13 @@ namespace Logic
                 { eripArg.EnumType = EripQAType.POSCancelResponse; }
                 if (arg.EnumType == PosQAType.UnknownResponse)
                 { eripArg.EnumType = EripQAType.UnknownResponse; }
-                eripArg.ResponseReq.ErrorCode = arg.ResponseReq.ErrorCode;
+                eripArg.ResponseReq.ErrorCode = arg.ResponseReq.ErrorCode ?? 0;
                 eripArg.ResponseReq.ErrorText = arg.ResponseReq.ErrorText;
+                if (arg.ResponseReq.ErrorCode == 16)
+                {
+                    eripArg.ResponseReq.KioskError = arg.ResponseReq.ResponseCode ?? eripArg.ResponseReq.KioskError;
+                    eripArg.ResponseReq.ErrorText = arg.ResponseReq.VisualHostResponse ?? eripArg.ResponseReq.ErrorText;
+                }
             }
             catch (Exception ex) { ex.Log(); }
             return eripArg;

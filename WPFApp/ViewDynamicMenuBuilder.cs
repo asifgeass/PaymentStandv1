@@ -18,6 +18,7 @@ using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Input;
 using WPFApp.Views.Elements;
+using System.Printing;
 
 namespace WPFApp
 {
@@ -54,7 +55,8 @@ namespace WPFApp
                 vmodel = window.DataContext as DynamicMenuWindowViewModel;
                 vmodel.NewResponseComeEvent += OnReponseCome;
                 vmodel.PropertyChanged += OnPropertyChanged;
-                vmodel.PaymentWaitingEvent += OnWaitingPayment;                            
+                vmodel.PaymentWaitingEvent += OnWaitingPayment;
+                this.OnStartBackgroundWorker().RunAsync();
                 loadingBarStyle = Application.Current.FindResource("MaterialDesignCircularProgressBar") as Style;
                 idleDetector = new IdleDetector(window, idleTimedefault);
                 idleDetector.IsIdle += OnIdle;
@@ -430,6 +432,65 @@ namespace WPFApp
         #endregion
 
         #region other stuff
+        private async Task OnStartBackgroundWorker()
+        {
+            SetMsg(Printing.PrinterQueue, Printing.Message);
+            if (!around.dialohHostPrinter.IsOpen) around.dialohHostPrinter.IsOpen = true;
+            Printing.LaunchMonitor();
+            await Task.Delay(500);
+            PrinterChecking().RunAsync();
+        }
+
+        private async Task PrinterChecking()
+        {
+            while (true)
+            {
+                try
+                {
+                    bool isPrintReady = vmodel.IsPrintDisabledCheck || await Printing.IsPrinterReady();                    
+                    var mesBox = around.dialohHostPrinter;
+                    short delay = 0;
+                    if (isPrintReady)
+                    {
+                        if (mesBox.IsOpen) mesBox.IsOpen = false;
+                        delay = 3000;
+                    }
+                    else //isFail
+                    {
+                        SetMsg(Printing.PrinterQueue, Printing.Message);
+                        if (!mesBox.IsOpen) mesBox.IsOpen = true;
+                        //window.Focus();
+                        around.printerMessage.Focus();
+                        delay = 1300;
+                    }
+                    await Task.Delay(delay);
+                }
+                catch (Exception ex) { ex.Log(); }
+            }
+        }
+
+        private async Task CheckAllPrinters()
+        {
+
+        }
+
+        private static async Task Repeat(int interval, int count, Action func)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                func();
+                await Task.Delay(interval);
+            }
+        }
+        private void SetMsg(PrintQueue queue, string msg)
+        {
+            string stat = "Статус: ";
+            string name = "Имя принтера: ";
+            around.printerMessage.text1msg.Text = msg;
+            around.printerMessage.text2stat.Text = $"{stat}{queue?.QueueStatus}".Replace("TonerLow", "IsReady");
+            around.printerMessage.text3name.Text = $"{name}{queue?.FullName}";
+        }
+
         private async void OnIdle(object sender, EventArgs arg)
         {
             try
@@ -550,7 +611,7 @@ namespace WPFApp
             panel.Children.Add(new TextBlock());
             panel.Children.Add(button);
             SetWindow(panel, 15);
-            idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
+            idleDetector.ChangeIdleTimeRestart(idleTimeAfterPayment * 2);
         }
         private void BuildErrorPage(PS_ERIP rootResponse)
         {
@@ -565,12 +626,15 @@ namespace WPFApp
             if (resp.ErrorCode == 128) //timeout 30s
             { str = $"Истекло время ожидания карты.(Код 128)\nОплата не была произведена.\n\nПопробуйте еще раз."; }
             if (resp.ErrorCode == 16) //canceled by user
-            { str = $"Отменено пользователем.(Код 16)\nОплата не была произведена."; }
+            {
+                //string tempStr = $"Отменено пользователем.(Код 16)\nОплата не была произведена.";
+                str = $"Ошибка {resp.KioskError}: {resp.ErrorText}";
+            }
             Ex.Info($"View Error Page building: response={rootResponse.EnumType} displayed to user:\n{str}");
             var control = Controls.CentralLabelBorder(str);
             control.Foreground = Brushes.DarkRed;
             var pic = Controls.IconBig(PackIconKind.CloseCircleOutline, Brushes.Red);
-            idleDetector.ChangeIdleTime(idleTimeAfterPayment * 2);
+            idleDetector.ChangeIdleTimeRestart(idleTimeAfterPayment * 2);
             views.AddControl(pic);
             views.AddControl(control);
             var button = Controls.ButtonAccept("Вернуться");
