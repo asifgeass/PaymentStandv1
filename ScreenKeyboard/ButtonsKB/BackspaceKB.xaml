@@ -8,13 +8,15 @@
              xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid>
-        <RepeatButton Padding="0" Click="RepeatButton_Click" Interval="1" Focusable="False">
-            <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
-                                         Foreground="Yellow" Name="IconControl"/>
-
-        </RepeatButton>
+        
         <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" x:Name="KeyButton1" Visibility="Hidden">
+            <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+                <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
+                                         Foreground="Yellow" Name="IconControl"/>                
+            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>            
         </kbrd:VirtualKeyKeyboardKey>
+        
     </Grid>
 </UserControl>
