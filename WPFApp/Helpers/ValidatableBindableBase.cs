@@ -13,10 +13,6 @@ namespace WPFApp
 {
     public class ValidatableBindableBase : BindableBase, INotifyDataErrorInfo
     {
-        //public void Validate()
-        //{
-
-        //}
         public bool ValidateResult(ValidationResult valResult, [CallerMemberName] string propName = null)
         {
             if (valResult == null) return true;

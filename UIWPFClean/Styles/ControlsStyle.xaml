@@ -105,7 +105,7 @@
         <Setter Property="FontSize" Value="{StaticResource globalFontSize}" />
     </Style>
 
-    <Style x:Key="KeyboardDrawerHost" TargetType="{x:Type materialDesign:DrawerHost}">
+    <Style TargetType="{x:Type materialDesign:DrawerHost}">
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
         <Setter Property="ClipToBounds" Value="True" />
         <Setter Property="LeftDrawerBackground" Value="{DynamicResource MaterialDesignPaper}" />

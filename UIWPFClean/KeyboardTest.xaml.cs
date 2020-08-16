@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -15,23 +14,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ScreenKeyboard.ButtonsKB
+namespace UIWPFClean
 {
     /// <summary>
-    /// Interaction logic for BackspaceKB.xaml
+    /// Interaction logic for KeyboardTest.xaml
     /// </summary>
-    public partial class BackspaceKB : UserControl
+    public partial class KeyboardTest : UserControl
     {
-        public BackspaceKB()
+        public KeyboardTest()
         {
             InitializeComponent();
         }
 
-        public PackIcon Icon => this.IconControl;
-
-        private void RepeatButton_Click(object sender, RoutedEventArgs e)
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            KeyButton1.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            DrawerHost.OpenDrawerCommand.Execute(Dock.Bottom, sender as TextBox);
         }
     }
 }

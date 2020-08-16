@@ -114,6 +114,9 @@
     <Compile Include="KeyboardSnackbar.xaml.cs">
       <DependentUpon>KeyboardSnackbar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KeyboardTest.xaml.cs">
+      <DependentUpon>KeyboardTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="PaymentScreen.xaml.cs">
       <DependentUpon>PaymentScreen.xaml</DependentUpon>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="KeyboardSnackbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="KeyboardTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

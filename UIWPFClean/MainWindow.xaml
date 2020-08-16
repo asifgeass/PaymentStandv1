@@ -22,7 +22,7 @@
     <ScrollViewer>
         
         <ContentControl>
-            <main:PaymentScreen/>
+            <local:KeyboardTest/>
         </ContentControl>
         
     </ScrollViewer>    
