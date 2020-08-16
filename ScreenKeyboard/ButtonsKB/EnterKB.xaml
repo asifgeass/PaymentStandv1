@@ -16,6 +16,12 @@
                                          Foreground="LawnGreen"
                                          />
             </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+            <kbrd:VirtualKeyKeyboardKey.ShiftedContent>
+                <materialDesign:PackIcon Kind="CheckBold" 
+                                         Height="auto" Width="auto" 
+                                         Foreground="LawnGreen"
+                                         />
+            </kbrd:VirtualKeyKeyboardKey.ShiftedContent>
         </kbrd:VirtualKeyKeyboardKey>
     </Grid>
 </UserControl>

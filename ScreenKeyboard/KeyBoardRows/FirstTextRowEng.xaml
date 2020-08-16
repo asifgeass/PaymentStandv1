@@ -24,16 +24,16 @@
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
 
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Q" UnshiftedText="Q" Grid.Column="1"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="W" UnshiftedText="W" Grid.Column="2"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="E" UnshiftedText="E" Grid.Column="3"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="R" UnshiftedText="R" Grid.Column="4"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="T" UnshiftedText="T" Grid.Column="5"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Y" UnshiftedText="Y" Grid.Column="6"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="U" UnshiftedText="U" Grid.Column="7"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="I" UnshiftedText="I" Grid.Column="8"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="O" UnshiftedText="O" Grid.Column="9"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="P" UnshiftedText="P" Grid.Column="10"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="q" UnshiftedText="q" ShiftedContent="Q" ShiftedUnicodeText="Q" Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="w" UnshiftedText="w" ShiftedContent="W" ShiftedUnicodeText="W" Grid.Column="2"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="e" UnshiftedText="e" ShiftedContent="E" ShiftedUnicodeText="E" Grid.Column="3"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="r" UnshiftedText="r" ShiftedContent="R" ShiftedUnicodeText="R" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="t" UnshiftedText="t" ShiftedContent="T" ShiftedUnicodeText="T" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="y" UnshiftedText="y" ShiftedContent="Y" ShiftedUnicodeText="Y" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="u" UnshiftedText="u" ShiftedContent="U" ShiftedUnicodeText="U" Grid.Column="7"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="i" UnshiftedText="i" ShiftedContent="I" ShiftedUnicodeText="I" Grid.Column="8"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="o" UnshiftedText="o" ShiftedContent="O" ShiftedUnicodeText="O" Grid.Column="9"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="p" UnshiftedText="p" ShiftedContent="P" ShiftedUnicodeText="P" Grid.Column="10"/>
     </Grid>
     
 </UserControl>

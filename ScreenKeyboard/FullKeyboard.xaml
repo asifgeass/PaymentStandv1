@@ -5,79 +5,81 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard"
              xmlns:row="clr-namespace:ScreenKeyboard.KeyboardRows"
-             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
+             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB" xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" Name="TextKBColumn"/>
-            <ColumnDefinition Width="0*" Name="NumericKBColumn"/>
-        </Grid.ColumnDefinitions>
-
-        <local:NumPadSolo Grid.Column="1"/>
-
-        <!--Text keyboard-->
-        <Grid Grid.Column="0">
+    <kbrd:Keyboard Focusable="False" >
+        <Grid >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="11*" Name="EngKBColumn"/>
-                <ColumnDefinition Width="0*" Name="RusKBColumn"/>
-                <ColumnDefinition Width="4*" Name="NumColumn"/>
+                <ColumnDefinition Width="1*" Name="TextKBColumn"/>
+                <ColumnDefinition Width="0*" Name="NumericKBColumn"/>
             </Grid.ColumnDefinitions>
 
-            <!--Eng keyboard-->
+            <local:NumPadSolo Grid.Column="1"/>
+
+            <!--Text keyboard-->
             <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0*" Name="RowNumberEng"/>
-                    <RowDefinition Height="1*" Name="RowEng1"/>
-                    <RowDefinition Height="1*" Name="RowEng2"/>
-                    <RowDefinition Height="1*" Name="RowEng3"/>
-                    <RowDefinition Height="1*" Name="RowControlsEng"/>
-                </Grid.RowDefinitions>
-                
-                <row:FirstTextRowEng Grid.Row="1"/>
-                <row:SecondTextRowEng Grid.Row="2"/>
-                <row:ThirdTextRowEng Grid.Row="3"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="11*" Name="EngKBColumn"/>
+                    <ColumnDefinition Width="0*" Name="RusKBColumn"/>
+                    <ColumnDefinition Width="4*" Name="NumColumn"/>
+                </Grid.ColumnDefinitions>
 
-                <!--Control Row (eng kb)-->
-                <Grid Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="8*" />
-                    </Grid.ColumnDefinitions>
-                    <button:LangRuEnKB x:Name="LangEngKB" Grid.Column="0"/>
-                    <row:ControlRowNoAccept Grid.Column="1"/>
-                </Grid>
-            </Grid>
-            
-            <!--Rus keyboard-->
-            <Grid Grid.Column="1">                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0*" Name="RowNumberRus"/>
-                    <RowDefinition Height="1*" Name="RowRus1"/>
-                    <RowDefinition Height="1*" Name="RowRus2"/>
-                    <RowDefinition Height="1*" Name="RowRus3"/>
-                    <RowDefinition Height="1*" Name="RowControlsRus"/>
-                </Grid.RowDefinitions>
-                
-                <row:FirstTextRowRus Grid.Row="1"/>
-                <row:SecondTextRowRus Grid.Row="2"/>
-                <row:ThirdTextRowRus Grid.Row="3"/>
-                
-                <!--Control Row (rus kb)-->
-                <Grid Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="8*" />
-                    </Grid.ColumnDefinitions>
-                    <button:LangRuEnKB x:Name="LangRusKB" Grid.Column="0"/>
-                    <row:ControlRowNoAccept Grid.Column="1"/>
+                <!--Eng keyboard-->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0*" Name="RowNumberEng"/>
+                        <RowDefinition Height="1*" Name="RowEng1"/>
+                        <RowDefinition Height="1*" Name="RowEng2"/>
+                        <RowDefinition Height="1*" Name="RowEng3"/>
+                        <RowDefinition Height="1*" Name="RowControlsEng"/>
+                    </Grid.RowDefinitions>
+
+                    <row:FirstTextRowEng Grid.Row="1"/>
+                    <row:SecondTextRowEng Grid.Row="2"/>
+                    <row:ThirdTextRowEng Grid.Row="3"/>
+
+                    <!--Control Row (eng kb)-->
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8*" />
+                        </Grid.ColumnDefinitions>
+                        <button:LangRuEnKB x:Name="LangEngKB" Grid.Column="0"/>
+                        <row:ControlRowNoAccept Grid.Column="1"/>
+                    </Grid>
                 </Grid>
 
-            </Grid>
+                <!--Rus keyboard-->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0*" Name="RowNumberRus"/>
+                        <RowDefinition Height="1*" Name="RowRus1"/>
+                        <RowDefinition Height="1*" Name="RowRus2"/>
+                        <RowDefinition Height="1*" Name="RowRus3"/>
+                        <RowDefinition Height="1*" Name="RowControlsRus"/>
+                    </Grid.RowDefinitions>
 
-            <row:NumPadEnterDel Grid.Column="2" />
+                    <row:FirstTextRowRus Grid.Row="1"/>
+                    <row:SecondTextRowRus Grid.Row="2"/>
+                    <row:ThirdTextRowRus Grid.Row="3"/>
+
+                    <!--Control Row (rus kb)-->
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="8*" />
+                        </Grid.ColumnDefinitions>
+                        <button:LangRuEnKB x:Name="LangRusKB" Grid.Column="0"/>
+                        <row:ControlRowNoAccept Grid.Column="1"/>
+                    </Grid>
+
+                </Grid>
+
+                <row:NumPadEnterDel Grid.Column="2" />
+            </Grid>
         </Grid>
-    </Grid>
+    </kbrd:Keyboard>
 
 </UserControl>

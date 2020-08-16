@@ -8,6 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="РУ-EN" Grid.Column="1" Name="LangKey" Click="LangKey_Click"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="РУ-EN" ShiftedContent="РУ-EN" Grid.Column="1" Name="LangKey" Click="LangKey_Click"/>
     </Grid>
 </UserControl>

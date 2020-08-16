@@ -23,14 +23,14 @@
             <ColumnDefinition Width="0.33*"/>
         </Grid.ColumnDefinitions>
 
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="A" UnshiftedText="A" Grid.Column="1"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="S" UnshiftedText="S" Grid.Column="2"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="D" UnshiftedText="D" Grid.Column="3"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="F" UnshiftedText="F" Grid.Column="4"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="G" UnshiftedText="G" Grid.Column="5"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="H" UnshiftedText="H" Grid.Column="6"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="J" UnshiftedText="J" Grid.Column="7"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="K" UnshiftedText="K" Grid.Column="8"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="L" UnshiftedText="L" Grid.Column="9"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="a" UnshiftedText="a" ShiftedContent="A" ShiftedUnicodeText="A" Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="s" UnshiftedText="s" ShiftedContent="S" ShiftedUnicodeText="S" Grid.Column="2"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="d" UnshiftedText="d" ShiftedContent="D" ShiftedUnicodeText="D" Grid.Column="3"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="f" UnshiftedText="f" ShiftedContent="F" ShiftedUnicodeText="F" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="g" UnshiftedText="g" ShiftedContent="G" ShiftedUnicodeText="G" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="h" UnshiftedText="h" ShiftedContent="H" ShiftedUnicodeText="H" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="j" UnshiftedText="j" ShiftedContent="J" ShiftedUnicodeText="J" Grid.Column="7"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="k" UnshiftedText="k" ShiftedContent="K" ShiftedUnicodeText="K" Grid.Column="8"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="l" UnshiftedText="l" ShiftedContent="L" ShiftedUnicodeText="L" Grid.Column="9"/>
     </Grid>
 </UserControl>

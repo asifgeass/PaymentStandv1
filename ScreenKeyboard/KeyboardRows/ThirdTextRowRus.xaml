@@ -4,35 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
-             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
+             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard" xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0.9*"/>
+            <ColumnDefinition Width="1*"/> <!--1-->
+            <ColumnDefinition Width="1*"/> <!--2-->
+            <ColumnDefinition Width="1*"/> <!-- 3 -->
+            <ColumnDefinition Width="1*"/> <!--4-->
+            <ColumnDefinition Width="1*"/> <!--5-->
+            <ColumnDefinition Width="1*"/> <!--6-->
+            <ColumnDefinition Width="1*"/> <!--7-->
+            <ColumnDefinition Width="1*"/> <!--8-->
+            <ColumnDefinition Width="1*"/> <!--9-->
+            <ColumnDefinition Width="1*"/> <!--10-->
+            <ColumnDefinition Width="0.9*"/> <!--11-->
+            <ColumnDefinition Width="0*"/> <!--12-->
         </Grid.ColumnDefinitions>
 
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Я" UnshiftedText="Я" Grid.Column="1"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ч" UnshiftedText="Ч" Grid.Column="2"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="С" UnshiftedText="С" Grid.Column="3"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="М" UnshiftedText="М" Grid.Column="4"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="И" UnshiftedText="И" Grid.Column="5"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Т" UnshiftedText="Т" Grid.Column="6"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ь" UnshiftedText="Ь" Grid.Column="7"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Б" UnshiftedText="Б" Grid.Column="8"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ю" UnshiftedText="Ю" Grid.Column="9"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Ъ" UnshiftedText="Ъ" Grid.Column="10"/>
+        <button:ShiftKB Grid.Column="0"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="я" UnshiftedText="я" ShiftedContent="Я" ShiftedUnicodeText="Я" Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="ч" UnshiftedText="ч" ShiftedContent="Ч" ShiftedUnicodeText="Ч" Grid.Column="2"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="с" UnshiftedText="с" ShiftedContent="С" ShiftedUnicodeText="С" Grid.Column="3"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="м" UnshiftedText="м" ShiftedContent="М" ShiftedUnicodeText="М" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="и" UnshiftedText="и" ShiftedContent="И" ShiftedUnicodeText="И" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="т" UnshiftedText="т" ShiftedContent="Т" ShiftedUnicodeText="Т" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="ь" UnshiftedText="ь" ShiftedContent="Ь" ShiftedUnicodeText="Ь" Grid.Column="7"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="б" UnshiftedText="б" ShiftedContent="Б" ShiftedUnicodeText="Б" Grid.Column="8"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="ю" UnshiftedText="ю" ShiftedContent="Ю" ShiftedUnicodeText="Ю" Grid.Column="9"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="ъ" UnshiftedText="ъ" ShiftedContent="Ъ" ShiftedUnicodeText="Ъ" Grid.Column="10"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="+" UnshiftedText="+" ShiftedContent="+" ShiftedUnicodeText="+" Grid.Column="11"/>
     </Grid>
 </UserControl>

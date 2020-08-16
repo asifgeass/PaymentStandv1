@@ -1,5 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UIWPFClean
+namespace ScreenKeyboard.ButtonsKB
 {
     /// <summary>
-    /// Interaction logic for KeyboardTest.xaml
+    /// Interaction logic for ShiftKB.xaml
     /// </summary>
-    public partial class KeyboardTest : UserControl
+    public partial class ShiftKB : UserControl
     {
-        public KeyboardTest()
+        public ShiftKB()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            BotFullKeyboard.Height = 400;
-            DrawerHost.OpenDrawerCommand.Execute(Dock.Bottom, sender as TextBox);
         }
     }
 }

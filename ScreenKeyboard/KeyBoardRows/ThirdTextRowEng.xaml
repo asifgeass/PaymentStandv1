@@ -4,31 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ScreenKeyboard.KeyboardRows"
-             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard"
+             xmlns:button="clr-namespace:ScreenKeyboard.ButtonsKB"
+             xmlns:kbrd="clr-namespace:Rife.Keyboard;assembly=Rife.Keyboard" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.66*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="0.66*"/>
+            <ColumnDefinition Width="0.8*"/> <!-- 0 -->
+            <ColumnDefinition Width="1*"/> <!-- 1 -->
+            <ColumnDefinition Width="1*"/> <!-- 2 -->
+            <ColumnDefinition Width="1*"/> <!-- 3 -->
+            <ColumnDefinition Width="1*"/> <!-- 4 -->
+            <ColumnDefinition Width="1*"/> <!-- 5 -->
+            <ColumnDefinition Width="1*"/> <!-- 6 -->
+            <ColumnDefinition Width="1*"/> <!-- 7 -->
+            <ColumnDefinition Width="0.8*"/> <!-- 8 -->
+            <ColumnDefinition Width="0*"/> <!-- 9 -->
+            <ColumnDefinition Width="0*"/> <!-- 10 -->
+            <ColumnDefinition Width="0*"/> <!-- 11 -->
         </Grid.ColumnDefinitions>
 
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="Z" UnshiftedText="Z" Grid.Column="1"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="X" UnshiftedText="X" Grid.Column="2"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="C" UnshiftedText="C" Grid.Column="3"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="V" UnshiftedText="V" Grid.Column="4"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="B" UnshiftedText="B" Grid.Column="5"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="N" UnshiftedText="N" Grid.Column="6"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedContent="M" UnshiftedText="M" Grid.Column="7"/>
+        <button:ShiftKB Grid.Column="0"/>
+        <!--<kbrd:CapsKeyboardKey UnshiftedContent="CAPS" ShiftedContent="CAPS" ShiftOnCapsLock="True" Grid.Column="0"/>-->
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="z" UnshiftedText="z" ShiftedContent="Z" ShiftedUnicodeText="Z"  Grid.Column="1"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="x" UnshiftedText="x" ShiftedContent="X" ShiftedUnicodeText="X" Grid.Column="2"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="c" UnshiftedText="c" ShiftedContent="C" ShiftedUnicodeText="C" Grid.Column="3"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="v" UnshiftedText="v" ShiftedContent="V" ShiftedUnicodeText="V" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="b" UnshiftedText="b" ShiftedContent="B" ShiftedUnicodeText="B" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="n" UnshiftedText="n" ShiftedContent="N" ShiftedUnicodeText="N" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="m" UnshiftedText="m" ShiftedContent="M" ShiftedUnicodeText="M" Grid.Column="7"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedContent="+" UnshiftedText="+" ShiftedContent="+" ShiftedUnicodeText="+" Grid.Column="8"/>
+        <!--<kbrd:ShiftKeyboardKey UnshiftedContent="unShift" ShiftedContent="Shift"  Grid.Column="9"/>-->
     </Grid>
 </UserControl>

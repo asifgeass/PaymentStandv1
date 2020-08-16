@@ -93,6 +93,9 @@
     <Compile Include="ButtonsKB\LangRuEnKB.xaml.cs">
       <DependentUpon>LangRuEnKB.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ButtonsKB\ShiftKB.xaml.cs">
+      <DependentUpon>ShiftKB.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FullKeyboard.xaml.cs" />
     <Compile Include="FullKeyboardNoCaps.xaml.cs">
       <DependentUpon>FullKeyboardNoCaps.xaml</DependentUpon>
@@ -127,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ButtonsKB\LangRuEnKB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ButtonsKB\ShiftKB.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

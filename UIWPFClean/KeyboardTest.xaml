@@ -11,17 +11,18 @@
         
         <materialDesign:DrawerHost Name="drawer1"
               HorizontalAlignment="Stretch"
-              VerticalAlignment="Stretch" >
+              VerticalAlignment="Stretch" 
+                                   Focusable="False">
 
             <materialDesign:DrawerHost.TopDrawerContent>
                 <materialDesign:ColorZone Mode="PrimaryDark"  >
-                    <keyb:FullKeyboardNoCaps x:Name="TopFullKeyboard"/>
+                    <keyb:FullKeyboard x:Name="TopFullKeyboard"/>
                 </materialDesign:ColorZone>
             </materialDesign:DrawerHost.TopDrawerContent>
 
             <materialDesign:DrawerHost.BottomDrawerContent>
                 <materialDesign:ColorZone Mode="PrimaryDark" >
-                    <keyb:FullKeyboardNoCaps x:Name="BotFullKeyboard"/>
+                    <keyb:FullKeyboard x:Name="BotFullKeyboard" Focusable="False"/>
                 </materialDesign:ColorZone>
             </materialDesign:DrawerHost.BottomDrawerContent>
 

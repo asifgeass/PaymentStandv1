@@ -24,9 +24,9 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="1" UnshiftedText="1" Grid.Column="1"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="2" UnshiftedText="2" Grid.Column="2"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="3" UnshiftedText="3" Grid.Column="3"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="1" UnshiftedText="1" ShiftedContent="1" ShiftedUnicodeText="1" Grid.Column="1"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="2" UnshiftedText="2" ShiftedContent="2" ShiftedUnicodeText="2" Grid.Column="2"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="3" UnshiftedText="3" ShiftedContent="3" ShiftedUnicodeText="3" Grid.Column="3"/>
         </Grid>
 
         <Grid Grid.Row="2">
@@ -36,9 +36,9 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="4" UnshiftedText="4" Grid.Column="1"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="5" UnshiftedText="5" Grid.Column="2"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="6" UnshiftedText="6" Grid.Column="3"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="4" UnshiftedText="4" ShiftedContent="4" ShiftedUnicodeText="4" Grid.Column="1"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="5" UnshiftedText="5" ShiftedContent="5" ShiftedUnicodeText="5" Grid.Column="2"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="6" UnshiftedText="6" ShiftedContent="6" ShiftedUnicodeText="6" Grid.Column="3"/>
         </Grid>
 
         <Grid Grid.Row="3">
@@ -48,9 +48,9 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="7" UnshiftedText="7" Grid.Column="1"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="8" UnshiftedText="8" Grid.Column="2"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="9" UnshiftedText="9" Grid.Column="3"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="7" UnshiftedText="7" ShiftedContent="7" ShiftedUnicodeText="7" Grid.Column="1"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="8" UnshiftedText="8" ShiftedContent="8" ShiftedUnicodeText="8" Grid.Column="2"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="9" UnshiftedText="9" ShiftedContent="9" ShiftedUnicodeText="9" Grid.Column="3"/>
         </Grid>
 
         <Grid Grid.Row="4">
@@ -59,8 +59,8 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="0" UnshiftedText="0" Grid.Column="1"/>
-            <kbrd:UnicodeKeyboardKey UnshiftedContent="." UnshiftedText="." Grid.Column="2"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="0" UnshiftedText="0" ShiftedContent="0" ShiftedUnicodeText="0" Grid.Column="1"/>
+            <kbrd:UnicodeKeyboardKey UnshiftedContent="." UnshiftedText="." ShiftedContent="." ShiftedUnicodeText="." Grid.Column="2"/>
         </Grid>
 
     </Grid>

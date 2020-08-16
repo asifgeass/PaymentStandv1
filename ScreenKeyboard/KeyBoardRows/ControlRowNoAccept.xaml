@@ -27,21 +27,27 @@
             <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                 <materialDesign:PackIcon Kind="ArrowLeft" Height="auto" Width="auto"/>
             </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+            <kbrd:VirtualKeyKeyboardKey.ShiftedContent>
+                <materialDesign:PackIcon Kind="ArrowLeft" Height="auto" Width="auto"/>
+            </kbrd:VirtualKeyKeyboardKey.ShiftedContent>
         </kbrd:VirtualKeyKeyboardKey>
 
         <kbrd:VirtualKeyKeyboardKey VirtualKey="RIGHT" Grid.Column="2">
             <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                 <materialDesign:PackIcon Kind="ArrowRight" Height="auto" Width="auto"/>
             </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+            <kbrd:VirtualKeyKeyboardKey.ShiftedContent>
+                <materialDesign:PackIcon Kind="ArrowRight" Height="auto" Width="auto"/>
+            </kbrd:VirtualKeyKeyboardKey.ShiftedContent>
         </kbrd:VirtualKeyKeyboardKey>
 
         <kbrd:VirtualKeyKeyboardKey VirtualKey="SPACE" Grid.Column="3"/>
 
 
-        <kbrd:UnicodeKeyboardKey UnshiftedText="-" UnshiftedContent="-" Grid.Column="4"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedText="/" UnshiftedContent="/" Grid.Column="5"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedText="*" UnshiftedContent="*" Grid.Column="6"/>
-        <kbrd:UnicodeKeyboardKey UnshiftedText="=" UnshiftedContent="=" Grid.Column="7"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedText="-" UnshiftedContent="-" ShiftedContent="-" ShiftedUnicodeText="-" Grid.Column="4"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedText="/" UnshiftedContent="/" ShiftedContent="/" ShiftedUnicodeText="/" Grid.Column="5"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedText="*" UnshiftedContent="*" ShiftedContent="*" ShiftedUnicodeText="*" Grid.Column="6"/>
+        <kbrd:UnicodeKeyboardKey UnshiftedText="=" UnshiftedContent="=" ShiftedContent="=" ShiftedUnicodeText="=" Grid.Column="7"/>
 
     </Grid>
 </UserControl>

@@ -11,11 +11,15 @@
     
     <Grid>
         
-        <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" x:Name="KeyButton1" Visibility="Hidden">
+        <kbrd:VirtualKeyKeyboardKey VirtualKey="BACK" x:Name="KeyButton1" Visibility="Visible">
             <kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
                 <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
                                          Foreground="Yellow" Name="IconControl"/>                
-            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>            
+            </kbrd:VirtualKeyKeyboardKey.UnshiftedContent>
+            <kbrd:VirtualKeyKeyboardKey.ShiftedContent>
+                <materialDesign:PackIcon Kind="BackspaceOutline" Height="auto" Width="auto" 
+                                         Foreground="Yellow" Name="IconControl2"/>
+            </kbrd:VirtualKeyKeyboardKey.ShiftedContent>
         </kbrd:VirtualKeyKeyboardKey>
         
     </Grid>
