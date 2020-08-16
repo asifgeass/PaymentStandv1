@@ -100,6 +100,7 @@
     <Compile Include="FullKeyboardNoCaps.xaml.cs">
       <DependentUpon>FullKeyboardNoCaps.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GridLengthAnimation.cs" />
     <Compile Include="KeyboardRows\ControlRowNoAccept.xaml.cs">
       <DependentUpon>ControlRowNoAccept.xaml</DependentUpon>
     </Compile>
